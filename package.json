@@ -1,0 +1,15 @@
+{
+  "name": "cryptofolio",
+  "version": "1.0.0",
+  "description": "An app to see your crypto investments",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "expo": "^41.0.1",
+    "react": "^17.0.1"
+  }
+}
