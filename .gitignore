@@ -5,3 +5,45 @@
 /node_modules
 /.pnp
 .pnp.js
+/cryptofolio/node_modules
+/cryptofolio/.expo
+
+/cryptofolio/xcuserdata
+/cryptofolio/*.xccheckout
+/cryptofolio/*.moved-aside
+/cryptofolio/DerivedData
+/cryptofolio/*.hmap
+/cryptofolio/*.ipa
+/cryptofolio/*.xcuserstate
+/cryptofolio/project.xcworkspace
+
+# Android/IntelliJ
+#
+/cryptofolio/build/
+/cryptofolio/.idea
+/cryptofolio/.gradle
+/cryptofolio/local.properties
+/cryptofolio/*.iml
+/cryptofolio/*.hprof
+
+# node.js
+#
+/cryptofolio/node_modules/
+/cryptofolio/npm-debug.log
+/cryptofolio/yarn-error.log
+
+# BUCK
+/cryptofolio/buck-out/
+\.buckd/
+/cryptofolio/*.keystore
+!debug.keystore
+
+# Bundle artifacts
+/cryptofolio/*.jsbundle
+
+# CocoaPods
+/cryptofolio/ios/Pods/
+
+# Expo
+/cryptofolio/.expo/
+/cryptofolio/web-build/
