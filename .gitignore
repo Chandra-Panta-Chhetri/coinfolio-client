@@ -1,49 +1,54 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# OSX
+#
+.DS_Store
 
-
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-/cryptofolio/node_modules
-/cryptofolio/.expo
-
-/cryptofolio/xcuserdata
-/cryptofolio/*.xccheckout
-/cryptofolio/*.moved-aside
-/cryptofolio/DerivedData
-/cryptofolio/*.hmap
-/cryptofolio/*.ipa
-/cryptofolio/*.xcuserstate
-/cryptofolio/project.xcworkspace
+# Xcode
+#
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+project.xcworkspace
 
 # Android/IntelliJ
 #
-/cryptofolio/build/
-/cryptofolio/.idea
-/cryptofolio/.gradle
-/cryptofolio/local.properties
-/cryptofolio/*.iml
-/cryptofolio/*.hprof
+build/
+.idea
+.gradle
+local.properties
+*.iml
+*.hprof
 
 # node.js
 #
-/cryptofolio/node_modules/
-/cryptofolio/npm-debug.log
-/cryptofolio/yarn-error.log
+node_modules/
+npm-debug.log
+yarn-error.log
 
 # BUCK
-/cryptofolio/buck-out/
+buck-out/
 \.buckd/
-/cryptofolio/*.keystore
+*.keystore
 !debug.keystore
 
 # Bundle artifacts
-/cryptofolio/*.jsbundle
+*.jsbundle
 
 # CocoaPods
-/cryptofolio/ios/Pods/
+/ios/Pods/
 
 # Expo
-/cryptofolio/.expo/
-/cryptofolio/web-build/
+.expo/
+web-build/
