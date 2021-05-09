@@ -2,24 +2,30 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
+import PortfolioScreen from "../screens/PortfolioScreen";
 
 const Stack = createStackNavigator();
 
-function MainStackNavigator() {
+function PortfolioStackNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen
+        name="Portfolio"
+        component={PortfolioScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="Login"
         component={LoginScreen}
-        options={{ title: "Login" }}
+        options={{ headerTitle: "Login" }}
       />
       <Stack.Screen
         name="SignUp"
         component={SignUpScreen}
-        options={{ title: "Sign Up" }}
+        options={{ headerTitle: "Sign Up" }}
       />
     </Stack.Navigator>
   );
 }
 
-export default MainStackNavigator;
+export default PortfolioStackNavigator;

@@ -8,7 +8,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import HomeScreen from "../screens/HomeScreen";
 import MarketScreen from "../screens/MarketScreen";
-import PortfolioScreen from "../screens/PortfolioScreen";
+import PortfolioStackNavigator from "./PortfolioStackNavigator";
 import SettingsScreen from "../screens/SettingsScreen";
 import NewsScreen from "../screens/NewsScreen";
 
@@ -69,7 +69,7 @@ const BottomTabNavigation = () => {
           />
           <BottomTab.Screen
             name="Portfolio"
-            component={PortfolioScreen}
+            component={PortfolioStackNavigator}
             options={{
               tabBarIcon: PortfolioTabIcon
             }}
