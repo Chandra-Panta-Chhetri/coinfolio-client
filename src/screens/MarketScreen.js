@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 
-function WatchlistScreen() {
+function MarketScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Watchlist Screen</Text>
+      <Text style={styles.text}>Market Screen</Text>
     </View>
   );
 }
@@ -23,4 +23,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default WatchlistScreen;
+export default MarketScreen;

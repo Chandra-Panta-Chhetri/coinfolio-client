@@ -4,10 +4,13 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SafeAreaView, StatusBar } from "react-native";
 import SafeAreaAndroidStyles from "../GlobalStyles";
 import { AntDesign } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import HomeScreen from "../screens/HomeScreen";
-import WatchListScreen from "../screens/WatchlistScreen";
+import MarketScreen from "../screens/MarketScreen";
 import PortfolioScreen from "../screens/PortfolioScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import NewsScreen from "../screens/NewsScreen";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -15,12 +18,16 @@ const HomeTabIcon = ({ color, size }) => {
   return <AntDesign name="home" size={size} color={color} />;
 };
 
-const WatchlistTabIcon = ({ color, size }) => {
-  return <AntDesign name="eyeo" size={size} color={color} />;
+const MarketTabIcon = ({ color, size }) => {
+  return <AntDesign name="barschart" size={size} color={color} />;
 };
 
 const PortfolioTabIcon = ({ color, size }) => {
-  return <AntDesign name="linechart" size={size} color={color} />;
+  return <Feather name="pie-chart" size={size} color={color} />;
+};
+
+const NewsTabIcon = ({ color, size }) => {
+  return <FontAwesome name="newspaper-o" size={size} color={color} />;
 };
 
 const SettingsTabIcon = ({ color, size }) => {
@@ -37,36 +44,41 @@ const BottomTabNavigation = () => {
             activeTintColor: "white",
             style: {
               backgroundColor: "black"
-            }
+            },
+            showLabel: false
           }}
         >
           <BottomTab.Screen
             name="Home"
             component={HomeScreen}
-            options={{ tabBarIcon: HomeTabIcon, tabBarLabel: "Home" }}
+            options={{ tabBarIcon: HomeTabIcon }}
           />
           <BottomTab.Screen
-            name="Watchlist"
-            component={WatchListScreen}
+            name="Market"
+            component={MarketScreen}
             options={{
-              tabBarIcon: WatchlistTabIcon,
-              tabBarLabel: "Watchlist"
+              tabBarIcon: MarketTabIcon
+            }}
+          />
+          <BottomTab.Screen
+            name="News"
+            component={NewsScreen}
+            options={{
+              tabBarIcon: NewsTabIcon
             }}
           />
           <BottomTab.Screen
             name="Portfolio"
             component={PortfolioScreen}
             options={{
-              tabBarIcon: PortfolioTabIcon,
-              tabBarLabel: "Portfolio"
+              tabBarIcon: PortfolioTabIcon
             }}
           />
           <BottomTab.Screen
             name="Settings"
             component={SettingsScreen}
             options={{
-              tabBarIcon: SettingsTabIcon,
-              tabBarLabel: "Settings"
+              tabBarIcon: SettingsTabIcon
             }}
           />
         </BottomTab.Navigator>

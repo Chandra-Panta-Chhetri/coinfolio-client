@@ -1,20 +1,25 @@
-import * as React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
-import Home from '../screens/Home'
-import second_page from '../screens/second_page'
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import LoginScreen from "../screens/LoginScreen";
+import SignUpScreen from "../screens/SignUpScreen";
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator();
 
 function MainStackNavigator() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name='Home' component={Home} options={{ title: 'Home Screen' }} />
-        <Stack.Screen name='Second' component={second_page} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  )
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{ title: "Login" }}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUpScreen}
+        options={{ title: "Sign Up" }}
+      />
+    </Stack.Navigator>
+  );
 }
 
-export default MainStackNavigator
+export default MainStackNavigator;

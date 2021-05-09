@@ -1,14 +1,10 @@
 import React from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 
-function PortfolioScreen({ navigation }) {
+function NewsScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Portfolio Screen</Text>
-      <Button
-        title="Go to Login"
-        onPress={() => navigation.navigate("Login")}
-      />
+      <Text style={styles.text}>News Screen</Text>
     </View>
   );
 }
@@ -27,4 +23,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default PortfolioScreen;
+export default NewsScreen;
