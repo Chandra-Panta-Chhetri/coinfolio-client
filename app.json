@@ -1,12 +1,10 @@
 {
-  "name": "cryptofolio",
-  "displayName": "cryptofolio",
+  "name": "coinfolio",
+  "displayName": "Coinfolio",
   "expo": {
-    "name": "cryptofolio",
-    "slug": "cryptofolio",
+    "name": "coinfolio",
+    "slug": "coinfolio",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"]
   }
 }
