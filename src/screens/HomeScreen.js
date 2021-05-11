@@ -1,10 +1,19 @@
-import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, View, Text, Button } from "react-native";
+import { connect } from "react-redux";
+import { selectNotifications } from "../redux/notification/notification.selectors";
+import { createStructuredSelector } from "reselect";
+import { addSuccessNotification } from "../redux/notification/notification.actions";
 
-function HomeScreen({ navigation }) {
+function HomeScreen({ navigation, notifications, test }) {
+  useEffect(() => {
+    test();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Home Screen</Text>
+      <Text style={styles.text}>Home Screen {notifications.length}</Text>
+      <Button onPress={test} title="Add" />
     </View>
   );
 }
@@ -23,4 +32,12 @@ const styles = StyleSheet.create({
   }
 });
 
-export default HomeScreen;
+const mapStateToProps = createStructuredSelector({
+  notifications: selectNotifications
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  test: () => dispatch(addSuccessNotification("Test"))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
