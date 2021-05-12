@@ -49,7 +49,7 @@ function HomeScreen({ navigation }) {
             <View style={styles.iconButton}>
               <IconButton icon="bell-alert" color="blue" />
             </View>
-            <Caption style={styles.iconButtonLabel}>Price Alerts</Caption>
+            <Caption style={styles.bold}>Price Alerts</Caption>
           </View>
         </TouchableRipple>
         <TouchableRipple rippleColor="rgba(0, 0, 0, .32)" onPress={() => {}}>
@@ -57,7 +57,7 @@ function HomeScreen({ navigation }) {
             <View style={styles.iconButton}>
               <IconButton icon="compare" color="blue" />
             </View>
-            <Caption style={styles.iconButtonLabel}>Compare</Caption>
+            <Caption style={styles.bold}>Compare</Caption>
           </View>
         </TouchableRipple>
         <TouchableRipple rippleColor="rgba(0, 0, 0, .32)" onPress={() => {}}>
@@ -65,7 +65,7 @@ function HomeScreen({ navigation }) {
             <View style={styles.iconButton}>
               <IconButton icon="calculator" color="blue" />
             </View>
-            <Caption style={styles.iconButtonLabel}>Converter</Caption>
+            <Caption style={styles.bold}>Converter</Caption>
           </View>
         </TouchableRipple>
         <TouchableRipple rippleColor="rgba(0, 0, 0, .32)" onPress={() => {}}>
@@ -73,7 +73,7 @@ function HomeScreen({ navigation }) {
             <View style={styles.iconButton}>
               <IconButton icon="eye" color="blue" />
             </View>
-            <Caption style={styles.iconButtonLabel}>Watchlist</Caption>
+            <Caption style={styles.bold}>Watchlist</Caption>
           </View>
         </TouchableRipple>
       </ScrollView>
@@ -106,10 +106,6 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderColor: "white",
     backgroundColor: "#ECECEC"
-  },
-  iconButtonLabel: {
-    color: "black",
-    fontWeight: "bold"
   }
 });
 
