@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { selectNotifications } from "../redux/notification/notification.selectors";
 import { createStructuredSelector } from "reselect";
 import { addSuccessNotification } from "../redux/notification/notification.actions";
+import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
 
 function HomeScreen({ navigation, notifications, test }) {
   useEffect(() => {
@@ -12,8 +13,28 @@ function HomeScreen({ navigation, notifications, test }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Home Screen {notifications.length}</Text>
-      <Button onPress={test} title="Add" />
+      <Card>
+        <Card.Content>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <Paragraph style={styles.rightMargin}>
+              <Paragraph style={styles.bold}>Market Cap: </Paragraph>
+              $3,026,234,553,628
+            </Paragraph>
+            <Paragraph style={styles.rightMargin}>
+              <Paragraph style={styles.bold}>24h Vol: </Paragraph>
+              $286,423,453,955
+            </Paragraph>
+            <Paragraph style={styles.rightMargin}>
+              <Paragraph style={styles.bold}>BTC Dominance: </Paragraph>
+              42.4%
+            </Paragraph>
+            <Paragraph style={styles.rightMargin}>
+              <Paragraph style={styles.bold}>ETH Dominance: </Paragraph>
+              19.4%
+            </Paragraph>
+          </ScrollView>
+        </Card.Content>
+      </Card>
     </View>
   );
 }
@@ -21,13 +42,12 @@ function HomeScreen({ navigation, notifications, test }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#ebebeb"
+    padding: 10
   },
-  text: {
-    color: "#101010",
-    fontSize: 24,
+  rightMargin: {
+    marginRight: 10
+  },
+  bold: {
     fontWeight: "bold"
   }
 });
