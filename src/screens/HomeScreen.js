@@ -1,34 +1,111 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import { StyleSheet, View, ScrollView, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { selectNotifications } from "../redux/notification/notification.selectors";
 import { createStructuredSelector } from "reselect";
 import { addSuccessNotification } from "../redux/notification/notification.actions";
+import {
+  Card,
+  Paragraph,
+  IconButton,
+  Caption,
+  TouchableRipple
+} from "react-native-paper";
 
-function HomeScreen({ navigation, notifications, test }) {
-  useEffect(() => {
-    test();
-  }, []);
+function HomeScreen({ navigation }) {
+  useEffect(() => {}, []);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Home Screen {notifications.length}</Text>
-      <Button onPress={test} title="Add" />
+      <Card>
+        <Card.Content>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <Paragraph style={styles.rightMargin}>
+              <Paragraph style={styles.bold}>Market Cap: </Paragraph>
+              $3,026,234,553,628
+            </Paragraph>
+            <Paragraph style={styles.rightMargin}>
+              <Paragraph style={styles.bold}>24h Vol: </Paragraph>
+              $286,423,453,955
+            </Paragraph>
+            <Paragraph style={styles.rightMargin}>
+              <Paragraph style={styles.bold}>BTC Dominance: </Paragraph>
+              42.4%
+            </Paragraph>
+            <Paragraph style={styles.rightMargin}>
+              <Paragraph style={styles.bold}>ETH Dominance: </Paragraph>
+              19.4%
+            </Paragraph>
+          </ScrollView>
+        </Card.Content>
+      </Card>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.shortcutIconContainer}
+      >
+        <TouchableRipple rippleColor="rgba(0, 0, 0, .32)" onPress={() => {}}>
+          <View style={styles.shortcutIconItem}>
+            <View style={styles.iconButton}>
+              <IconButton icon="bell-alert" color="blue" />
+            </View>
+            <Caption style={styles.bold}>Price Alerts</Caption>
+          </View>
+        </TouchableRipple>
+        <TouchableRipple rippleColor="rgba(0, 0, 0, .32)" onPress={() => {}}>
+          <View style={styles.shortcutIconItem}>
+            <View style={styles.iconButton}>
+              <IconButton icon="compare" color="blue" />
+            </View>
+            <Caption style={styles.bold}>Compare</Caption>
+          </View>
+        </TouchableRipple>
+        <TouchableRipple rippleColor="rgba(0, 0, 0, .32)" onPress={() => {}}>
+          <View style={styles.shortcutIconItem}>
+            <View style={styles.iconButton}>
+              <IconButton icon="calculator" color="blue" />
+            </View>
+            <Caption style={styles.bold}>Converter</Caption>
+          </View>
+        </TouchableRipple>
+        <TouchableRipple rippleColor="rgba(0, 0, 0, .32)" onPress={() => {}}>
+          <View style={styles.shortcutIconItem}>
+            <View style={styles.iconButton}>
+              <IconButton icon="eye" color="blue" />
+            </View>
+            <Caption style={styles.bold}>Watchlist</Caption>
+          </View>
+        </TouchableRipple>
+      </ScrollView>
+      <View></View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#ebebeb"
+    padding: 10
   },
-  text: {
-    color: "#101010",
-    fontSize: 24,
+  rightMargin: {
+    marginRight: 10
+  },
+  bold: {
     fontWeight: "bold"
+  },
+  shortcutIconContainer: {
+    justifyContent: "space-between",
+    flex: 1,
+    marginTop: 10
+  },
+  shortcutIconItem: {
+    alignItems: "center",
+    padding: 5
+  },
+  iconButton: {
+    borderWidth: 5,
+    borderRadius: 30,
+    borderColor: "white",
+    backgroundColor: "#ECECEC"
   }
 });
 
