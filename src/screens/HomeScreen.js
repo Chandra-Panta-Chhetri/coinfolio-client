@@ -12,7 +12,8 @@ import {
   TouchableRipple,
   Title,
   Headline,
-  Avatar
+  Avatar,
+  Button
 } from "react-native-paper";
 
 function HomeScreen({ navigation }) {
@@ -23,25 +24,35 @@ function HomeScreen({ navigation }) {
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
     >
-      <Card>
+      <Card style={styles.globalSummaryCard}>
         <Card.Content>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <Paragraph style={styles.rightMargin}>
-              <Paragraph style={styles.bold}>Market Cap: </Paragraph>
-              $3,026,234,553,628
-            </Paragraph>
-            <Paragraph style={styles.rightMargin}>
-              <Paragraph style={styles.bold}>24h Vol: </Paragraph>
-              $286,423,453,955
-            </Paragraph>
-            <Paragraph style={styles.rightMargin}>
-              <Paragraph style={styles.bold}>BTC Dominance: </Paragraph>
-              42.4%
-            </Paragraph>
-            <Paragraph style={styles.rightMargin}>
-              <Paragraph style={styles.bold}>ETH Dominance: </Paragraph>
-              19.4%
-            </Paragraph>
+            <View style={styles.globalSummaryItem}>
+              <Paragraph style={styles.globalSummaryLabel}>
+                Market Cap:{" "}
+              </Paragraph>
+              <Paragraph style={styles.globalSummaryValue}>
+                $3,026,234,553,628
+              </Paragraph>
+            </View>
+            <View style={styles.globalSummaryItem}>
+              <Paragraph style={styles.globalSummaryLabel}>24h Vol: </Paragraph>
+              <Paragraph style={styles.globalSummaryValue}>
+                $286,423,453,955
+              </Paragraph>
+            </View>
+            <View style={styles.globalSummaryItem}>
+              <Paragraph style={styles.globalSummaryLabel}>
+                BTC Dominance:{" "}
+              </Paragraph>
+              <Paragraph style={styles.globalSummaryValue}>42.4%</Paragraph>
+            </View>
+            <View style={styles.globalSummaryItem}>
+              <Paragraph style={styles.globalSummaryLabel}>
+                ETH Dominance:{" "}
+              </Paragraph>
+              <Paragraph style={styles.globalSummaryValue}>19.4%</Paragraph>
+            </View>
           </ScrollView>
         </Card.Content>
       </Card>
@@ -84,7 +95,17 @@ function HomeScreen({ navigation }) {
         </TouchableRipple>
       </ScrollView>
       <View style={styles.section}>
-        <Headline style={styles.bold}>Top Coins</Headline>
+        <View style={styles.sectionHeadingContainer}>
+          <Headline style={styles.bold}>Top Coins</Headline>
+          <Button
+            compact
+            uppercase={false}
+            labelStyle={styles.seeAllButton}
+            onPress={() => {}}
+          >
+            See All
+          </Button>
+        </View>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -168,7 +189,17 @@ function HomeScreen({ navigation }) {
         </ScrollView>
       </View>
       <View style={styles.section}>
-        <Headline style={styles.bold}>Gainers & Losers</Headline>
+        <View style={styles.sectionHeadingContainer}>
+          <Headline style={styles.bold}>Gainers & Losers</Headline>
+          <Button
+            compact
+            uppercase={false}
+            labelStyle={styles.seeAllButton}
+            onPress={() => {}}
+          >
+            See All
+          </Button>
+        </View>
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.gainerAndLoserContainer}
@@ -289,7 +320,17 @@ function HomeScreen({ navigation }) {
         </ScrollView>
       </View>
       <View style={styles.section}>
-        <Headline style={styles.bold}>News</Headline>
+        <View style={styles.sectionHeadingContainer}>
+          <Headline style={styles.bold}>News</Headline>
+          <Button
+            compact
+            uppercase={false}
+            labelStyle={styles.seeAllButton}
+            onPress={() => {}}
+          >
+            See All
+          </Button>
+        </View>
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.newsContainer}
@@ -347,8 +388,9 @@ const styles = StyleSheet.create({
   container: {
     padding: 10
   },
-  rightMargin: {
-    marginRight: 10
+  globalSummaryItem: {
+    marginRight: 10,
+    flexDirection: "row"
   },
   bold: {
     fontWeight: "bold"
@@ -459,6 +501,25 @@ const styles = StyleSheet.create({
   newsImage: {
     width: 100,
     height: 100
+  },
+  sectionHeadingContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+  seeAllButton: {
+    fontWeight: "bold",
+    color: "blue"
+  },
+  globalSummaryCard: {
+    backgroundColor: "black"
+  },
+  globalSummaryLabel: {
+    color: "white",
+    fontWeight: "bold"
+  },
+  globalSummaryValue: {
+    color: "darkgray"
   }
 });
 
