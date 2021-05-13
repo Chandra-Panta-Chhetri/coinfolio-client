@@ -90,71 +90,81 @@ function HomeScreen({ navigation }) {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.topMoversContainer}
         >
-          <Card style={styles.topMoverCard}>
-            <Card.Content>
-              <Avatar.Image
-                size={30}
-                source={{
-                  uri: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-                }}
-              />
-              <Paragraph style={styles.topMoverName}>BTC</Paragraph>
-              <Paragraph style={styles.topMoverPrice}>$69,230.24</Paragraph>
-              <Paragraph style={styles.topMoverPercent}>-4.25% </Paragraph>
-            </Card.Content>
-          </Card>
-          <Card style={styles.topMoverCard}>
-            <Card.Content>
-              <Avatar.Image
-                size={30}
-                source={{
-                  uri: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-                }}
-              />
-              <Paragraph style={styles.topMoverName}>BTC</Paragraph>
-              <Paragraph style={styles.topMoverPrice}>$69,230.24</Paragraph>
-              <Paragraph style={styles.topMoverPercent}>-4.25% </Paragraph>
-            </Card.Content>
-          </Card>
-          <Card style={styles.topMoverCard}>
-            <Card.Content>
-              <Avatar.Image
-                size={30}
-                source={{
-                  uri: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-                }}
-              />
-              <Paragraph style={styles.topMoverName}>BTC</Paragraph>
-              <Paragraph style={styles.topMoverPrice}>$69,230.24</Paragraph>
-              <Paragraph style={styles.topMoverPercent}>-4.25% </Paragraph>
-            </Card.Content>
-          </Card>
-          <Card style={styles.topMoverCard}>
-            <Card.Content>
-              <Avatar.Image
-                size={30}
-                source={{
-                  uri: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-                }}
-              />
-              <Paragraph style={styles.topMoverName}>BTC</Paragraph>
-              <Paragraph style={styles.topMoverPrice}>$69,230.24</Paragraph>
-              <Paragraph style={styles.topMoverPercent}>-4.25% </Paragraph>
-            </Card.Content>
-          </Card>
-          <Card style={styles.topMoverCard}>
-            <Card.Content>
-              <Avatar.Image
-                size={30}
-                source={{
-                  uri: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-                }}
-              />
-              <Paragraph style={styles.topMoverName}>BTC</Paragraph>
-              <Paragraph style={styles.topMoverPrice}>$69,230.24</Paragraph>
-              <Paragraph style={styles.topMoverPercent}>-4.25% </Paragraph>
-            </Card.Content>
-          </Card>
+          <TouchableOpacity activeOpacity={0.7}>
+            <Card style={styles.topMoverCard}>
+              <Card.Content>
+                <Avatar.Image
+                  size={30}
+                  source={{
+                    uri: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                  }}
+                />
+                <Paragraph style={styles.topMoverName}>BTC</Paragraph>
+                <Paragraph style={styles.topMoverPrice}>$69,230.24</Paragraph>
+                <Paragraph style={styles.topMoverPercent}>-4.25% </Paragraph>
+              </Card.Content>
+            </Card>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.7}>
+            <Card style={styles.topMoverCard}>
+              <Card.Content>
+                <Avatar.Image
+                  size={30}
+                  source={{
+                    uri: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                  }}
+                />
+                <Paragraph style={styles.topMoverName}>BTC</Paragraph>
+                <Paragraph style={styles.topMoverPrice}>$69,230.24</Paragraph>
+                <Paragraph style={styles.topMoverPercent}>-4.25% </Paragraph>
+              </Card.Content>
+            </Card>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.7}>
+            <Card style={styles.topMoverCard}>
+              <Card.Content>
+                <Avatar.Image
+                  size={30}
+                  source={{
+                    uri: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                  }}
+                />
+                <Paragraph style={styles.topMoverName}>BTC</Paragraph>
+                <Paragraph style={styles.topMoverPrice}>$69,230.24</Paragraph>
+                <Paragraph style={styles.topMoverPercent}>-4.25% </Paragraph>
+              </Card.Content>
+            </Card>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.7}>
+            <Card style={styles.topMoverCard}>
+              <Card.Content>
+                <Avatar.Image
+                  size={30}
+                  source={{
+                    uri: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                  }}
+                />
+                <Paragraph style={styles.topMoverName}>BTC</Paragraph>
+                <Paragraph style={styles.topMoverPrice}>$69,230.24</Paragraph>
+                <Paragraph style={styles.topMoverPercent}>-4.25% </Paragraph>
+              </Card.Content>
+            </Card>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.7}>
+            <Card style={styles.topMoverCard}>
+              <Card.Content>
+                <Avatar.Image
+                  size={30}
+                  source={{
+                    uri: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                  }}
+                />
+                <Paragraph style={styles.topMoverName}>BTC</Paragraph>
+                <Paragraph style={styles.topMoverPrice}>$69,230.24</Paragraph>
+                <Paragraph style={styles.topMoverPercent}>-4.25% </Paragraph>
+              </Card.Content>
+            </Card>
+          </TouchableOpacity>
         </ScrollView>
       </View>
       <View style={styles.section}>
@@ -163,110 +173,170 @@ function HomeScreen({ navigation }) {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.gainerAndLoserContainer}
         >
-          <Card style={styles.gainerAndLoserCard}>
-            <Card.Content style={styles.gainerAndLoserCardBody}>
-              <Avatar.Image
-                size={35}
-                source={{
-                  uri: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-                }}
-              />
-              <View style={styles.gainerLoserInfoContainer}>
-                <View>
-                  <Paragraph style={styles.gainerLoserFullName}>
-                    Bitcoin
-                  </Paragraph>
-                  <Paragraph style={styles.gainerLoserTicker}>BTC</Paragraph>
+          <TouchableOpacity activeOpacity={0.7}>
+            <Card style={styles.gainerAndLoserCard}>
+              <Card.Content style={styles.gainerAndLoserCardBody}>
+                <Avatar.Image
+                  size={35}
+                  source={{
+                    uri: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                  }}
+                />
+                <View style={styles.gainerLoserInfoContainer}>
+                  <View>
+                    <Paragraph style={styles.gainerLoserFullName}>
+                      Bitcoin
+                    </Paragraph>
+                    <Paragraph style={styles.gainerLoserTicker}>BTC</Paragraph>
+                  </View>
+                  <View style={styles.priceAndPercent}>
+                    <Paragraph style={styles.gainerLoserPrice}>
+                      $69,230.24
+                    </Paragraph>
+                    <Paragraph style={styles.gainerLoserPercent}>
+                      +4.25%
+                    </Paragraph>
+                  </View>
                 </View>
-                <View style={styles.priceAndPercent}>
-                  <Paragraph style={styles.gainerLoserPrice}>
-                    $69,230.24
-                  </Paragraph>
-                  <Paragraph style={styles.gainerLoserPercent}>
-                    +4.25%
-                  </Paragraph>
+              </Card.Content>
+            </Card>
+          </TouchableOpacity>
+
+          <TouchableOpacity activeOpacity={0.7}>
+            <Card style={styles.gainerAndLoserCard}>
+              <Card.Content style={styles.gainerAndLoserCardBody}>
+                <Avatar.Image
+                  size={35}
+                  source={{
+                    uri: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                  }}
+                />
+                <View style={styles.gainerLoserInfoContainer}>
+                  <View>
+                    <Paragraph style={styles.gainerLoserFullName}>
+                      Bitcoin
+                    </Paragraph>
+                    <Paragraph style={styles.gainerLoserTicker}>BTC</Paragraph>
+                  </View>
+                  <View style={styles.priceAndPercent}>
+                    <Paragraph style={styles.gainerLoserPrice}>
+                      $69,230.24
+                    </Paragraph>
+                    <Paragraph style={styles.gainerLoserPercent}>
+                      +4.25%
+                    </Paragraph>
+                  </View>
                 </View>
-              </View>
-            </Card.Content>
-          </Card>
-          <Card style={styles.gainerAndLoserCard}>
-            <Card.Content style={styles.gainerAndLoserCardBody}>
-              <Avatar.Image
-                size={35}
-                source={{
-                  uri: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-                }}
-              />
-              <View style={styles.gainerLoserInfoContainer}>
-                <View>
-                  <Paragraph style={styles.gainerLoserFullName}>
-                    Bitcoin
-                  </Paragraph>
-                  <Paragraph style={styles.gainerLoserTicker}>BTC</Paragraph>
+              </Card.Content>
+            </Card>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.7}>
+            <Card style={styles.gainerAndLoserCard}>
+              <Card.Content style={styles.gainerAndLoserCardBody}>
+                <Avatar.Image
+                  size={35}
+                  source={{
+                    uri: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                  }}
+                />
+                <View style={styles.gainerLoserInfoContainer}>
+                  <View>
+                    <Paragraph style={styles.gainerLoserFullName}>
+                      Bitcoin
+                    </Paragraph>
+                    <Paragraph style={styles.gainerLoserTicker}>BTC</Paragraph>
+                  </View>
+                  <View style={styles.priceAndPercent}>
+                    <Paragraph style={styles.gainerLoserPrice}>
+                      $69,230.24
+                    </Paragraph>
+                    <Paragraph style={styles.gainerLoserPercent}>
+                      +4.25%
+                    </Paragraph>
+                  </View>
                 </View>
-                <View style={styles.priceAndPercent}>
-                  <Paragraph style={styles.gainerLoserPrice}>
-                    $69,230.24
-                  </Paragraph>
-                  <Paragraph style={styles.gainerLoserPercent}>
-                    +4.25%
-                  </Paragraph>
+              </Card.Content>
+            </Card>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.7}>
+            <Card style={styles.gainerAndLoserCard}>
+              <Card.Content style={styles.gainerAndLoserCardBody}>
+                <Avatar.Image
+                  size={35}
+                  source={{
+                    uri: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                  }}
+                />
+                <View style={styles.gainerLoserInfoContainer}>
+                  <View>
+                    <Paragraph style={styles.gainerLoserFullName}>
+                      Bitcoin
+                    </Paragraph>
+                    <Paragraph style={styles.gainerLoserTicker}>BTC</Paragraph>
+                  </View>
+                  <View style={styles.priceAndPercent}>
+                    <Paragraph style={styles.gainerLoserPrice}>
+                      $69,230.24
+                    </Paragraph>
+                    <Paragraph style={styles.gainerLoserPercent}>
+                      +4.25%
+                    </Paragraph>
+                  </View>
                 </View>
-              </View>
-            </Card.Content>
-          </Card>
-          <Card style={styles.gainerAndLoserCard}>
-            <Card.Content style={styles.gainerAndLoserCardBody}>
-              <Avatar.Image
-                size={35}
-                source={{
-                  uri: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-                }}
-              />
-              <View style={styles.gainerLoserInfoContainer}>
-                <View>
-                  <Paragraph style={styles.gainerLoserFullName}>
-                    Bitcoin
+              </Card.Content>
+            </Card>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
+      <View style={styles.section}>
+        <Headline style={styles.bold}>News</Headline>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.newsContainer}
+        >
+          <TouchableOpacity activeOpacity={0.6}>
+            <Card style={styles.newsItemCard}>
+              <Card.Content style={styles.newsItemCardBody}>
+                <View style={styles.newsInfo}>
+                  <Paragraph style={styles.newsTitle}>
+                    Dogecoin falls 15% to below 40 cents on Elon Musk’s crypto
+                    about-face
                   </Paragraph>
-                  <Paragraph style={styles.gainerLoserTicker}>BTC</Paragraph>
+                  <Caption style={styles.newsSubtitle}>
+                    3h ago | CBC News
+                  </Caption>
                 </View>
-                <View style={styles.priceAndPercent}>
-                  <Paragraph style={styles.gainerLoserPrice}>
-                    $69,230.24
+                <Card.Cover
+                  style={styles.newsImage}
+                  source={{
+                    uri: "https://sm.mashable.com/t/mashable_in/feature/d/dogecoin-e/dogecoin-everything-you-need-to-know-about-the-cryptocurrenc_4ssb.h1280.jpg"
+                  }}
+                />
+              </Card.Content>
+            </Card>
+          </TouchableOpacity>
+
+          <TouchableOpacity activeOpacity={0.6}>
+            <Card style={styles.newsItemCard}>
+              <Card.Content style={styles.newsItemCardBody}>
+                <View style={styles.newsInfo}>
+                  <Paragraph style={styles.newsTitle}>
+                    Dogecoin falls 15% to below 40 cents on Elon Musk’s crypto
+                    about-face
                   </Paragraph>
-                  <Paragraph style={styles.gainerLoserPercent}>
-                    +4.25%
-                  </Paragraph>
+                  <Caption style={styles.newsSubtitle}>
+                    3h ago | CBC News
+                  </Caption>
                 </View>
-              </View>
-            </Card.Content>
-          </Card>
-          <Card style={styles.gainerAndLoserCard}>
-            <Card.Content style={styles.gainerAndLoserCardBody}>
-              <Avatar.Image
-                size={35}
-                source={{
-                  uri: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-                }}
-              />
-              <View style={styles.gainerLoserInfoContainer}>
-                <View>
-                  <Paragraph style={styles.gainerLoserFullName}>
-                    Bitcoin
-                  </Paragraph>
-                  <Paragraph style={styles.gainerLoserTicker}>BTC</Paragraph>
-                </View>
-                <View style={styles.priceAndPercent}>
-                  <Paragraph style={styles.gainerLoserPrice}>
-                    $69,230.24
-                  </Paragraph>
-                  <Paragraph style={styles.gainerLoserPercent}>
-                    +4.25%
-                  </Paragraph>
-                </View>
-              </View>
-            </Card.Content>
-          </Card>
+                <Card.Cover
+                  style={styles.newsImage}
+                  source={{
+                    uri: "https://sm.mashable.com/t/mashable_in/feature/d/dogecoin-e/dogecoin-everything-you-need-to-know-about-the-cryptocurrenc_4ssb.h1280.jpg"
+                  }}
+                />
+              </Card.Content>
+            </Card>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     </ScrollView>
@@ -362,6 +432,33 @@ const styles = StyleSheet.create({
   },
   priceAndPercent: {
     alignItems: "flex-end"
+  },
+  newsContainer: {
+    marginTop: 10
+  },
+  newsItemCardBody: {
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  newsItemCard: {
+    marginBottom: 10,
+    backgroundColor: "black",
+    borderRadius: 13
+  },
+  newsTitle: {
+    color: "white",
+    fontSize: 15
+  },
+  newsSubtitle: {
+    color: "darkgray",
+    fontWeight: "bold"
+  },
+  newsInfo: {
+    flex: 1
+  },
+  newsImage: {
+    width: 100,
+    height: 100
   }
 });
 
