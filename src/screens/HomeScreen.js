@@ -7,14 +7,13 @@ import { addSuccessNotification } from "../redux/notification/notification.actio
 import {
   Card,
   Paragraph,
-  IconButton,
   Caption,
-  TouchableRipple,
-  Title,
   Headline,
   Avatar,
   Button
 } from "react-native-paper";
+import GlobalMarketSummary from "../components/GlobalMarketSummary";
+import ShortcutIcons from "../components/ShortcutIcons";
 
 function HomeScreen({ navigation }) {
   useEffect(() => {}, []);
@@ -24,76 +23,8 @@ function HomeScreen({ navigation }) {
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
     >
-      <Card style={styles.globalSummaryCard}>
-        <Card.Content>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <View style={styles.globalSummaryItem}>
-              <Paragraph style={styles.globalSummaryLabel}>
-                Market Cap:{" "}
-              </Paragraph>
-              <Paragraph style={styles.globalSummaryValue}>
-                $3,026,234,553,628
-              </Paragraph>
-            </View>
-            <View style={styles.globalSummaryItem}>
-              <Paragraph style={styles.globalSummaryLabel}>24h Vol: </Paragraph>
-              <Paragraph style={styles.globalSummaryValue}>
-                $286,423,453,955
-              </Paragraph>
-            </View>
-            <View style={styles.globalSummaryItem}>
-              <Paragraph style={styles.globalSummaryLabel}>
-                BTC Dominance:{" "}
-              </Paragraph>
-              <Paragraph style={styles.globalSummaryValue}>42.4%</Paragraph>
-            </View>
-            <View style={styles.globalSummaryItem}>
-              <Paragraph style={styles.globalSummaryLabel}>
-                ETH Dominance:{" "}
-              </Paragraph>
-              <Paragraph style={styles.globalSummaryValue}>19.4%</Paragraph>
-            </View>
-          </ScrollView>
-        </Card.Content>
-      </Card>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.shortcutIconContainer}
-      >
-        <TouchableRipple rippleColor="rgba(0, 0, 0, .32)" onPress={() => {}}>
-          <View style={styles.shortcutIconItem}>
-            <View style={styles.iconButton}>
-              <IconButton icon="bell-alert" color="blue" />
-            </View>
-            <Caption style={styles.bold}>Price Alerts</Caption>
-          </View>
-        </TouchableRipple>
-        <TouchableRipple rippleColor="rgba(0, 0, 0, .32)" onPress={() => {}}>
-          <View style={styles.shortcutIconItem}>
-            <View style={styles.iconButton}>
-              <IconButton icon="compare" color="blue" />
-            </View>
-            <Caption style={styles.bold}>Compare</Caption>
-          </View>
-        </TouchableRipple>
-        <TouchableRipple rippleColor="rgba(0, 0, 0, .32)" onPress={() => {}}>
-          <View style={styles.shortcutIconItem}>
-            <View style={styles.iconButton}>
-              <IconButton icon="calculator" color="blue" />
-            </View>
-            <Caption style={styles.bold}>Converter</Caption>
-          </View>
-        </TouchableRipple>
-        <TouchableRipple rippleColor="rgba(0, 0, 0, .32)" onPress={() => {}}>
-          <View style={styles.shortcutIconItem}>
-            <View style={styles.iconButton}>
-              <IconButton icon="eye" color="blue" />
-            </View>
-            <Caption style={styles.bold}>Watchlist</Caption>
-          </View>
-        </TouchableRipple>
-      </ScrollView>
+      <GlobalMarketSummary />
+      <ShortcutIcons />
       <View style={styles.section}>
         <View style={styles.sectionHeadingContainer}>
           <Headline style={styles.bold}>Top Coins</Headline>
@@ -388,27 +319,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 10
   },
-  globalSummaryItem: {
-    marginRight: 10,
-    flexDirection: "row"
-  },
   bold: {
     fontWeight: "bold"
-  },
-  shortcutIconContainer: {
-    justifyContent: "space-between",
-    flex: 1,
-    marginTop: 10
-  },
-  shortcutIconItem: {
-    alignItems: "center",
-    padding: 5
-  },
-  iconButton: {
-    borderWidth: 5,
-    borderRadius: 30,
-    borderColor: "white",
-    backgroundColor: "#ECECEC"
   },
   topMoversContainer: {
     marginTop: 10
@@ -510,16 +422,6 @@ const styles = StyleSheet.create({
   seeAllButton: {
     fontWeight: "bold",
     color: "blue"
-  },
-  globalSummaryCard: {
-    backgroundColor: "black"
-  },
-  globalSummaryLabel: {
-    color: "white",
-    fontWeight: "bold"
-  },
-  globalSummaryValue: {
-    color: "darkgray"
   }
 });
 
