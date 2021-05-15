@@ -59,6 +59,7 @@ const NewsSummary = ({ navigation }) => {
         keyExtractor={(n) => n.title}
         renderItem={(props) => <NewsItem {...props} navigation={navigation} />}
         scrollEnabled={false}
+        listKey="NewsSummaryList"
       />
     </View>
   );
@@ -77,7 +78,6 @@ const styles = StyleSheet.create({
   },
   newsCard: {
     marginBottom: 10,
-
     borderRadius: 13
   },
   newsTitle: {

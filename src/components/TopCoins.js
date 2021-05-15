@@ -69,6 +69,7 @@ const TopCoins = ({ navigation }) => {
         data={dummyData}
         keyExtractor={(tm) => tm.ticker}
         renderItem={(props) => <TopCoin {...props} navigation={navigation} />}
+        listKey="TopCoinsList"
       />
     </View>
   );

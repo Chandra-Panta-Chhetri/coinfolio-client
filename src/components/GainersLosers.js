@@ -82,6 +82,7 @@ const GainersLosers = ({ navigation }) => {
           <GainerLoser {...props} navigation={navigation} />
         )}
         scrollEnabled={false}
+        listKey="GainersLosersList"
       />
     </View>
   );

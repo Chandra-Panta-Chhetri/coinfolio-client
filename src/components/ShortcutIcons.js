@@ -49,6 +49,7 @@ const ShortcutIcons = ({ navigation }) => {
       renderItem={(props) => (
         <ShortcutIcon navigation={navigation} {...props} />
       )}
+      listKey="ShortcutIconsList"
     />
   );
 };

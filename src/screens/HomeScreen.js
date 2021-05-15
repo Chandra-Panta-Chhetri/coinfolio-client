@@ -4,7 +4,7 @@ import ShortcutIcons from "../components/ShortcutIcons";
 import TopCoins from "../components/TopCoins";
 import GainersLosers from "../components/GainersLosers";
 import NewsSummary from "../components/NewsSummary";
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { selectNotifications } from "../redux/notification/notification.selectors";
 import { createStructuredSelector } from "reselect";
@@ -12,17 +12,20 @@ import { addSuccessNotification } from "../redux/notification/notification.actio
 
 function HomeScreen() {
   return (
-    <ScrollView
+    <FlatList
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
-      nestedScrollEnabled
-    >
-      <GlobalMarketSummary />
-      <ShortcutIcons />
-      <TopCoins />
-      <GainersLosers />
-      <NewsSummary />
-    </ScrollView>
+      ListHeaderComponent={
+        <>
+          <GlobalMarketSummary />
+          <ShortcutIcons />
+          <TopCoins />
+          <GainersLosers />
+          <NewsSummary />
+        </>
+      }
+      listKey="HomeScreenList"
+    />
   );
 }
 
