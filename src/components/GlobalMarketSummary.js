@@ -36,11 +36,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
     flexDirection: "row"
   },
-  container: {
-    backgroundColor: "black"
-  },
+  container: {},
   summaryLabel: {
-    color: "white",
     fontWeight: "bold"
   },
   summaryValue: {

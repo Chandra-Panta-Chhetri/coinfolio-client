@@ -32,8 +32,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   seeAllButton: {
-    fontWeight: "bold",
-    color: "blue"
+    fontWeight: "bold"
   }
 });
 

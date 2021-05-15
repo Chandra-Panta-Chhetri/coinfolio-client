@@ -27,10 +27,7 @@ const shortcuts = [
 
 const ShortcutIcon = ({ item, navigation }) => {
   return (
-    <TouchableRipple
-      rippleColor="rgba(0, 0, 0, .32)"
-      onPress={() => navigation.navigate(item.navigateTo)}
-    >
+    <TouchableRipple onPress={() => navigation.navigate(item.navigateTo)}>
       <View style={styles.shortcutIconItem}>
         <View style={styles.iconButton}>
           <IconButton icon={item.iconName} color={item.iconColor} />

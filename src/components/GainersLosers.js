@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
   },
   gainersLosersCards: { marginTop: 10 },
   gainerLoserCard: {
-    backgroundColor: "black",
     marginBottom: 10,
     borderRadius: 13
   },
@@ -102,7 +101,6 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   gainerLoserFullName: {
-    color: "white",
     fontWeight: "bold",
     fontSize: 18
   },
@@ -112,7 +110,6 @@ const styles = StyleSheet.create({
     fontSize: 13
   },
   gainerLoserPrice: {
-    color: "white",
     fontWeight: "bold",
     fontSize: 18
   },

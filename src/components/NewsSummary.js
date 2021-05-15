@@ -77,11 +77,10 @@ const styles = StyleSheet.create({
   },
   newsCard: {
     marginBottom: 10,
-    backgroundColor: "black",
+
     borderRadius: 13
   },
   newsTitle: {
-    color: "white",
     fontSize: 15
   },
   newsSubtitle: {

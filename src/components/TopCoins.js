@@ -82,13 +82,11 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   topCoinCard: {
-    backgroundColor: "black",
     marginRight: 10,
     borderRadius: 13,
     width: 125
   },
   topCoinName: {
-    color: "white",
     fontWeight: "bold",
     marginTop: 10
   },

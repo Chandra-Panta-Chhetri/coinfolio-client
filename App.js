@@ -3,15 +3,34 @@ import BottomTabNavigation from "./src/navigation/BottomTabNavigation";
 import { Provider as StoreProvider } from "react-redux";
 import { Provider as PaperProvider } from "react-native-paper";
 import { store } from "./src/redux/store.js";
+import { DarkTheme, DefaultTheme } from "./src/redux/preferences/theme.styles";
+import SafeAreaAndroidStyles from "./src/GlobalStyles";
+import { SafeAreaView, StatusBar } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { connect } from "react-redux";
+import { selectIsThemeDark } from "./src/redux/preferences/preferences.selectors";
 
-const App = () => <BottomTabNavigation />;
+const App = ({ isThemeDark }) => (
+  <PaperProvider theme={isThemeDark ? DarkTheme : DefaultTheme}>
+    <SafeAreaView style={SafeAreaAndroidStyles.AndroidSafeArea}>
+      <StatusBar />
+      <NavigationContainer theme={isThemeDark ? DarkTheme : DefaultTheme}>
+        <BottomTabNavigation />
+      </NavigationContainer>
+    </SafeAreaView>
+  </PaperProvider>
+);
+
+const mapStateToProps = (state) => ({
+  isThemeDark: selectIsThemeDark(state)
+});
+
+const AppWithState = connect(mapStateToProps)(App);
 
 export default function () {
   return (
     <StoreProvider store={store}>
-      <PaperProvider>
-        <App />
-      </PaperProvider>
+      <AppWithState />
     </StoreProvider>
   );
 }

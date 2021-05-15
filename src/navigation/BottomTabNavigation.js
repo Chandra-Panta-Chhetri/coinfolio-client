@@ -1,8 +1,5 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { SafeAreaView, StatusBar } from "react-native";
-import SafeAreaAndroidStyles from "../GlobalStyles";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
@@ -36,54 +33,45 @@ const SettingsTabIcon = ({ color, size }) => {
 
 const BottomTabNavigation = () => {
   return (
-    <SafeAreaView style={SafeAreaAndroidStyles.AndroidSafeArea}>
-      <StatusBar />
-      <NavigationContainer>
-        <BottomTab.Navigator
-          tabBarOptions={{
-            activeTintColor: "white",
-            style: {
-              backgroundColor: "black"
-            },
-            showLabel: false
-          }}
-        >
-          <BottomTab.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{ tabBarIcon: HomeTabIcon }}
-          />
-          <BottomTab.Screen
-            name="Market"
-            component={MarketScreen}
-            options={{
-              tabBarIcon: MarketTabIcon
-            }}
-          />
-          <BottomTab.Screen
-            name="News"
-            component={NewsScreen}
-            options={{
-              tabBarIcon: NewsTabIcon
-            }}
-          />
-          <BottomTab.Screen
-            name="Portfolio"
-            component={PortfolioStackNavigator}
-            options={{
-              tabBarIcon: PortfolioTabIcon
-            }}
-          />
-          <BottomTab.Screen
-            name="Settings"
-            component={SettingsScreen}
-            options={{
-              tabBarIcon: SettingsTabIcon
-            }}
-          />
-        </BottomTab.Navigator>
-      </NavigationContainer>
-    </SafeAreaView>
+    <BottomTab.Navigator
+      tabBarOptions={{
+        showLabel: false
+      }}
+    >
+      <BottomTab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ tabBarIcon: HomeTabIcon }}
+      />
+      <BottomTab.Screen
+        name="Market"
+        component={MarketScreen}
+        options={{
+          tabBarIcon: MarketTabIcon
+        }}
+      />
+      <BottomTab.Screen
+        name="News"
+        component={NewsScreen}
+        options={{
+          tabBarIcon: NewsTabIcon
+        }}
+      />
+      <BottomTab.Screen
+        name="Portfolio"
+        component={PortfolioStackNavigator}
+        options={{
+          tabBarIcon: PortfolioTabIcon
+        }}
+      />
+      <BottomTab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          tabBarIcon: SettingsTabIcon
+        }}
+      />
+    </BottomTab.Navigator>
   );
 };
 
