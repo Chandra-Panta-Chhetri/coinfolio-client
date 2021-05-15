@@ -54,11 +54,11 @@ const NewsSummary = ({ navigation }) => {
     <View style={styles.container}>
       <HeadingWithSeeAll headingTitle="News" onSeeAllBtnPress={() => {}} />
       <FlatList
-        showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.newsContainer}
         data={dummyData}
         keyExtractor={(n) => n.title}
         renderItem={(props) => <NewsItem {...props} navigation={navigation} />}
+        scrollEnabled={false}
       />
     </View>
   );

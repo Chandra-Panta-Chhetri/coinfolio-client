@@ -75,13 +75,13 @@ const GainersLosers = ({ navigation }) => {
         onSeeAllBtnPress={() => {}}
       />
       <FlatList
-        showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.gainersLosersCards}
         data={dummyData}
         keyExtractor={(gl) => gl.ticker}
         renderItem={(props) => (
           <GainerLoser {...props} navigation={navigation} />
         )}
+        scrollEnabled={false}
       />
     </View>
   );
@@ -125,6 +125,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     marginLeft: 10
+  },
+  priceAndPercent: {
+    alignItems: "flex-end"
   }
 });
 
