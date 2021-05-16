@@ -75,7 +75,7 @@ const GainersLosers = ({ navigation }) => {
         onSeeAllBtnPress={() => {}}
       />
       <FlatList
-        contentContainerStyle={styles.gainersLosersCards}
+        style={styles.gainersLosersCards}
         data={dummyData}
         keyExtractor={(gl) => gl.ticker}
         renderItem={(props) => (

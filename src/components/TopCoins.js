@@ -65,7 +65,7 @@ const TopCoins = ({ navigation }) => {
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.topCoinCards}
+        style={styles.topCoinCards}
         data={dummyData}
         keyExtractor={(tm) => tm.ticker}
         renderItem={(props) => <TopCoin {...props} navigation={navigation} />}
