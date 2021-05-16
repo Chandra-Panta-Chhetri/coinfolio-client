@@ -21,6 +21,7 @@ export const DarkTheme = {
   ...NavigationDarkTheme,
   colors: {
     ...PaperDarkTheme.colors,
-    ...NavigationDarkTheme.colors
+    ...NavigationDarkTheme.colors,
+    text: "white"
   }
 };

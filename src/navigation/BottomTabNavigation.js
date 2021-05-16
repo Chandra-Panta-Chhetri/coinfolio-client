@@ -5,9 +5,9 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import HomeScreen from "../screens/HomeScreen";
 import MarketScreen from "../screens/MarketScreen";
-import PortfolioStackNavigator from "./PortfolioStackNavigator";
 import SettingsScreen from "../screens/SettingsScreen";
 import NewsScreen from "../screens/NewsScreen";
+import PortfolioScreen from "../screens/PortfolioScreen";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -41,7 +41,9 @@ const BottomTabNavigation = () => {
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
-        options={{ tabBarIcon: HomeTabIcon }}
+        options={({ route }) => ({
+          tabBarIcon: HomeTabIcon
+        })}
       />
       <BottomTab.Screen
         name="Market"
@@ -59,7 +61,7 @@ const BottomTabNavigation = () => {
       />
       <BottomTab.Screen
         name="Portfolio"
-        component={PortfolioStackNavigator}
+        component={PortfolioScreen}
         options={{
           tabBarIcon: PortfolioTabIcon
         }}

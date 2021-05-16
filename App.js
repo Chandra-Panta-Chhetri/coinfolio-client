@@ -1,5 +1,5 @@
 import React from "react";
-import BottomTabNavigation from "./src/navigation/BottomTabNavigation";
+import MainStackNavigator from "./src/navigation/MainStackNavigator";
 import { Provider as StoreProvider } from "react-redux";
 import { Provider as PaperProvider } from "react-native-paper";
 import { store } from "./src/redux/store.js";
@@ -15,7 +15,7 @@ const App = ({ isThemeDark }) => (
     <SafeAreaView style={SafeAreaAndroidStyles.AndroidSafeArea}>
       <StatusBar />
       <NavigationContainer theme={isThemeDark ? DarkTheme : DefaultTheme}>
-        <BottomTabNavigation />
+        <MainStackNavigator />
       </NavigationContainer>
     </SafeAreaView>
   </PaperProvider>
