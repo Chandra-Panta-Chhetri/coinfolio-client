@@ -11,25 +11,25 @@ import PortfolioScreen from "../screens/PortfolioScreen";
 
 const BottomTab = createBottomTabNavigator();
 
-const HomeTabIcon = ({ color, size }) => {
-  return <AntDesign name="home" size={size} color={color} />;
-};
+const HomeTabIcon = ({ color, size }) => (
+  <AntDesign name="home" size={size} color={color} />
+);
 
-const MarketTabIcon = ({ color, size }) => {
-  return <AntDesign name="barschart" size={size} color={color} />;
-};
+const MarketTabIcon = ({ color, size }) => (
+  <AntDesign name="barschart" size={size} color={color} />
+);
 
-const PortfolioTabIcon = ({ color, size }) => {
-  return <Feather name="pie-chart" size={size} color={color} />;
-};
+const PortfolioTabIcon = ({ color, size }) => (
+  <Feather name="pie-chart" size={size} color={color} />
+);
 
-const NewsTabIcon = ({ color, size }) => {
-  return <FontAwesome name="newspaper-o" size={size} color={color} />;
-};
+const NewsTabIcon = ({ color, size }) => (
+  <FontAwesome name="newspaper-o" size={size} color={color} />
+);
 
-const SettingsTabIcon = ({ color, size }) => {
-  return <AntDesign name="setting" size={size} color={color} />;
-};
+const SettingsTabIcon = ({ color, size }) => (
+  <AntDesign name="setting" size={size} color={color} />
+);
 
 const BottomTabNavigation = () => {
   return (
@@ -41,9 +41,9 @@ const BottomTabNavigation = () => {
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
-        options={({ route }) => ({
+        options={{
           tabBarIcon: HomeTabIcon
-        })}
+        }}
       />
       <BottomTab.Screen
         name="Market"

@@ -31,8 +31,10 @@ const shortcuts = [
 ];
 
 const ShortcutIcon = ({ item, navigation }) => {
+  const navigateToScreen = () => navigation.navigate(item.navigateTo);
+
   return (
-    <TouchableRipple onPress={() => navigation.navigate(item.navigateTo)}>
+    <TouchableRipple onPress={navigateToScreen}>
       <View style={styles.shortcutIconItem}>
         <View style={styles.iconButton}>
           <IconButton icon={item.iconName} color={item.iconColor} />

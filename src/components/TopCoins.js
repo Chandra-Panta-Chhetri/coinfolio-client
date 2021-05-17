@@ -38,7 +38,7 @@ const dummyData = [
 ];
 
 const TopCoin = ({ item, navigation }) => (
-  <TouchableOpacity activeOpacity={0.7}>
+  <TouchableOpacity activeOpacity={0.6}>
     <Card style={styles.topCoinCard}>
       <Card.Content>
         <Avatar.Image
@@ -59,9 +59,14 @@ const TopCoin = ({ item, navigation }) => (
 );
 
 const TopCoins = ({ navigation }) => {
+  const navigateToMarketScreen = () => navigation.navigate("Market");
+
   return (
     <View style={styles.container}>
-      <HeadingWithSeeAll headingTitle="Top Coins" onSeeAllBtnPress={() => {}} />
+      <HeadingWithSeeAll
+        headingTitle="Top Coins"
+        onSeeAllBtnPress={navigateToMarketScreen}
+      />
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}

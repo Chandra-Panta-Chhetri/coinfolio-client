@@ -36,7 +36,7 @@ const dummyData = [
 ];
 
 const GainerLoser = ({ item, navigation }) => (
-  <TouchableOpacity activeOpacity={0.7}>
+  <TouchableOpacity activeOpacity={0.6}>
     <Card style={styles.gainerLoserCard}>
       <Card.Content style={styles.gainerLoserCardBody}>
         <Avatar.Image
@@ -68,11 +68,13 @@ const GainerLoser = ({ item, navigation }) => (
 );
 
 const GainersLosers = ({ navigation }) => {
+  const navigateToMarketScreen = () => navigation.navigate("Market");
+
   return (
     <View style={styles.container}>
       <HeadingWithSeeAll
         headingTitle="Gainers & Losers"
-        onSeeAllBtnPress={() => {}}
+        onSeeAllBtnPress={navigateToMarketScreen}
       />
       <FlatList
         style={styles.gainersLosersCards}

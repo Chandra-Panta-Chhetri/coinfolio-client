@@ -28,7 +28,7 @@ const dummyData = [
   }
 ];
 
-const NewsItem = ({ item, navigation }) => (
+const NewsItem = ({ item }) => (
   <TouchableOpacity activeOpacity={0.6}>
     <Card style={styles.newsCard}>
       <Card.Content style={styles.newsCardBody}>
@@ -50,14 +50,19 @@ const NewsItem = ({ item, navigation }) => (
 );
 
 const NewsSummary = ({ navigation }) => {
+  const navigateToNewsScreen = () => navigation.navigate("News");
+
   return (
     <View style={styles.container}>
-      <HeadingWithSeeAll headingTitle="News" onSeeAllBtnPress={() => {}} />
+      <HeadingWithSeeAll
+        headingTitle="News"
+        onSeeAllBtnPress={navigateToNewsScreen}
+      />
       <FlatList
         style={styles.newsContainer}
         data={dummyData}
         keyExtractor={(n) => n.title}
-        renderItem={(props) => <NewsItem {...props} navigation={navigation} />}
+        renderItem={(props) => <NewsItem {...props} />}
         scrollEnabled={false}
         listKey="NewsSummaryList"
       />
@@ -88,7 +93,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   newsInfo: {
-    flex: 1
+    flex: 1,
+    marginRight: 5
   },
   newsImagePreview: {
     width: 90,
