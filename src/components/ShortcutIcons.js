@@ -7,22 +7,27 @@ const shortcuts = [
   {
     label: "Price Alerts",
     iconName: "bell-alert",
-    navigateTo: "News",
-    iconColor: "blue"
+    navigateTo: "PriceAlert",
+    iconColor: "rgb(10, 132, 255)"
   },
   {
     label: "Compare",
     iconName: "compare",
-    navigateTo: "News",
-    iconColor: "blue"
+    navigateTo: "Compare",
+    iconColor: "rgb(10, 132, 255)"
   },
   {
     label: "Converter",
     iconName: "calculator",
-    navigateTo: "News",
-    iconColor: "blue"
+    navigateTo: "Converter",
+    iconColor: "rgb(10, 132, 255)"
   },
-  { label: "Watchlist", iconName: "eye", navigateTo: "News", iconColor: "blue" }
+  {
+    label: "Watchlist",
+    iconName: "eye",
+    navigateTo: "Market",
+    iconColor: "rgb(10, 132, 255)"
+  }
 ];
 
 const ShortcutIcon = ({ item, navigation }) => {
