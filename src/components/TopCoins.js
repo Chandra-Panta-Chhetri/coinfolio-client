@@ -3,39 +3,12 @@ import { StyleSheet, View, TouchableOpacity, FlatList } from "react-native";
 import { Card, Paragraph, Avatar } from "react-native-paper";
 import HeadingWithSeeAll from "./HeadingWithSeeAll";
 import { withNavigation } from "@react-navigation/compat";
-
-const dummyData = [
-  {
-    ticker: "BTC",
-    price: 69230.24,
-    percentChange: -4.25,
-    image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-  },
-  {
-    ticker: "LTC",
-    price: 400,
-    percentChange: +7.0,
-    image: "https://s2.coinmarketcap.com/static/img/coins/64x64/2.png"
-  },
-  {
-    ticker: "ETH",
-    price: 4800.24,
-    percentChange: -2.25,
-    image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png"
-  },
-  {
-    ticker: "BNB",
-    price: 800.24,
-    percentChange: -10.25,
-    image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png"
-  },
-  {
-    ticker: "USDT",
-    price: 1,
-    percentChange: 3.25,
-    image: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
-  }
-];
+import { connect } from "react-redux";
+import {
+  selectTopCoins,
+  selectIsLoadingSummary
+} from "../redux/summary/summary.selectors";
+import { startTopCoinsFetch } from "../redux/summary/summary.actions";
 
 const TopCoin = ({ item, navigation }) => (
   <TouchableOpacity activeOpacity={0.6}>
@@ -58,8 +31,12 @@ const TopCoin = ({ item, navigation }) => (
   </TouchableOpacity>
 );
 
-const TopCoins = ({ navigation }) => {
+const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
   const navigateToMarketScreen = () => navigation.navigate("Market");
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
@@ -71,7 +48,7 @@ const TopCoins = ({ navigation }) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         style={styles.topCoinCards}
-        data={dummyData}
+        data={topCoins}
         keyExtractor={(tm) => tm.ticker}
         renderItem={(props) => <TopCoin {...props} navigation={navigation} />}
         listKey="TopCoinsList"
@@ -107,4 +84,16 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withNavigation(TopCoins);
+const mapStateToProps = (state) => ({
+  topCoins: selectTopCoins(state),
+  isLoading: selectIsLoadingSummary(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchTopCoins: () => dispatch(startTopCoinsFetch())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withNavigation(TopCoins));

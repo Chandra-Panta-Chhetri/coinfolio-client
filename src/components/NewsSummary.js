@@ -3,30 +3,12 @@ import { StyleSheet, View, TouchableOpacity, FlatList } from "react-native";
 import { Card, Paragraph, Caption } from "react-native-paper";
 import HeadingWithSeeAll from "./HeadingWithSeeAll";
 import { withNavigation } from "@react-navigation/compat";
-
-const dummyData = [
-  {
-    title:
-      "Dogecoin falls 15% to below 40 cents on Elon Musk’s crypto about-face",
-    publishedTime: "3h ago",
-    source: "CBC News",
-    imagePreview: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-  },
-  {
-    title: "Ethereum’s Ratio Overtakes Resistance",
-    publishedTime: "10h ago",
-    source: "Trustnodes",
-    imagePreview:
-      "https://www.trustnodes.com/wp-content/uploads/2021/05/xethereum-ratio-bitcoin-price-may-14-2021.png.pagespeed.ic.e_g1OTbZRR.webp"
-  },
-  {
-    title: "Will Musk Buy ETH?",
-    publishedTime: "1h ago",
-    source: "Trustnodes",
-    imagePreview:
-      "https://www.trustnodes.com/wp-content/uploads/2021/05/xelon-musk.jpg.pagespeed.ic.jLiFCP5v7B.webp"
-  }
-];
+import { connect } from "react-redux";
+import {
+  selectNewsSummary,
+  selectIsLoadingSummary
+} from "../redux/summary/summary.selectors";
+import { startNewsSummaryFetch } from "../redux/summary/summary.actions";
 
 const NewsItem = ({ item }) => (
   <TouchableOpacity activeOpacity={0.6}>
@@ -49,8 +31,12 @@ const NewsItem = ({ item }) => (
   </TouchableOpacity>
 );
 
-const NewsSummary = ({ navigation }) => {
+const NewsSummary = ({ navigation, news, isLoading, fetchNewsSummary }) => {
   const navigateToNewsScreen = () => navigation.navigate("News");
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
@@ -60,7 +46,7 @@ const NewsSummary = ({ navigation }) => {
       />
       <FlatList
         style={styles.newsContainer}
-        data={dummyData}
+        data={news}
         keyExtractor={(n) => n.title}
         renderItem={(props) => <NewsItem {...props} />}
         scrollEnabled={false}
@@ -102,4 +88,16 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withNavigation(NewsSummary);
+const mapStateToProps = (state) => ({
+  news: selectNewsSummary(state),
+  isLoading: selectIsLoadingSummary(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchNewsSummary: () => dispatch(startNewsSummaryFetch())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withNavigation(NewsSummary));

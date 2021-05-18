@@ -1,4 +1,5 @@
 import USER_ACTION_TYPES from "../user/user.action.types";
+import SUMMARY_ACTION_TYPES from "../summary/summary.action.types";
 import { all, call, put, takeEvery } from "redux-saga/effects";
 import {
   addErrorNotification,
@@ -18,7 +19,11 @@ function* watchErrorNotifications() {
     [
       USER_ACTION_TYPES.SIGN_UP_FAIL,
       USER_ACTION_TYPES.LOG_OUT_FAIL,
-      USER_ACTION_TYPES.SIGN_IN_FAIL
+      USER_ACTION_TYPES.SIGN_IN_FAIL,
+      SUMMARY_ACTION_TYPES.TOP_COINS_FETCH_FAIL,
+      SUMMARY_ACTION_TYPES.NEWS_SUMMARY_FETCH_FAIL,
+      SUMMARY_ACTION_TYPES.GAINERS_LOSERS_FETCH_FAIL,
+      SUMMARY_ACTION_TYPES.GLOBAL_SUMMARY_FETCH_FAIL
     ],
     showErrorNotification
   );
