@@ -9,6 +9,7 @@ import { SafeAreaView, StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { connect } from "react-redux";
 import { selectIsThemeDark } from "./src/redux/preferences/preferences.selectors";
+import NotificationSnackbar from "./src/components/NotificationSnackbar";
 
 const App = ({ isThemeDark }) => (
   <PaperProvider theme={isThemeDark ? DarkTheme : DefaultTheme}>
@@ -17,6 +18,7 @@ const App = ({ isThemeDark }) => (
       <NavigationContainer theme={isThemeDark ? DarkTheme : DefaultTheme}>
         <MainStackNavigator />
       </NavigationContainer>
+      <NotificationSnackbar />
     </SafeAreaView>
   </PaperProvider>
 );

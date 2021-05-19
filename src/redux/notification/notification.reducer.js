@@ -1,7 +1,12 @@
 import NOTIFICATION_ACTION_TYPES from "./notification.action.types";
 
 const INITIAL_STATE = {
-  notifications: []
+  notifications: [
+    {
+      message: "Something long long long long long long long",
+      backgroundColor: "#f0ad4e"
+    }
+  ]
 };
 
 const notificationReducer = (prevState = INITIAL_STATE, action) => {
@@ -13,6 +18,11 @@ const notificationReducer = (prevState = INITIAL_STATE, action) => {
       return {
         ...prevState,
         notifications: [action.payload]
+      };
+    case NOTIFICATION_ACTION_TYPES.CLEAR_NOTIFICATIONS:
+      return {
+        ...prevState,
+        notifications: []
       };
     default:
       return prevState;
