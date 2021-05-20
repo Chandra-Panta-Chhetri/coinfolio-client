@@ -38,7 +38,7 @@ const GainersLosers = ({
         scrollEnabled={false}
         listKey="GainersLosersList"
       />
-      {isLoading && gainersLosers.length !== 0 && (
+      {isLoading && gainersLosers.length === 0 && (
         <FlatList
           style={styles.gainersLosersCards}
           data={DUMMY_SKELETON_ARRAY}

@@ -1,38 +1,38 @@
 import SUMMARY_ACTION_TYPES from "./summary.action.types";
 
+// {
+//   ticker: "BTC",
+//   price: 69230.24,
+//   percentChange: -4.25,
+//   image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+// },
+// {
+//   ticker: "LTC",
+//   price: 400,
+//   percentChange: +7.0,
+//   image: "https://s2.coinmarketcap.com/static/img/coins/64x64/2.png"
+// },
+// {
+//   ticker: "ETH",
+//   price: 4800.24,
+//   percentChange: -2.25,
+//   image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png"
+// },
+// {
+//   ticker: "BNB",
+//   price: 800.24,
+//   percentChange: -10.25,
+//   image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png"
+// },
+// {
+//   ticker: "USDT",
+//   price: 1,
+//   percentChange: 3.25,
+//   image: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
+// }
+
 const INITIAL_STATE = {
-  topCoins: [
-    {
-      ticker: "BTC",
-      price: 69230.24,
-      percentChange: -4.25,
-      image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-    },
-    {
-      ticker: "LTC",
-      price: 400,
-      percentChange: +7.0,
-      image: "https://s2.coinmarketcap.com/static/img/coins/64x64/2.png"
-    },
-    {
-      ticker: "ETH",
-      price: 4800.24,
-      percentChange: -2.25,
-      image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png"
-    },
-    {
-      ticker: "BNB",
-      price: 800.24,
-      percentChange: -10.25,
-      image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png"
-    },
-    {
-      ticker: "USDT",
-      price: 1,
-      percentChange: 3.25,
-      image: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
-    }
-  ],
+  topCoins: [],
   gainersLosers: [
     {
       fullName: "Bitcoin",
@@ -92,7 +92,7 @@ const INITIAL_STATE = {
     btcDominance: 42.4,
     ethDominance: 19.4
   },
-  numLoadingReq: 0
+  numLoadingReq: 1
 };
 
 const notificationReducer = (prevState = INITIAL_STATE, action) => {

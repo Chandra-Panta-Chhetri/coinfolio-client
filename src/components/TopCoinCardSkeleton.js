@@ -1,21 +1,47 @@
 import React from "react";
-import SkeletonContent from "react-native-skeleton-placeholder";
+import SkeletonPlaceholder from "react-native-skeleton-placeholder";
+import { Card } from "react-native-paper";
+import { StyleSheet } from "react-native";
 
-// highlightColor="#2b2b2b" backgroundColor="#4a4949"
 const TopCoinCardSkeleton = () => {
   return (
-    <SkeletonContent
-      containerStyle={{ flex: 1, width: 300 }}
-      animationDirection="horizontalLeft"
-      layout={[
-        // long line
-        { width: 220, height: 20, marginBottom: 6, key: "smt" },
-        // short line
-        { width: 180, height: 20, marginBottom: 6, key: "smt2" }
-      ]}
-      isLoading
-    />
+    <Card style={styles.topCoinCard}>
+      <Card.Content>
+        <SkeletonPlaceholder
+          highlightColor="rgb(10, 132, 255)"
+          backgroundColor="gainsboro"
+        >
+          <SkeletonPlaceholder.Item borderRadius={30} width={30} height={30} />
+          <SkeletonPlaceholder.Item
+            borderRadius={13}
+            width="50%"
+            height={10}
+            marginTop={10}
+          />
+          <SkeletonPlaceholder.Item
+            borderRadius={13}
+            width="100%"
+            height={10}
+            marginTop={10}
+          />
+          <SkeletonPlaceholder.Item
+            borderRadius={13}
+            width="100%"
+            height={10}
+            marginTop={10}
+          />
+        </SkeletonPlaceholder>
+      </Card.Content>
+    </Card>
   );
 };
+
+const styles = StyleSheet.create({
+  topCoinCard: {
+    marginRight: 10,
+    borderRadius: 13,
+    width: 125
+  }
+});
 
 export default TopCoinCardSkeleton;

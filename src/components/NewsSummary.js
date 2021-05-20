@@ -31,7 +31,7 @@ const NewsSummary = ({ navigation, news, isLoading, fetchNewsSummary }) => {
         scrollEnabled={false}
         listKey="NewsSummaryList"
       />
-      {isLoading && news.length !== 0 && (
+      {isLoading && news.length === 0 && (
         <FlatList
           style={styles.newsContainer}
           data={DUMMY_SKELETON_ARRAY}

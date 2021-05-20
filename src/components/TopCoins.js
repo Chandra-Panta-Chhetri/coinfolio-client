@@ -34,7 +34,7 @@ const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
         )}
         listKey="TopCoinsList"
       />
-      {isLoading && topCoins.length !== 0 && (
+      {isLoading && topCoins.length === 0 && (
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
