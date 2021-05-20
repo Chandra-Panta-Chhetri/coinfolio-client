@@ -1,6 +1,5 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity, FlatList } from "react-native";
-import { Card, Paragraph, Caption } from "react-native-paper";
+import { StyleSheet, View, FlatList } from "react-native";
 import HeadingWithSeeAll from "./HeadingWithSeeAll";
 import { withNavigation } from "@react-navigation/compat";
 import { connect } from "react-redux";
@@ -9,34 +8,14 @@ import {
   selectIsLoadingSummary
 } from "../redux/summary/summary.selectors";
 import { startNewsSummaryFetch } from "../redux/summary/summary.actions";
+import NewsCard from "./NewsCard";
+import NewsCardSkeleton from "./NewsCardSkeleton";
 
-const NewsItem = ({ item }) => (
-  <TouchableOpacity activeOpacity={0.6}>
-    <Card style={styles.newsCard}>
-      <Card.Content style={styles.newsCardBody}>
-        <View style={styles.newsInfo}>
-          <Paragraph style={styles.newsTitle}>{item.title}</Paragraph>
-          <Caption style={styles.newsSubtitle}>
-            {item.publishedTime} | {item.source}
-          </Caption>
-        </View>
-        <Card.Cover
-          style={styles.newsImagePreview}
-          source={{
-            uri: item.imagePreview
-          }}
-        />
-      </Card.Content>
-    </Card>
-  </TouchableOpacity>
-);
+const NUM_SKELETON_TO_SHOW = 3;
+const DUMMY_SKELETON_ARRAY = Array(NUM_SKELETON_TO_SHOW).fill("1");
 
 const NewsSummary = ({ navigation, news, isLoading, fetchNewsSummary }) => {
   const navigateToNewsScreen = () => navigation.navigate("News");
-
-  if (isLoading) {
-    return null;
-  }
 
   return (
     <View style={styles.container}>
@@ -48,10 +27,20 @@ const NewsSummary = ({ navigation, news, isLoading, fetchNewsSummary }) => {
         style={styles.newsContainer}
         data={news}
         keyExtractor={(n) => n.title}
-        renderItem={(props) => <NewsItem {...props} />}
+        renderItem={(props) => <NewsCard {...props} />}
         scrollEnabled={false}
         listKey="NewsSummaryList"
       />
+      {isLoading && news.length !== 0 && (
+        <FlatList
+          style={styles.newsContainer}
+          data={DUMMY_SKELETON_ARRAY}
+          keyExtractor={(s, index) => s + index}
+          renderItem={() => <NewsCardSkeleton />}
+          scrollEnabled={false}
+          listKey="NewsSummarySkeletonList"
+        />
+      )}
     </View>
   );
 };
@@ -62,29 +51,6 @@ const styles = StyleSheet.create({
   },
   newsContainer: {
     marginTop: 10
-  },
-  newsCardBody: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  newsCard: {
-    marginBottom: 10,
-    borderRadius: 13
-  },
-  newsTitle: {
-    fontSize: 15
-  },
-  newsSubtitle: {
-    color: "darkgray",
-    fontWeight: "bold"
-  },
-  newsInfo: {
-    flex: 1,
-    marginRight: 5
-  },
-  newsImagePreview: {
-    width: 90,
-    height: 90
   }
 });
 

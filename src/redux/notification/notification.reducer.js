@@ -1,12 +1,7 @@
 import NOTIFICATION_ACTION_TYPES from "./notification.action.types";
 
 const INITIAL_STATE = {
-  notifications: [
-    {
-      message: "Something long long long long long long long",
-      backgroundColor: "#f0ad4e"
-    }
-  ]
+  notifications: []
 };
 
 const notificationReducer = (prevState = INITIAL_STATE, action) => {

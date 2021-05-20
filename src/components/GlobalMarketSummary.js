@@ -18,7 +18,7 @@ const GlobalMarketSummary = ({
   }
 
   return (
-    <Card style={styles.container}>
+    <Card>
       <Card.Content>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View style={styles.summaryItem}>
@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
     flexDirection: "row"
   },
-  container: {},
   summaryLabel: {
     fontWeight: "bold"
   },

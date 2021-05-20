@@ -1,6 +1,5 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity, FlatList } from "react-native";
-import { Card, Paragraph, Avatar } from "react-native-paper";
+import { StyleSheet, View, FlatList } from "react-native";
 import HeadingWithSeeAll from "./HeadingWithSeeAll";
 import { withNavigation } from "@react-navigation/compat";
 import { connect } from "react-redux";
@@ -9,34 +8,14 @@ import {
   selectIsLoadingSummary
 } from "../redux/summary/summary.selectors";
 import { startTopCoinsFetch } from "../redux/summary/summary.actions";
+import TopCoinCard from "./TopCoinCard";
+import TopCoinSkeletonCard from "./TopCoinCardSkeleton";
 
-const TopCoin = ({ item, navigation }) => (
-  <TouchableOpacity activeOpacity={0.6}>
-    <Card style={styles.topCoinCard}>
-      <Card.Content>
-        <Avatar.Image
-          size={30}
-          source={{
-            uri: item.image
-          }}
-        />
-        <Paragraph style={styles.topCoinName}>{item.ticker}</Paragraph>
-        <Paragraph style={styles.topCoinPrice}>${item.price}</Paragraph>
-        <Paragraph style={styles.topCoinPercent}>
-          {item.percentChange > 0 && "+"}
-          {item.percentChange}%
-        </Paragraph>
-      </Card.Content>
-    </Card>
-  </TouchableOpacity>
-);
+const NUM_SKELETON_TO_SHOW = 10;
+const DUMMY_SKELETON_ARRAY = Array(NUM_SKELETON_TO_SHOW).fill("1");
 
 const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
   const navigateToMarketScreen = () => navigation.navigate("Market");
-
-  if (isLoading) {
-    return null;
-  }
 
   return (
     <View style={styles.container}>
@@ -50,9 +29,22 @@ const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
         style={styles.topCoinCards}
         data={topCoins}
         keyExtractor={(tm) => tm.ticker}
-        renderItem={(props) => <TopCoin {...props} navigation={navigation} />}
+        renderItem={(props) => (
+          <TopCoinCard {...props} navigation={navigation} />
+        )}
         listKey="TopCoinsList"
       />
+      {isLoading && topCoins.length !== 0 && (
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.topCoinCards}
+          data={DUMMY_SKELETON_ARRAY}
+          keyExtractor={(s, index) => s + index}
+          renderItem={() => <TopCoinSkeletonCard />}
+          listKey="TopCoinsSkeletonList"
+        />
+      )}
     </View>
   );
 };
@@ -63,24 +55,6 @@ const styles = StyleSheet.create({
   },
   topCoinCards: {
     marginTop: 10
-  },
-  topCoinCard: {
-    marginRight: 10,
-    borderRadius: 13,
-    width: 125
-  },
-  topCoinName: {
-    fontWeight: "bold",
-    marginTop: 10
-  },
-  topCoinPrice: {
-    color: "darkgray"
-  },
-  topCoinPercent: {
-    color: "red",
-    fontWeight: "bold",
-    fontSize: 17,
-    marginTop: 12
   }
 });
 
