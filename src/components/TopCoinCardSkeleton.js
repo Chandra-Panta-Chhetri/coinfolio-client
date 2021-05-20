@@ -1,36 +1,28 @@
 import React from "react";
-import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import { Card } from "react-native-paper";
 import { StyleSheet } from "react-native";
+import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
+import { LinearGradient } from "expo-linear-gradient";
+
+const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
 const TopCoinCardSkeleton = () => {
   return (
     <Card style={styles.topCoinCard}>
       <Card.Content>
-        <SkeletonPlaceholder
-          highlightColor="rgb(10, 132, 255)"
-          backgroundColor="gainsboro"
-        >
-          <SkeletonPlaceholder.Item borderRadius={30} width={30} height={30} />
-          <SkeletonPlaceholder.Item
-            borderRadius={13}
-            width="50%"
-            height={10}
-            marginTop={10}
-          />
-          <SkeletonPlaceholder.Item
-            borderRadius={13}
-            width="100%"
-            height={10}
-            marginTop={10}
-          />
-          <SkeletonPlaceholder.Item
-            borderRadius={13}
-            width="100%"
-            height={10}
-            marginTop={10}
-          />
-        </SkeletonPlaceholder>
+        <ShimmerPlaceholder
+          style={{ borderRadius: 30, width: 30, height: 30 }}
+          shimmerColors={["gainsboro", "#f8f8f8", "gainsboro"]}
+        />
+        <ShimmerPlaceholder
+          style={{ borderRadius: 13, width: 50, height: 10, marginTop: 10 }}
+        />
+        <ShimmerPlaceholder
+          style={{ borderRadius: 13, width: 100, height: 10, marginTop: 10 }}
+        />
+        <ShimmerPlaceholder
+          style={{ borderRadius: 13, width: 100, height: 10, marginTop: 10 }}
+        />
       </Card.Content>
     </Card>
   );
