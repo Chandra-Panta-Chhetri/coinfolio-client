@@ -9,19 +9,21 @@ import {
 import { startGlobalSummaryFetch } from "../redux/summary/summary.actions";
 import Skeleton from "./Skeleton";
 
+const GlobalMarketSummarySkeleton = () => (
+  <Card>
+    <Card.Content style={styles.rowFlexbox}>
+      <Skeleton style={styles.globalSkeleton} />
+    </Card.Content>
+  </Card>
+);
+
 const GlobalMarketSummary = ({
   globalSummary,
   fetchGlobalSummary,
   isLoading
 }) => {
-  if (isLoading) {
-    return (
-      <Card>
-        <Card.Content style={{ flexDirection: "row" }}>
-          <Skeleton style={styles.globalSkeleton} />
-        </Card.Content>
-      </Card>
-    );
+  if (isLoading && globalSummary === null) {
+    return <GlobalMarketSummarySkeleton />;
   }
 
   return (
@@ -71,8 +73,11 @@ const styles = StyleSheet.create({
   },
   globalSkeleton: {
     height: 20,
-    borderRadius: 13,
+    borderRadius: 6,
     flex: 1
+  },
+  rowFlexbox: {
+    flexDirection: "row"
   }
 });
 

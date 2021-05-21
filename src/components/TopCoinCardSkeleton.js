@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
     width: 125
   },
   iconSkeleton: { borderRadius: 30, width: 30, height: 30 },
-  symbolSkeleton: { borderRadius: 13, width: 50, height: 10, marginTop: 10 },
-  priceSkeleton: { borderRadius: 13, width: 100, height: 10, marginTop: 10 }
+  symbolSkeleton: { borderRadius: 6, width: 50, height: 10, marginTop: 10 },
+  priceSkeleton: { borderRadius: 6, width: 100, height: 10, marginTop: 10 }
 });
 
 export default TopCoinCardSkeleton;

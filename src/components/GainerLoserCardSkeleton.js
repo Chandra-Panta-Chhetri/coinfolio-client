@@ -39,12 +39,12 @@ const styles = StyleSheet.create({
   },
   fullNamePriceSkeleton: {
     height: 15,
-    borderRadius: 13,
+    borderRadius: 6,
     flex: 1
   },
   symbolPercentSkeleton: {
     height: 15,
-    borderRadius: 13,
+    borderRadius: 6,
     marginTop: 10,
     flex: 1
   },

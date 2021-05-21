@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   newsInfo: {
     flex: 1,
-    marginRight: 5
+    marginRight: 15
   },
   newsImagePreview: {
     width: 90,
