@@ -7,6 +7,7 @@ import {
   selectIsLoadingSummary
 } from "../redux/summary/summary.selectors";
 import { startGlobalSummaryFetch } from "../redux/summary/summary.actions";
+import Skeleton from "./Skeleton";
 
 const GlobalMarketSummary = ({
   globalSummary,
@@ -14,7 +15,13 @@ const GlobalMarketSummary = ({
   isLoading
 }) => {
   if (isLoading) {
-    return null;
+    return (
+      <Card>
+        <Card.Content style={{ flexDirection: "row" }}>
+          <Skeleton style={styles.globalSkeleton} />
+        </Card.Content>
+      </Card>
+    );
   }
 
   return (
@@ -61,6 +68,11 @@ const styles = StyleSheet.create({
   },
   summaryValue: {
     color: "darkgray"
+  },
+  globalSkeleton: {
+    height: 20,
+    borderRadius: 13,
+    flex: 1
   }
 });
 
