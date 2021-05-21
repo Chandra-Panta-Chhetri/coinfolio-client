@@ -31,38 +31,38 @@ import SUMMARY_ACTION_TYPES from "./summary.action.types";
 //   image: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
 // }
 
+// {
+//   fullName: "Bitcoin",
+//   ticker: "BTC",
+//   price: 69230.24,
+//   percentChange: 4.25,
+//   image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+// },
+// {
+//   fullName: "Ethereum",
+//   ticker: "ETH",
+//   price: 4800.24,
+//   percentChange: -2.25,
+//   image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png"
+// },
+// {
+//   fullName: "Litecoin",
+//   ticker: "LTC",
+//   price: 400,
+//   percentChange: 7,
+//   image: "https://s2.coinmarketcap.com/static/img/coins/64x64/2.png"
+// },
+// {
+//   fullName: "Binance Coin",
+//   ticker: "BNB",
+//   price: 800.24,
+//   percentChange: -10.25,
+//   image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png"
+// }
+
 const INITIAL_STATE = {
   topCoins: [],
-  gainersLosers: [
-    {
-      fullName: "Bitcoin",
-      ticker: "BTC",
-      price: 69230.24,
-      percentChange: 4.25,
-      image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-    },
-    {
-      fullName: "Ethereum",
-      ticker: "ETH",
-      price: 4800.24,
-      percentChange: -2.25,
-      image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png"
-    },
-    {
-      fullName: "Litecoin",
-      ticker: "LTC",
-      price: 400,
-      percentChange: 7,
-      image: "https://s2.coinmarketcap.com/static/img/coins/64x64/2.png"
-    },
-    {
-      fullName: "Binance Coin",
-      ticker: "BNB",
-      price: 800.24,
-      percentChange: -10.25,
-      image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png"
-    }
-  ],
+  gainersLosers: [],
   news: [
     {
       title:
