@@ -1,0 +1,73 @@
+import SUMMARY_ACTION_TYPES from "./summary.action.types";
+
+export const startTopCoinsFetch = () => ({
+  type: SUMMARY_ACTION_TYPES.START_TOP_COINS_FETCH
+});
+
+export const topCoinsFetchSuccess = (topCoins) => ({
+  type: SUMMARY_ACTION_TYPES.TOP_COINS_FETCH_SUCCESS,
+  payload: {
+    topCoins
+  }
+});
+
+export const topCoinsFetchFail = (errorMsg) => ({
+  type: SUMMARY_ACTION_TYPES.TOP_COINS_FETCH_FAIL,
+  payload: {
+    errorMsg
+  }
+});
+
+export const startGainersLosersFetch = () => ({
+  type: SUMMARY_ACTION_TYPES.START_GAINERS_LOSERS_FETCH
+});
+
+export const gainersLosersFetchSuccess = (gainersLosers) => ({
+  type: SUMMARY_ACTION_TYPES.GAINERS_LOSERS_FETCH_SUCCESS,
+  payload: {
+    gainersLosers
+  }
+});
+
+export const gainersLosersFetchFail = (errorMsg) => ({
+  type: SUMMARY_ACTION_TYPES.GAINERS_LOSERS_FETCH_FAIL,
+  payload: {
+    errorMsg
+  }
+});
+
+export const startNewsSummaryFetch = () => ({
+  type: SUMMARY_ACTION_TYPES.START_NEWS_SUMMARY_FETCH
+});
+
+export const newsSummaryFetchSuccess = (news) => ({
+  type: SUMMARY_ACTION_TYPES.NEWS_SUMMARY_FETCH_SUCCESS,
+  payload: {
+    news
+  }
+});
+
+export const newsSummaryFetchFail = (errorMsg) => ({
+  type: SUMMARY_ACTION_TYPES.NEWS_SUMMARY_FETCH_FAIL,
+  payload: {
+    errorMsg
+  }
+});
+
+export const startGlobalSummaryFetch = () => ({
+  type: SUMMARY_ACTION_TYPES.START_GLOBAL_SUMMARY_FETCH
+});
+
+export const globalSummaryFetchSuccess = (globalSummary) => ({
+  type: SUMMARY_ACTION_TYPES.GLOBAL_SUMMARY_FETCH_SUCCESS,
+  payload: {
+    globalSummary
+  }
+});
+
+export const globalSummaryFetchFail = (errorMsg) => ({
+  type: SUMMARY_ACTION_TYPES.GLOBAL_SUMMARY_FETCH_FAIL,
+  payload: {
+    errorMsg
+  }
+});

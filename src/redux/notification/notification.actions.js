@@ -31,3 +31,7 @@ export const addWarningNotification = (message) => ({
     backgroundColor: "#f0ad4e"
   }
 });
+
+export const clearNotifications = () => ({
+  type: NOTIFICATION_ACTION_TYPES.CLEAR_NOTIFICATIONS
+});

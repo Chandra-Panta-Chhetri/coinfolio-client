@@ -14,6 +14,11 @@ const notificationReducer = (prevState = INITIAL_STATE, action) => {
         ...prevState,
         notifications: [action.payload]
       };
+    case NOTIFICATION_ACTION_TYPES.CLEAR_NOTIFICATIONS:
+      return {
+        ...prevState,
+        notifications: []
+      };
     default:
       return prevState;
   }
