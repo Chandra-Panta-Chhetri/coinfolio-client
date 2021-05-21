@@ -25,7 +25,7 @@ export const DarkTheme = {
     ...PaperDarkTheme.colors,
     ...NavigationDarkTheme.colors,
     text: "white",
-    primaryShimmer: "gainsboro",
-    secondaryShimmer: "#f8f8f8"
+    primaryShimmer: "#7d7d7d",
+    secondaryShimmer: "gainsboro"
   }
 };
