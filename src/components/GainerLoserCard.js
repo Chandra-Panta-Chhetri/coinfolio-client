@@ -1,10 +1,14 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Card, Paragraph, Avatar } from "react-native-paper";
+import TouchableNativeOpacity from "./TouchableNativeOpacity";
 
 const GainerLoserCard = ({ item, navigation }) => {
   return (
-    <TouchableOpacity activeOpacity={0.6}>
+    <TouchableNativeOpacity
+      activeOpacity={0.6}
+      viewContainerStyle={styles.androidContainer}
+    >
       <Card style={styles.gainerLoserCard}>
         <Card.Content style={styles.gainerLoserCardBody}>
           <Avatar.Image
@@ -34,14 +38,16 @@ const GainerLoserCard = ({ item, navigation }) => {
           </View>
         </Card.Content>
       </Card>
-    </TouchableOpacity>
+    </TouchableNativeOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   gainerLoserCard: {
-    marginBottom: 10,
     borderRadius: 13
+  },
+  androidContainer: {
+    marginBottom: 10
   },
   gainerLoserCardBody: {
     flexDirection: "row",
