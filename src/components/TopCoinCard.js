@@ -1,10 +1,14 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet } from "react-native";
 import { Card, Paragraph, Avatar } from "react-native-paper";
+import TouchableNativeOpacity from "./TouchableNativeOpacity";
 
 const TopCoinCard = ({ item, navigation }) => {
   return (
-    <TouchableOpacity activeOpacity={0.6}>
+    <TouchableNativeOpacity
+      activeOpacity={0.6}
+      viewContainerStyle={styles.androidContainer}
+    >
       <Card style={styles.topCoinCard}>
         <Card.Content>
           <Avatar.Image
@@ -21,13 +25,12 @@ const TopCoinCard = ({ item, navigation }) => {
           </Paragraph>
         </Card.Content>
       </Card>
-    </TouchableOpacity>
+    </TouchableNativeOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   topCoinCard: {
-    marginRight: 10,
     borderRadius: 13,
     width: 125
   },
@@ -43,6 +46,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 17,
     marginTop: 12
+  },
+  androidContainer: {
+    marginRight: 10
   }
 });
 
