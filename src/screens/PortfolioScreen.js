@@ -1,16 +1,15 @@
 import React from "react";
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Image, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../redux/user/user.selectors";
 import { createStructuredSelector } from "reselect";
-import { Button, Text, Headline, Subheading } from "react-native-paper";
+import { Button, Headline, Paragraph, Subheading } from "react-native-paper";
+import PortfolioValue from "../components/PortfolioValueCard";
 
 const UnAuthenticatedPortfolio = ({ navigation }) => (
-  <View style={styles.container}>
+  <View style={styles.noAuthContainer}>
     <Image
-      source={{
-        uri: "https://www.pngkit.com/png/detail/243-2438344_3d-chart-4-icon-png-3-pie-chart.png"
-      }}
+      source={require("../../assets/images/portfolio-static-pie-chart.png")}
       style={styles.noAuthImage}
     />
     <Headline style={styles.noAuthHeading}>
@@ -42,12 +41,25 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
   if (!isAuthenticated) {
     return <UnAuthenticatedPortfolio navigation={navigation} />;
   }
+  <FlatList
+    contentContainerStyle={styles.container}
+    showsVerticalScrollIndicator={false}
+    ListHeaderComponent={
+      <>
+        <Paragraph>hi</Paragraph>
+      </>
+    }
+    listKey="PortfolioScreenList"
+  />;
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  noAuthContainer: {
+    padding: 10,
     justifyContent: "center",
+    flex: 1
+  },
+  container: {
     padding: 10
   },
   noAuthHeading: {
@@ -65,8 +77,10 @@ const styles = StyleSheet.create({
   },
   noAuthImage: {
     width: "100%",
-    height: 200,
-    backgroundColor: "transparent"
+    height: 150,
+    backgroundColor: "transparent",
+    resizeMode: "contain",
+    marginBottom: 10
   }
 });
 
