@@ -1,7 +1,11 @@
 import PORTFOLIO_ACTION_TYPES from "./portfolio.action.types";
 
 const INITIAL_STATE = {
-  portfolio: null,
+  portfolio: {
+    value: 20000,
+    percent: 14.08,
+    plChange: 1000
+  },
   transactions: [],
   numLoadingReq: 0
 };

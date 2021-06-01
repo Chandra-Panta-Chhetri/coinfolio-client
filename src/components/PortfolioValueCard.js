@@ -1,58 +1,70 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Card, Paragraph, Caption } from "react-native-paper";
-import TouchableNativeOpacity from "./TouchableNativeOpacity";
+import { Card, Paragraph, Subheading } from "react-native-paper";
+import { connect } from "react-redux";
+import {
+  selectIsLoadingPortfolio,
+  selectPortfolioDetails
+} from "../redux/portfolio/portfolio.selectors";
+import PortfolioValueSkeleton from "./PortfolioValueCardSkeleton";
 
-const NewsCard = ({ item }) => (
-  <TouchableNativeOpacity
-    activeOpacity={0.6}
-    viewContainerStyle={styles.androidContainer}
-  >
-    <Card style={styles.newsCard}>
-      <Card.Content style={styles.newsCardBody}>
-        <View style={styles.newsInfo}>
-          <Paragraph style={styles.newsTitle}>{item.title}</Paragraph>
-          <Caption style={styles.newsSubtitle}>
-            {item.publishedTime} | {item.source}
-          </Caption>
+const PortfolioValueCard = ({ portfolio, isLoading }) => {
+  if (isLoading && portfolio === null) {
+    return <PortfolioValueSkeleton />;
+  }
+
+  return (
+    <Card>
+      <Card.Content>
+        <Paragraph style={styles.label}>Current Value</Paragraph>
+        <View style={styles.valueAndPercent}>
+          <Subheading style={styles.value}>$ {portfolio.value}</Subheading>
+          <Subheading
+            style={[
+              styles.percent,
+              { color: portfolio.percent > 0 ? "green" : "red" }
+            ]}
+          >
+            + {portfolio.percent}%
+          </Subheading>
         </View>
-        <Card.Cover
-          style={styles.newsImagePreview}
-          source={{
-            uri: item.imagePreview
-          }}
-        />
+        <Paragraph style={styles.plChange}>
+          + {portfolio.plChange} (24h)
+        </Paragraph>
       </Card.Content>
     </Card>
-  </TouchableNativeOpacity>
-);
+  );
+};
 
 const styles = StyleSheet.create({
-  newsCardBody: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  newsCard: {
-    borderRadius: 13
-  },
-  androidContainer: {
-    marginBottom: 10
-  },
-  newsTitle: {
+  label: {
+    fontWeight: "bold",
+    letterSpacing: 1,
     fontSize: 15
   },
-  newsSubtitle: {
-    color: "darkgray",
-    fontWeight: "bold"
+  valueAndPercent: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 5
   },
-  newsInfo: {
-    flex: 1,
-    marginRight: 15
+  value: {
+    fontWeight: "bold",
+    fontSize: 22,
+    letterSpacing: 1
   },
-  newsImagePreview: {
-    width: 90,
-    height: 90
+  percent: {
+    fontWeight: "bold",
+    letterSpacing: 1,
+    fontSize: 16
+  },
+  plChange: {
+    marginVertical: 0
   }
 });
 
-export default NewsCard;
+const mapStateToProps = (state) => ({
+  portfolio: selectPortfolioDetails(state),
+  isLoading: selectIsLoadingPortfolio(state)
+});
+
+export default connect(mapStateToProps)(PortfolioValueCard);

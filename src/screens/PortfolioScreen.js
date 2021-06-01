@@ -3,7 +3,7 @@ import { StyleSheet, View, Image, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../redux/user/user.selectors";
 import { createStructuredSelector } from "reselect";
-import { Button, Headline, Paragraph, Subheading } from "react-native-paper";
+import { Button, Headline, Subheading } from "react-native-paper";
 import PortfolioValue from "../components/PortfolioValueCard";
 
 const UnAuthenticatedPortfolio = ({ navigation }) => (
@@ -41,16 +41,18 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
   if (!isAuthenticated) {
     return <UnAuthenticatedPortfolio navigation={navigation} />;
   }
-  <FlatList
-    contentContainerStyle={styles.container}
-    showsVerticalScrollIndicator={false}
-    ListHeaderComponent={
-      <>
-        <Paragraph>hi</Paragraph>
-      </>
-    }
-    listKey="PortfolioScreenList"
-  />;
+  return (
+    <FlatList
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
+      ListHeaderComponent={
+        <>
+          <PortfolioValue />
+        </>
+      }
+      listKey="PortfolioScreenList"
+    />
+  );
 }
 
 const styles = StyleSheet.create({

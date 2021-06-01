@@ -3,51 +3,41 @@ import { StyleSheet, View } from "react-native";
 import { Card } from "react-native-paper";
 import Skeleton from "./Skeleton";
 
-const NewsCardSkeleton = () => (
-  <Card style={styles.cardContainer}>
-    <Card.Content style={styles.cardBody}>
-      <View style={styles.infoContainer}>
-        <View style={styles.rowFlexbox}>
-          <Skeleton style={styles.titleSkeleton} />
-        </View>
-        <Skeleton style={styles.subheadingSkeleton} />
+const PortfolioValueCardSkeleton = () => (
+  <Card>
+    <Card.Content>
+      <Skeleton style={styles.subheadingSkeleton} />
+      <View style={styles.rowFlexbox}>
+        <Skeleton style={styles.valueSkeleton} />
+        <Skeleton style={styles.percentSkeleton} />
       </View>
-      <Skeleton style={styles.imagePreviewSkeleton} />
+      <Skeleton style={styles.subheadingSkeleton} />
     </Card.Content>
   </Card>
 );
 
 const styles = StyleSheet.create({
-  cardBody: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  cardContainer: {
-    marginBottom: 10,
-    borderRadius: 13
-  },
-  infoContainer: {
-    flex: 1,
-    marginRight: 15
-  },
-  titleSkeleton: {
+  valueSkeleton: {
     height: 25,
     borderRadius: 6,
-    flex: 1
+    width: "60%"
+  },
+  percentSkeleton: {
+    height: 25,
+    borderRadius: 6,
+    width: "25%"
   },
   subheadingSkeleton: {
     height: 20,
     borderRadius: 6,
-    marginTop: 10,
-    width: 100
-  },
-  imagePreviewSkeleton: {
-    width: 90,
-    height: 90
+    marginBottom: 10,
+    width: "35%"
   },
   rowFlexbox: {
-    flexDirection: "row"
+    flexDirection: "row",
+    marginBottom: 10,
+    justifyContent: "space-between"
   }
 });
 
-export default NewsCardSkeleton;
+export default PortfolioValueCardSkeleton;
