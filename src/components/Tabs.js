@@ -6,10 +6,12 @@ import {
   TouchableWithoutFeedback,
   Animated
 } from "react-native";
+import { useTheme } from "react-native-paper";
 
 const Tabs = ({ children, initialActiveTab = 0 }) => {
   const numTabs = children.length;
   const widthPerTab = 100 / numTabs;
+  const { dark: isDarkMode, colors } = useTheme();
 
   const [activeTab, setActiveTab] = useState(initialActiveTab);
   const [tabHeadingContainerWidth, setTabHeadingContainerWidth] = useState(0);
@@ -45,6 +47,9 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
             <View
               style={[
                 styles.tabContainer,
+                {
+                  borderColor: isDarkMode ? colors.border : colors.primary
+                },
                 index === 0
                   ? styles.noRightBorders
                   : index + 1 === numTabs
@@ -53,9 +58,14 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
               ]}
             >
               <Text
-                style={
-                  activeTab === index ? styles.activeTabLabel : styles.tabLabel
-                }
+                style={[
+                  styles.tabLabel,
+                  activeTab === index
+                    ? isDarkMode
+                      ? { color: colors.primary }
+                      : { color: "white" }
+                    : { color: colors.text }
+                ]}
               >
                 {child.props.tabLabel}
               </Text>
@@ -68,6 +78,9 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
             {
               width: `${widthPerTab}%`,
               left: activeOverlayLeftPosition
+            },
+            {
+              backgroundColor: isDarkMode ? colors.border : colors.primary
             }
           ]}
         ></Animated.View>
@@ -82,7 +95,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     position: "relative",
-    height: 40
+    height: 35
   },
   tabContainer: {
     flex: 1,
@@ -101,12 +114,8 @@ const styles = StyleSheet.create({
     borderRadius: 4
   },
   tabLabel: {
-    color: "black",
-    fontWeight: "bold"
-  },
-  activeTabLabel: {
-    color: "white",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    letterSpacing: 1
   },
   noRightBorders: {
     borderRightWidth: 0,
