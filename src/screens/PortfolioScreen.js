@@ -3,7 +3,7 @@ import { StyleSheet, View, Image, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../redux/user/user.selectors";
 import { createStructuredSelector } from "reselect";
-import { Button, Headline, Subheading } from "react-native-paper";
+import { Button, Headline, Subheading, Card } from "react-native-paper";
 import PortfolioValue from "../components/PortfolioValueCard";
 import SummaryTabs from "../components/Tabs";
 
@@ -50,8 +50,21 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
         <>
           <PortfolioValue />
           <SummaryTabs>
-            <Subheading tabLabel="Line Chart">Hi</Subheading>
-            <Subheading tabLabel="Pie Chart">Hi 2</Subheading>
+            <Card tabLabel="Line Chart">
+              <Card.Content>
+                <Button mode="contained" uppercase={false}>
+                  Test 1
+                </Button>
+              </Card.Content>
+            </Card>
+            <Card tabLabel="Pie Chart">
+              <Card.Content>
+                <Subheading>Hi 2</Subheading>
+                <Button mode="contained" uppercase={false}>
+                  Test 2
+                </Button>
+              </Card.Content>
+            </Card>
           </SummaryTabs>
         </>
       }

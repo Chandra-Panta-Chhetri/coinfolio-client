@@ -18,14 +18,25 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
   const [activeOverlayLeftPosition, setActiveOverlayLeftPosition] = useState(
     new Animated.Value(initialActiveTab * (tabHeadingContainerWidth / numTabs))
   );
+  const [tabContentTranslateX, setTabContentTranslateX] = useState(
+    new Animated.Value(tabHeadingContainerWidth)
+  );
 
   const handleActiveTabSlide = (newTabIndex) => {
-    Animated.spring(activeOverlayLeftPosition, {
-      toValue: newTabIndex * (tabHeadingContainerWidth / numTabs),
-      useNativeDriver: false,
-      bounciness: 2,
-      speed: 6
-    }).start();
+    tabContentTranslateX.setValue(tabHeadingContainerWidth);
+    Animated.parallel([
+      Animated.spring(activeOverlayLeftPosition, {
+        toValue: newTabIndex * (tabHeadingContainerWidth / numTabs),
+        useNativeDriver: false,
+        bounciness: 2,
+        speed: 6
+      }).start(),
+      Animated.spring(tabContentTranslateX, {
+        toValue: 0,
+        useNativeDriver: false,
+        friction: 15
+      }).start()
+    ]);
   };
 
   return (
@@ -40,8 +51,10 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
           <TouchableWithoutFeedback
             key={index}
             onPress={() => {
-              setActiveTab(index);
-              handleActiveTabSlide(index);
+              if (index !== activeTab) {
+                setActiveTab(index);
+                handleActiveTabSlide(index);
+              }
             }}
           >
             <View
@@ -85,6 +98,18 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
           ]}
         ></Animated.View>
       </View>
+      <Animated.View
+        style={{
+          transform: [
+            {
+              translateX: tabContentTranslateX
+            }
+          ],
+          left: tabContentTranslateX
+        }}
+      >
+        {children[activeTab]}
+      </Animated.View>
     </View>
   );
 };
