@@ -5,6 +5,7 @@ import { selectCurrentUser } from "../redux/user/user.selectors";
 import { createStructuredSelector } from "reselect";
 import { Button, Headline, Subheading } from "react-native-paper";
 import PortfolioValue from "../components/PortfolioValueCard";
+import SummaryTabs from "../components/Tabs";
 
 const UnAuthenticatedPortfolio = ({ navigation }) => (
   <View style={styles.noAuthContainer}>
@@ -48,6 +49,10 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
       ListHeaderComponent={
         <>
           <PortfolioValue />
+          <SummaryTabs>
+            <Subheading tabLabel="Line Chart">Hi</Subheading>
+            <Subheading tabLabel="Pie Chart">Hi 2</Subheading>
+          </SummaryTabs>
         </>
       }
       listKey="PortfolioScreenList"
