@@ -65,6 +65,14 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
                 </Button>
               </Card.Content>
             </Card>
+            <Card tabLabel="Test Chart">
+              <Card.Content>
+                <Subheading>Hi 3</Subheading>
+                <Button mode="contained" uppercase={false}>
+                  Test 3
+                </Button>
+              </Card.Content>
+            </Card>
           </SummaryTabs>
         </>
       }

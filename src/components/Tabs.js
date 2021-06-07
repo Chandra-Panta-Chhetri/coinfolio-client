@@ -1,51 +1,61 @@
 import React, { useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  Animated
-} from "react-native";
+import { View, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
 import { useTheme } from "react-native-paper";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring
+} from "react-native-reanimated";
 
 const Tabs = ({ children, initialActiveTab = 0 }) => {
   const numTabs = children.length;
-  const widthPerTab = 100 / numTabs;
   const { dark: isDarkMode, colors } = useTheme();
 
   const [activeTab, setActiveTab] = useState(initialActiveTab);
   const [tabHeadingContainerWidth, setTabHeadingContainerWidth] = useState(0);
-  const [activeOverlayLeftPosition, setActiveOverlayLeftPosition] = useState(
-    new Animated.Value(initialActiveTab * (tabHeadingContainerWidth / numTabs))
-  );
-  const [tabContentTranslateX, setTabContentTranslateX] = useState(
-    new Animated.Value(tabHeadingContainerWidth)
-  );
+  const leftPosition = useSharedValue(0);
+  const translateX = useSharedValue(0);
+
+  const animatedTabHeadingStyle = useAnimatedStyle(() => ({
+    left: leftPosition.value
+  }));
+
+  const animatedTabContentStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateX: translateX.value
+      }
+    ]
+  }));
 
   const handleActiveTabSlide = (newTabIndex) => {
-    tabContentTranslateX.setValue(tabHeadingContainerWidth);
-    Animated.parallel([
-      Animated.spring(activeOverlayLeftPosition, {
-        toValue: newTabIndex * (tabHeadingContainerWidth / numTabs),
-        useNativeDriver: false,
-        bounciness: 2,
-        speed: 6
-      }).start(),
-      Animated.spring(tabContentTranslateX, {
-        toValue: 0,
-        useNativeDriver: false,
-        friction: 15
-      }).start()
-    ]);
+    translateX.value = tabHeadingContainerWidth;
+    leftPosition.value = withSpring(
+      newTabIndex * (tabHeadingContainerWidth / numTabs),
+      {
+        velocity: 30,
+        overshootClamping: true,
+        damping: 7,
+        mass: 2
+      }
+    );
+    translateX.value = withSpring(0, {
+      velocity: 30,
+      overshootClamping: true,
+      damping: 7,
+      mass: 2
+    });
   };
 
   return (
     <View>
       <View
         style={styles.tabHeadingContainer}
-        onLayout={(e) =>
-          setTabHeadingContainerWidth(e.nativeEvent.layout.width)
-        }
+        onLayout={(e) => {
+          const containerWidth = e.nativeEvent.layout.width;
+          leftPosition.value = initialActiveTab * (containerWidth / numTabs);
+          setTabHeadingContainerWidth(containerWidth);
+        }}
       >
         {children.map((child, index) => (
           <TouchableWithoutFeedback
@@ -89,25 +99,14 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
           style={[
             styles.activeTabOverlay,
             {
-              width: `${widthPerTab}%`,
-              left: activeOverlayLeftPosition
-            },
-            {
+              width: `${100 / numTabs}%`,
               backgroundColor: isDarkMode ? colors.border : colors.primary
-            }
+            },
+            animatedTabHeadingStyle
           ]}
         ></Animated.View>
       </View>
-      <Animated.View
-        style={{
-          transform: [
-            {
-              translateX: tabContentTranslateX
-            }
-          ],
-          left: tabContentTranslateX
-        }}
-      >
+      <Animated.View style={animatedTabContentStyle}>
         {children[activeTab]}
       </Animated.View>
     </View>
