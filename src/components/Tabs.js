@@ -80,7 +80,16 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
                   : { ...styles.noRightBorders, ...styles.noLeftBorders }
               ]}
             >
-              {child.props.iconComponent}
+              {React.cloneElement(child.props.iconComponent, {
+                style: {
+                  color:
+                    activeTab === index
+                      ? isDarkMode
+                        ? colors.primary
+                        : "white"
+                      : colors.text
+                }
+              })}
               <Text
                 style={[
                   styles.tabLabel,
