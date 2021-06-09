@@ -80,6 +80,7 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
                   : { ...styles.noRightBorders, ...styles.noLeftBorders }
               ]}
             >
+              {child.props.iconComponent}
               <Text
                 style={[
                   styles.tabLabel,
@@ -90,7 +91,8 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
                     : { color: colors.text }
                 ]}
               >
-                {child.props.tabLabel}
+                {child.props.iconComponent && " "}
+                {child.props.tabLabel || ""}
               </Text>
             </View>
           </TouchableWithoutFeedback>
@@ -127,7 +129,8 @@ const styles = StyleSheet.create({
     borderColor: "#007aff",
     borderRadius: 4,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    flexDirection: "row"
   },
   activeTabOverlay: {
     position: "absolute",

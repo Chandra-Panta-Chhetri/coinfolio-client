@@ -3,9 +3,12 @@ import { StyleSheet, View, Image, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../redux/user/user.selectors";
 import { createStructuredSelector } from "reselect";
-import { Button, Headline, Subheading, Card } from "react-native-paper";
+import { Button, Headline, Subheading } from "react-native-paper";
 import PortfolioValue from "../components/PortfolioValueCard";
 import SummaryTabs from "../components/Tabs";
+import PortfolioLineChart from "../components/PortfolioLineChart";
+import PortfolioPieChart from "../components/PortfolioPieChart";
+import { Entypo } from "@expo/vector-icons";
 
 const UnAuthenticatedPortfolio = ({ navigation }) => (
   <View style={styles.noAuthContainer}>
@@ -42,6 +45,7 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
   if (!isAuthenticated) {
     return <UnAuthenticatedPortfolio navigation={navigation} />;
   }
+
   return (
     <FlatList
       contentContainerStyle={styles.container}
@@ -50,29 +54,18 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
         <>
           <PortfolioValue />
           <SummaryTabs>
-            <Card tabLabel="Line Chart">
-              <Card.Content>
-                <Button mode="contained" uppercase={false}>
-                  Test 1
-                </Button>
-              </Card.Content>
-            </Card>
-            <Card tabLabel="Pie Chart">
-              <Card.Content>
-                <Subheading>Hi 2</Subheading>
-                <Button mode="contained" uppercase={false}>
-                  Test 2
-                </Button>
-              </Card.Content>
-            </Card>
-            <Card tabLabel="Test Chart">
-              <Card.Content>
-                <Subheading>Hi 3</Subheading>
-                <Button mode="contained" uppercase={false}>
-                  Test 3
-                </Button>
-              </Card.Content>
-            </Card>
+            <PortfolioLineChart
+              tabLabel="Line Chart"
+              iconComponent={
+                <Entypo name="line-graph" size={24} color="black" />
+              }
+            />
+            <PortfolioPieChart
+              tabLabel="Pie Chart"
+              iconComponent={
+                <Entypo name="pie-chart" size={24} color="black" />
+              }
+            />
           </SummaryTabs>
         </>
       }
