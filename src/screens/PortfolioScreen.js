@@ -53,7 +53,11 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
       ListHeaderComponent={
         <>
           <PortfolioValue />
-          <SummaryTabs>
+          <PortfolioPieChart
+            tabLabel="Pie Chart"
+            iconComponent={<Entypo name="pie-chart" size={24} />}
+          />
+          {/* <SummaryTabs>
             <PortfolioLineChart
               tabLabel="Line Chart"
               iconComponent={<Entypo name="line-graph" size={24} />}
@@ -62,7 +66,7 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
               tabLabel="Pie Chart"
               iconComponent={<Entypo name="pie-chart" size={24} />}
             />
-          </SummaryTabs>
+          </SummaryTabs> */}
         </>
       }
       listKey="PortfolioScreenList"
