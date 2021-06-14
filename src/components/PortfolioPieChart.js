@@ -39,13 +39,7 @@ const PortfolioPieChart = () => {
           style={{ height: 150, width: "100%" }}
           data={pieData}
           padAngle={0.06}
-          startAngle={0}
-          endAngle={Math.PI * 2}
-          valueAccessor={({ item }) => {
-            return item.value;
-          }}
           innerRadius="75%"
-          sort={(a, b) => b.value - a.value}
         >
           <Text>Hi</Text>
         </PieChart>

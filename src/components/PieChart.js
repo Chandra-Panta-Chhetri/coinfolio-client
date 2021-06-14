@@ -20,7 +20,7 @@ const PieChart = ({
   innerRadius,
   outerRadius,
   labelRadius,
-  padAngle,
+  padAngle = 0,
   style,
   sortFunc = defaultSortFunc,
   valueAccessorFunc = defaultValueAccessorFunc,
