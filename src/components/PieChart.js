@@ -1,7 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Platform } from "react-native";
 import * as shape from "d3-shape";
 import Svg, { G, Path } from "react-native-svg";
+import Reanimated, {
+  withTiming,
+  useSharedValue,
+  useAnimatedProps,
+  Easing,
+  useDerivedValue,
+  runOnJS,
+  interpolate
+} from "react-native-reanimated";
 
 const defaultSortFunc = (a, b) => b.value - a.value;
 const defaultValueAccessorFunc = ({ item }) => item.value;
@@ -26,18 +35,35 @@ const PieChart = ({
   valueAccessorFunc = defaultValueAccessorFunc,
   children,
   startAngle = 0,
-  endAngle = Math.PI * 2
+  endAngle = Math.PI * 2,
+  animate = true
 }) => {
   const [containerDimensions, setContainerDimensions] = useState({
     height: 0,
     width: 0
   });
+  const [_, setEndAngleState] = useState(startAngle);
 
   const onLayout = (event) => {
     const height = event.nativeEvent.layout.height;
     const width = event.nativeEvent.layout.width;
     setContainerDimensions({ height, width });
   };
+
+  const endAngleSharedVal = useSharedValue(startAngle);
+  const animatedEndAngle = useDerivedValue(() => {
+    runOnJS(setEndAngleState)(endAngleSharedVal.value);
+    return endAngleSharedVal.value * (endAngle / 2);
+  });
+
+  useEffect(() => {
+    if (animate) {
+      endAngleSharedVal.value = withTiming(2, {
+        duration: 1000,
+        easing: Easing.inOut(Easing.quad)
+      });
+    }
+  }, [animate]);
 
   const { height, width } = containerDimensions;
   const maxRadius = Math.min(width, height) / 2;
@@ -69,7 +95,7 @@ const PieChart = ({
     .value((d) => valueAccessorFunc({ item: d }))
     .sort(sortFunc)
     .startAngle(startAngle)
-    .endAngle(endAngle)(data);
+    .endAngle(animatedEndAngle.value)(data);
 
   const slices = pieSlices.map((slice) => ({
     ...slice,

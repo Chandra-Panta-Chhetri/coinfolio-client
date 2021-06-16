@@ -17,24 +17,14 @@ const PortfolioPieChart = () => {
       value,
       svg: {
         fill: randomColor(),
-        onPress: () => {
-          console.log(index + "clicked");
-        }
+        onPress: () => {}
       },
       key: `pie-${index}`
     }));
 
   return (
     <Card style={styles.cardContainer}>
-      <Card.Content
-        style={styles.cardBody}
-        onLayout={(event) =>
-          console.log(
-            event.nativeEvent.layout.width,
-            event.nativeEvent.layout.height
-          )
-        }
-      >
+      <Card.Content style={styles.cardBody}>
         <PieChart
           style={{ height: 150, width: "100%" }}
           data={pieData}

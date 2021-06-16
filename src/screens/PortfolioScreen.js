@@ -9,6 +9,7 @@ import SummaryTabs from "../components/Tabs";
 import PortfolioLineChart from "../components/PortfolioLineChart";
 import PortfolioPieChart from "../components/PortfolioPieChart";
 import { Entypo } from "@expo/vector-icons";
+// import PortfolioPieChart from "../components/PortfolioPieChart2";
 
 const UnAuthenticatedPortfolio = ({ navigation }) => (
   <View style={styles.noAuthContainer}>
@@ -53,6 +54,7 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
       ListHeaderComponent={
         <>
           <PortfolioValue />
+          {/* <PortfolioPieChart /> */}
           <PortfolioPieChart
             tabLabel="Pie Chart"
             iconComponent={<Entypo name="pie-chart" size={24} />}
