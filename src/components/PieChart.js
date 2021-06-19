@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import { View, Platform } from "react-native";
 import * as shape from "d3-shape";
 import Svg, { G, Path } from "react-native-svg";
-import Reanimated, {
-  withTiming,
-  useSharedValue,
-  useAnimatedProps,
-  Easing,
-  useDerivedValue,
-  runOnJS,
-  interpolate
-} from "react-native-reanimated";
+// import Reanimated, {
+//   withTiming,
+//   useSharedValue,
+//   useAnimatedProps,
+//   Easing,
+//   useDerivedValue,
+//   runOnJS,
+//   interpolate
+// } from "react-native-reanimated";
 
 const defaultSortFunc = (a, b) => b.value - a.value;
 const defaultValueAccessorFunc = ({ item }) => item.value;
@@ -36,13 +36,13 @@ const PieChart = ({
   children,
   startAngle = 0,
   endAngle = Math.PI * 2,
-  animate = true
+  selectedElevation = 3,
+  selectedSlice = null
 }) => {
   const [containerDimensions, setContainerDimensions] = useState({
     height: 0,
     width: 0
   });
-  const [_, setEndAngleState] = useState(startAngle);
 
   const onLayout = (event) => {
     const height = event.nativeEvent.layout.height;
@@ -50,23 +50,8 @@ const PieChart = ({
     setContainerDimensions({ height, width });
   };
 
-  const endAngleSharedVal = useSharedValue(startAngle);
-  const animatedEndAngle = useDerivedValue(() => {
-    runOnJS(setEndAngleState)(endAngleSharedVal.value);
-    return endAngleSharedVal.value * (endAngle / 2);
-  });
-
-  useEffect(() => {
-    if (animate) {
-      endAngleSharedVal.value = withTiming(2, {
-        duration: 1000,
-        easing: Easing.inOut(Easing.quad)
-      });
-    }
-  }, [animate]);
-
   const { height, width } = containerDimensions;
-  const maxRadius = Math.min(width, height) / 2;
+  const maxRadius = Math.min(width, height) / 2 - selectedElevation;
 
   const _outerRadius = calculateRadius(outerRadius, maxRadius, maxRadius);
   const _innerRadius = calculateRadius(innerRadius, maxRadius, 0);
@@ -79,6 +64,12 @@ const PieChart = ({
   const arcGenerator = shape
     .arc()
     .outerRadius(_outerRadius)
+    .innerRadius(_innerRadius)
+    .padAngle(padAngle);
+
+  const selectedArcGenerator = shape
+    .arc()
+    .outerRadius(_outerRadius + selectedElevation)
     .innerRadius(_innerRadius)
     .padAngle(padAngle);
 
@@ -95,7 +86,7 @@ const PieChart = ({
     .value((d) => valueAccessorFunc({ item: d }))
     .sort(sortFunc)
     .startAngle(startAngle)
-    .endAngle(animatedEndAngle.value)(data);
+    .endAngle(endAngle)(data);
 
   const slices = pieSlices.map((slice) => ({
     ...slice,
@@ -106,7 +97,8 @@ const PieChart = ({
   const childProps = {
     pieChartContainerDimensions: { width, height },
     data,
-    slices
+    slices,
+    selectedSlice
   };
 
   const modifiedChildElements = React.Children.map(children, (child) =>
@@ -115,17 +107,12 @@ const PieChart = ({
 
   return (
     <View pointerEvents={"box-none"} style={style}>
-      <View
-        pointerEvents={"box-none"}
-        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        onLayout={onLayout}
-      >
+      <View pointerEvents={"box-none"} style={{ flex: 1 }} onLayout={onLayout}>
         {height > 0 && width > 0 && (
           <>
             <Svg
               pointerEvents={Platform.OS === "android" && "box-none"}
-              width={width}
-              height={height}
+              style={{ width, height }}
             >
               <G x={width / 2} y={height / 2}>
                 {pieSlices.map((slice, index) => {
@@ -135,7 +122,11 @@ const PieChart = ({
                       key={key}
                       onPress={onPress}
                       {...svg}
-                      d={arcGenerator(slice)}
+                      d={
+                        index === selectedSlice
+                          ? selectedArcGenerator(slice)
+                          : arcGenerator(slice)
+                      }
                     />
                   );
                 })}
