@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Platform } from "react-native";
 import * as shape from "d3-shape";
-import Svg, { G, Path } from "react-native-svg";
+import Svg, { G, Path, Text } from "react-native-svg";
 // import Reanimated, {
 //   withTiming,
 //   useSharedValue,
@@ -36,8 +36,9 @@ const PieChart = ({
   children,
   startAngle = 0,
   endAngle = Math.PI * 2,
-  selectedElevation = 3,
-  selectedSlice = null
+  selectedElevation = 5,
+  selectedSlice = null,
+  innerLabelConfig = {}
 }) => {
   const [containerDimensions, setContainerDimensions] = useState({
     height: 0,
@@ -107,7 +108,14 @@ const PieChart = ({
 
   return (
     <View pointerEvents={"box-none"} style={style}>
-      <View pointerEvents={"box-none"} style={{ flex: 1 }} onLayout={onLayout}>
+      <View
+        pointerEvents={"box-none"}
+        style={{
+          flex: 1,
+          position: "relative"
+        }}
+        onLayout={onLayout}
+      >
         {height > 0 && width > 0 && (
           <>
             <Svg
@@ -130,9 +138,14 @@ const PieChart = ({
                     />
                   );
                 })}
+                <Text {...innerLabelConfig}>
+                  {selectedSlice !== null
+                    ? `${data[selectedSlice].key} - ${data[selectedSlice].value}%`
+                    : ""}
+                </Text>
               </G>
             </Svg>
-            {modifiedChildElements}
+            {/* {modifiedChildElements} */}
           </>
         )}
       </View>
