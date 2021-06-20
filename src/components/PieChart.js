@@ -111,8 +111,7 @@ const PieChart = ({
       <View
         pointerEvents={"box-none"}
         style={{
-          flex: 1,
-          position: "relative"
+          flex: 1
         }}
         onLayout={onLayout}
       >
@@ -145,7 +144,7 @@ const PieChart = ({
                 </Text>
               </G>
             </Svg>
-            {/* {modifiedChildElements} */}
+            {modifiedChildElements}
           </>
         )}
       </View>

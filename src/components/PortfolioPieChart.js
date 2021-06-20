@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
-import { Card } from "react-native-paper";
+import { StyleSheet, View, ScrollView } from "react-native";
+import { Card, Paragraph } from "react-native-paper";
 import PieChart from "./PieChart";
+import TouchableNativeOpacity from "./TouchableNativeOpacity";
 
 const innerLabelConfig = {
   textAnchor: "middle",
@@ -11,8 +12,58 @@ const innerLabelConfig = {
   fontWeight: "bold"
 };
 
+const Labels = ({
+  data = [],
+  selectedSlice = null,
+  changeSelectedSlice = () => {}
+}) => {
+  return (
+    <ScrollView
+      contentContainerStyle={styles.pieChartLabels}
+      horizontal
+      showsHorizontalScrollIndicator={false}
+    >
+      {data.map((pieSlice, i) => {
+        return (
+          <TouchableNativeOpacity
+            key={pieSlice.key}
+            activeOpacity={0.6}
+            onPress={() => changeSelectedSlice(i, false)}
+            viewContainerStyle={styles.touchableOpacityContainer}
+          >
+            <View
+              style={[
+                styles.pieChartLabelContainer,
+                i === selectedSlice ? styles.activeLabel : null
+              ]}
+            >
+              <View
+                style={[
+                  styles.pieSliceDot,
+                  { backgroundColor: pieSlice.svg.fill }
+                ]}
+              />
+              <Paragraph style={styles.pieChartLabel}>{pieSlice.key}</Paragraph>
+            </View>
+          </TouchableNativeOpacity>
+        );
+      })}
+    </ScrollView>
+  );
+};
+
 const PortfolioPieChart = () => {
   const [selectedSlice, setSelectedSlice] = useState(null);
+
+  const changeSelectedSlice = (index, allowToggle = true) => {
+    if (selectedSlice !== index) {
+      return setSelectedSlice(index);
+    }
+
+    if (allowToggle) {
+      setSelectedSlice(null);
+    }
+  };
 
   const data = [
     { percent: 50, ticker: "ETH" },
@@ -27,13 +78,7 @@ const PortfolioPieChart = () => {
     value: value.percent,
     svg: {
       fill: colors[index],
-      onPress: () => {
-        if (selectedSlice !== index) {
-          setSelectedSlice(index);
-        } else {
-          setSelectedSlice(null);
-        }
-      }
+      onPress: () => changeSelectedSlice(index)
     },
     key: `${value.ticker}`
   }));
@@ -48,7 +93,12 @@ const PortfolioPieChart = () => {
           innerRadius="75%"
           selectedSlice={selectedSlice}
           innerLabelConfig={innerLabelConfig}
-        ></PieChart>
+        />
+        <Labels
+          data={pieData}
+          selectedSlice={selectedSlice}
+          changeSelectedSlice={changeSelectedSlice}
+        />
       </Card.Content>
     </Card>
   );
@@ -59,14 +109,37 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 13
   },
-  cardBody: {
-    flexDirection: "row",
-    justifyContent: "center"
-  },
+  cardBody: {},
   pieChart: {
     height: 170,
     width: "100%"
-  }
+  },
+  pieChartLabels: {
+    marginTop: 15
+  },
+  pieChartLabelContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 2,
+    paddingHorizontal: 5
+  },
+  pieChartLabel: {
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    letterSpacing: 1
+  },
+  activeLabel: {
+    backgroundColor: "#D8D8D8",
+    borderRadius: 5
+  },
+  pieSliceDot: {
+    width: 10,
+    height: 5,
+    borderRadius: 5,
+    marginRight: 3
+  },
+  touchableOpacityContainer: { marginRight: 3.5 }
 });
 
 export default PortfolioPieChart;
