@@ -12,6 +12,7 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
   const { dark: isDarkMode, colors } = useTheme();
 
   const [activeTab, setActiveTab] = useState(initialActiveTab);
+  const [loadedTabs, setLoadedTabs] = useState([initialActiveTab]);
   const [tabHeadingContainerWidth, setTabHeadingContainerWidth] = useState(0);
   const leftPosition = useSharedValue(0);
   const translateX = useSharedValue(0);
@@ -47,6 +48,14 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
     });
   };
 
+  const handleTabClick = (tabIndex) => {
+    if (tabIndex !== activeTab) {
+      handleActiveTabSlide(tabIndex);
+      setActiveTab(tabIndex);
+      setLoadedTabs([...loadedTabs.filter((i) => i !== tabIndex), tabIndex]);
+    }
+  };
+
   return (
     <View>
       <View
@@ -60,12 +69,7 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
         {children.map((child, index) => (
           <TouchableWithoutFeedback
             key={index}
-            onPress={() => {
-              if (index !== activeTab) {
-                setActiveTab(index);
-                handleActiveTabSlide(index);
-              }
-            }}
+            onPress={() => handleTabClick(index)}
           >
             <View
               style={[
@@ -118,7 +122,20 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
         ></Animated.View>
       </View>
       <Animated.View style={animatedTabContentStyle}>
-        {children[activeTab]}
+        {React.Children.map(children, (child, i) => {
+          const hasTabBeenSelected = loadedTabs.includes(i);
+          const isTabActive = i === activeTab;
+
+          if (!hasTabBeenSelected) {
+            return null;
+          }
+
+          return (
+            <View style={[isTabActive ? null : { display: "none" }]}>
+              {child}
+            </View>
+          );
+        })}
       </Animated.View>
     </View>
   );

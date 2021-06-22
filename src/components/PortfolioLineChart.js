@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Title } from "react-native-paper";
 
 const PortfolioLineChart = () => {
+  useEffect(() => {
+    console.log("rerendering line chart component");
+  }, []);
+
   return (
     <Card style={styles.cardContainer}>
       <Card.Content style={styles.cardBody}>

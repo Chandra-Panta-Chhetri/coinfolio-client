@@ -14,6 +14,7 @@ import Svg, { G, Path, Text } from "react-native-svg";
 
 const defaultSortFunc = (a, b) => b.value - a.value;
 const defaultValueAccessorFunc = ({ item }) => item.value;
+const defaultGetInnerLabelText = () => "";
 
 const calculateRadius = (radiusFromProp, maxRadius, defaultRadius) => {
   if (typeof radiusFromProp === "string") {
@@ -38,7 +39,8 @@ const PieChart = ({
   endAngle = Math.PI * 2,
   selectedElevation = 5,
   selectedSlice = null,
-  innerLabelConfig = {}
+  innerLabelConfig = {},
+  getInnerLabelText = defaultGetInnerLabelText
 }) => {
   const [containerDimensions, setContainerDimensions] = useState({
     height: 0,
@@ -139,7 +141,7 @@ const PieChart = ({
                 })}
                 <Text {...innerLabelConfig}>
                   {selectedSlice !== null
-                    ? `${data[selectedSlice].key} - ${data[selectedSlice].value}%`
+                    ? getInnerLabelText(data[selectedSlice])
                     : ""}
                 </Text>
               </G>

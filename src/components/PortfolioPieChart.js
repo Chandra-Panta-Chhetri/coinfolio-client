@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { Card, Paragraph } from "react-native-paper";
 import PieChart from "./PieChart";
@@ -52,7 +52,17 @@ const Labels = ({
   );
 };
 
+const getInnerLabelText = (selectedSlice) =>
+  `${selectedSlice.key} - ${selectedSlice.value}%`;
+
 const PortfolioPieChart = () => {
+  const [data, setData] = useState([
+    { percent: 50, ticker: "ETH" },
+    { percent: 20, ticker: "BTC" },
+    { percent: 10, ticker: "ADA" },
+    { percent: 10, ticker: "XLM" },
+    { percent: 10, ticker: "THETA" }
+  ]);
   const [selectedSlice, setSelectedSlice] = useState(null);
 
   const changeSelectedSlice = (index, allowToggle = true) => {
@@ -65,13 +75,6 @@ const PortfolioPieChart = () => {
     }
   };
 
-  const data = [
-    { percent: 50, ticker: "ETH" },
-    { percent: 20, ticker: "BTC" },
-    { percent: 10, ticker: "ADA" },
-    { percent: 10, ticker: "XLM" },
-    { percent: 10, ticker: "THETA" }
-  ];
   const colors = ["#21e6c1", "#278ea5", "#1f4287", "#071e3d", "#28c7fa"];
 
   const pieData = data.map((value, index) => ({
@@ -83,9 +86,13 @@ const PortfolioPieChart = () => {
     key: `${value.ticker}`
   }));
 
+  useEffect(() => {
+    console.log("pie chart component mounted");
+  }, []);
+
   return (
     <Card style={styles.cardContainer}>
-      <Card.Content style={styles.cardBody}>
+      <Card.Content>
         <PieChart
           style={styles.pieChart}
           data={pieData}
@@ -93,6 +100,7 @@ const PortfolioPieChart = () => {
           innerRadius="75%"
           selectedSlice={selectedSlice}
           innerLabelConfig={innerLabelConfig}
+          getInnerLabelText={getInnerLabelText}
         />
         <Labels
           data={pieData}
@@ -109,7 +117,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 13
   },
-  cardBody: {},
   pieChart: {
     height: 170,
     width: "100%"
