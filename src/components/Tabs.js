@@ -115,7 +115,12 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
             styles.activeTabOverlay,
             {
               width: `${100 / numTabs}%`,
-              backgroundColor: isDarkMode ? colors.border : colors.primary
+              backgroundColor: isDarkMode ? colors.border : colors.primary,
+              ...(activeTab === 0
+                ? styles.noRightBorders
+                : activeTab + 1 === numTabs
+                ? styles.noLeftBorders
+                : { ...styles.noRightBorders, ...styles.noLeftBorders })
             },
             animatedTabHeadingStyle
           ]}
