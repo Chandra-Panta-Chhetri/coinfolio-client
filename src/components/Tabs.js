@@ -4,7 +4,6 @@ import { useTheme } from "react-native-paper";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
-  withSpring,
   withTiming,
   Easing
 } from "react-native-reanimated";
@@ -54,9 +53,9 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
 
   const handleTabClick = (tabIndex) => {
     if (tabIndex !== activeTab) {
-      handleActiveTabSlide(tabIndex);
       setActiveTab(tabIndex);
       setLoadedTabs([...loadedTabs.filter((i) => i !== tabIndex), tabIndex]);
+      handleActiveTabSlide(tabIndex);
     }
   };
 
@@ -70,46 +69,38 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
           setTabHeadingContainerWidth(containerWidth);
         }}
       >
-        {children.map((child, index) => (
-          <TouchableWithoutFeedback
-            key={index}
-            onPress={() => handleTabClick(index)}
-          >
-            <View
-              style={[
-                styles.tabContainer,
-                {
-                  borderColor: isDarkMode ? colors.border : colors.primary
-                },
-                getBorderStyles(index, numTabs)
-              ]}
+        {children.map((child, index) => {
+          const activeStyles =
+            activeTab === index
+              ? isDarkMode
+                ? { color: colors.primary }
+                : { color: "white" }
+              : { color: colors.text };
+          return (
+            <TouchableWithoutFeedback
+              key={index}
+              onPress={() => handleTabClick(index)}
             >
-              {React.cloneElement(child.props.iconComponent, {
-                style: {
-                  color:
-                    activeTab === index
-                      ? isDarkMode
-                        ? colors.primary
-                        : "white"
-                      : colors.text
-                }
-              })}
-              <Text
+              <View
                 style={[
-                  styles.tabLabel,
-                  activeTab === index
-                    ? isDarkMode
-                      ? { color: colors.primary }
-                      : { color: "white" }
-                    : { color: colors.text }
+                  styles.tabContainer,
+                  {
+                    borderColor: isDarkMode ? colors.border : colors.primary
+                  },
+                  getBorderStyles(index, numTabs)
                 ]}
               >
-                {child.props.iconComponent && " "}
-                {child.props.tabLabel || ""}
-              </Text>
-            </View>
-          </TouchableWithoutFeedback>
-        ))}
+                {React.cloneElement(child.props.iconComponent, {
+                  style: [activeStyles]
+                })}
+                <Text style={[styles.tabLabel, activeStyles]}>
+                  {child.props.iconComponent && " "}
+                  {child.props.tabLabel || ""}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+          );
+        })}
         <Animated.View
           style={[
             styles.activeTabOverlay,
