@@ -2,19 +2,11 @@ import React, { useState, useEffect } from "react";
 import { View, Platform } from "react-native";
 import * as shape from "d3-shape";
 import Svg, { G, Path, Text } from "react-native-svg";
-// import Reanimated, {
-//   withTiming,
-//   useSharedValue,
-//   useAnimatedProps,
-//   Easing,
-//   useDerivedValue,
-//   runOnJS,
-//   interpolate
-// } from "react-native-reanimated";
 
 const defaultSortFunc = (a, b) => b.value - a.value;
 const defaultValueAccessorFunc = ({ item }) => item.value;
 const defaultGetInnerLabelText = () => "";
+const MAX_RADIUS_OFFSET = 2;
 
 const calculateRadius = (radiusFromProp, maxRadius, defaultRadius) => {
   if (typeof radiusFromProp === "string") {
@@ -54,7 +46,8 @@ const PieChart = ({
   };
 
   const { height, width } = containerDimensions;
-  const maxRadius = Math.min(width, height) / 2 - selectedElevation;
+  const maxRadius =
+    Math.min(width, height) / 2 - (selectedElevation + MAX_RADIUS_OFFSET);
 
   const _outerRadius = calculateRadius(outerRadius, maxRadius, maxRadius);
   const _innerRadius = calculateRadius(innerRadius, maxRadius, 0);

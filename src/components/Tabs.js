@@ -7,6 +7,13 @@ import Animated, {
   withSpring
 } from "react-native-reanimated";
 
+const getBorderStyles = (tabIndex, totalTabs) =>
+  tabIndex === 0
+    ? styles.noRightBorders
+    : tabIndex + 1 === totalTabs
+    ? styles.noLeftBorders
+    : { ...styles.noRightBorders, ...styles.noLeftBorders };
+
 const Tabs = ({ children, initialActiveTab = 0 }) => {
   const numTabs = children.length;
   const { dark: isDarkMode, colors } = useTheme();
@@ -77,11 +84,7 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
                 {
                   borderColor: isDarkMode ? colors.border : colors.primary
                 },
-                index === 0
-                  ? styles.noRightBorders
-                  : index + 1 === numTabs
-                  ? styles.noLeftBorders
-                  : { ...styles.noRightBorders, ...styles.noLeftBorders }
+                getBorderStyles(index, numTabs)
               ]}
             >
               {React.cloneElement(child.props.iconComponent, {
@@ -116,11 +119,7 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
             {
               width: `${100 / numTabs}%`,
               backgroundColor: isDarkMode ? colors.border : colors.primary,
-              ...(activeTab === 0
-                ? styles.noRightBorders
-                : activeTab + 1 === numTabs
-                ? styles.noLeftBorders
-                : { ...styles.noRightBorders, ...styles.noLeftBorders })
+              ...getBorderStyles(activeTab, numTabs)
             },
             animatedTabHeadingStyle
           ]}

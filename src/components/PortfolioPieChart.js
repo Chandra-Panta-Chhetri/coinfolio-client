@@ -22,6 +22,7 @@ const Labels = ({
       contentContainerStyle={styles.pieChartLabels}
       horizontal
       showsHorizontalScrollIndicator={false}
+      centerContent
     >
       {data.map((pieSlice, i) => {
         return (
@@ -122,14 +123,15 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   pieChartLabels: {
-    marginTop: 15
+    marginTop: 10,
+    flexGrow: 1
   },
   pieChartLabelContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
     paddingVertical: 2,
-    paddingHorizontal: 5
+    paddingHorizontal: 4,
+    justifyContent: "center"
   },
   pieChartLabel: {
     fontWeight: "bold",
@@ -144,9 +146,9 @@ const styles = StyleSheet.create({
     width: 10,
     height: 5,
     borderRadius: 5,
-    marginRight: 3
+    marginRight: 4
   },
-  touchableOpacityContainer: { marginRight: 3.5 }
+  touchableOpacityContainer: { marginRight: 0 }
 });
 
 export default PortfolioPieChart;
