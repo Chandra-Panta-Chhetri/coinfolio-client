@@ -102,47 +102,43 @@ const PieChart = ({
   );
 
   return (
-    <View pointerEvents={"box-none"} style={style}>
-      <View
-        pointerEvents={"box-none"}
-        style={{
-          flex: 1
-        }}
-        onLayout={onLayout}
-      >
-        {height > 0 && width > 0 && (
-          <>
-            <Svg
-              pointerEvents={Platform.OS === "android" && "box-none"}
-              style={{ width, height }}
-            >
-              <G x={width / 2} y={height / 2}>
-                {pieSlices.map((slice, index) => {
-                  const { key, onPress, svg } = data[index];
-                  return (
-                    <Path
-                      key={key}
-                      onPress={onPress}
-                      {...svg}
-                      d={
-                        index === selectedSlice
-                          ? selectedArcGenerator(slice)
-                          : arcGenerator(slice)
-                      }
-                    />
-                  );
-                })}
-                <Text {...innerLabelConfig}>
-                  {selectedSlice !== null
-                    ? getInnerLabelText(data[selectedSlice])
-                    : ""}
-                </Text>
-              </G>
-            </Svg>
-            {modifiedChildElements}
-          </>
-        )}
-      </View>
+    <View
+      pointerEvents={"box-none"}
+      style={{ ...style, flex: 1 }}
+      onLayout={onLayout}
+    >
+      {height > 0 && width > 0 && (
+        <>
+          <Svg
+            pointerEvents={Platform.OS === "android" && "box-none"}
+            style={{ width, height }}
+          >
+            <G x={width / 2} y={height / 2}>
+              {pieSlices.map((slice, index) => {
+                const { key, onPress, svg } = data[index];
+                return (
+                  <Path
+                    key={key}
+                    onPress={onPress}
+                    {...svg}
+                    d={
+                      index === selectedSlice
+                        ? selectedArcGenerator(slice)
+                        : arcGenerator(slice)
+                    }
+                  />
+                );
+              })}
+              <Text {...innerLabelConfig}>
+                {selectedSlice !== null
+                  ? getInnerLabelText(data[selectedSlice])
+                  : ""}
+              </Text>
+            </G>
+          </Svg>
+          {modifiedChildElements}
+        </>
+      )}
     </View>
   );
 };

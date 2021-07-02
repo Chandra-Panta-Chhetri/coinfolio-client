@@ -97,7 +97,7 @@ const PortfolioPieChart = () => {
         <PieChart
           style={styles.pieChart}
           data={pieData}
-          padAngle={0.06}
+          padAngle={0.05}
           innerRadius="75%"
           selectedSlice={selectedSlice}
           innerLabelConfig={innerLabelConfig}

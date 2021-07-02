@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Title } from "react-native-paper";
+import LineChart from "./RainbowChart/Graph";
 
 const PortfolioLineChart = () => {
   useEffect(() => {
@@ -10,7 +11,7 @@ const PortfolioLineChart = () => {
   return (
     <Card style={styles.cardContainer}>
       <Card.Content style={styles.cardBody}>
-        <Title>Portfolio Line Chart</Title>
+        <LineChart />
       </Card.Content>
     </Card>
   );
