@@ -32,7 +32,7 @@ const PortfolioLineChart = () => {
   const [data, setData] = useState(graphs);
 
   useEffect(() => {
-    console.log("rerendering line chart component");
+    console.log("in useffect");
   }, []);
 
   return (

@@ -36,16 +36,20 @@ const PieChart = ({
 }) => {
   const [containerDimensions, setContainerDimensions] = useState({
     height: 0,
-    width: 0
+    width: 0,
+    hasBeenCalculated: false
   });
+  const { height, width, hasBeenCalculated } = containerDimensions;
 
   const onLayout = (event) => {
     const height = event.nativeEvent.layout.height;
     const width = event.nativeEvent.layout.width;
-    setContainerDimensions({ height, width });
+    if (hasBeenCalculated) {
+      return;
+    }
+    setContainerDimensions({ height, width, hasBeenCalculated: true });
   };
 
-  const { height, width } = containerDimensions;
   const maxRadius =
     Math.min(width, height) / 2 - (selectedElevation + MAX_RADIUS_OFFSET);
 

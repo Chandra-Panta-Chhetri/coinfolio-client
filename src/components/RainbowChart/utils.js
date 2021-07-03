@@ -2,10 +2,10 @@ import * as shape from "d3-shape";
 import { scaleLinear } from "d3-scale";
 import { parse } from "react-native-redash";
 
-const NUM_POINTS_TO_SHOW = 60;
+const MAX_NUM_POINTS_TO_SHOW = 60;
 
 export const buildGraph = (datapoints, xAxisSize = 0, yAxisSize = 0) => {
-  const priceList = datapoints.prices.slice(0, NUM_POINTS_TO_SHOW);
+  const priceList = datapoints.prices.slice(0, MAX_NUM_POINTS_TO_SHOW);
   const formattedValues = priceList.map((price) => [
     parseFloat(price[0]),
     price[1]
@@ -29,6 +29,6 @@ export const buildGraph = (datapoints, xAxisSize = 0, yAxisSize = 0) => {
     minPrice,
     maxPrice,
     percentChange: datapoints.percent_change,
-    path: svgPath
+    path: parse(svgPath)
   };
 };

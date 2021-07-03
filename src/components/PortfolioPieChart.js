@@ -86,9 +86,7 @@ const PortfolioPieChart = () => {
     key: `${value.ticker}`
   }));
 
-  useEffect(() => {
-    console.log("pie chart component mounted");
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <Card style={styles.cardContainer}>
