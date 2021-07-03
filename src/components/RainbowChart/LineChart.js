@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
@@ -7,10 +7,10 @@ import Reanimated, {
   useAnimatedStyle,
   useAnimatedProps,
   useSharedValue,
-  withTiming,
-  useDerivedValue
+  withTiming
 } from "react-native-reanimated";
 import { mixPath } from "react-native-redash";
+import Cursor from "./Cursor";
 
 const AnimatedPath = Reanimated.createAnimatedComponent(Path);
 
@@ -89,7 +89,11 @@ const LineChart = ({ data = [], style, initialSelectedGraph = 0 }) => {
                 strokeWidth={3}
               />
             </Svg>
-            {/* <Cursor data={current} /> */}
+            <Cursor
+              dataWithPaths={dataWithPaths}
+              selected={currentSelected}
+              maxWidth={width}
+            />
           </View>
           <View style={[styles.selection]}>
             <View style={StyleSheet.absoluteFill}>
