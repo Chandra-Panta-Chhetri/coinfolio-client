@@ -55,11 +55,11 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
           <PortfolioValue />
           <SummaryTabs>
             <PortfolioLineChart
-              tabLabel="Line Chart"
+              tabLabel="Historic Value"
               iconComponent={<Entypo name="line-graph" size={24} />}
             />
             <PortfolioPieChart
-              tabLabel="Pie Chart"
+              tabLabel="Allocations"
               iconComponent={<Entypo name="pie-chart" size={24} />}
             />
           </SummaryTabs>

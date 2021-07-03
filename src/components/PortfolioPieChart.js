@@ -22,7 +22,6 @@ const Labels = ({
       contentContainerStyle={styles.pieChartLabels}
       horizontal
       showsHorizontalScrollIndicator={false}
-      centerContent
     >
       {data.map((pieSlice, i) => {
         return (
@@ -119,7 +118,7 @@ const styles = StyleSheet.create({
     borderRadius: 13
   },
   pieChart: {
-    height: 170,
+    height: 180,
     width: "100%"
   },
   pieChartLabels: {

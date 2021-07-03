@@ -42,12 +42,11 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
     ]
   }));
 
+  const tabWidth = numTabs === 0 ? 0 : tabHeadingContainerWidth / numTabs;
+
   const handleActiveTabSlide = (newTabIndex) => {
     translateX.value = tabHeadingContainerWidth;
-    leftPosition.value = withTiming(
-      newTabIndex * (tabHeadingContainerWidth / numTabs),
-      animationConfig
-    );
+    leftPosition.value = withTiming(newTabIndex * tabWidth, animationConfig);
     translateX.value = withTiming(0, animationConfig);
   };
 
@@ -65,7 +64,8 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
         style={styles.tabHeadingContainer}
         onLayout={(e) => {
           const containerWidth = e.nativeEvent.layout.width;
-          leftPosition.value = initialActiveTab * (containerWidth / numTabs);
+          leftPosition.value =
+            numTabs === 0 ? 0 : initialActiveTab * (containerWidth / numTabs);
           setTabHeadingContainerWidth(containerWidth);
         }}
       >
@@ -105,7 +105,7 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
           style={[
             styles.activeTabOverlay,
             {
-              width: `${100 / numTabs}%`,
+              width: `${numTabs === 0 ? 0 : 100 / numTabs}%`,
               backgroundColor: isDarkMode ? colors.border : colors.primary,
               ...getBorderStyles(activeTab, numTabs)
             },
