@@ -11,6 +11,7 @@ import Reanimated, {
 } from "react-native-reanimated";
 import { mixPath } from "react-native-redash";
 import Cursor from "./Cursor";
+import Header from "./Header";
 
 const AnimatedPath = Reanimated.createAnimatedComponent(Path);
 
@@ -31,6 +32,7 @@ const LineChart = ({ data = [], style, initialSelectedGraph = 0 }) => {
   const svgPathTransistion = useSharedValue(0);
   const previousSelected = useSharedValue(initialSelectedGraph);
   const currentSelected = useSharedValue(initialSelectedGraph);
+  const y = useSharedValue(0);
 
   const animatedLabelOverlay = useAnimatedStyle(() => {
     return {
@@ -79,8 +81,13 @@ const LineChart = ({ data = [], style, initialSelectedGraph = 0 }) => {
     <View style={[styles.container, style]} onLayout={onLayout}>
       {width > 0 && height > 0 && (
         <>
+          <Header
+            data={dataWithPaths}
+            selected={currentSelected}
+            maxHeight={height}
+            yPos={y}
+          />
           <View style={styles.headerContainer}>
-            {/* <Header data={current} /> */}
             <Svg width="100%" height="100%">
               <AnimatedPath
                 animatedProps={animatedPathProps}
@@ -93,6 +100,8 @@ const LineChart = ({ data = [], style, initialSelectedGraph = 0 }) => {
               dataWithPaths={dataWithPaths}
               selected={currentSelected}
               maxWidth={width}
+              yPos={y}
+              maxHeight={height * HEIGHT_MULTIPLIER}
             />
           </View>
           <View style={[styles.selection]}>
