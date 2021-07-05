@@ -86,13 +86,15 @@ const PortfolioPieChart = () => {
     key: `${value.ticker}`
   }));
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log("rendering pie chart");
+  }, []);
 
   return (
     <Card style={styles.cardContainer}>
       <Card.Content>
         <PieChart
-          style={styles.pieChart}
+          pieChartStyle={styles.pieChart}
           data={pieData}
           padAngle={0.05}
           innerRadius="75%"

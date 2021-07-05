@@ -7,8 +7,10 @@ import {
   useAnimatedStyle
 } from "react-native-reanimated";
 
-const Header = ({ data, selected, maxHeight, yPos }) => {
-  const selectedGraph = useDerivedValue(() => data[selected.value].data);
+const Header = ({ modifiedData, selected, maxHeight, yPos }) => {
+  const selectedGraph = useDerivedValue(
+    () => modifiedData[selected.value].data
+  );
 
   const price = useDerivedValue(() => {
     const priceForYPos = interpolate(
@@ -30,21 +32,18 @@ const Header = ({ data, selected, maxHeight, yPos }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.values}>
-        <View>
-          <ReText style={styles.value} text={price} />
-        </View>
-        <View>
-          <ReText style={percentChangeStyles} text={percentChange} />
-        </View>
+      <View>
+        <ReText style={styles.value} text={price} />
+      </View>
+      <View>
+        <ReText style={percentChangeStyles} text={percentChange} />
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
-  values: {
+  container: {
     flexDirection: "row",
     justifyContent: "space-between"
   },

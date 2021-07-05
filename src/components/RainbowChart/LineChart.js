@@ -12,21 +12,29 @@ import Reanimated, {
 import { mixPath } from "react-native-redash";
 import Cursor from "./Cursor";
 import Header from "./Header";
+import Skeleton from "../Skeleton";
 
 const AnimatedPath = Reanimated.createAnimatedComponent(Path);
 
-const HEIGHT_OF_LINE_GRAPH = 88;
-const HEIGHT_MULTIPLIER = HEIGHT_OF_LINE_GRAPH / 100;
+const SVG_CONFIG = {
+  fill: "transparent",
+  stroke: "black",
+  strokeWidth: 3
+};
 
-const LineChart = ({ data = [], style, initialSelectedGraph = 0 }) => {
-  const [containerDimensions, setContainerDimensions] = useState({
+const LineChart = ({
+  data = [],
+  chartStyle,
+  initialSelectedGraph = 0,
+  svgConfig = SVG_CONFIG
+}) => {
+  const [chartDimensions, setChartDimensions] = useState({
     width: 0,
-    height: 0,
-    hasBeenCalculated: false
+    height: 0
   });
-  const [dataWithPaths, setDataWithPaths] = useState(data);
+  const [modifiedData, setModifiedData] = useState(data);
 
-  const { width, height, hasBeenCalculated } = containerDimensions;
+  const { width, height } = chartDimensions;
   const buttonWidth = data.length === 0 ? 0 : width / data.length;
 
   const svgPathTransistion = useSharedValue(0);
@@ -34,40 +42,37 @@ const LineChart = ({ data = [], style, initialSelectedGraph = 0 }) => {
   const currentSelected = useSharedValue(initialSelectedGraph);
   const y = useSharedValue(0);
 
-  const animatedLabelOverlay = useAnimatedStyle(() => {
-    return {
+  const animatedLabelOverlay = useAnimatedStyle(
+    () => ({
       transform: [
         { translateX: withTiming(buttonWidth * currentSelected.value) }
       ]
-    };
-  }, [buttonWidth]);
+    }),
+    [buttonWidth]
+  );
 
   const animatedPathProps = useAnimatedProps(() => {
-    const previousPath = dataWithPaths[previousSelected.value].data.path;
-    const currentPath = dataWithPaths[currentSelected.value].data.path;
+    const previousPath = modifiedData[previousSelected.value].data.path;
+    const currentPath = modifiedData[currentSelected.value].data.path;
 
     return {
       d: !previousPath
         ? ""
         : mixPath(svgPathTransistion.value, previousPath, currentPath)
     };
-  }, [dataWithPaths]);
+  }, [modifiedData]);
 
   const onLayout = (event) => {
     const height = event.nativeEvent.layout.height;
     const width = event.nativeEvent.layout.width;
 
-    if (hasBeenCalculated) {
-      return;
-    }
-
-    const formattedData = data.map((graph) => ({
-      ...graph,
-      data: buildGraph(graph.data, width, height * HEIGHT_MULTIPLIER)
+    const formattedData = data.map((d) => ({
+      ...d,
+      data: buildGraph(d.data, width, height)
     }));
 
-    setContainerDimensions({ height, width, hasBeenCalculated: true });
-    setDataWithPaths(formattedData);
+    setChartDimensions({ height, width });
+    setModifiedData(formattedData);
   };
 
   const handleGraphLabelSelect = (index) => {
@@ -77,58 +82,63 @@ const LineChart = ({ data = [], style, initialSelectedGraph = 0 }) => {
     svgPathTransistion.value = withTiming(1);
   };
 
+  if (width === 0 && height === 0) {
+    return (
+      <View onLayout={onLayout} style={[chartStyle]}>
+        <Skeleton style={styles.fullContainerSpace} />
+      </View>
+    );
+  }
+
   return (
-    <View style={[styles.container, style]} onLayout={onLayout}>
-      {width > 0 && height > 0 && (
-        <>
-          <Header
-            data={dataWithPaths}
-            selected={currentSelected}
-            maxHeight={height}
-            yPos={y}
+    <View
+      style={[
+        styles.container,
+        { width: chartStyle.width ? chartStyle.width : "100%" }
+      ]}
+    >
+      <View style={styles.headerContainer}>
+        <Header
+          modifiedData={modifiedData}
+          selected={currentSelected}
+          maxHeight={height}
+          yPos={y}
+        />
+      </View>
+      <View style={[chartStyle]}>
+        <Svg width="100%" height="100%">
+          <AnimatedPath animatedProps={animatedPathProps} {...svgConfig} />
+        </Svg>
+        <Cursor
+          modifiedData={modifiedData}
+          selected={currentSelected}
+          maxWidth={width}
+          yPos={y}
+        />
+      </View>
+      <View style={[styles.bottomLabelContainer]}>
+        <View style={StyleSheet.absoluteFill}>
+          <Reanimated.View
+            style={[
+              styles.backgroundSelection,
+              {
+                width: buttonWidth
+              },
+              animatedLabelOverlay
+            ]}
           />
-          <View style={styles.headerContainer}>
-            <Svg width="100%" height="100%">
-              <AnimatedPath
-                animatedProps={animatedPathProps}
-                fill="transparent"
-                stroke="black"
-                strokeWidth={3}
-              />
-            </Svg>
-            <Cursor
-              dataWithPaths={dataWithPaths}
-              selected={currentSelected}
-              maxWidth={width}
-              yPos={y}
-              maxHeight={height * HEIGHT_MULTIPLIER}
-            />
-          </View>
-          <View style={[styles.selection]}>
-            <View style={StyleSheet.absoluteFill}>
-              <Reanimated.View
-                style={[
-                  styles.backgroundSelection,
-                  {
-                    width: buttonWidth
-                  },
-                  animatedLabelOverlay
-                ]}
-              />
+        </View>
+        {data.map((graph, index) => (
+          <TouchableWithoutFeedback
+            key={graph.label}
+            onPress={() => handleGraphLabelSelect(index)}
+          >
+            <View style={{ width: buttonWidth }}>
+              <Text style={styles.label}>{graph.label}</Text>
             </View>
-            {data.map((graph, index) => (
-              <TouchableWithoutFeedback
-                key={graph.label}
-                onPress={() => handleGraphLabelSelect(index)}
-              >
-                <View style={{ width: buttonWidth }}>
-                  <Text style={styles.label}>{graph.label}</Text>
-                </View>
-              </TouchableWithoutFeedback>
-            ))}
-          </View>
-        </>
-      )}
+          </TouchableWithoutFeedback>
+        ))}
+      </View>
     </View>
   );
 };
@@ -142,18 +152,24 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     borderRadius: 5
   },
-  selection: {
+  bottomLabelContainer: {
     flexDirection: "row",
     alignSelf: "center",
-    width: "100%"
+    width: "100%",
+    marginTop: 10
   },
   label: {
     color: "black",
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
+    letterSpacing: 1
   },
   headerContainer: {
-    height: `${HEIGHT_OF_LINE_GRAPH}%`
+    marginBottom: 10
+  },
+  fullContainerSpace: {
+    width: "100%",
+    height: "100%"
   }
 });
 

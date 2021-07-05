@@ -15,7 +15,7 @@ const ACTIVE_GESTURE_ANIMATION_CONFIG = {
 };
 
 const Cursor = ({
-  dataWithPaths,
+  modifiedData,
   selected,
   size = CURSOR_SIZE,
   maxWidth,
@@ -24,17 +24,17 @@ const Cursor = ({
   const active = useSharedValue(false);
   const x = useSharedValue(0);
 
-  const setXAndYCoordinates = (event) => {
+  function setXAndYCoordinates(event) {
     "worklet";
 
     if (event.x >= 0 && event.x <= maxWidth) {
       x.value = event.x;
-      const path = dataWithPaths[selected.value].data.path;
+      const path = modifiedData[selected.value].data.path;
       if (path) {
         yPos.value = getYForX(path, x.value);
       }
     }
-  };
+  }
 
   const onGestureEvent = useAnimatedGestureHandler(
     {
@@ -45,7 +45,7 @@ const Cursor = ({
       onActive: setXAndYCoordinates,
       onFinish: () => (active.value = false)
     },
-    [dataWithPaths]
+    [modifiedData]
   );
 
   const animatedDotStyles = useAnimatedStyle(
@@ -61,7 +61,7 @@ const Cursor = ({
         }
       ]
     }),
-    [dataWithPaths]
+    [modifiedData]
   );
 
   const animatedVerticalBarStyles = useAnimatedStyle(
@@ -76,7 +76,7 @@ const Cursor = ({
         }
       ]
     }),
-    [dataWithPaths]
+    [modifiedData]
   );
 
   return (

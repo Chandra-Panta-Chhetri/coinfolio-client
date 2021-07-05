@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { View, Platform } from "react-native";
+import React, { useState } from "react";
+import { View, Platform, StyleSheet } from "react-native";
 import * as shape from "d3-shape";
 import Svg, { G, Path, Text } from "react-native-svg";
+import Skeleton from "./Skeleton";
 
 const defaultSortFunc = (a, b) => b.value - a.value;
 const defaultValueAccessorFunc = ({ item }) => item.value;
@@ -23,7 +24,7 @@ const PieChart = ({
   outerRadius,
   labelRadius,
   padAngle = 0,
-  style,
+  pieChartStyle,
   sortFunc = defaultSortFunc,
   valueAccessorFunc = defaultValueAccessorFunc,
   children,
@@ -36,17 +37,13 @@ const PieChart = ({
 }) => {
   const [containerDimensions, setContainerDimensions] = useState({
     height: 0,
-    width: 0,
-    hasBeenCalculated: false
+    width: 0
   });
-  const { height, width, hasBeenCalculated } = containerDimensions;
+  const { height, width } = containerDimensions;
 
   const onLayout = (event) => {
     const height = event.nativeEvent.layout.height;
     const width = event.nativeEvent.layout.width;
-    if (hasBeenCalculated) {
-      return;
-    }
     setContainerDimensions({ height, width, hasBeenCalculated: true });
   };
 
@@ -105,12 +102,16 @@ const PieChart = ({
     React.cloneElement(child, childProps)
   );
 
+  if (width === 0 && height === 0) {
+    return (
+      <View onLayout={onLayout} style={[pieChartStyle]}>
+        <Skeleton style={styles.fullContainerSpace} />
+      </View>
+    );
+  }
+
   return (
-    <View
-      pointerEvents={"box-none"}
-      style={{ ...style, flex: 1 }}
-      onLayout={onLayout}
-    >
+    <View pointerEvents={"box-none"} style={pieChartStyle}>
       {height > 0 && width > 0 && (
         <>
           <Svg
@@ -146,5 +147,12 @@ const PieChart = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  fullContainerSpace: {
+    width: "100%",
+    height: "100%"
+  }
+});
 
 export default PieChart;

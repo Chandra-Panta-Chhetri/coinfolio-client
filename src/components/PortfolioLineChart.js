@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
-import { Card, Title } from "react-native-paper";
+import { StyleSheet, Text } from "react-native";
+import { Card } from "react-native-paper";
 import LineChart from "./RainbowChart/LineChart";
 
 import dummydata from "./RainbowChart/dummydata.json";
@@ -31,14 +31,12 @@ const graphs = [
 const PortfolioLineChart = () => {
   const [data, setData] = useState(graphs);
 
-  useEffect(() => {
-    console.log("in useffect");
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <Card style={styles.cardContainer}>
       <Card.Content style={styles.cardBody}>
-        <LineChart data={data} style={styles.lineChart} />
+        <LineChart data={data} chartStyle={styles.lineChart} />
       </Card.Content>
     </Card>
   );
