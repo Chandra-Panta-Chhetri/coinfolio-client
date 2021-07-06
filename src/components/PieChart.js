@@ -3,11 +3,11 @@ import { View, Platform, StyleSheet } from "react-native";
 import * as shape from "d3-shape";
 import Svg, { G, Path, Text } from "react-native-svg";
 import Skeleton from "./Skeleton";
+import CONSTANTS from "../Constants";
 
 const defaultSortFunc = (a, b) => b.value - a.value;
 const defaultValueAccessorFunc = ({ item }) => item.value;
 const defaultGetInnerLabelText = () => "";
-const MAX_RADIUS_OFFSET = 2;
 
 const calculateRadius = (radiusFromProp, maxRadius, defaultRadius) => {
   if (typeof radiusFromProp === "string") {
@@ -23,14 +23,14 @@ const PieChart = ({
   innerRadius,
   outerRadius,
   labelRadius,
-  padAngle = 0,
+  padAngle = CONSTANTS.PIE_CHART_PAD_ANGLE,
   pieChartStyle,
   sortFunc = defaultSortFunc,
   valueAccessorFunc = defaultValueAccessorFunc,
   children,
-  startAngle = 0,
-  endAngle = Math.PI * 2,
-  selectedElevation = 5,
+  startAngle = CONSTANTS.PIE_CHART_START_ANGLE,
+  endAngle = CONSTANTS.PIE_CHART_END_ANGLE,
+  selectedElevation = CONSTANTS.PIE_CHART_SELECTED_ELEVATION,
   selectedSlice = null,
   innerLabelConfig = {},
   getInnerLabelText = defaultGetInnerLabelText
@@ -48,7 +48,8 @@ const PieChart = ({
   };
 
   const maxRadius =
-    Math.min(width, height) / 2 - (selectedElevation + MAX_RADIUS_OFFSET);
+    Math.min(width, height) / 2 -
+    (selectedElevation + CONSTANTS.PIE_CHART_MAX_RADIUS_OFFSET);
 
   const _outerRadius = calculateRadius(outerRadius, maxRadius, maxRadius);
   const _innerRadius = calculateRadius(innerRadius, maxRadius, 0);

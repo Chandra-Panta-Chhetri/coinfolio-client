@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { Card } from "react-native-paper";
 import LineChart from "./RainbowChart/LineChart";
 
@@ -35,7 +35,7 @@ const PortfolioLineChart = () => {
 
   return (
     <Card style={styles.cardContainer}>
-      <Card.Content style={styles.cardBody}>
+      <Card.Content>
         <LineChart data={data} chartStyle={styles.lineChart} />
       </Card.Content>
     </Card>
@@ -44,12 +44,7 @@ const PortfolioLineChart = () => {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    marginBottom: 10,
     borderRadius: 13
-  },
-  cardBody: {
-    flexDirection: "row",
-    alignItems: "center"
   },
   lineChart: {
     width: "100%",

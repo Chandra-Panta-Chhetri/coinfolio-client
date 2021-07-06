@@ -24,7 +24,12 @@ const CONSTANTS = {
     dy: "0.50em",
     fontSize: 16,
     fontWeight: "bold"
-  }
+  },
+  PIE_CHART_MAX_RADIUS_OFFSET: 2,
+  PIE_CHART_SELECTED_ELEVATION: 5,
+  PIE_CHART_END_ANGLE: Math.PI * 2,
+  PIE_CHART_START_ANGLE: 0,
+  PIE_CHART_PAD_ANGLE: 0
 };
 
 export default CONSTANTS;

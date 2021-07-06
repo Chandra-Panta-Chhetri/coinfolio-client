@@ -15,6 +15,7 @@ const Labels = ({
       contentContainerStyle={styles.pieChartLabels}
       horizontal
       showsHorizontalScrollIndicator={false}
+      style={styles.scrollViewContainer}
     >
       {data.map((pieSlice, i) => {
         return (
@@ -107,16 +108,18 @@ const PortfolioPieChart = () => {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    marginBottom: 10,
     borderRadius: 13
   },
   pieChart: {
-    height: 180,
+    height: 190,
     width: "100%"
   },
   pieChartLabels: {
     marginTop: 10,
     flexGrow: 1
+  },
+  scrollViewContainer: {
+    marginVertical: 6
   },
   pieChartLabelContainer: {
     flexDirection: "row",
