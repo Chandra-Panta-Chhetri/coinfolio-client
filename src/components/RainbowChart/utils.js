@@ -1,11 +1,15 @@
 import * as shape from "d3-shape";
 import { scaleLinear } from "d3-scale";
 import { parse } from "react-native-redash";
+import CONSTANTS from "../../Constants";
 
-const MAX_NUM_POINTS_TO_SHOW = 60;
-
-export const buildGraph = (datapoints, xAxisSize = 0, yAxisSize = 0) => {
-  const priceList = datapoints.prices.slice(0, MAX_NUM_POINTS_TO_SHOW);
+export const buildGraph = (
+  datapoints,
+  xAxisSize = 0,
+  yAxisSize = 0,
+  maxPointsToShow = CONSTANTS.LINE_CHART_MAX_NUM_POINTS_TO_SHOW
+) => {
+  const priceList = datapoints.prices.slice(0, maxPointsToShow);
   const formattedValues = priceList.map((price) => [
     parseFloat(price[0]),
     price[1]

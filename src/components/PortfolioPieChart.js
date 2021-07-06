@@ -3,14 +3,7 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import { Card, Paragraph } from "react-native-paper";
 import PieChart from "./PieChart";
 import TouchableNativeOpacity from "./TouchableNativeOpacity";
-
-const innerLabelConfig = {
-  textAnchor: "middle",
-  fill: "black",
-  dy: "0.50em",
-  fontSize: 16,
-  fontWeight: "bold"
-};
+import CONSTANTS from "../Constants";
 
 const Labels = ({
   data = [],
@@ -99,7 +92,7 @@ const PortfolioPieChart = () => {
           padAngle={0.05}
           innerRadius="75%"
           selectedSlice={selectedSlice}
-          innerLabelConfig={innerLabelConfig}
+          innerLabelConfig={CONSTANTS.PIE_CHART_INNER_LABEL_CONFIG}
           getInnerLabelText={getInnerLabelText}
         />
         <Labels

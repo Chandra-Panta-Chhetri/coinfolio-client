@@ -8,16 +8,12 @@ import Reanimated, {
   withSpring
 } from "react-native-reanimated";
 import { getYForX } from "react-native-redash";
-
-const CURSOR_SIZE = 15;
-const ACTIVE_GESTURE_ANIMATION_CONFIG = {
-  overshootClamping: true
-};
+import CONSTANTS from "../../Constants";
 
 const Cursor = ({
   modifiedData,
   selected,
-  size = CURSOR_SIZE,
+  size = CONSTANTS.LINE_CHART_CURSOR_SIZE,
   maxWidth,
   yPos
 }) => {
@@ -48,36 +44,30 @@ const Cursor = ({
     [modifiedData]
   );
 
-  const animatedDotStyles = useAnimatedStyle(
-    () => ({
-      transform: [
-        { translateX: x.value - size / 2 },
-        { translateY: yPos.value - size / 2 },
-        {
-          scale: withSpring(
-            active.value ? 1 : 0,
-            ACTIVE_GESTURE_ANIMATION_CONFIG
-          )
-        }
-      ]
-    }),
-    [modifiedData]
-  );
+  const animatedDotStyles = useAnimatedStyle(() => ({
+    transform: [
+      { translateX: x.value - size / 2 },
+      { translateY: yPos.value - size / 2 },
+      {
+        scale: withSpring(
+          active.value ? 1 : 0,
+          CONSTANTS.LINE_CHART_ACTIVE_GESTURE_ANIMATION_CONFIG
+        )
+      }
+    ]
+  }));
 
-  const animatedVerticalBarStyles = useAnimatedStyle(
-    () => ({
-      transform: [
-        { translateX: x.value },
-        {
-          scale: withSpring(
-            active.value ? 1 : 0,
-            ACTIVE_GESTURE_ANIMATION_CONFIG
-          )
-        }
-      ]
-    }),
-    [modifiedData]
-  );
+  const animatedVerticalBarStyles = useAnimatedStyle(() => ({
+    transform: [
+      { translateX: x.value },
+      {
+        scale: withSpring(
+          active.value ? 1 : 0,
+          CONSTANTS.LINE_CHART_ACTIVE_GESTURE_ANIMATION_CONFIG
+        )
+      }
+    ]
+  }));
 
   return (
     <PanGestureHandler onGestureEvent={onGestureEvent}>

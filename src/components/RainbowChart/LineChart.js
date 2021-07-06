@@ -13,20 +13,15 @@ import { mixPath } from "react-native-redash";
 import Cursor from "./Cursor";
 import Header from "./Header";
 import Skeleton from "../Skeleton";
+import CONSTANTS from "../../Constants";
 
 const AnimatedPath = Reanimated.createAnimatedComponent(Path);
-
-const SVG_CONFIG = {
-  fill: "transparent",
-  stroke: "black",
-  strokeWidth: 3
-};
 
 const LineChart = ({
   data = [],
   chartStyle,
   initialSelectedGraph = 0,
-  svgConfig = SVG_CONFIG
+  svgConfig = CONSTANTS.LINE_CHART_SVG_CONFIG
 }) => {
   const [chartDimensions, setChartDimensions] = useState({
     width: 0,
@@ -71,8 +66,8 @@ const LineChart = ({
       data: buildGraph(d.data, width, height)
     }));
 
-    setChartDimensions({ height, width });
     setModifiedData(formattedData);
+    setChartDimensions({ height, width });
   };
 
   const handleGraphLabelSelect = (index) => {

@@ -4,9 +4,9 @@ import { useTheme } from "react-native-paper";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
-  withTiming,
-  Easing
+  withTiming
 } from "react-native-reanimated";
+import CONSTANTS from "../Constants";
 
 const getBorderStyles = (tabIndex, totalTabs) =>
   tabIndex === 0
@@ -14,11 +14,6 @@ const getBorderStyles = (tabIndex, totalTabs) =>
     : tabIndex + 1 === totalTabs
     ? styles.noLeftBorders
     : { ...styles.noRightBorders, ...styles.noLeftBorders };
-
-const animationConfig = {
-  duration: 280,
-  easing: Easing.inOut(Easing.quad)
-};
 
 const Tabs = ({ children, initialActiveTab = 0 }) => {
   const numTabs = children.length;
@@ -46,8 +41,11 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
 
   const handleActiveTabSlide = (newTabIndex) => {
     translateX.value = tabHeadingContainerWidth;
-    leftPosition.value = withTiming(newTabIndex * tabWidth, animationConfig);
-    translateX.value = withTiming(0, animationConfig);
+    leftPosition.value = withTiming(
+      newTabIndex * tabWidth,
+      CONSTANTS.TABS_SLIDE_ANIMATION_CONFIG
+    );
+    translateX.value = withTiming(0, CONSTANTS.TABS_SLIDE_ANIMATION_CONFIG);
   };
 
   const handleTabClick = (tabIndex) => {

@@ -10,9 +10,7 @@ import {
 import { startGainersLosersFetch } from "../redux/summary/summary.actions";
 import GainerLoserCard from "./GainerLoserCard";
 import GainerLoserCardSkeleton from "./GainerLoserCardSkeleton";
-
-const NUM_SKELETON_TO_SHOW = 4;
-const DUMMY_SKELETON_ARRAY = Array(NUM_SKELETON_TO_SHOW).fill("1");
+import CONSTANTS from "../Constants";
 
 const GainersLosers = ({
   navigation,
@@ -21,6 +19,9 @@ const GainersLosers = ({
   fetchGainersLosers
 }) => {
   const navigateToMarketScreen = () => navigation.navigate("Market");
+  const dummySkeletonArray = Array(
+    CONSTANTS.GAINERS_LOSERS_NUM_SKELETON_TO_SHOW
+  ).fill("1");
 
   return (
     <View style={styles.container}>
@@ -41,7 +42,7 @@ const GainersLosers = ({
       {isLoading && gainersLosers.length === 0 && (
         <FlatList
           style={styles.gainersLosersCards}
-          data={DUMMY_SKELETON_ARRAY}
+          data={dummySkeletonArray}
           keyExtractor={(s, index) => s + index}
           renderItem={() => <GainerLoserCardSkeleton />}
           scrollEnabled={false}

@@ -10,12 +10,13 @@ import {
 import { startNewsSummaryFetch } from "../redux/summary/summary.actions";
 import NewsCard from "./NewsCard";
 import NewsCardSkeleton from "./NewsCardSkeleton";
-
-const NUM_SKELETON_TO_SHOW = 3;
-const DUMMY_SKELETON_ARRAY = Array(NUM_SKELETON_TO_SHOW).fill("1");
+import CONSTANTS from "../Constants";
 
 const NewsSummary = ({ navigation, news, isLoading, fetchNewsSummary }) => {
   const navigateToNewsScreen = () => navigation.navigate("News");
+  const dummySkeletonArray = Array(
+    CONSTANTS.NEWS_SUMMARY_NUM_SKELETON_TO_SHOW
+  ).fill("1");
 
   return (
     <View style={styles.container}>
@@ -34,7 +35,7 @@ const NewsSummary = ({ navigation, news, isLoading, fetchNewsSummary }) => {
       {isLoading && news.length === 0 && (
         <FlatList
           style={styles.newsContainer}
-          data={DUMMY_SKELETON_ARRAY}
+          data={dummySkeletonArray}
           keyExtractor={(s, index) => s + index}
           renderItem={() => <NewsCardSkeleton />}
           scrollEnabled={false}

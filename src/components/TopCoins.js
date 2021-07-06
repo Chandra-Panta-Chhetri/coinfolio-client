@@ -10,12 +10,13 @@ import {
 import { startTopCoinsFetch } from "../redux/summary/summary.actions";
 import TopCoinCard from "./TopCoinCard";
 import TopCoinSkeletonCard from "./TopCoinCardSkeleton";
-
-const NUM_SKELETON_TO_SHOW = 10;
-const DUMMY_SKELETON_ARRAY = Array(NUM_SKELETON_TO_SHOW).fill("1");
+import CONSTANTS from "../Constants";
 
 const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
   const navigateToMarketScreen = () => navigation.navigate("Market");
+  const dummySkeletonArray = Array(
+    CONSTANTS.TOP_COINS_NUM_SKELETON_TO_SHOW
+  ).fill("1");
 
   return (
     <View style={styles.container}>
@@ -39,7 +40,7 @@ const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
           horizontal
           showsHorizontalScrollIndicator={false}
           style={styles.topCoinCards}
-          data={DUMMY_SKELETON_ARRAY}
+          data={dummySkeletonArray}
           keyExtractor={(s, index) => s + index}
           renderItem={() => <TopCoinSkeletonCard />}
           listKey="TopCoinsSkeletonList"
