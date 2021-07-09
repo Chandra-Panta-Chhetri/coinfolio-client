@@ -7,21 +7,27 @@ import {
   useAnimatedStyle
 } from "react-native-reanimated";
 
-const Header = ({ modifiedData, selected, maxHeight, yPos }) => {
-  const selectedGraph = useDerivedValue(
-    () => modifiedData[selected.value].data
-  );
-
+const Header = ({ selectedGraph, maxHeight, yPos }) => {
   const price = useDerivedValue(() => {
-    const priceForYPos = interpolate(
-      yPos.value,
-      [maxHeight, 0],
-      [selectedGraph.value.minPrice, selectedGraph.value.maxPrice]
-    );
-    return `$ ${round(priceForYPos, 2)}`;
+    if (selectedGraph.value.labelCoordinates) {
+      const priceForYPos = interpolate(
+        yPos.value,
+        [maxHeight, 0],
+        [
+          selectedGraph.value.labelCoordinates[1].val,
+          selectedGraph.value.labelCoordinates[0].val
+        ]
+      );
+      return `$ ${round(priceForYPos, 2)}`;
+    }
+    return "";
   });
 
   const percentChange = useDerivedValue(
+    () => selectedGraph.value.percentChange || 0
+  );
+
+  const percentChangeLabel = useDerivedValue(
     () => `${round(selectedGraph.value.percentChange, 3)}%`
   );
 
@@ -36,7 +42,7 @@ const Header = ({ modifiedData, selected, maxHeight, yPos }) => {
         <ReText style={styles.value} text={price} />
       </View>
       <View>
-        <ReText style={percentChangeStyles} text={percentChange} />
+        <ReText style={percentChangeStyles} text={percentChangeLabel} />
       </View>
     </View>
   );

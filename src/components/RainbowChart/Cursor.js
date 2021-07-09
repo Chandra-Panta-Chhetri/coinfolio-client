@@ -11,38 +11,33 @@ import { getYForX } from "react-native-redash";
 import CONSTANTS from "../../Constants";
 
 const Cursor = ({
-  modifiedData,
-  selected,
+  selectedGraph,
   size = CONSTANTS.LINE_CHART_CURSOR_SIZE,
   maxWidth,
-  yPos
+  yPos,
+  isPanGestureActive
 }) => {
-  const active = useSharedValue(false);
   const x = useSharedValue(0);
 
   function setXAndYCoordinates(event) {
     "worklet";
-
     if (event.x >= 0 && event.x <= maxWidth) {
       x.value = event.x;
-      const path = modifiedData[selected.value].data.path;
+      const path = selectedGraph.value.path;
       if (path) {
         yPos.value = getYForX(path, x.value);
       }
     }
   }
 
-  const onGestureEvent = useAnimatedGestureHandler(
-    {
-      onStart: (event) => {
-        active.value = true;
-        setXAndYCoordinates(event);
-      },
-      onActive: setXAndYCoordinates,
-      onFinish: () => (active.value = false)
+  const onGestureEvent = useAnimatedGestureHandler({
+    onStart: (event) => {
+      isPanGestureActive.value = true;
+      setXAndYCoordinates(event);
     },
-    [modifiedData]
-  );
+    onActive: setXAndYCoordinates,
+    onFinish: () => (isPanGestureActive.value = false)
+  });
 
   const animatedDotStyles = useAnimatedStyle(() => ({
     transform: [
@@ -50,7 +45,7 @@ const Cursor = ({
       { translateY: yPos.value - size / 2 },
       {
         scale: withSpring(
-          active.value ? 1 : 0,
+          isPanGestureActive.value ? 1 : 0,
           CONSTANTS.LINE_CHART_ACTIVE_GESTURE_ANIMATION_CONFIG
         )
       }
@@ -62,7 +57,7 @@ const Cursor = ({
       { translateX: x.value },
       {
         scale: withSpring(
-          active.value ? 1 : 0,
+          isPanGestureActive.value ? 1 : 0,
           CONSTANTS.LINE_CHART_ACTIVE_GESTURE_ANIMATION_CONFIG
         )
       }

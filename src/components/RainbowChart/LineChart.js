@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, TextInput } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { buildGraph } from "./utils";
@@ -7,12 +7,14 @@ import Reanimated, {
   useAnimatedStyle,
   useAnimatedProps,
   useSharedValue,
-  withTiming
+  withTiming,
+  useDerivedValue
 } from "react-native-reanimated";
 import { mixPath } from "react-native-redash";
 import Cursor from "./Cursor";
 import Header from "./Header";
 import Skeleton from "../Skeleton";
+import ChartLabelItem from "./ChartLabelItem";
 import CONSTANTS from "../../Constants";
 
 const AnimatedPath = Reanimated.createAnimatedComponent(Path);
@@ -29,6 +31,19 @@ const LineChart = ({
   });
   const [modifiedData, setModifiedData] = useState(data);
 
+  const onLayout = (event) => {
+    const height = event.nativeEvent.layout.height;
+    const width = event.nativeEvent.layout.width;
+
+    const formattedData = data.map((d) => ({
+      ...d,
+      data: buildGraph(d.data, width, height)
+    }));
+
+    setModifiedData([...formattedData]);
+    setChartDimensions({ height, width });
+  };
+
   const { width, height } = chartDimensions;
   const buttonWidth = data.length === 0 ? 0 : width / data.length;
 
@@ -36,6 +51,12 @@ const LineChart = ({
   const previousSelected = useSharedValue(initialSelectedGraph);
   const currentSelected = useSharedValue(initialSelectedGraph);
   const y = useSharedValue(0);
+  const isPanGestureActive = useSharedValue(false);
+
+  const selectedGraph = useDerivedValue(
+    () => modifiedData[currentSelected.value].data,
+    [modifiedData]
+  );
 
   const animatedLabelOverlay = useAnimatedStyle(
     () => ({
@@ -53,22 +74,12 @@ const LineChart = ({
     return {
       d: !previousPath
         ? ""
-        : mixPath(svgPathTransistion.value, previousPath, currentPath)
+        : mixPath(svgPathTransistion.value, previousPath, currentPath),
+      strokeWidth: isPanGestureActive.value
+        ? svgConfig.strokeWidth + 1
+        : svgConfig.strokeWidth
     };
-  }, [modifiedData]);
-
-  const onLayout = (event) => {
-    const height = event.nativeEvent.layout.height;
-    const width = event.nativeEvent.layout.width;
-
-    const formattedData = data.map((d) => ({
-      ...d,
-      data: buildGraph(d.data, width, height)
-    }));
-
-    setModifiedData(formattedData);
-    setChartDimensions({ height, width });
-  };
+  }, [modifiedData, svgConfig]);
 
   const handleGraphLabelSelect = (index) => {
     svgPathTransistion.value = 0;
@@ -93,23 +104,27 @@ const LineChart = ({
       ]}
     >
       <View style={styles.headerContainer}>
-        <Header
-          modifiedData={modifiedData}
-          selected={currentSelected}
-          maxHeight={height}
-          yPos={y}
-        />
+        <Header maxHeight={height} yPos={y} selectedGraph={selectedGraph} />
       </View>
-      <View style={[chartStyle]}>
+      <View style={[chartStyle, { position: "relative" }]}>
         <Svg width="100%" height="100%">
           <AnimatedPath animatedProps={animatedPathProps} {...svgConfig} />
         </Svg>
         <Cursor
-          modifiedData={modifiedData}
-          selected={currentSelected}
           maxWidth={width}
           yPos={y}
+          isPanGestureActive={isPanGestureActive}
+          selectedGraph={selectedGraph}
         />
+        {[1, 2].map((_, i) => (
+          <ChartLabelItem
+            key={i}
+            isPanGestureActive={isPanGestureActive}
+            indexOfCoordinates={i}
+            selectedGraph={selectedGraph}
+            maxWidth={width}
+          />
+        ))}
       </View>
       <View style={[styles.bottomLabelContainer]}>
         <View style={StyleSheet.absoluteFill}>
@@ -151,7 +166,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignSelf: "center",
     width: "100%",
-    marginTop: 10
+    marginTop: 18
   },
   label: {
     color: "black",
@@ -160,7 +175,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1
   },
   headerContainer: {
-    marginBottom: 10
+    marginBottom: 18
   },
   fullContainerSpace: {
     width: "100%",
