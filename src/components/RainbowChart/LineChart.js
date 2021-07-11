@@ -51,6 +51,7 @@ const LineChart = ({
   const previousSelected = useSharedValue(initialSelectedGraph);
   const currentSelected = useSharedValue(initialSelectedGraph);
   const y = useSharedValue(0);
+  const x = useSharedValue(0);
   const isPanGestureActive = useSharedValue(false);
 
   const selectedGraph = useDerivedValue(
@@ -104,7 +105,13 @@ const LineChart = ({
       ]}
     >
       <View style={styles.headerContainer}>
-        <Header maxHeight={height} yPos={y} selectedGraph={selectedGraph} />
+        <Header
+          maxHeight={height}
+          yPos={y}
+          selectedGraph={selectedGraph}
+          xPos={x}
+          maxWidth={width}
+        />
       </View>
       <View style={[chartStyle, { position: "relative" }]}>
         <Svg width="100%" height="100%">
@@ -115,6 +122,7 @@ const LineChart = ({
           yPos={y}
           isPanGestureActive={isPanGestureActive}
           selectedGraph={selectedGraph}
+          xPos={x}
         />
         {[1, 2].map((_, i) => (
           <ChartLabelItem

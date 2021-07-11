@@ -7,7 +7,12 @@ import {
   useAnimatedStyle
 } from "react-native-reanimated";
 
-const Header = ({ selectedGraph, maxHeight, yPos }) => {
+function formatTime(date) {
+  "worklet";
+  return new Date(date);
+}
+
+const Header = ({ selectedGraph, maxHeight, yPos, maxWidth, xPos }) => {
   const price = useDerivedValue(() => {
     if (selectedGraph.value.labelCoordinates) {
       const priceForYPos = interpolate(
@@ -19,6 +24,18 @@ const Header = ({ selectedGraph, maxHeight, yPos }) => {
         ]
       );
       return `$ ${round(priceForYPos, 2)}`;
+    }
+    return "";
+  });
+
+  const time = useDerivedValue(() => {
+    if (selectedGraph.value.scaleX) {
+      const timeForXPos = interpolate(
+        xPos.value,
+        [0, maxWidth],
+        selectedGraph.value.scaleX.domain
+      );
+      return `${formatTime(timeForXPos)}`;
     }
     return "";
   });
@@ -39,6 +56,7 @@ const Header = ({ selectedGraph, maxHeight, yPos }) => {
   return (
     <View style={styles.container}>
       <View>
+        <ReText style={styles.value} text={time} />
         <ReText style={styles.value} text={price} />
       </View>
       <View>

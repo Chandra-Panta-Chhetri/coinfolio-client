@@ -42,12 +42,10 @@ export const buildGraph = (
   ]);
   const extremas = findMaxAndMinY(formattedValues);
   const dates = formattedValues.map((value) => value[1]);
-  const scaleX = scaleLinear()
-    .domain([Math.min(...dates), Math.max(...dates)])
-    .range([0, xAxisSize]);
-  const scaleY = scaleLinear()
-    .domain([extremas.minVal, extremas.maxVal])
-    .range([yAxisSize, 0]);
+  const scaleXDomain = [Math.min(...dates), Math.max(...dates)];
+  const scaleYDomain = [extremas.minVal, extremas.maxVal];
+  const scaleX = scaleLinear().domain(scaleXDomain).range([0, xAxisSize]);
+  const scaleY = scaleLinear().domain(scaleYDomain).range([yAxisSize, 0]);
 
   const svgPath = shape
     .line()
@@ -69,6 +67,12 @@ export const buildGraph = (
         y: yAxisSize - 6,
         val: extremas.minVal
       }
-    ]
+    ],
+    scaleX: {
+      domain: scaleXDomain
+    },
+    scaleY: {
+      domain: scaleYDomain
+    }
   };
 };

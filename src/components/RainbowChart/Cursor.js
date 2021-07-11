@@ -15,17 +15,16 @@ const Cursor = ({
   size = CONSTANTS.LINE_CHART_CURSOR_SIZE,
   maxWidth,
   yPos,
-  isPanGestureActive
+  isPanGestureActive,
+  xPos
 }) => {
-  const x = useSharedValue(0);
-
   function setXAndYCoordinates(event) {
     "worklet";
     if (event.x >= 0 && event.x <= maxWidth) {
-      x.value = event.x;
+      xPos.value = event.x;
       const path = selectedGraph.value.path;
       if (path) {
-        yPos.value = getYForX(path, x.value);
+        yPos.value = getYForX(path, xPos.value);
       }
     }
   }
@@ -41,7 +40,7 @@ const Cursor = ({
 
   const animatedDotStyles = useAnimatedStyle(() => ({
     transform: [
-      { translateX: x.value - size / 2 },
+      { translateX: xPos.value - size / 2 },
       { translateY: yPos.value - size / 2 },
       {
         scale: withSpring(
@@ -54,7 +53,7 @@ const Cursor = ({
 
   const animatedVerticalBarStyles = useAnimatedStyle(() => ({
     transform: [
-      { translateX: x.value },
+      { translateX: xPos.value },
       {
         scale: withSpring(
           isPanGestureActive.value ? 1 : 0,
