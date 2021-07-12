@@ -7,9 +7,22 @@ import {
   useAnimatedStyle
 } from "react-native-reanimated";
 
+function formatAMPM(date) {
+  "worklet";
+  const hours = date.getHours() <= 12 ? date.getHours() : date.getHours() - 12;
+  const formattedHour = hours < 10 ? "0" + hours : hours;
+  const minutes =
+    date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+  const amOrPm = date.getHours() >= 12 ? "PM" : "AM";
+  return formattedHour + ":" + minutes + " " + amOrPm;
+}
+
 function formatTime(date) {
   "worklet";
-  return new Date(date);
+  const jsDate = new Date(date * 1000);
+  const dateStr = jsDate.toDateString().split(" ").slice(1, 4).join(" ");
+  const timeStr = formatAMPM(jsDate);
+  return `${dateStr} ${timeStr}`;
 }
 
 const Header = ({ selectedGraph, maxHeight, yPos, maxWidth, xPos }) => {

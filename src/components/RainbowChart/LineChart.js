@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, TextInput } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { buildGraph } from "./utils";
+import { buildGraph } from "./chart-utils";
 import Reanimated, {
   useAnimatedStyle,
   useAnimatedProps,
@@ -14,7 +14,7 @@ import { mixPath } from "react-native-redash";
 import Cursor from "./Cursor";
 import Header from "./Header";
 import Skeleton from "../Skeleton";
-import ChartLabelItem from "./ChartLabelItem";
+import Label from "./Label";
 import CONSTANTS from "../../Constants";
 
 const AnimatedPath = Reanimated.createAnimatedComponent(Path);
@@ -32,20 +32,20 @@ const LineChart = ({
   const [modifiedData, setModifiedData] = useState(data);
 
   const onLayout = (event) => {
-    const height = event.nativeEvent.layout.height;
-    const width = event.nativeEvent.layout.width;
+    const chartHeight = event.nativeEvent.layout.height;
+    const chartWidth = event.nativeEvent.layout.width;
 
     const formattedData = data.map((d) => ({
-      ...d,
-      data: buildGraph(d.data, width, height)
+      label: d.label,
+      data: buildGraph(d.data, chartWidth, chartHeight)
     }));
 
-    setModifiedData([...formattedData]);
-    setChartDimensions({ height, width });
+    setModifiedData(formattedData);
+    setChartDimensions({ height: chartHeight, width: chartWidth });
   };
 
   const { width, height } = chartDimensions;
-  const buttonWidth = data.length === 0 ? 0 : width / data.length;
+  const buttonWidth = data.length && width / data.length;
 
   const svgPathTransistion = useSharedValue(0);
   const previousSelected = useSharedValue(initialSelectedGraph);
@@ -83,6 +83,7 @@ const LineChart = ({
   }, [modifiedData, svgConfig]);
 
   const handleGraphLabelSelect = (index) => {
+    if (currentSelected.value === index) return;
     svgPathTransistion.value = 0;
     previousSelected.value = currentSelected.value;
     currentSelected.value = index;
@@ -98,12 +99,7 @@ const LineChart = ({
   }
 
   return (
-    <View
-      style={[
-        styles.container,
-        { width: chartStyle.width ? chartStyle.width : "100%" }
-      ]}
-    >
+    <View style={[styles.container, { width: chartStyle.width || "100%" }]}>
       <View style={styles.headerContainer}>
         <Header
           maxHeight={height}
@@ -114,7 +110,7 @@ const LineChart = ({
         />
       </View>
       <View style={[chartStyle, { position: "relative" }]}>
-        <Svg width="100%" height="100%">
+        <Svg style={styles.fullContainerSpace}>
           <AnimatedPath animatedProps={animatedPathProps} {...svgConfig} />
         </Svg>
         <Cursor
@@ -125,7 +121,7 @@ const LineChart = ({
           xPos={x}
         />
         {[1, 2].map((_, i) => (
-          <ChartLabelItem
+          <Label
             key={i}
             isPanGestureActive={isPanGestureActive}
             indexOfCoordinates={i}
@@ -146,13 +142,13 @@ const LineChart = ({
             ]}
           />
         </View>
-        {data.map((graph, index) => (
+        {data.map((d, i) => (
           <TouchableWithoutFeedback
-            key={graph.label}
-            onPress={() => handleGraphLabelSelect(index)}
+            key={d.label}
+            onPress={() => handleGraphLabelSelect(i)}
           >
             <View style={{ width: buttonWidth }}>
-              <Text style={styles.label}>{graph.label}</Text>
+              <Text style={styles.label}>{d.label}</Text>
             </View>
           </TouchableWithoutFeedback>
         ))}
