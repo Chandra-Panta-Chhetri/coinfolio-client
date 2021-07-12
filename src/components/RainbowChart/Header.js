@@ -36,7 +36,7 @@ const Header = ({ selectedGraph, maxHeight, yPos, maxWidth, xPos }) => {
           selectedGraph.value.labelCoordinates[0].val
         ]
       );
-      return `$ ${round(priceForYPos, 2)}`;
+      return `$${round(priceForYPos, 2)}`;
     }
     return "";
   });
@@ -61,31 +61,32 @@ const Header = ({ selectedGraph, maxHeight, yPos, maxWidth, xPos }) => {
     () => `${round(selectedGraph.value.percentChange, 3)}%`
   );
 
-  const percentChangeStyles = useAnimatedStyle(() => ({
+  const percentChangeStyle = useAnimatedStyle(() => ({
     fontWeight: "bold",
-    color: percentChange.value > 0 ? "green" : "red"
+    color: percentChange.value > 0 ? "green" : "red",
+    fontSize: 15
   }));
 
   return (
-    <View style={styles.container}>
-      <View>
-        <ReText style={styles.value} text={time} />
-        <ReText style={styles.value} text={price} />
+    <>
+      <ReText style={styles.bold} text={time} />
+      <View style={styles.priceAndPercent}>
+        <ReText style={styles.bold} text={price} />
+        <ReText style={percentChangeStyle} text={percentChangeLabel} />
       </View>
-      <View>
-        <ReText style={percentChangeStyles} text={percentChangeLabel} />
-      </View>
-    </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  priceAndPercent: {
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    alignItems: "center"
   },
-  value: {
-    fontWeight: "bold"
+  bold: {
+    fontWeight: "bold",
+    fontSize: 15
   }
 });
 

@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignSelf: "center",
     width: "100%",
-    marginTop: 18
+    marginTop: 24
   },
   label: {
     color: "black",
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1
   },
   headerContainer: {
-    marginBottom: 18
+    marginBottom: 20
   },
   fullContainerSpace: {
     width: "100%",

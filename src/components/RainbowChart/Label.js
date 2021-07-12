@@ -60,7 +60,10 @@ const ChartLabelItem = ({
 
   return (
     <Reanimated.View style={animatedStyles} onLayout={onLayout}>
-      <ReText text={labelValue} style={{ textAlign: "center" }} />
+      <ReText
+        text={labelValue}
+        style={{ textAlign: "center", fontSize: 15, fontWeight: "bold" }}
+      />
     </Reanimated.View>
   );
 };
