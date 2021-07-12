@@ -68,6 +68,10 @@ const LineChart = ({
     [buttonWidth]
   );
 
+  const animatedTimeFilterStyle = useAnimatedStyle(() => ({
+    opacity: withTiming(isPanGestureActive.value ? 0 : 1)
+  }));
+
   const animatedPathProps = useAnimatedProps(() => {
     const previousPath = modifiedData[previousSelected.value].data.path;
     const currentPath = modifiedData[currentSelected.value].data.path;
@@ -130,7 +134,9 @@ const LineChart = ({
           />
         ))}
       </View>
-      <View style={[styles.bottomLabelContainer]}>
+      <Reanimated.View
+        style={[styles.bottomLabelContainer, animatedTimeFilterStyle]}
+      >
         <View style={StyleSheet.absoluteFill}>
           <Reanimated.View
             style={[
@@ -152,7 +158,7 @@ const LineChart = ({
             </View>
           </TouchableWithoutFeedback>
         ))}
-      </View>
+      </Reanimated.View>
     </View>
   );
 };
