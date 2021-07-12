@@ -16,7 +16,8 @@ const Cursor = ({
   maxWidth,
   yPos,
   isPanGestureActive,
-  xPos
+  xPos,
+  hasBeenCalculated
 }) => {
   function setXAndYCoordinates(event) {
     "worklet";
@@ -31,10 +32,14 @@ const Cursor = ({
 
   const onGestureEvent = useAnimatedGestureHandler({
     onStart: (event) => {
+      if (!hasBeenCalculated.value) return;
       isPanGestureActive.value = true;
       setXAndYCoordinates(event);
     },
-    onActive: setXAndYCoordinates,
+    onActive: (event) => {
+      if (!hasBeenCalculated.value) return;
+      setXAndYCoordinates(event);
+    },
     onFinish: () => (isPanGestureActive.value = false)
   });
 

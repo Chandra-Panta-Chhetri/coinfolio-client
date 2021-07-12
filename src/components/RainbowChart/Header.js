@@ -25,7 +25,14 @@ function formatTime(date) {
   return `${dateStr} ${timeStr}`;
 }
 
-const Header = ({ selectedGraph, maxHeight, yPos, maxWidth, xPos }) => {
+const Header = ({
+  selectedGraph,
+  maxHeight,
+  yPos,
+  maxWidth,
+  xPos,
+  hasBeenCalculated
+}) => {
   const price = useDerivedValue(() => {
     if (selectedGraph.value.labelCoordinates) {
       const priceForYPos = interpolate(
@@ -57,14 +64,15 @@ const Header = ({ selectedGraph, maxHeight, yPos, maxWidth, xPos }) => {
     () => selectedGraph.value.percentChange || 0
   );
 
-  const percentChangeLabel = useDerivedValue(
-    () => `${round(selectedGraph.value.percentChange, 3)}%`
+  const percentChangeLabel = useDerivedValue(() =>
+    selectedGraph.value.percentChange ? `${round(percentChange.value, 3)}%` : ""
   );
 
   const percentChangeStyle = useAnimatedStyle(() => ({
     fontWeight: "bold",
-    color: percentChange.value > 0 ? "green" : "red",
-    fontSize: 15
+    color: percentChange.value >= 0 ? "green" : "red",
+    fontSize: 15,
+    opacity: hasBeenCalculated.value ? 1 : 0
   }));
 
   return (

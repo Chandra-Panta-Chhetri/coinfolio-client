@@ -59,6 +59,8 @@ const LineChart = ({
     [modifiedData]
   );
 
+  const hasBeenCalculated = useDerivedValue(() => !!selectedGraph.value.path);
+
   const animatedLabelOverlay = useAnimatedStyle(
     () => ({
       transform: [
@@ -69,7 +71,9 @@ const LineChart = ({
   );
 
   const animatedTimeFilterStyle = useAnimatedStyle(() => ({
-    opacity: withTiming(isPanGestureActive.value ? 0 : 1)
+    opacity: withTiming(
+      isPanGestureActive.value || !hasBeenCalculated.value ? 0 : 1
+    )
   }));
 
   const animatedPathProps = useAnimatedProps(() => {
@@ -111,6 +115,7 @@ const LineChart = ({
           selectedGraph={selectedGraph}
           xPos={x}
           maxWidth={width}
+          hasBeenCalculated={hasBeenCalculated}
         />
       </View>
       <View style={[chartStyle, { position: "relative" }]}>
@@ -123,6 +128,7 @@ const LineChart = ({
           isPanGestureActive={isPanGestureActive}
           selectedGraph={selectedGraph}
           xPos={x}
+          hasBeenCalculated={hasBeenCalculated}
         />
         {[1, 2].map((_, i) => (
           <Label
@@ -131,6 +137,7 @@ const LineChart = ({
             indexOfCoordinates={i}
             selectedGraph={selectedGraph}
             maxWidth={width}
+            hasBeenCalculated={hasBeenCalculated}
           />
         ))}
       </View>

@@ -1,5 +1,6 @@
 import React from "react";
 import { ReText } from "react-native-redash";
+import { StyleSheet } from "react-native";
 import Reanimated, {
   useAnimatedStyle,
   useDerivedValue,
@@ -19,7 +20,8 @@ const ChartLabelItem = ({
   isPanGestureActive,
   indexOfCoordinates,
   selectedGraph,
-  maxWidth
+  maxWidth,
+  hasBeenCalculated
 }) => {
   const labelWidth = useSharedValue(0);
 
@@ -38,7 +40,9 @@ const ChartLabelItem = ({
 
   const animatedStyles = useAnimatedStyle(
     () => ({
-      opacity: withTiming(isPanGestureActive.value ? 0 : 1),
+      opacity: withTiming(
+        isPanGestureActive.value || !hasBeenCalculated.value ? 0 : 1
+      ),
       position: "absolute",
       transform: [
         {
@@ -60,12 +64,17 @@ const ChartLabelItem = ({
 
   return (
     <Reanimated.View style={animatedStyles} onLayout={onLayout}>
-      <ReText
-        text={labelValue}
-        style={{ textAlign: "center", fontSize: 15, fontWeight: "bold" }}
-      />
+      <ReText text={labelValue} style={styles.labelVal} />
     </Reanimated.View>
   );
 };
+
+const styles = StyleSheet.create({
+  labelVal: {
+    textAlign: "center",
+    fontSize: 15,
+    fontWeight: "bold"
+  }
+});
 
 export default ChartLabelItem;
