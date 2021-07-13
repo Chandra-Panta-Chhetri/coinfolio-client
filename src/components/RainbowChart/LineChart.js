@@ -37,7 +37,10 @@ const LineChart = ({
 
     const formattedData = data.map((d) => ({
       label: d.label,
-      data: buildGraph(d.data, chartWidth, chartHeight)
+      data: {
+        ...buildGraph(d.data, chartWidth, chartHeight),
+        defaultTimeLabel: d.defaultTimeLabel
+      }
     }));
 
     setModifiedData(formattedData);
@@ -116,6 +119,7 @@ const LineChart = ({
           xPos={x}
           maxWidth={width}
           hasBeenCalculated={hasBeenCalculated}
+          isPanGestureActive={isPanGestureActive}
         />
       </View>
       <View style={[chartStyle, { position: "relative" }]}>

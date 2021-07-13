@@ -31,10 +31,11 @@ const Header = ({
   yPos,
   maxWidth,
   xPos,
-  hasBeenCalculated
+  hasBeenCalculated,
+  isPanGestureActive
 }) => {
   const price = useDerivedValue(() => {
-    if (selectedGraph.value.labelCoordinates) {
+    if (selectedGraph.value.labelCoordinates && isPanGestureActive.value) {
       const priceForYPos = interpolate(
         yPos.value,
         [maxHeight, 0],
@@ -50,6 +51,9 @@ const Header = ({
 
   const time = useDerivedValue(() => {
     if (selectedGraph.value.scaleX) {
+      if (!isPanGestureActive.value) {
+        return selectedGraph.value.defaultTimeLabel;
+      }
       const timeForXPos = interpolate(
         xPos.value,
         [0, maxWidth],

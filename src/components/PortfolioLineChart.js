@@ -8,23 +8,28 @@ const values = dummydata.data.prices;
 const graphs = [
   {
     label: "1h",
-    data: values.hour
+    data: values.hour,
+    defaultTimeLabel: "Past Hour"
   },
   {
     label: "1d",
-    data: values.day
+    data: values.day,
+    defaultTimeLabel: "Yesterday"
   },
   {
     label: "1m",
-    data: values.month
+    data: values.month,
+    defaultTimeLabel: "Past Month"
   },
   {
     label: "1y",
-    data: values.year
+    data: values.year,
+    defaultTimeLabel: "Past Year"
   },
   {
     label: "All",
-    data: values.all
+    data: values.all,
+    defaultTimeLabel: "All Time"
   }
 ];
 
