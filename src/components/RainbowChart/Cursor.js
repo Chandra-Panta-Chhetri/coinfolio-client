@@ -4,7 +4,6 @@ import { PanGestureHandler } from "react-native-gesture-handler";
 import Reanimated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
-  useSharedValue,
   withSpring
 } from "react-native-reanimated";
 import { getYForX } from "react-native-redash";

@@ -4,7 +4,8 @@ import { round, ReText } from "react-native-redash";
 import {
   useDerivedValue,
   interpolate,
-  useAnimatedStyle
+  useAnimatedStyle,
+  withTiming
 } from "react-native-reanimated";
 
 function formatAMPM(date) {
@@ -76,22 +77,22 @@ const Header = ({
     fontWeight: "bold",
     color: percentChange.value >= 0 ? "green" : "red",
     fontSize: 15,
-    opacity: hasBeenCalculated.value ? 1 : 0
+    opacity: withTiming(hasBeenCalculated.value ? 1 : 0)
   }));
 
   return (
     <>
-      <ReText style={styles.bold} text={time} />
-      <View style={styles.priceAndPercent}>
-        <ReText style={styles.bold} text={price} />
+      <View style={styles.timeAndPercent}>
+        <ReText style={styles.bold} text={time} />
         <ReText style={percentChangeStyle} text={percentChangeLabel} />
       </View>
+      <ReText style={styles.bold} text={price} />
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  priceAndPercent: {
+  timeAndPercent: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"

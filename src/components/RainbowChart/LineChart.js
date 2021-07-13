@@ -122,7 +122,7 @@ const LineChart = ({
           isPanGestureActive={isPanGestureActive}
         />
       </View>
-      <View style={[chartStyle, { position: "relative" }]}>
+      <View style={[chartStyle, styles.relativePosition]}>
         <Svg style={styles.fullContainerSpace}>
           <AnimatedPath animatedProps={animatedPathProps} {...svgConfig} />
         </Svg>
@@ -196,11 +196,14 @@ const styles = StyleSheet.create({
     letterSpacing: 1
   },
   headerContainer: {
-    marginBottom: 20
+    marginBottom: 10
   },
   fullContainerSpace: {
     width: "100%",
     height: "100%"
+  },
+  relativePosition: {
+    position: "relative"
   }
 });
 

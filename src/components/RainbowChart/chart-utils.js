@@ -59,12 +59,12 @@ export const buildGraph = (
     labelCoordinates: [
       {
         x: scaleX(formattedValues[extremas.maxIndex][1]),
-        y: -22,
+        y: -25,
         val: extremas.maxVal
       },
       {
         x: scaleX(formattedValues[extremas.minIndex][1]),
-        y: yAxisSize - 5,
+        y: yAxisSize - 4,
         val: extremas.minVal
       }
     ],

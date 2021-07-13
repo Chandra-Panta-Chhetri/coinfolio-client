@@ -40,9 +40,7 @@ const ChartLabelItem = ({
 
   const animatedStyles = useAnimatedStyle(
     () => ({
-      opacity: withTiming(
-        isPanGestureActive.value || !hasBeenCalculated.value ? 0 : 1
-      ),
+      opacity: isPanGestureActive.value || !hasBeenCalculated.value ? 0 : 1,
       position: "absolute",
       transform: [
         {
