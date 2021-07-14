@@ -31,14 +31,21 @@ const LineChart = ({
 }) => {
   const [chartDimensions, setChartDimensions] = useState({
     width: 0,
-    height: 0
+    height: 0,
+    hasBeenCalculated: false
   });
   const [modifiedData, setModifiedData] = useState(data);
+  const { width, height, hasBeenCalculated } = chartDimensions;
 
   const onLayout = (event) => {
+    if (hasBeenCalculated) return;
     const chartHeight = event.nativeEvent.layout.height;
     const chartWidth = event.nativeEvent.layout.width;
-    console.log("here", chartHeight, chartWidth);
+    setChartDimensions({
+      height: chartHeight,
+      width: chartWidth,
+      hasBeenCalculated: true
+    });
     const valueAccessors = {
       xValueAccessor,
       yValueAccessor,
@@ -52,10 +59,8 @@ const LineChart = ({
       valueAccessors
     );
     setModifiedData(formattedData);
-    setChartDimensions({ height: chartHeight, width: chartWidth });
   };
 
-  const { width, height } = chartDimensions;
   const buttonWidth = data.length && width / data.length;
 
   const pathTransistion = useSharedValue(0);
