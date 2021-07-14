@@ -44,7 +44,7 @@ const PieChart = ({
   const onLayout = (event) => {
     const height = event.nativeEvent.layout.height;
     const width = event.nativeEvent.layout.width;
-    setContainerDimensions({ height, width, hasBeenCalculated: true });
+    setContainerDimensions({ height, width, hasPathsBeenCalculated: true });
   };
 
   const maxRadius =

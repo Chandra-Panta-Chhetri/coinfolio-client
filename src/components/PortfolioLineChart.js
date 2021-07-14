@@ -33,6 +33,11 @@ const graphs = [
   }
 ];
 
+const xValueAccessor = (dataInstance) => dataInstance[1];
+const yValueAccessor = (dataInstance) => dataInstance[0];
+const percentChangeAccessor = (data) => data.percent_change;
+const dataPointsAccessor = (data) => data.prices;
+
 const PortfolioLineChart = () => {
   const [data, setData] = useState(graphs);
 
@@ -41,7 +46,14 @@ const PortfolioLineChart = () => {
   return (
     <Card style={styles.cardContainer}>
       <Card.Content>
-        <LineChart data={data} chartStyle={styles.lineChart} />
+        <LineChart
+          data={data}
+          chartStyle={styles.lineChart}
+          xValueAccessor={xValueAccessor}
+          yValueAccessor={yValueAccessor}
+          percentChangeAccessor={percentChangeAccessor}
+          dataPointsAccessor={dataPointsAccessor}
+        />
       </Card.Content>
     </Card>
   );

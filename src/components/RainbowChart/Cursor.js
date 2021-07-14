@@ -11,41 +11,41 @@ import CONSTANTS from "../../Constants";
 
 const Cursor = ({
   selectedGraph,
-  size = CONSTANTS.LINE_CHART_CURSOR_SIZE,
+  cursorSize = CONSTANTS.LINE_CHART_CURSOR_SIZE,
   maxWidth,
-  yPos,
+  yPanGesturePos,
   isPanGestureActive,
-  xPos,
-  hasBeenCalculated
+  xPanGesturePos,
+  hasPathsBeenCalculated
 }) => {
   function setXAndYCoordinates(event) {
     "worklet";
     if (event.x >= 0 && event.x <= maxWidth) {
-      xPos.value = event.x;
+      xPanGesturePos.value = event.x;
       const path = selectedGraph.value.path;
       if (path) {
-        yPos.value = getYForX(path, xPos.value);
+        yPanGesturePos.value = getYForX(path, xPanGesturePos.value);
       }
     }
   }
 
   const onGestureEvent = useAnimatedGestureHandler({
     onStart: (event) => {
-      if (!hasBeenCalculated.value) return;
+      if (!hasPathsBeenCalculated.value) return;
       isPanGestureActive.value = true;
       setXAndYCoordinates(event);
     },
     onActive: (event) => {
-      if (!hasBeenCalculated.value) return;
+      if (!hasPathsBeenCalculated.value) return;
       setXAndYCoordinates(event);
     },
     onFinish: () => (isPanGestureActive.value = false)
   });
 
-  const animatedDotStyles = useAnimatedStyle(() => ({
+  const animatedDot = useAnimatedStyle(() => ({
     transform: [
-      { translateX: xPos.value - size / 2 },
-      { translateY: yPos.value - size / 2 },
+      { translateX: xPanGesturePos.value - cursorSize / 2 },
+      { translateY: yPanGesturePos.value - cursorSize / 2 },
       {
         scale: withSpring(
           isPanGestureActive.value ? 1 : 0,
@@ -55,9 +55,9 @@ const Cursor = ({
     ]
   }));
 
-  const animatedVerticalBarStyles = useAnimatedStyle(() => ({
+  const animatedVerticalBar = useAnimatedStyle(() => ({
     transform: [
-      { translateX: xPos.value },
+      { translateX: xPanGesturePos.value },
       {
         scale: withSpring(
           isPanGestureActive.value ? 1 : 0,
@@ -70,14 +70,16 @@ const Cursor = ({
   return (
     <PanGestureHandler onGestureEvent={onGestureEvent}>
       <Reanimated.View style={StyleSheet.absoluteFill}>
-        <Reanimated.View
-          style={[styles.verticalLine, animatedVerticalBarStyles]}
-        />
+        <Reanimated.View style={[styles.verticalBar, animatedVerticalBar]} />
         <Reanimated.View
           style={[
             styles.cursorBody,
-            { width: size, height: size, borderRadius: size / 2 },
-            animatedDotStyles
+            {
+              width: cursorSize,
+              height: cursorSize,
+              borderRadius: cursorSize / 2
+            },
+            animatedDot
           ]}
         />
       </Reanimated.View>
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
   cursorBody: {
     backgroundColor: "black"
   },
-  verticalLine: {
+  verticalBar: {
     borderLeftWidth: 2,
     borderLeftColor: "black",
     position: "absolute",

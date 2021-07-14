@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { buildGraph } from "./chart-utils";
+import { formatData } from "./chart-utils";
 import Reanimated, {
   useAnimatedStyle,
   useAnimatedProps,
@@ -23,7 +23,11 @@ const LineChart = ({
   data = [],
   chartStyle,
   initialSelectedGraph = 0,
-  svgConfig = CONSTANTS.LINE_CHART_SVG_CONFIG
+  svgConfig = CONSTANTS.LINE_CHART_SVG_CONFIG,
+  xValueAccessor = CONSTANTS.LINE_CHART_DEFAULT_ACCESSOR_FUNC,
+  yValueAccessor = CONSTANTS.LINE_CHART_DEFAULT_ACCESSOR_FUNC,
+  percentChangeAccessor = CONSTANTS.LINE_CHART_DEFAULT_ACCESSOR_FUNC,
+  dataPointsAccessor = CONSTANTS.LINE_CHART_DEFAULT_ACCESSOR_FUNC
 }) => {
   const [chartDimensions, setChartDimensions] = useState({
     width: 0,
@@ -34,15 +38,19 @@ const LineChart = ({
   const onLayout = (event) => {
     const chartHeight = event.nativeEvent.layout.height;
     const chartWidth = event.nativeEvent.layout.width;
-
-    const formattedData = data.map((d) => ({
-      label: d.label,
-      data: {
-        ...buildGraph(d.data, chartWidth, chartHeight),
-        defaultTimeLabel: d.defaultTimeLabel
-      }
-    }));
-
+    console.log("here", chartHeight, chartWidth);
+    const valueAccessors = {
+      xValueAccessor,
+      yValueAccessor,
+      percentChangeAccessor,
+      dataPointsAccessor
+    };
+    const formattedData = formatData(
+      data,
+      chartWidth,
+      chartHeight,
+      valueAccessors
+    );
     setModifiedData(formattedData);
     setChartDimensions({ height: chartHeight, width: chartWidth });
   };
@@ -50,11 +58,11 @@ const LineChart = ({
   const { width, height } = chartDimensions;
   const buttonWidth = data.length && width / data.length;
 
-  const svgPathTransistion = useSharedValue(0);
+  const pathTransistion = useSharedValue(0);
   const previousSelected = useSharedValue(initialSelectedGraph);
   const currentSelected = useSharedValue(initialSelectedGraph);
-  const y = useSharedValue(0);
-  const x = useSharedValue(0);
+  const yPanGesturePos = useSharedValue(0);
+  const xPanGesturePos = useSharedValue(0);
   const isPanGestureActive = useSharedValue(false);
 
   const selectedGraph = useDerivedValue(
@@ -62,7 +70,9 @@ const LineChart = ({
     [modifiedData]
   );
 
-  const hasBeenCalculated = useDerivedValue(() => !!selectedGraph.value.path);
+  const hasPathsBeenCalculated = useDerivedValue(
+    () => !!selectedGraph.value.path
+  );
 
   const animatedLabelOverlay = useAnimatedStyle(
     () => ({
@@ -73,9 +83,9 @@ const LineChart = ({
     [buttonWidth]
   );
 
-  const animatedTimeFilterStyle = useAnimatedStyle(() => ({
+  const animatedTimeFilters = useAnimatedStyle(() => ({
     opacity: withTiming(
-      isPanGestureActive.value || !hasBeenCalculated.value ? 0 : 1
+      isPanGestureActive.value || !hasPathsBeenCalculated.value ? 0 : 1
     )
   }));
 
@@ -86,19 +96,21 @@ const LineChart = ({
     return {
       d: !previousPath
         ? ""
-        : mixPath(svgPathTransistion.value, previousPath, currentPath),
-      strokeWidth: isPanGestureActive.value
-        ? svgConfig.strokeWidth + 1
-        : svgConfig.strokeWidth
+        : mixPath(pathTransistion.value, previousPath, currentPath),
+      strokeWidth: withTiming(
+        isPanGestureActive.value
+          ? svgConfig.strokeWidth + 1
+          : svgConfig.strokeWidth
+      )
     };
   }, [modifiedData, svgConfig]);
 
-  const handleGraphLabelSelect = (index) => {
+  const handleTimeFilterClick = (index) => {
     if (currentSelected.value === index) return;
-    svgPathTransistion.value = 0;
+    pathTransistion.value = 0;
     previousSelected.value = currentSelected.value;
     currentSelected.value = index;
-    svgPathTransistion.value = withTiming(1);
+    pathTransistion.value = withTiming(1);
   };
 
   if (width === 0 && height === 0) {
@@ -113,12 +125,10 @@ const LineChart = ({
     <View style={[styles.container, { width: chartStyle.width || "100%" }]}>
       <View style={styles.headerContainer}>
         <Header
-          maxHeight={height}
-          yPos={y}
+          yPanGesturePos={yPanGesturePos}
           selectedGraph={selectedGraph}
-          xPos={x}
-          maxWidth={width}
-          hasBeenCalculated={hasBeenCalculated}
+          xPanGesturePos={xPanGesturePos}
+          hasPathsBeenCalculated={hasPathsBeenCalculated}
           isPanGestureActive={isPanGestureActive}
         />
       </View>
@@ -128,11 +138,11 @@ const LineChart = ({
         </Svg>
         <Cursor
           maxWidth={width}
-          yPos={y}
+          yPanGesturePos={yPanGesturePos}
           isPanGestureActive={isPanGestureActive}
           selectedGraph={selectedGraph}
-          xPos={x}
-          hasBeenCalculated={hasBeenCalculated}
+          xPanGesturePos={xPanGesturePos}
+          hasPathsBeenCalculated={hasPathsBeenCalculated}
         />
         {[1, 2].map((_, i) => (
           <Label
@@ -141,12 +151,12 @@ const LineChart = ({
             indexOfCoordinates={i}
             selectedGraph={selectedGraph}
             maxWidth={width}
-            hasBeenCalculated={hasBeenCalculated}
+            hasPathsBeenCalculated={hasPathsBeenCalculated}
           />
         ))}
       </View>
       <Reanimated.View
-        style={[styles.bottomLabelContainer, animatedTimeFilterStyle]}
+        style={[styles.timeFilterContainer, animatedTimeFilters]}
       >
         <View style={StyleSheet.absoluteFill}>
           <Reanimated.View
@@ -162,7 +172,7 @@ const LineChart = ({
         {data.map((d, i) => (
           <TouchableWithoutFeedback
             key={d.label}
-            onPress={() => handleGraphLabelSelect(i)}
+            onPress={() => handleTimeFilterClick(i)}
           >
             <View style={{ width: buttonWidth }}>
               <Text style={styles.label}>{d.label}</Text>
@@ -183,7 +193,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     borderRadius: 5
   },
-  bottomLabelContainer: {
+  timeFilterContainer: {
     flexDirection: "row",
     alignSelf: "center",
     width: "100%",

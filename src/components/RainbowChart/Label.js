@@ -4,24 +4,16 @@ import { StyleSheet } from "react-native";
 import Reanimated, {
   useAnimatedStyle,
   useDerivedValue,
-  useSharedValue,
-  withTiming
+  useSharedValue
 } from "react-native-reanimated";
-
-function boundXCoordinate(val, upperBound, labelWidth) {
-  "worklet";
-  if (val + labelWidth > upperBound) {
-    return val - labelWidth - 7;
-  }
-  return val - labelWidth / 2 < 0 ? 0 : val - labelWidth / 2;
-}
+import { boundXCoordinate } from "./chart-utils";
 
 const ChartLabelItem = ({
   isPanGestureActive,
   indexOfCoordinates,
   selectedGraph,
   maxWidth,
-  hasBeenCalculated
+  hasPathsBeenCalculated
 }) => {
   const labelWidth = useSharedValue(0);
 
@@ -38,9 +30,10 @@ const ChartLabelItem = ({
         }
   );
 
-  const animatedStyles = useAnimatedStyle(
+  const animatedLabelContainer = useAnimatedStyle(
     () => ({
-      opacity: isPanGestureActive.value || !hasBeenCalculated.value ? 0 : 1,
+      opacity:
+        isPanGestureActive.value || !hasPathsBeenCalculated.value ? 0 : 1,
       position: "absolute",
       transform: [
         {
@@ -61,7 +54,7 @@ const ChartLabelItem = ({
   );
 
   return (
-    <Reanimated.View style={animatedStyles} onLayout={onLayout}>
+    <Reanimated.View style={animatedLabelContainer} onLayout={onLayout}>
       <ReText text={labelValue} style={styles.labelVal} />
     </Reanimated.View>
   );

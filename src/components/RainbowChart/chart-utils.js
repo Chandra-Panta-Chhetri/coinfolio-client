@@ -3,76 +3,142 @@ import { scaleLinear } from "d3-scale";
 import { parse } from "react-native-redash";
 import CONSTANTS from "../../Constants";
 
-const findMaxAndMinY = (datapoints) => {
-  if (datapoints.length === 0) {
-    return { minVal: null, minIndex: null, maxVal: null, maxIndex: null };
+const findMaxAndMinYX = (dataPoints) => {
+  if (dataPoints.length === 0) {
+    return {
+      x: {
+        minVal: null,
+        maxVal: null
+      },
+      y: {
+        minVal: null,
+        indexOfMinYVal: null,
+        maxVal: null,
+        indexOfMaxYVal: null
+      }
+    };
   }
 
-  let minIndex = 0;
-  let maxIndex = 0;
+  let indexOfMinYVal = 0;
+  let indexOfMaxYVal = 0;
+  let indexOfMinXVal = 0;
+  let indexOfMaxXVal = 0;
 
-  for (let i = 1; i < datapoints.length; i++) {
-    if (datapoints[minIndex][0] > datapoints[i][0]) {
-      minIndex = i;
+  for (let i = 1; i < dataPoints.length; i++) {
+    if (dataPoints[indexOfMinYVal][1] > dataPoints[i][1]) {
+      indexOfMinYVal = i;
     }
 
-    if (datapoints[maxIndex][0] < datapoints[i][0]) {
-      maxIndex = i;
+    if (dataPoints[indexOfMaxYVal][1] < dataPoints[i][1]) {
+      indexOfMaxYVal = i;
+    }
+
+    if (dataPoints[indexOfMinXVal][0] > dataPoints[i][0]) {
+      indexOfMinXVal = i;
+    }
+
+    if (dataPoints[indexOfMaxXVal][0] < dataPoints[i][0]) {
+      indexOfMaxXVal = i;
     }
   }
 
   return {
-    minVal: datapoints[minIndex][0],
-    minIndex,
-    maxIndex,
-    maxVal: datapoints[maxIndex][0]
+    x: {
+      minVal: dataPoints[indexOfMinXVal][0],
+      maxVal: dataPoints[indexOfMaxXVal][0]
+    },
+    y: {
+      minVal: dataPoints[indexOfMinYVal][1],
+      indexOfMinYVal,
+      indexOfMaxYVal,
+      maxVal: dataPoints[indexOfMaxYVal][1]
+    }
   };
 };
 
-export const buildGraph = (
-  datapoints,
-  xAxisSize = 0,
-  yAxisSize = 0,
+export const buildLineChart = (
+  data,
+  chartWidth = 0,
+  chartHeight = 0,
+  { xValueAccessor, yValueAccessor, percentChangeAccessor, dataPointsAccessor },
   maxPointsToShow = CONSTANTS.LINE_CHART_MAX_NUM_POINTS_TO_SHOW
 ) => {
-  const priceList = datapoints.prices.slice(0, maxPointsToShow);
-  const formattedValues = priceList.map((price) => [
-    parseFloat(price[0]),
-    price[1]
+  const dataPoints = dataPointsAccessor(data).slice(0, maxPointsToShow);
+  const parsedDataPoints = dataPoints.map((dp) => [
+    parseFloat(xValueAccessor(dp)),
+    parseFloat(yValueAccessor(dp))
   ]);
-  const extremas = findMaxAndMinY(formattedValues);
-  const dates = formattedValues.map((value) => value[1]);
-  const scaleXDomain = [Math.min(...dates), Math.max(...dates)];
-  const scaleYDomain = [extremas.minVal, extremas.maxVal];
-  const scaleX = scaleLinear().domain(scaleXDomain).range([0, xAxisSize]);
-  const scaleY = scaleLinear().domain(scaleYDomain).range([yAxisSize, 0]);
+  const extremas = findMaxAndMinYX(parsedDataPoints);
+  const scaleXDomain = [extremas.x.minVal, extremas.x.maxVal];
+  const scaleYDomain = [extremas.y.minVal, extremas.y.maxVal];
+  const scaleXRange = [0, chartWidth];
+  const scaleYRange = [chartHeight, 0];
+  const scaleX = scaleLinear().domain(scaleXDomain).range(scaleXRange);
+  const scaleY = scaleLinear().domain(scaleYDomain).range(scaleYRange);
 
   const svgPath = shape
     .line()
-    .x(([, x]) => scaleX(x))
-    .y(([y]) => scaleY(y))
-    .curve(shape.curveBasis)(formattedValues);
+    .x((dp) => scaleX(dp[0]))
+    .y((dp) => scaleY(dp[1]))
+    .curve(shape.curveBasis)(parsedDataPoints);
 
   return {
-    percentChange: datapoints.percent_change,
+    percentChange: percentChangeAccessor(data),
     path: parse(svgPath),
     labelCoordinates: [
       {
-        x: scaleX(formattedValues[extremas.maxIndex][1]),
+        x: scaleX(parsedDataPoints[extremas.y.indexOfMaxYVal][0]),
         y: -25,
-        val: extremas.maxVal
+        val: extremas.y.maxVal
       },
       {
-        x: scaleX(formattedValues[extremas.minIndex][1]),
-        y: yAxisSize - 4,
-        val: extremas.minVal
+        x: scaleX(parsedDataPoints[extremas.y.indexOfMinYVal][0]),
+        y: chartHeight - 4,
+        val: extremas.y.minVal
       }
     ],
-    scaleX: {
-      domain: scaleXDomain
+    xAxis: {
+      domain: scaleXDomain,
+      range: scaleXRange
     },
-    scaleY: {
-      domain: scaleYDomain
+    yAxis: {
+      domain: scaleYDomain,
+      range: scaleYRange
     }
   };
 };
+
+export const formatData = (data, chartWidth, chartHeight, valueAccessors) =>
+  data.map((d) => ({
+    label: d.label,
+    data: {
+      defaultTimeLabel: d.defaultTimeLabel,
+      ...buildLineChart(d.data, chartWidth, chartHeight, valueAccessors)
+    }
+  }));
+
+function formatAmPm(date) {
+  "worklet";
+  const hours = date.getHours() <= 12 ? date.getHours() : date.getHours() - 12;
+  const formattedHour = hours < 10 ? "0" + hours : hours;
+  const minutes =
+    date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+  const amOrPm = date.getHours() >= 12 ? "PM" : "AM";
+  return formattedHour + ":" + minutes + " " + amOrPm;
+}
+
+export function formatTime(date) {
+  "worklet";
+  const jsDate = new Date(date * 1000);
+  const dateStr = jsDate.toDateString().split(" ").slice(1, 4).join(" ");
+  const timeStr = formatAmPm(jsDate);
+  return `${dateStr} ${timeStr}`;
+}
+
+export function boundXCoordinate(val, upperBound, labelWidth) {
+  "worklet";
+  if (val + labelWidth > upperBound) {
+    return val - labelWidth - 7;
+  }
+  return val - labelWidth / 2 < 0 ? 0 : val - labelWidth / 2;
+}
