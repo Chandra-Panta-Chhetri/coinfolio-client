@@ -107,7 +107,7 @@ const PieChart = ({
 
   if (width === 0 && height === 0) {
     return (
-      <View onLayout={onLayout} style={[pieChartStyle]}>
+      <View onLayout={onLayout} style={pieChartStyle}>
         <Skeleton style={styles.fullContainerSpace} />
       </View>
     );

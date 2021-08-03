@@ -120,7 +120,7 @@ const LineChart = ({
 
   if (width === 0 && height === 0) {
     return (
-      <View onLayout={onLayout} style={[chartStyle]}>
+      <View onLayout={onLayout} style={chartStyle}>
         <Skeleton style={styles.fullContainerSpace} />
       </View>
     );
