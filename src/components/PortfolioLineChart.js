@@ -60,9 +60,7 @@ const PortfolioLineChart = () => {
 };
 
 const styles = StyleSheet.create({
-  cardContainer: {
-    borderRadius: 13
-  },
+  cardContainer: {},
   lineChart: {
     width: "100%",
     height: 180

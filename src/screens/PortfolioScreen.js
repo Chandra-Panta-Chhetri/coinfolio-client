@@ -3,7 +3,13 @@ import { StyleSheet, View, Image, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../redux/user/user.selectors";
 import { createStructuredSelector } from "reselect";
-import { Button, Headline, Subheading } from "react-native-paper";
+import {
+  Button,
+  Headline,
+  Subheading,
+  Card,
+  Paragraph
+} from "react-native-paper";
 import PortfolioValue from "../components/PortfolioValueCard";
 import SummaryTabs from "../components/Tabs";
 import PortfolioLineChart from "../components/PortfolioLineChart";
@@ -41,6 +47,20 @@ const UnauthenticatedPortfolio = ({ navigation }) => (
   </View>
 );
 
+const OverallProfit = () => (
+  <Card style={styles.overallContainer}>
+    <Card.Content>
+      <Paragraph style={styles.overallLabel}>Total Profit/Loss</Paragraph>
+      <View style={styles.overallProfitAndPercent}>
+        <Subheading style={styles.overallText}>$8000.00</Subheading>
+        <Subheading style={[styles.overallText, { color: "green" }]}>
+          +14.00%
+        </Subheading>
+      </View>
+    </Card.Content>
+  </Card>
+);
+
 function PortfolioScreen({ navigation, isAuthenticated }) {
   if (!isAuthenticated) {
     return <UnauthenticatedPortfolio navigation={navigation} />;
@@ -53,6 +73,7 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
       ListHeaderComponent={
         <>
           <PortfolioValue />
+          <OverallProfit />
           <SummaryTabs>
             <PortfolioLineChart
               tabLabel="Historic Value"
@@ -98,6 +119,23 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     resizeMode: "contain",
     marginBottom: 10
+  },
+  overallContainer: {
+    marginTop: 15
+  },
+  overallProfitAndPercent: {
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  overallText: {
+    fontWeight: "bold",
+    letterSpacing: 1,
+    fontSize: 16
+  },
+  overallLabel: {
+    fontWeight: "bold",
+    letterSpacing: 1,
+    fontSize: 15
   }
 });
 

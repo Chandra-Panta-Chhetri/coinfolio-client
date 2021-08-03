@@ -18,7 +18,7 @@ const PortfolioValueCard = ({ portfolio, isLoading }) => {
       <Card.Content>
         <Paragraph style={styles.label}>Current Value</Paragraph>
         <View style={styles.valueAndPercent}>
-          <Subheading style={styles.value}>$ {portfolio.value}</Subheading>
+          <Subheading style={styles.value}>${portfolio.value}</Subheading>
           <Subheading
             style={[
               styles.percent,
@@ -29,7 +29,7 @@ const PortfolioValueCard = ({ portfolio, isLoading }) => {
           </Subheading>
         </View>
         <Paragraph style={styles.plChange}>
-          + {portfolio.plChange} (24h)
+          {portfolio.plChange >= 0 ? "+" : ""}${portfolio.plChange} (24h)
         </Paragraph>
       </Card.Content>
     </Card>
