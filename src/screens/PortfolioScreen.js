@@ -14,6 +14,7 @@ import PortfolioValue from "../components/PortfolioValueCard";
 import SummaryTabs from "../components/Tabs";
 import PortfolioLineChart from "../components/PortfolioLineChart";
 import PortfolioPieChart from "../components/PortfolioPieChart";
+import AssetsBreakdown from "../components/PortfolioAssets";
 import { Entypo } from "@expo/vector-icons";
 
 const UnauthenticatedPortfolio = ({ navigation }) => (
@@ -74,7 +75,7 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
         <>
           <PortfolioValue />
           <OverallProfit />
-          <SummaryTabs>
+          {/* <SummaryTabs>
             <PortfolioLineChart
               tabLabel="Historic Value"
               iconComponent={<Entypo name="line-graph" size={24} />}
@@ -83,7 +84,8 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
               tabLabel="Allocations"
               iconComponent={<Entypo name="pie-chart" size={24} />}
             />
-          </SummaryTabs>
+          </SummaryTabs> */}
+          <AssetsBreakdown />
         </>
       }
       listKey="PortfolioScreenList"

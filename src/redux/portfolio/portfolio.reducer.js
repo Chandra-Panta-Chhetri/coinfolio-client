@@ -7,7 +7,39 @@ const INITIAL_STATE = {
     plChange: 1000
   },
   transactions: [],
-  numLoadingReq: 0
+  numLoadingReq: 0,
+  assets: [
+    {
+      asset: {
+        iconSrc: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png",
+        fullName: "Bitcoin",
+        ticker: "BTC"
+      },
+      price: {
+        current: 38532.0,
+        percentChange: 1.2
+      },
+      holdings: {
+        currentVal: 38532.0,
+        totalCoins: 1
+      }
+    },
+    {
+      asset: {
+        iconSrc: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
+        fullName: "Ethereum",
+        ticker: "ETH"
+      },
+      price: {
+        current: 2500,
+        percentChange: -5
+      },
+      holdings: {
+        currentVal: 5000,
+        totalCoins: 2
+      }
+    }
+  ]
 };
 
 const userReducer = (prevState = INITIAL_STATE, action) => {

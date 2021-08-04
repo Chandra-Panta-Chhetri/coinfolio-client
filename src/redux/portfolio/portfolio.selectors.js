@@ -21,3 +21,8 @@ export const selectIsLoadingPortfolio = createSelector(
   [selectNumLoadingReq],
   (numLoadingReq) => numLoadingReq > 0
 );
+
+export const selectPortfolioAssets = createSelector(
+  [selectPortfolio],
+  (portfolio) => portfolio.assets
+);
