@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import Svg, { Path } from "react-native-svg";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { formatData } from "./chart-utils";
 import Reanimated, {
   useAnimatedStyle,
@@ -16,6 +15,7 @@ import Header from "./Header";
 import Skeleton from "../Skeleton";
 import Label from "./Label";
 import CONSTANTS from "../../Constants";
+import PressableView from "../PressableView";
 
 const AnimatedPath = Reanimated.createAnimatedComponent(Path);
 
@@ -175,14 +175,13 @@ const LineChart = ({
           />
         </View>
         {data.map((d, i) => (
-          <TouchableWithoutFeedback
+          <PressableView
             key={d.label}
             onPress={() => handleTimeFilterClick(i)}
+            viewStyle={{ width: buttonWidth }}
           >
-            <View style={{ width: buttonWidth }}>
-              <Text style={styles.label}>{d.label}</Text>
-            </View>
-          </TouchableWithoutFeedback>
+            <Text style={styles.label}>{d.label}</Text>
+          </PressableView>
         ))}
       </Reanimated.View>
     </View>

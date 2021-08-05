@@ -25,7 +25,7 @@ const PortfolioValueCard = ({ portfolio, isLoading }) => {
               { color: portfolio.percent > 0 ? "green" : "red" }
             ]}
           >
-            + {portfolio.percent}%
+            +{portfolio.percent}%
           </Subheading>
         </View>
         <Paragraph style={styles.plChange}>

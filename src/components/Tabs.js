@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { useTheme } from "react-native-paper";
 import Animated, {
   useSharedValue,
@@ -7,6 +7,7 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 import CONSTANTS from "../Constants";
+import PressableView from "./PressableView";
 
 const getBorderStyles = (tabIndex, totalTabs) =>
   tabIndex === 0
@@ -75,28 +76,25 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
                 : { color: "white" }
               : { color: colors.text };
           return (
-            <TouchableWithoutFeedback
+            <PressableView
               key={index}
               onPress={() => handleTabClick(index)}
+              viewStyle={[
+                styles.tabContainer,
+                {
+                  borderColor: isDarkMode ? colors.border : colors.primary
+                },
+                getBorderStyles(index, numTabs)
+              ]}
             >
-              <View
-                style={[
-                  styles.tabContainer,
-                  {
-                    borderColor: isDarkMode ? colors.border : colors.primary
-                  },
-                  getBorderStyles(index, numTabs)
-                ]}
-              >
-                {React.cloneElement(child.props.iconComponent, {
-                  style: [activeStyles]
-                })}
-                <Text style={[styles.tabLabel, activeStyles]}>
-                  {child.props.iconComponent && " "}
-                  {child.props.tabLabel || ""}
-                </Text>
-              </View>
-            </TouchableWithoutFeedback>
+              {React.cloneElement(child.props.iconComponent, {
+                style: [activeStyles]
+              })}
+              <Text style={[styles.tabLabel, activeStyles]}>
+                {child.props.iconComponent && " "}
+                {child.props.tabLabel || ""}
+              </Text>
+            </PressableView>
           );
         })}
         <Animated.View
