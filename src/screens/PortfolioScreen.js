@@ -82,6 +82,9 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
     onBeginDrag: () => (isScrolling.value = true)
   });
 
+  const navigateToAddTransactionScreen = () =>
+    navigation.navigate("AddTransaction");
+
   if (!isAuthenticated) {
     return <UnauthenticatedPortfolio navigation={navigation} />;
   }
@@ -117,7 +120,7 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
           icon="plus"
           accessibilityLabel="Add Transaction"
           color="white"
-          onPress={() => console.log("Pressed")}
+          onPress={navigateToAddTransactionScreen}
         />
       </Reanimated.View>
     </>
