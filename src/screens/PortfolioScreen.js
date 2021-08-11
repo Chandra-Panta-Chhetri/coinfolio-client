@@ -8,7 +8,8 @@ import {
   Headline,
   Subheading,
   Card,
-  Paragraph
+  Paragraph,
+  FAB
 } from "react-native-paper";
 import PortfolioValue from "../components/PortfolioValueCard";
 import SummaryTabs from "../components/Tabs";
@@ -16,6 +17,14 @@ import PortfolioLineChart from "../components/PortfolioLineChart";
 import PortfolioPieChart from "../components/PortfolioPieChart";
 import AssetsBreakdown from "../components/PortfolioAssets";
 import { Entypo } from "@expo/vector-icons";
+import Reanimated, {
+  useSharedValue,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  withTiming
+} from "react-native-reanimated";
+
+const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
 const UnauthenticatedPortfolio = ({ navigation }) => (
   <View style={styles.noAuthContainer}>
@@ -63,33 +72,55 @@ const OverallProfit = () => (
 );
 
 function PortfolioScreen({ navigation, isAuthenticated }) {
+  const isScrolling = useSharedValue(false);
+  const fabStyles = useAnimatedStyle(() => ({
+    transform: [{ scale: withTiming(isScrolling.value ? 0 : 1) }]
+  }));
+  const scrollHandler = useAnimatedScrollHandler({
+    onEndDrag: () => (isScrolling.value = false),
+    onMomentumEnd: () => (isScrolling.value = false),
+    onBeginDrag: () => (isScrolling.value = true)
+  });
+
   if (!isAuthenticated) {
     return <UnauthenticatedPortfolio navigation={navigation} />;
   }
 
   return (
-    <FlatList
-      contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}
-      ListHeaderComponent={
-        <>
-          <PortfolioValue />
-          <OverallProfit />
-          {/* <SummaryTabs>
-            <PortfolioLineChart
-              tabLabel="Historic Value"
-              iconComponent={<Entypo name="line-graph" size={24} />}
-            />
-            <PortfolioPieChart
-              tabLabel="Allocations"
-              iconComponent={<Entypo name="pie-chart" size={24} />}
-            />
-          </SummaryTabs> */}
-          <AssetsBreakdown />
-        </>
-      }
-      listKey="PortfolioScreenList"
-    />
+    <>
+      <AnimatedFlatList
+        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={false}
+        onScroll={scrollHandler}
+        ListHeaderComponent={
+          <>
+            <PortfolioValue />
+            <OverallProfit />
+            <SummaryTabs>
+              <PortfolioLineChart
+                tabLabel="Historic Value"
+                iconComponent={<Entypo name="line-graph" size={24} />}
+              />
+              <PortfolioPieChart
+                tabLabel="Allocations"
+                iconComponent={<Entypo name="pie-chart" size={24} />}
+              />
+            </SummaryTabs>
+            <AssetsBreakdown />
+          </>
+        }
+        listKey="PortfolioScreenList"
+      />
+      <Reanimated.View style={[styles.bottomRight, fabStyles]}>
+        <FAB
+          style={[styles.addTransactionFab]}
+          icon="plus"
+          accessibilityLabel="Add Transaction"
+          color="white"
+          onPress={() => console.log("Pressed")}
+        />
+      </Reanimated.View>
+    </>
   );
 }
 
@@ -138,6 +169,20 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 1,
     fontSize: 15
+  },
+  bottomRight: {
+    position: "absolute",
+    margin: 16,
+    right: 0,
+    bottom: 0
+  },
+  addTransactionFab: {
+    backgroundColor: "#007aff",
+    width: 64,
+    height: 64,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 32
   }
 });
 
