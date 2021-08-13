@@ -27,7 +27,11 @@ const INITIAL_STATE = {
       holdingsVal: 5000.48,
       totalHoldings: 2
     }
-  ]
+  ],
+  overallProfit: {
+    value: 8000,
+    percentChange: 14
+  }
 };
 
 const userReducer = (prevState = INITIAL_STATE, action) => {

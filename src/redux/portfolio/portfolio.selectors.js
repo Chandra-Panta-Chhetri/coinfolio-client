@@ -26,3 +26,8 @@ export const selectPortfolioAssets = createSelector(
   [selectPortfolio],
   (portfolio) => portfolio.assets
 );
+
+export const selectOverallProfit = createSelector(
+  [selectPortfolio],
+  (portfolio) => portfolio.overallProfit
+);

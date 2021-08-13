@@ -3,15 +3,8 @@ import { StyleSheet, View, Image, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../redux/user/user.selectors";
 import { createStructuredSelector } from "reselect";
-import {
-  Button,
-  Headline,
-  Subheading,
-  Card,
-  Paragraph,
-  FAB
-} from "react-native-paper";
-import PortfolioValue from "../components/PortfolioValueCard";
+import { Button, Headline, Subheading, FAB } from "react-native-paper";
+import CurrentValue from "../components/PortfolioCurrentValue";
 import SummaryTabs from "../components/Tabs";
 import PortfolioLineChart from "../components/PortfolioLineChart";
 import PortfolioPieChart from "../components/PortfolioPieChart";
@@ -23,6 +16,7 @@ import Reanimated, {
   useAnimatedStyle,
   withTiming
 } from "react-native-reanimated";
+import OverallProfit from "../components/PortfolioOverallProfit";
 
 const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
@@ -57,20 +51,6 @@ const UnauthenticatedPortfolio = ({ navigation }) => (
   </View>
 );
 
-const OverallProfit = () => (
-  <Card style={styles.overallContainer}>
-    <Card.Content>
-      <Paragraph style={styles.overallLabel}>Total Profit/Loss</Paragraph>
-      <View style={styles.overallProfitAndPercent}>
-        <Subheading style={styles.overallText}>$8000.00</Subheading>
-        <Subheading style={[styles.overallText, { color: "green" }]}>
-          +14.00%
-        </Subheading>
-      </View>
-    </Card.Content>
-  </Card>
-);
-
 function PortfolioScreen({ navigation, isAuthenticated }) {
   const isScrolling = useSharedValue(false);
   const fabStyles = useAnimatedStyle(() => ({
@@ -97,7 +77,7 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
         onScroll={scrollHandler}
         ListHeaderComponent={
           <>
-            <PortfolioValue />
+            <CurrentValue />
             <OverallProfit />
             <SummaryTabs>
               <PortfolioLineChart
@@ -155,23 +135,6 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     resizeMode: "contain",
     marginBottom: 10
-  },
-  overallContainer: {
-    marginTop: 15
-  },
-  overallProfitAndPercent: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  overallText: {
-    fontWeight: "bold",
-    letterSpacing: 1,
-    fontSize: 16
-  },
-  overallLabel: {
-    fontWeight: "bold",
-    letterSpacing: 1,
-    fontSize: 15
   },
   bottomRight: {
     position: "absolute",
