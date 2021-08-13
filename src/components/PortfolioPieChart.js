@@ -4,6 +4,10 @@ import { Card, Paragraph } from "react-native-paper";
 import PieChart from "./PieChart";
 import TouchableNativeOpacity from "./TouchableNativeOpacity";
 import CONSTANTS from "../Constants";
+import { connect } from "react-redux";
+import { selectPortfolioAssets } from "../redux/portfolio/portfolio.selectors";
+
+const roundPercent = (num) => Math.round((num + Number.EPSILON) * 100) / 100;
 
 const Labels = ({
   data = [],
@@ -49,15 +53,27 @@ const Labels = ({
 const getInnerLabelText = (selectedSlice) =>
   `${selectedSlice.key} - ${selectedSlice.value}%`;
 
-const PortfolioPieChart = () => {
-  const [data, setData] = useState([
-    { percent: 50, ticker: "ETH" },
-    { percent: 20, ticker: "BTC" },
-    { percent: 10, ticker: "ADA" },
-    { percent: 10, ticker: "XLM" },
-    { percent: 10, ticker: "THETA" }
-  ]);
+const PortfolioPieChart = ({ assets }) => {
+  const [data, setData] = useState([]);
   const [selectedSlice, setSelectedSlice] = useState(null);
+
+  useEffect(() => {
+    const totalPortfolioVal = assets.reduce(
+      (acc, asset) => acc + asset.holdingsVal,
+      0
+    );
+    const allocations = assets;
+    allocations.sort((a1, a2) => a1.holdingsVal - a2.holdingsVal);
+    const formattedAllocations = allocations
+      .slice(0, CONSTANTS.PIE_CHART_MAX_NUM_ALLOCATIONS_TO_SHOW)
+      .map((allocation) => ({
+        ticker: allocation.ticker,
+        percent: roundPercent(
+          (allocation.holdingsVal / totalPortfolioVal) * 100
+        )
+      }));
+    setData(formattedAllocations);
+  }, [assets]);
 
   const changeSelectedSlice = (index, allowToggle = true) => {
     if (selectedSlice !== index) {
@@ -146,4 +162,8 @@ const styles = StyleSheet.create({
   touchableOpacityContainer: { marginRight: 0 }
 });
 
-export default PortfolioPieChart;
+const mapStateToProps = (state) => ({
+  assets: selectPortfolioAssets(state)
+});
+
+export default connect(mapStateToProps)(PortfolioPieChart);
