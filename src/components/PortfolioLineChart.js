@@ -1,53 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { Card } from "react-native-paper";
+import { connect } from "react-redux";
+import { selectPortfolioHistoricValue } from "../redux/portfolio/portfolio.selectors";
 import LineChart from "./RainbowChart/LineChart";
-
-import dummydata from "./RainbowChart/dummydata.json";
-const values = dummydata.data.prices;
-const graphs = [
-  {
-    label: "1h",
-    data: values.hour,
-    defaultTimeLabel: "Past Hour"
-  },
-  {
-    label: "1d",
-    data: values.day,
-    defaultTimeLabel: "Yesterday"
-  },
-  {
-    label: "1m",
-    data: values.month,
-    defaultTimeLabel: "Past Month"
-  },
-  {
-    label: "1y",
-    data: values.year,
-    defaultTimeLabel: "Past Year"
-  },
-  {
-    label: "All",
-    data: values.all,
-    defaultTimeLabel: "All Time"
-  }
-];
 
 const xValueAccessor = (dataInstance) => dataInstance[1];
 const yValueAccessor = (dataInstance) => dataInstance[0];
 const percentChangeAccessor = (data) => data.percent_change;
 const dataPointsAccessor = (data) => data.prices;
 
-const PortfolioLineChart = () => {
-  const [data, setData] = useState(graphs);
-
+const PortfolioLineChart = ({ historicValue = [] }) => {
   useEffect(() => {}, []);
 
   return (
     <Card style={styles.cardContainer}>
       <Card.Content>
         <LineChart
-          data={data}
+          data={historicValue}
           chartStyle={styles.lineChart}
           xValueAccessor={xValueAccessor}
           yValueAccessor={yValueAccessor}
@@ -67,4 +37,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default PortfolioLineChart;
+const mapStateToProps = (state) => ({
+  historicValue: selectPortfolioHistoricValue(state)
+});
+
+export default connect(mapStateToProps)(PortfolioLineChart);

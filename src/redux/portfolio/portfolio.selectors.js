@@ -2,9 +2,9 @@ import { createSelector } from "reselect";
 
 const selectPortfolio = (state) => state.portfolio;
 
-export const selectPortfolioDetails = createSelector(
+export const selectCurrentPortfolioValue = createSelector(
   [selectPortfolio],
-  (portfolio) => portfolio.portfolio
+  (portfolio) => portfolio.currentPortfolio
 );
 
 export const selectTransactions = createSelector(
@@ -30,4 +30,9 @@ export const selectPortfolioAssets = createSelector(
 export const selectOverallProfit = createSelector(
   [selectPortfolio],
   (portfolio) => portfolio.overallProfit
+);
+
+export const selectPortfolioHistoricValue = createSelector(
+  [selectPortfolio],
+  (portfolio) => portfolio.historicValue
 );

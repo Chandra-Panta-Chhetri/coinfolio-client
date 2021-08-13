@@ -1,7 +1,36 @@
 import PORTFOLIO_ACTION_TYPES from "./portfolio.action.types";
+import dummydata from "../../components/RainbowChart/dummydata.json";
+const values = dummydata.data.prices;
+const historicValue = [
+  {
+    label: "1h",
+    data: values.hour,
+    defaultTimeLabel: "Past Hour"
+  },
+  {
+    label: "1d",
+    data: values.day,
+    defaultTimeLabel: "Yesterday"
+  },
+  {
+    label: "1m",
+    data: values.month,
+    defaultTimeLabel: "Past Month"
+  },
+  {
+    label: "1y",
+    data: values.year,
+    defaultTimeLabel: "Past Year"
+  },
+  {
+    label: "All",
+    data: values.all,
+    defaultTimeLabel: "All Time"
+  }
+];
 
 const INITIAL_STATE = {
-  portfolio: {
+  currentPortfolio: {
     value: 20000,
     percent: 14.08,
     plChange: 1000
@@ -31,7 +60,8 @@ const INITIAL_STATE = {
   overallProfit: {
     value: 8000,
     percentChange: 14
-  }
+  },
+  historicValue: historicValue
 };
 
 const userReducer = (prevState = INITIAL_STATE, action) => {

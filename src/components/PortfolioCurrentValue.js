@@ -4,12 +4,12 @@ import { Card, Paragraph, Subheading } from "react-native-paper";
 import { connect } from "react-redux";
 import {
   selectIsLoadingPortfolio,
-  selectPortfolioDetails
+  selectCurrentPortfolioValue
 } from "../redux/portfolio/portfolio.selectors";
 import PortfolioValueSkeleton from "./PortfolioValueCardSkeleton";
 
-const PortfolioValueCard = ({ portfolio, isLoading }) => {
-  if (isLoading && portfolio === null) {
+const PortfolioValueCard = ({ currentValue, isLoading }) => {
+  if (isLoading && currentValue === null) {
     return <PortfolioValueSkeleton />;
   }
 
@@ -18,18 +18,18 @@ const PortfolioValueCard = ({ portfolio, isLoading }) => {
       <Card.Content>
         <Paragraph style={styles.label}>Current Value</Paragraph>
         <View style={styles.valueAndPercent}>
-          <Subheading style={styles.value}>${portfolio.value}</Subheading>
+          <Subheading style={styles.value}>${currentValue.value}</Subheading>
           <Subheading
             style={[
               styles.percent,
-              { color: portfolio.percent > 0 ? "green" : "red" }
+              { color: currentValue.percent > 0 ? "green" : "red" }
             ]}
           >
-            +{portfolio.percent}%
+            +{currentValue.percent}%
           </Subheading>
         </View>
         <Paragraph style={styles.plChange}>
-          {portfolio.plChange >= 0 ? "+" : ""}${portfolio.plChange} (24h)
+          {currentValue.plChange >= 0 ? "+" : ""}${currentValue.plChange} (24h)
         </Paragraph>
       </Card.Content>
     </Card>
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
-  portfolio: selectPortfolioDetails(state),
+  currentValue: selectCurrentPortfolioValue(state),
   isLoading: selectIsLoadingPortfolio(state)
 });
 
