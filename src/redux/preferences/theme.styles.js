@@ -14,7 +14,11 @@ export const DefaultTheme = {
     ...PaperDefaultTheme.colors,
     ...NavigationDefaultTheme.colors,
     primaryShimmer: "gainsboro",
-    secondaryShimmer: "#f8f8f8"
+    secondaryShimmer: "#f8f8f8",
+    portfolio: {
+      loginBtnBackground: "#c4c3c7",
+      loginBtnText: "black"
+    }
   }
 };
 
@@ -26,6 +30,10 @@ export const DarkTheme = {
     ...NavigationDarkTheme.colors,
     text: "white",
     primaryShimmer: "#7d7d7d",
-    secondaryShimmer: "gainsboro"
+    secondaryShimmer: "gainsboro",
+    portfolio: {
+      loginBtnBackground: "#23262d",
+      loginBtnText: "white"
+    }
   }
 };

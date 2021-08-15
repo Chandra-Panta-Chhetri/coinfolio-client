@@ -1,7 +1,7 @@
 import USER_ACTION_TYPES from "./user.action.types";
 
 const INITIAL_STATE = {
-  currentUser: {},
+  currentUser: null,
   isChangingAuthState: false,
   loadingText: "",
   hasAutoSignedIn: false

@@ -3,7 +3,13 @@ import { StyleSheet, View, Image, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../redux/user/user.selectors";
 import { createStructuredSelector } from "reselect";
-import { Button, Headline, Subheading, FAB } from "react-native-paper";
+import {
+  Button,
+  Headline,
+  Subheading,
+  FAB,
+  useTheme
+} from "react-native-paper";
 import CurrentValue from "../components/PortfolioCurrentValue";
 import SummaryTabs from "../components/Tabs";
 import PortfolioLineChart from "../components/PortfolioLineChart";
@@ -20,36 +26,48 @@ import OverallProfit from "../components/PortfolioOverallProfit";
 
 const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
-const UnauthenticatedPortfolio = ({ navigation }) => (
-  <View style={styles.noAuthContainer}>
-    <Image
-      source={require("../../assets/images/portfolio-static-pie-chart.png")}
-      style={styles.noAuthImage}
-    />
-    <Headline style={styles.noAuthHeading}>
-      Track Your Crypto Portfolio
-    </Headline>
-    <Subheading style={styles.noAuthSubheading}>
-      Signup or login to track your crypto transactions, current balance and
-      profit/loss.
-    </Subheading>
-    <Button
-      uppercase={false}
-      onPress={() => navigation.navigate("SignUp")}
-      style={styles.signUpBtn}
-      mode="contained"
-    >
-      Create an account
-    </Button>
-    <Button
-      onPress={() => navigation.navigate("Login")}
-      mode="contained"
-      uppercase={false}
-    >
-      Login
-    </Button>
-  </View>
-);
+const UnauthenticatedPortfolio = ({ navigation }) => {
+  const { colors } = useTheme();
+
+  return (
+    <View style={styles.noAuthContainer}>
+      <Image
+        source={require("../../assets/images/portfolio-static-pie-chart.png")}
+        style={styles.noAuthImage}
+      />
+      <Headline style={styles.noAuthHeading}>
+        Track Your Crypto Investments
+      </Headline>
+      <Subheading style={styles.noAuthSubheading}>
+        Signup or login to track your crypto transactions, current balance and
+        profit/loss.
+      </Subheading>
+      <Button
+        uppercase={false}
+        onPress={() => navigation.navigate("SignUp")}
+        style={styles.signUpBtn}
+        mode="contained"
+        labelStyle={styles.bold}
+      >
+        Create an account
+      </Button>
+      <Button
+        onPress={() => navigation.navigate("Login")}
+        mode="contained"
+        uppercase={false}
+        style={{
+          backgroundColor: colors.portfolio.loginBtnBackground
+        }}
+        labelStyle={{
+          color: colors.portfolio.loginBtnText,
+          fontWeight: "bold"
+        }}
+      >
+        Login
+      </Button>
+    </View>
+  );
+};
 
 function PortfolioScreen({ navigation, isAuthenticated }) {
   const isScrolling = useSharedValue(false);
@@ -149,6 +167,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 32
+  },
+  bold: {
+    fontWeight: "bold"
   }
 });
 
