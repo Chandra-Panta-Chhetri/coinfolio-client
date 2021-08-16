@@ -7,7 +7,7 @@ import {
   selectPortfolioAssets
 } from "../../redux/portfolio/portfolio.selectors";
 import { AntDesign } from "@expo/vector-icons";
-import PressableView from "../PressableView";
+import PressableView from "../shared/PressableView";
 
 const styles = StyleSheet.create({
   heading: { fontWeight: "bold", marginTop: 15 },

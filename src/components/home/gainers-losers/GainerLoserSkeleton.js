@@ -1,53 +1,56 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card } from "react-native-paper";
-import Skeleton from "./Skeleton";
+import Skeleton from "../../shared/Skeleton";
 
-const NewsCardSkeleton = () => (
+const GainerLoserSkeleton = () => (
   <Card style={styles.cardContainer}>
     <Card.Content style={styles.cardBody}>
+      <Skeleton style={styles.iconSkeleton} />
       <View style={styles.infoContainer}>
         <View style={styles.rowFlexbox}>
-          <Skeleton style={styles.titleSkeleton} />
+          <Skeleton style={styles.fullNamePriceSkeleton} />
         </View>
-        <Skeleton style={styles.subheadingSkeleton} />
+        <View style={styles.rowFlexbox}>
+          <Skeleton style={styles.symbolPercentSkeleton} />
+        </View>
       </View>
-      <Skeleton style={styles.imagePreviewSkeleton} />
     </Card.Content>
   </Card>
 );
 
 const styles = StyleSheet.create({
-  cardBody: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
   cardContainer: {
     marginBottom: 10,
     borderRadius: 13
   },
+  cardBody: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  iconSkeleton: {
+    borderRadius: 35,
+    width: 35,
+    height: 35
+  },
   infoContainer: {
     flex: 1,
-    marginRight: 15
+    marginLeft: 10
   },
-  titleSkeleton: {
-    height: 25,
+  fullNamePriceSkeleton: {
+    height: 15,
     borderRadius: 6,
     flex: 1
   },
-  subheadingSkeleton: {
-    height: 20,
+  symbolPercentSkeleton: {
+    height: 15,
     borderRadius: 6,
     marginTop: 10,
-    width: 100
-  },
-  imagePreviewSkeleton: {
-    width: 90,
-    height: 90
+    flex: 1
   },
   rowFlexbox: {
     flexDirection: "row"
   }
 });
 
-export default NewsCardSkeleton;
+export default GainerLoserSkeleton;

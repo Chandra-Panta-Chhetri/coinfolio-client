@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Paragraph, Avatar } from "react-native-paper";
-import TouchableNativeOpacity from "./TouchableNativeOpacity";
+import TouchableNativeOpacity from "../../shared/TouchableNativeOpacity";
 
-const GainerLoserCard = ({ item, navigation }) => {
+const GainerLoser = ({ item, navigation }) => {
   return (
     <TouchableNativeOpacity
       activeOpacity={0.6}
@@ -81,4 +81,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default GainerLoserCard;
+export default GainerLoser;

@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Card, Paragraph, Avatar } from "react-native-paper";
-import TouchableNativeOpacity from "./TouchableNativeOpacity";
+import TouchableNativeOpacity from "../../shared/TouchableNativeOpacity";
 
-const TopCoinCard = ({ item, navigation }) => {
+const TopCoin = ({ item, navigation }) => {
   return (
     <TouchableNativeOpacity
       activeOpacity={0.6}
@@ -52,4 +52,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TopCoinCard;
+export default TopCoin;

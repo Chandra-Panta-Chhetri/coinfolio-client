@@ -5,9 +5,9 @@ import { connect } from "react-redux";
 import {
   selectGlobalSummary,
   selectIsLoadingSummary
-} from "../redux/summary/summary.selectors";
-import { startGlobalSummaryFetch } from "../redux/summary/summary.actions";
-import Skeleton from "./Skeleton";
+} from "../../redux/summary/summary.selectors";
+import { startGlobalSummaryFetch } from "../../redux/summary/summary.actions";
+import Skeleton from "../shared/Skeleton";
 
 const GlobalMarketSummarySkeleton = () => (
   <Card>

@@ -5,7 +5,7 @@ import { selectCurrentUser } from "../redux/user/user.selectors";
 import { createStructuredSelector } from "reselect";
 import { FAB } from "react-native-paper";
 import CurrentValue from "../components/portfolio/current-value/CurrentValue";
-import SummaryTabs from "../components/Tabs";
+import SummaryTabs from "../components/shared/Tabs";
 import HistoricValue from "../components/portfolio/HistoricValue";
 import Allocations from "../components/portfolio/Allocations";
 import AssetsBreakdown from "../components/portfolio/AssetsBreakdown";

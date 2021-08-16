@@ -14,7 +14,7 @@ import Cursor from "./Cursor";
 import Header from "./Header";
 import Skeleton from "../Skeleton";
 import Label from "./Label";
-import CONSTANTS from "../../Constants";
+import CONSTANTS from "../../../Constants";
 import PressableView from "../PressableView";
 
 const AnimatedPath = Reanimated.createAnimatedComponent(Path);

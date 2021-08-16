@@ -9,7 +9,7 @@ import { SafeAreaView, StatusBar, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { connect } from "react-redux";
 import { selectIsThemeDark } from "./src/redux/preferences/preferences.selectors";
-import NotificationSnackbar from "./src/components/NotificationSnackbar";
+import NotificationSnackbar from "./src/components/shared/NotificationSnackbar";
 
 const App = ({ isThemeDark }) => {
   const theme = isThemeDark ? DarkTheme : DefaultTheme;

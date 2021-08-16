@@ -1,7 +1,7 @@
 import * as shape from "d3-shape";
 import { scaleLinear } from "d3-scale";
 import { parse } from "react-native-redash";
-import CONSTANTS from "../../Constants";
+import CONSTANTS from "../../../Constants";
 
 const findMaxAndMinYX = (dataPoints) => {
   if (dataPoints.length === 0) {

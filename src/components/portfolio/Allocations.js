@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { Card, Paragraph } from "react-native-paper";
-import PieChart from "../PieChart";
-import TouchableNativeOpacity from "../TouchableNativeOpacity";
+import PieChart from "../shared/PieChart";
+import TouchableNativeOpacity from "../shared/TouchableNativeOpacity";
 import CONSTANTS from "../../Constants";
 import { connect } from "react-redux";
 import { selectPortfolioAssets } from "../../redux/portfolio/portfolio.selectors";

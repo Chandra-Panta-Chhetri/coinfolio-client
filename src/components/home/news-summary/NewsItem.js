@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Paragraph, Caption } from "react-native-paper";
-import TouchableNativeOpacity from "./TouchableNativeOpacity";
+import TouchableNativeOpacity from "../../shared/TouchableNativeOpacity";
 
-const NewsCard = ({ item }) => (
+const NewsItem = ({ item }) => (
   <TouchableNativeOpacity
     activeOpacity={0.6}
     viewContainerStyle={styles.androidContainer}
@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default NewsCard;
+export default NewsItem;

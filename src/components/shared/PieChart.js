@@ -3,7 +3,7 @@ import { View, Platform, StyleSheet } from "react-native";
 import * as shape from "d3-shape";
 import Svg, { G, Path, Text } from "react-native-svg";
 import Skeleton from "./Skeleton";
-import CONSTANTS from "../Constants";
+import CONSTANTS from "../../Constants";
 
 const defaultSortFunc = (a, b) => b.value - a.value;
 const defaultValueAccessorFunc = ({ item }) => item.value;

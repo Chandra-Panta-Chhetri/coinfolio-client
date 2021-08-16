@@ -1,16 +1,16 @@
 import React from "react";
 import { StyleSheet, View, FlatList } from "react-native";
-import HeadingWithSeeAll from "./HeadingWithSeeAll";
+import HeadingWithSeeAll from "../HeadingWithSeeAll";
 import { withNavigation } from "@react-navigation/compat";
 import { connect } from "react-redux";
 import {
   selectGainersLosers,
   selectIsLoadingSummary
-} from "../redux/summary/summary.selectors";
-import { startGainersLosersFetch } from "../redux/summary/summary.actions";
-import GainerLoserCard from "./GainerLoserCard";
-import GainerLoserCardSkeleton from "./GainerLoserCardSkeleton";
-import CONSTANTS from "../Constants";
+} from "../../../redux/summary/summary.selectors";
+import { startGainersLosersFetch } from "../../../redux/summary/summary.actions";
+import GainerLoser from "./GainerLoser";
+import GainerLoserSkeleton from "./GainerLoserSkeleton";
+import CONSTANTS from "../../../Constants";
 
 const GainersLosers = ({
   navigation,
@@ -34,7 +34,7 @@ const GainersLosers = ({
         data={gainersLosers}
         keyExtractor={(gl) => gl.ticker}
         renderItem={(props) => (
-          <GainerLoserCard {...props} navigation={navigation} />
+          <GainerLoser {...props} navigation={navigation} />
         )}
         scrollEnabled={false}
         listKey="GainersLosersList"
@@ -44,7 +44,7 @@ const GainersLosers = ({
           style={styles.gainersLosersCards}
           data={dummySkeletonArray}
           keyExtractor={(s, index) => s + index}
-          renderItem={() => <GainerLoserCardSkeleton />}
+          renderItem={() => <GainerLoserSkeleton />}
           scrollEnabled={false}
           listKey="GainersLosersSkeletonList"
         />

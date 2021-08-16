@@ -7,7 +7,7 @@ import Reanimated, {
   withSpring
 } from "react-native-reanimated";
 import { getYForX } from "react-native-redash";
-import CONSTANTS from "../../Constants";
+import CONSTANTS from "../../../Constants";
 
 const Cursor = ({
   selectedGraph,

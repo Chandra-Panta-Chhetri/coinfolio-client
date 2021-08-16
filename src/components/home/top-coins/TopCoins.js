@@ -1,16 +1,16 @@
 import React from "react";
 import { StyleSheet, View, FlatList } from "react-native";
-import HeadingWithSeeAll from "./HeadingWithSeeAll";
+import HeadingWithSeeAll from "../HeadingWithSeeAll";
 import { withNavigation } from "@react-navigation/compat";
 import { connect } from "react-redux";
 import {
   selectTopCoins,
   selectIsLoadingSummary
-} from "../redux/summary/summary.selectors";
-import { startTopCoinsFetch } from "../redux/summary/summary.actions";
-import TopCoinCard from "./TopCoinCard";
-import TopCoinSkeletonCard from "./TopCoinCardSkeleton";
-import CONSTANTS from "../Constants";
+} from "../../../redux/summary/summary.selectors";
+import { startTopCoinsFetch } from "../../../redux/summary/summary.actions";
+import TopCoin from "./TopCoin";
+import TopCoinSkeleton from "./TopCoinSkeleton";
+import CONSTANTS from "../../../Constants";
 
 const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
   const navigateToMarketScreen = () => navigation.navigate("Market");
@@ -30,9 +30,7 @@ const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
         style={styles.topCoinCards}
         data={topCoins}
         keyExtractor={(tm) => tm.ticker}
-        renderItem={(props) => (
-          <TopCoinCard {...props} navigation={navigation} />
-        )}
+        renderItem={(props) => <TopCoin {...props} navigation={navigation} />}
         listKey="TopCoinsList"
       />
       {isLoading && topCoins.length === 0 && (
@@ -42,7 +40,7 @@ const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
           style={styles.topCoinCards}
           data={dummySkeletonArray}
           keyExtractor={(s, index) => s + index}
-          renderItem={() => <TopCoinSkeletonCard />}
+          renderItem={() => <TopCoinSkeleton />}
           listKey="TopCoinsSkeletonList"
         />
       )}

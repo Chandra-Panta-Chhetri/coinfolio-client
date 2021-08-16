@@ -1,9 +1,9 @@
 import React from "react";
-import GlobalMarketSummary from "../components/GlobalMarketSummary";
-import ShortcutIcons from "../components/ShortcutIcons";
-import TopCoins from "../components/TopCoins";
-import GainersLosers from "../components/GainersLosers";
-import NewsSummary from "../components/NewsSummary";
+import GlobalMarketSummary from "../components/home/GlobalMarketSummary";
+import ShortcutIcons from "../components/home/ShortcutIcons";
+import TopCoins from "../components/home/top-coins/TopCoins";
+import GainersLosers from "../components/home/gainers-losers/GainersLosers";
+import NewsSummary from "../components/home/news-summary/NewsSummary";
 import { StyleSheet, FlatList } from "react-native";
 
 function HomeScreen() {

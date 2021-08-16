@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Snackbar, Paragraph } from "react-native-paper";
-import { selectRecentNotification } from "../redux/notification/notification.selectors";
-import { clearNotifications } from "../redux/notification/notification.actions";
+import { selectRecentNotification } from "../../redux/notification/notification.selectors";
+import { clearNotifications } from "../../redux/notification/notification.actions";
 import { connect } from "react-redux";
 
 const NotificationSnackbar = ({ notification, clearNotifications }) => {

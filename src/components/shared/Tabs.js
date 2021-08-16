@@ -6,7 +6,7 @@ import Animated, {
   useAnimatedStyle,
   withTiming
 } from "react-native-reanimated";
-import CONSTANTS from "../Constants";
+import CONSTANTS from "../../Constants";
 import PressableView from "./PressableView";
 
 const getBorderStyles = (tabIndex, totalTabs) =>
