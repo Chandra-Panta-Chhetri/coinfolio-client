@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { Card, Paragraph } from "react-native-paper";
-import PieChart from "./PieChart";
-import TouchableNativeOpacity from "./TouchableNativeOpacity";
-import CONSTANTS from "../Constants";
+import PieChart from "../PieChart";
+import TouchableNativeOpacity from "../TouchableNativeOpacity";
+import CONSTANTS from "../../Constants";
 import { connect } from "react-redux";
-import { selectPortfolioAssets } from "../redux/portfolio/portfolio.selectors";
+import { selectPortfolioAssets } from "../../redux/portfolio/portfolio.selectors";
 
 const roundPercent = (num) => Math.round((num + Number.EPSILON) * 100) / 100;
 
@@ -53,7 +53,7 @@ const Labels = ({
 const getInnerLabelText = (selectedSlice) =>
   `${selectedSlice.key} - ${selectedSlice.value}%`;
 
-const PortfolioPieChart = ({ assets }) => {
+const Allocations = ({ assets }) => {
   const [data, setData] = useState([]);
   const [selectedSlice, setSelectedSlice] = useState(null);
 
@@ -166,4 +166,4 @@ const mapStateToProps = (state) => ({
   assets: selectPortfolioAssets(state)
 });
 
-export default connect(mapStateToProps)(PortfolioPieChart);
+export default connect(mapStateToProps)(Allocations);

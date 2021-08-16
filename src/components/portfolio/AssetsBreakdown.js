@@ -5,9 +5,9 @@ import { connect } from "react-redux";
 import {
   selectIsLoadingPortfolio,
   selectPortfolioAssets
-} from "../redux/portfolio/portfolio.selectors";
+} from "../../redux/portfolio/portfolio.selectors";
 import { AntDesign } from "@expo/vector-icons";
-import PressableView from "./PressableView";
+import PressableView from "../PressableView";
 
 const styles = StyleSheet.create({
   heading: { fontWeight: "bold", marginTop: 15 },
@@ -74,7 +74,7 @@ const tableHeadings = [
   }
 ];
 
-const PortfolioAssets = ({ assets = [], isLoading }) => {
+const AssetsBreakdown = ({ assets = [], isLoading }) => {
   const [sortCriteria, setSortCriteria] = useState({
     columnToSortBy: "fullName",
     sortAscending: true
@@ -186,4 +186,4 @@ const mapStateToProps = (state) => ({
   isLoading: selectIsLoadingPortfolio(state)
 });
 
-export default connect(mapStateToProps)(PortfolioAssets);
+export default connect(mapStateToProps)(AssetsBreakdown);

@@ -3,12 +3,12 @@ import { StyleSheet, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../redux/user/user.selectors";
 import { createStructuredSelector } from "reselect";
-import { FAB, useTheme } from "react-native-paper";
-import CurrentValue from "../components/PortfolioCurrentValue";
+import { FAB } from "react-native-paper";
+import CurrentValue from "../components/portfolio/current-value/CurrentValue";
 import SummaryTabs from "../components/Tabs";
-import PortfolioLineChart from "../components/PortfolioLineChart";
-import PortfolioPieChart from "../components/PortfolioPieChart";
-import AssetsBreakdown from "../components/PortfolioAssets";
+import HistoricValue from "../components/portfolio/HistoricValue";
+import Allocations from "../components/portfolio/Allocations";
+import AssetsBreakdown from "../components/portfolio/AssetsBreakdown";
 import { Entypo } from "@expo/vector-icons";
 import Reanimated, {
   useSharedValue,
@@ -16,7 +16,7 @@ import Reanimated, {
   useAnimatedStyle,
   withTiming
 } from "react-native-reanimated";
-import OverallProfit from "../components/PortfolioOverallProfit";
+import AllTimeProfit from "../components/portfolio/AllTimeProfit";
 import Unauthenticated from "../components/portfolio/Unauthenticated";
 
 const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
@@ -48,13 +48,13 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
         ListHeaderComponent={
           <>
             <CurrentValue />
-            <OverallProfit />
+            <AllTimeProfit />
             <SummaryTabs>
-              <PortfolioLineChart
+              <HistoricValue
                 tabLabel="Historic Value"
                 iconComponent={<Entypo name="line-graph" size={24} />}
               />
-              <PortfolioPieChart
+              <Allocations
                 tabLabel="Allocations"
                 iconComponent={<Entypo name="pie-chart" size={24} />}
               />

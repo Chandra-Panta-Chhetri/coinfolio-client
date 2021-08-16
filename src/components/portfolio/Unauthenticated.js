@@ -8,7 +8,7 @@ const Unauthenticated = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../../../assets/images/portfolio-static-pie-chart.png")}
+        source={require("../../../assets/images/static-pie-chart.png")}
         style={styles.staticImage}
       />
       <Headline style={styles.heading}>Track Your Crypto Investments</Headline>

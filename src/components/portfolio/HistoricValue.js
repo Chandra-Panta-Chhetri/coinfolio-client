@@ -2,15 +2,15 @@ import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { Card } from "react-native-paper";
 import { connect } from "react-redux";
-import { selectPortfolioHistoricValue } from "../redux/portfolio/portfolio.selectors";
-import LineChart from "./RainbowChart/LineChart";
+import { selectPortfolioHistoricValue } from "../../redux/portfolio/portfolio.selectors";
+import LineChart from "../RainbowChart/LineChart";
 
 const xValueAccessor = (dataInstance) => dataInstance[1];
 const yValueAccessor = (dataInstance) => dataInstance[0];
 const percentChangeAccessor = (data) => data.percent_change;
 const dataPointsAccessor = (data) => data.prices;
 
-const PortfolioLineChart = ({ historicValue = [] }) => {
+const HistoricValue = ({ historicValue = [] }) => {
   useEffect(() => {}, []);
 
   return (
@@ -41,4 +41,4 @@ const mapStateToProps = (state) => ({
   historicValue: selectPortfolioHistoricValue(state)
 });
 
-export default connect(mapStateToProps)(PortfolioLineChart);
+export default connect(mapStateToProps)(HistoricValue);

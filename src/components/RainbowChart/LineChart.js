@@ -190,7 +190,8 @@ const LineChart = ({
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    position: "relative"
   },
   backgroundSelection: {
     backgroundColor: "#f3f3f3",

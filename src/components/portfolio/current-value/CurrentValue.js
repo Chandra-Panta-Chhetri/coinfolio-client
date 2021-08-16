@@ -1,16 +1,18 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Card, Paragraph, Subheading } from "react-native-paper";
+import { Card, Paragraph, Subheading, useTheme } from "react-native-paper";
 import { connect } from "react-redux";
 import {
   selectIsLoadingPortfolio,
   selectCurrentPortfolioValue
-} from "../redux/portfolio/portfolio.selectors";
-import PortfolioValueSkeleton from "./PortfolioValueCardSkeleton";
+} from "../../../redux/portfolio/portfolio.selectors";
+import CurrentValueSkeleton from "./Skeleton";
 
-const PortfolioValueCard = ({ currentValue, isLoading }) => {
+const CurrentValue = ({ currentValue, isLoading }) => {
+  const { colors } = useTheme();
+
   if (isLoading && currentValue === null) {
-    return <PortfolioValueSkeleton />;
+    return <CurrentValueSkeleton />;
   }
 
   return (
@@ -67,4 +69,4 @@ const mapStateToProps = (state) => ({
   isLoading: selectIsLoadingPortfolio(state)
 });
 
-export default connect(mapStateToProps)(PortfolioValueCard);
+export default connect(mapStateToProps)(CurrentValue);

@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 import {
   selectOverallProfit,
   selectIsLoadingPortfolio
-} from "../redux/portfolio/portfolio.selectors";
+} from "../../redux/portfolio/portfolio.selectors";
 import { Subheading, Card, Paragraph } from "react-native-paper";
 
-const OverallProfit = ({ isLoading, overallProfit }) => {
+const AllTimeProfit = ({ isLoading, overallProfit }) => {
   const isPositivePercent = overallProfit.percentChange >= 0;
 
   return (
@@ -58,4 +58,4 @@ const mapStateToProps = (state) => ({
   isLoading: selectIsLoadingPortfolio(state)
 });
 
-export default connect(mapStateToProps)(OverallProfit);
+export default connect(mapStateToProps)(AllTimeProfit);

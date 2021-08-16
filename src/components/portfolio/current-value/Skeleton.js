@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card } from "react-native-paper";
-import Skeleton from "./Skeleton";
+import Skeleton from "../../Skeleton";
 
-const PortfolioValueCardSkeleton = () => (
+const CurrentValueSkeleton = () => (
   <Card>
     <Card.Content>
       <Skeleton style={styles.subheadingSkeleton} />
@@ -40,4 +40,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default PortfolioValueCardSkeleton;
+export default CurrentValueSkeleton;
