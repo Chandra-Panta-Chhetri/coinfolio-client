@@ -1,11 +1,12 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Paragraph, Caption } from "react-native-paper";
+import CONSTANTS from "../../../Constants";
 import TouchableNativeOpacity from "../../shared/TouchableNativeOpacity";
 
 const NewsItem = ({ item }) => (
   <TouchableNativeOpacity
-    activeOpacity={0.6}
+    activeOpacity={CONSTANTS.SHARED.TOUCHABLE_ACTIVE_OPACITY}
     viewContainerStyle={styles.androidContainer}
   >
     <Card style={styles.newsCard}>
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   newsCard: {
-    borderRadius: 13
+    borderRadius: CONSTANTS.SHARED.BORDER_RADIUS
   },
   androidContainer: {
     marginBottom: 10

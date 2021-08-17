@@ -61,7 +61,7 @@ export const buildLineChart = (
   chartWidth = 0,
   chartHeight = 0,
   { xValueAccessor, yValueAccessor, percentChangeAccessor, dataPointsAccessor },
-  maxPointsToShow = CONSTANTS.LINE_CHART_MAX_NUM_POINTS_TO_SHOW
+  maxPointsToShow = CONSTANTS.LINE_CHART.MAX_NUM_POINTS_TO_SHOW
 ) => {
   const dataPoints = dataPointsAccessor(data).slice(0, maxPointsToShow);
   const parsedDataPoints = dataPoints.map((dp) => [

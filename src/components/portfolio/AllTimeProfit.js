@@ -6,6 +6,7 @@ import {
   selectIsLoadingPortfolio
 } from "../../redux/portfolio/portfolio.selectors";
 import { Subheading, Card, Paragraph } from "react-native-paper";
+import CONSTANTS from "../../Constants";
 
 const AllTimeProfit = ({ isLoading, overallProfit }) => {
   const isPositivePercent = overallProfit.percentChange >= 0;
@@ -35,7 +36,7 @@ const AllTimeProfit = ({ isLoading, overallProfit }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 15
+    marginBottom: CONSTANTS.PORTFOLIO.MARGIN_BOTTOM
   },
   overallProfitAndPercent: {
     flexDirection: "row",

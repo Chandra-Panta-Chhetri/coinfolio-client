@@ -1,18 +1,19 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Card, Paragraph, Avatar } from "react-native-paper";
+import CONSTANTS from "../../../Constants";
 import TouchableNativeOpacity from "../../shared/TouchableNativeOpacity";
 
 const TopCoin = ({ item, navigation }) => {
   return (
     <TouchableNativeOpacity
-      activeOpacity={0.6}
+      activeOpacity={CONSTANTS.SHARED.TOUCHABLE_ACTIVE_OPACITY}
       viewContainerStyle={styles.androidContainer}
     >
       <Card style={styles.topCoinCard}>
         <Card.Content>
           <Avatar.Image
-            size={30}
+            size={CONSTANTS.SHARED.AVATAR_IMAGE_SIZE}
             source={{
               uri: item.image
             }}
@@ -31,7 +32,7 @@ const TopCoin = ({ item, navigation }) => {
 
 const styles = StyleSheet.create({
   topCoinCard: {
-    borderRadius: 13,
+    borderRadius: CONSTANTS.SHARED.BORDER_RADIUS,
     width: 125
   },
   topCoinName: {

@@ -5,10 +5,6 @@ import Svg, { G, Path, Text } from "react-native-svg";
 import Skeleton from "./Skeleton";
 import CONSTANTS from "../../Constants";
 
-const defaultSortFunc = (a, b) => b.value - a.value;
-const defaultValueAccessorFunc = ({ item }) => item.value;
-const defaultGetInnerLabelText = () => "";
-
 const calculateRadius = (radiusFromProp, maxRadius, defaultRadius) => {
   if (typeof radiusFromProp === "string") {
     return (radiusFromProp.split("%")[0] / 100) * maxRadius;
@@ -19,21 +15,21 @@ const calculateRadius = (radiusFromProp, maxRadius, defaultRadius) => {
 };
 
 const PieChart = ({
-  data,
-  innerRadius,
-  outerRadius,
-  // labelRadius,
-  padAngle = CONSTANTS.PIE_CHART_PAD_ANGLE,
-  pieChartStyle,
-  sortFunc = defaultSortFunc,
-  valueAccessorFunc = defaultValueAccessorFunc,
-  // children,
-  startAngle = CONSTANTS.PIE_CHART_START_ANGLE,
-  endAngle = CONSTANTS.PIE_CHART_END_ANGLE,
-  selectedElevation = CONSTANTS.PIE_CHART_SELECTED_ELEVATION,
+  data = [],
+  innerRadius = 0,
+  outerRadius = 0,
+  padAngle = CONSTANTS.PIE_CHART.DEFAULT_PAD_ANGLE,
+  pieChartStyle = {},
+  sortFunc = CONSTANTS.PIE_CHART.DEFAULT_SORT_FUNCTION,
+  valueAccessorFunc = CONSTANTS.PIE_CHART.DEFAULT_VALUE_ACCESSOR_FUNCTION,
+  startAngle = CONSTANTS.PIE_CHART.DEFAULT_START_ANGLE,
+  endAngle = CONSTANTS.PIE_CHART.DEFAULT_END_ANGLE,
   selectedSlice = null,
-  innerLabelConfig,
-  getInnerLabelText = defaultGetInnerLabelText
+  innerLabelConfig = {},
+  getInnerLabelText = CONSTANTS.PIE_CHART
+    .DEFAULT_INNER_LABEL_VALUE_ACCESSOR_FUNCTION
+  // children,
+  // labelRadius,
 }) => {
   const [containerDimensions, setContainerDimensions] = useState({
     height: 0,
@@ -51,7 +47,8 @@ const PieChart = ({
 
   const maxRadius =
     Math.min(width, height) / 2 -
-    (selectedElevation + CONSTANTS.PIE_CHART_MAX_RADIUS_OFFSET);
+    (CONSTANTS.PIE_CHART.SELECTED_ELEVATION +
+      CONSTANTS.PIE_CHART.MAX_RADIUS_OFFSET);
 
   const _outerRadius = calculateRadius(outerRadius, maxRadius, maxRadius);
   const _innerRadius = calculateRadius(innerRadius, maxRadius, 0);
@@ -69,7 +66,7 @@ const PieChart = ({
 
   const selectedArcGenerator = shape
     .arc()
-    .outerRadius(_outerRadius + selectedElevation)
+    .outerRadius(_outerRadius + CONSTANTS.PIE_CHART.SELECTED_ELEVATION)
     .innerRadius(_innerRadius)
     .padAngle(padAngle);
 
@@ -138,9 +135,7 @@ const PieChart = ({
                 );
               })}
               <Text {...innerLabelConfig}>
-                {selectedSlice !== null
-                  ? getInnerLabelText(data[selectedSlice])
-                  : ""}
+                {selectedSlice && getInnerLabelText(data[selectedSlice])}
               </Text>
             </G>
           </Svg>

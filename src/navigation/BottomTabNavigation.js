@@ -11,30 +11,51 @@ import NewsScreen from "../screens/NewsScreen";
 import PortfolioScreen from "../screens/PortfolioScreen";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { useTheme } from "react-native-paper";
+import CONSTANTS from "../Constants";
 
 const BottomTab =
   Platform.OS === "android"
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
 
-const HomeTabIcon = ({ color, size = 21.5 }) => (
-  <AntDesign name="home" size={size} color={color} />
+const HomeTabIcon = ({ color }) => (
+  <AntDesign
+    name="home"
+    size={CONSTANTS.SHARED.BOTTOM_TAB_ICON_SIZE}
+    color={color}
+  />
 );
 
-const MarketTabIcon = ({ color, size = 21.5 }) => (
-  <AntDesign name="barschart" size={size} color={color} />
+const MarketTabIcon = ({ color }) => (
+  <AntDesign
+    name="barschart"
+    size={CONSTANTS.SHARED.BOTTOM_TAB_ICON_SIZE}
+    color={color}
+  />
 );
 
-const PortfolioTabIcon = ({ color, size = 21.5 }) => (
-  <Feather name="pie-chart" size={size} color={color} />
+const PortfolioTabIcon = ({ color }) => (
+  <Feather
+    name="pie-chart"
+    size={CONSTANTS.SHARED.BOTTOM_TAB_ICON_SIZE}
+    color={color}
+  />
 );
 
-const NewsTabIcon = ({ color, size = 21.5 }) => (
-  <FontAwesome name="newspaper-o" size={size} color={color} />
+const NewsTabIcon = ({ color }) => (
+  <FontAwesome
+    name="newspaper-o"
+    size={CONSTANTS.SHARED.BOTTOM_TAB_ICON_SIZE}
+    color={color}
+  />
 );
 
-const SettingsTabIcon = ({ color, size = 21.5 }) => (
-  <AntDesign name="setting" size={size} color={color} />
+const SettingsTabIcon = ({ color }) => (
+  <AntDesign
+    name="setting"
+    size={CONSTANTS.SHARED.BOTTOM_TAB_ICON_SIZE}
+    color={color}
+  />
 );
 
 const BottomTabNavigation = () => {

@@ -2,33 +2,7 @@ import React from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import { IconButton, Caption, TouchableRipple } from "react-native-paper";
 import { withNavigation } from "@react-navigation/compat";
-
-const shortcuts = [
-  {
-    label: "Price Alerts",
-    iconName: "bell-alert",
-    navigateTo: "PriceAlert",
-    iconColor: "rgb(10, 132, 255)"
-  },
-  {
-    label: "Compare",
-    iconName: "compare",
-    navigateTo: "Compare",
-    iconColor: "rgb(10, 132, 255)"
-  },
-  {
-    label: "Converter",
-    iconName: "calculator",
-    navigateTo: "Converter",
-    iconColor: "rgb(10, 132, 255)"
-  },
-  {
-    label: "Watchlist",
-    iconName: "eye",
-    navigateTo: "Market",
-    iconColor: "rgb(10, 132, 255)"
-  }
-];
+import CONSTANTS from "../../Constants";
 
 const ShortcutIcon = ({ item, navigation }) => {
   const navigateToScreen = () => navigation.navigate(item.navigateTo);
@@ -52,7 +26,7 @@ const ShortcutIcons = ({ navigation }) => {
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.shortcutIconContainer}
       keyExtractor={(sc) => sc.label}
-      data={shortcuts}
+      data={CONSTANTS.SHORTCUT_ICONS.SHORTCUTS}
       renderItem={(props) => (
         <ShortcutIcon navigation={navigation} {...props} />
       )}

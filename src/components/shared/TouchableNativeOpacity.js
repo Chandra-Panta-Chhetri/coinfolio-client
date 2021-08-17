@@ -6,17 +6,23 @@ import {
   View,
   StyleSheet
 } from "react-native";
+import CONSTANTS from "../../Constants";
 
 const TouchableNativeOpacity = ({
   children,
   viewContainerStyle = {},
   ...otherProps
 }) =>
-  Platform.OS === "android" && Platform.Version >= 21 ? (
+  Platform.OS === "android" &&
+  Platform.Version >=
+    CONSTANTS.SHARED.MIN_ANDROID_VERSION_FOR_TOUCHABLE_RIPPLES ? (
     <View style={[styles.rippleContainer, viewContainerStyle]}>
       <TouchableNativeFeedback
         {...otherProps}
-        background={TouchableNativeFeedback.Ripple("gray", false)}
+        background={TouchableNativeFeedback.Ripple(
+          CONSTANTS.SHARED.TOUCHABLE_RIPPLE_COLOR,
+          false
+        )}
       >
         {children}
       </TouchableNativeFeedback>
@@ -29,7 +35,7 @@ const styles = StyleSheet.create({
   rippleContainer: {
     flex: 1,
     overflow: "hidden",
-    borderRadius: 13
+    borderRadius: CONSTANTS.SHARED.BORDER_RADIUS
   }
 });
 

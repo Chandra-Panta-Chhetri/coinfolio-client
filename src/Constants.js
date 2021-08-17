@@ -1,37 +1,103 @@
 import { Easing } from "react-native-reanimated";
 
 const CONSTANTS = {
-  LINE_CHART_MAX_NUM_POINTS_TO_SHOW: 60,
-  LINE_CHART_SVG_CONFIG: {
-    fill: "transparent",
-    stroke: "black",
-    strokeWidth: 3
+  LINE_CHART: {
+    MAX_NUM_POINTS_TO_SHOW: 60,
+    SVG_LINE_CONFIG: {
+      fill: "transparent",
+      stroke: "black",
+      strokeWidth: 3
+    },
+    CURSOR_SIZE: 15,
+    ACTIVE_GESTURE_ANIMATION_CONFIG: {
+      overshootClamping: true
+    },
+    DEFAULT_ACCESSOR_FUNC: () => null
   },
-  LINE_CHART_CURSOR_SIZE: 15,
-  LINE_CHART_ACTIVE_GESTURE_ANIMATION_CONFIG: {
-    overshootClamping: true
+  TOP_COINS: {
+    NUM_SKELETON_TO_SHOW: 10
   },
-  LINE_CHART_DEFAULT_ACCESSOR_FUNC: () => null,
-  TOP_COINS_NUM_SKELETON_TO_SHOW: 10,
-  NEWS_SUMMARY_NUM_SKELETON_TO_SHOW: 3,
-  GAINERS_LOSERS_NUM_SKELETON_TO_SHOW: 4,
-  TABS_SLIDE_ANIMATION_CONFIG: {
-    duration: 280,
-    easing: Easing.inOut(Easing.quad)
+  NEWS_SUMMARY: {
+    NUM_SKELETON_TO_SHOW: 3
   },
-  PIE_CHART_INNER_LABEL_CONFIG: {
-    textAnchor: "middle",
-    fill: "black",
-    dy: "0.50em",
-    fontSize: 16,
-    fontWeight: "bold"
+  GAINERS_LOSERS: {
+    NUM_SKELETON_TO_SHOW: 4
   },
-  PIE_CHART_MAX_RADIUS_OFFSET: 2,
-  PIE_CHART_SELECTED_ELEVATION: 5,
-  PIE_CHART_END_ANGLE: Math.PI * 2,
-  PIE_CHART_START_ANGLE: 0,
-  PIE_CHART_PAD_ANGLE: 0,
-  PIE_CHART_MAX_NUM_ALLOCATIONS_TO_SHOW: 5
+  TABS: {
+    SWITCH_ANIMATION_CONFIG: {
+      duration: 280,
+      easing: Easing.inOut(Easing.quad)
+    }
+  },
+  PIE_CHART: {
+    INNER_LABEL_CONFIG: {
+      textAnchor: "middle",
+      fill: "black",
+      dy: "0.50em",
+      fontSize: 16,
+      fontWeight: "bold"
+    },
+    MAX_RADIUS_OFFSET: 2,
+    SELECTED_ELEVATION: 5,
+    DEFAULT_END_ANGLE: Math.PI * 2,
+    DEFAULT_START_ANGLE: 0,
+    DEFAULT_PAD_ANGLE: 0,
+    DEFAULT_SORT_FUNCTION: (a, b) => b.value - a.value,
+    DEFAULT_VALUE_ACCESSOR_FUNCTION: ({ item }) => item.value,
+    DEFAULT_INNER_LABEL_VALUE_ACCESSOR_FUNCTION: (selectedSlice) =>
+      `${selectedSlice.key} - ${selectedSlice.value}%`
+  },
+  PORTFOLIO: {
+    MARGIN_BOTTOM: 15
+  },
+  ALLOCATIONS: {
+    MAX_NUM_TO_SHOW: 5
+  },
+  SHARED: {
+    EMPTY_FUNCTION: () => {},
+    BORDER_RADIUS: 6,
+    MIN_ANDROID_VERSION_FOR_TOUCHABLE_RIPPLES: 21,
+    TOUCHABLE_RIPPLE_COLOR: "grey",
+    SCREEN_PADDING: 10,
+    BOTTOM_TAB_ICON_SIZE: 21.5,
+    AVATAR_IMAGE_SIZE: 35,
+    TAB_HEADING_ICON_SIZE: 24,
+    TOUCHABLE_ACTIVE_OPACITY: 0.6
+  },
+  SHORTCUT_ICONS: {
+    SHORTCUTS: [
+      {
+        label: "Price Alerts",
+        iconName: "bell-alert",
+        navigateTo: "PriceAlert",
+        iconColor: "rgb(10, 132, 255)"
+      },
+      {
+        label: "Compare",
+        iconName: "compare",
+        navigateTo: "Compare",
+        iconColor: "rgb(10, 132, 255)"
+      },
+      {
+        label: "Converter",
+        iconName: "calculator",
+        navigateTo: "Converter",
+        iconColor: "rgb(10, 132, 255)"
+      },
+      {
+        label: "Watchlist",
+        iconName: "eye",
+        navigateTo: "Market",
+        iconColor: "rgb(10, 132, 255)"
+      }
+    ]
+  },
+  NOTIFICATION_SNACKBAR: {
+    DURATION: 5000
+  },
+  ASSETS_BREAKDOWN: {
+    SORT_ICON_SIZE: 12
+  }
 };
 
 export default CONSTANTS;

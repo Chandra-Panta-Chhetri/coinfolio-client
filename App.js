@@ -4,7 +4,6 @@ import { Provider as StoreProvider } from "react-redux";
 import { Provider as PaperProvider } from "react-native-paper";
 import { store } from "./src/redux/store.js";
 import { DarkTheme, DefaultTheme } from "./src/redux/preferences/theme.styles";
-import SafeAreaAndroidStyles from "./src/GlobalStyles";
 import { SafeAreaView, StatusBar, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -16,7 +15,7 @@ const App = ({ isThemeDark }) => {
 
   return (
     <PaperProvider theme={theme}>
-      <SafeAreaView style={SafeAreaAndroidStyles.AndroidSafeArea}>
+      <SafeAreaView style={{ flex: 1 }}>
         <StatusBar />
         <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
           <NavigationContainer theme={theme}>

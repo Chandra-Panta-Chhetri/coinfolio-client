@@ -6,13 +6,12 @@ import TouchableNativeOpacity from "../shared/TouchableNativeOpacity";
 import CONSTANTS from "../../Constants";
 import { connect } from "react-redux";
 import { selectPortfolioAssets } from "../../redux/portfolio/portfolio.selectors";
-
-const roundPercent = (num) => Math.round((num + Number.EPSILON) * 100) / 100;
+import { roundPercent } from "../../GlobalUtils";
 
 const Labels = ({
   data = [],
   selectedSlice = null,
-  changeSelectedSlice = () => {}
+  changeSelectedSlice = CONSTANTS.SHARED.EMPTY_FUNCTION
 }) => {
   return (
     <ScrollView
@@ -25,7 +24,7 @@ const Labels = ({
         return (
           <TouchableNativeOpacity
             key={pieSlice.key}
-            activeOpacity={0.6}
+            activeOpacity={CONSTANTS.SHARED.TOUCHABLE_ACTIVE_OPACITY}
             onPress={() => changeSelectedSlice(i, false)}
             viewContainerStyle={styles.touchableOpacityContainer}
           >
@@ -50,9 +49,6 @@ const Labels = ({
   );
 };
 
-const getInnerLabelText = (selectedSlice) =>
-  `${selectedSlice.key} - ${selectedSlice.value}%`;
-
 const Allocations = ({ assets }) => {
   const [data, setData] = useState([]);
   const [selectedSlice, setSelectedSlice] = useState(null);
@@ -65,7 +61,7 @@ const Allocations = ({ assets }) => {
     const allocations = assets;
     allocations.sort((a1, a2) => a1.holdingsVal - a2.holdingsVal);
     const formattedAllocations = allocations
-      .slice(0, CONSTANTS.PIE_CHART_MAX_NUM_ALLOCATIONS_TO_SHOW)
+      .slice(0, CONSTANTS.ALLOCATIONS.MAX_NUM_TO_SHOW)
       .map((allocation) => ({
         ticker: allocation.ticker,
         percent: roundPercent(
@@ -101,7 +97,7 @@ const Allocations = ({ assets }) => {
   }, []);
 
   return (
-    <Card style={styles.cardContainer}>
+    <Card>
       <Card.Content>
         <PieChart
           pieChartStyle={styles.pieChart}
@@ -109,8 +105,7 @@ const Allocations = ({ assets }) => {
           padAngle={0.05}
           innerRadius="75%"
           selectedSlice={selectedSlice}
-          innerLabelConfig={CONSTANTS.PIE_CHART_INNER_LABEL_CONFIG}
-          getInnerLabelText={getInnerLabelText}
+          innerLabelConfig={CONSTANTS.PIE_CHART.INNER_LABEL_CONFIG}
         />
         <Labels
           data={pieData}
@@ -123,9 +118,6 @@ const Allocations = ({ assets }) => {
 };
 
 const styles = StyleSheet.create({
-  cardContainer: {
-    borderRadius: 13
-  },
   pieChart: {
     height: 190,
     width: "100%"

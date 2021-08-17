@@ -11,7 +11,7 @@ import CONSTANTS from "../../../Constants";
 
 const Cursor = ({
   selectedGraph,
-  cursorSize = CONSTANTS.LINE_CHART_CURSOR_SIZE,
+  cursorSize = CONSTANTS.LINE_CHART.CURSOR_SIZE,
   maxWidth,
   yPanGesturePos,
   isPanGestureActive,
@@ -49,7 +49,7 @@ const Cursor = ({
       {
         scale: withSpring(
           isPanGestureActive.value ? 1 : 0,
-          CONSTANTS.LINE_CHART_ACTIVE_GESTURE_ANIMATION_CONFIG
+          CONSTANTS.LINE_CHART.ACTIVE_GESTURE_ANIMATION_CONFIG
         )
       }
     ]
@@ -61,7 +61,7 @@ const Cursor = ({
       {
         scale: withSpring(
           isPanGestureActive.value ? 1 : 0,
-          CONSTANTS.LINE_CHART_ACTIVE_GESTURE_ANIMATION_CONFIG
+          CONSTANTS.LINE_CHART.ACTIVE_GESTURE_ANIMATION_CONFIG
         )
       }
     ]

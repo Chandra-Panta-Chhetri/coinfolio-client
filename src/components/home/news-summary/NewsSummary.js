@@ -15,7 +15,7 @@ import CONSTANTS from "../../../Constants";
 const NewsSummary = ({ navigation, news, isLoading, fetchNewsSummary }) => {
   const navigateToNewsScreen = () => navigation.navigate("News");
   const dummySkeletonArray = Array(
-    CONSTANTS.NEWS_SUMMARY_NUM_SKELETON_TO_SHOW
+    CONSTANTS.NEWS_SUMMARY.NUM_SKELETON_TO_SHOW
   ).fill("1");
 
   return (

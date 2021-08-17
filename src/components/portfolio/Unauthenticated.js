@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Image } from "react-native";
 import { Button, Headline, Subheading, useTheme } from "react-native-paper";
+import CONSTANTS from "../../Constants";
 
 const Unauthenticated = ({ navigation }) => {
   const { colors } = useTheme();
@@ -45,7 +46,7 @@ const Unauthenticated = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: CONSTANTS.SHARED.SCREEN_PADDING,
     justifyContent: "center",
     flex: 1
   },

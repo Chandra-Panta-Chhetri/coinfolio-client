@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Paragraph, Subheading, useTheme } from "react-native-paper";
 import { connect } from "react-redux";
+import CONSTANTS from "../../../Constants";
 import {
   selectIsLoadingPortfolio,
   selectCurrentPortfolioValue
@@ -16,7 +17,7 @@ const CurrentValue = ({ currentValue, isLoading }) => {
   }
 
   return (
-    <Card>
+    <Card style={styles.container}>
       <Card.Content>
         <Paragraph style={styles.label}>Current Value</Paragraph>
         <View style={styles.valueAndPercent}>
@@ -39,6 +40,7 @@ const CurrentValue = ({ currentValue, isLoading }) => {
 };
 
 const styles = StyleSheet.create({
+  container: { marginBottom: CONSTANTS.PORTFOLIO.MARGIN_BOTTOM },
   label: {
     fontWeight: "bold",
     letterSpacing: 1,

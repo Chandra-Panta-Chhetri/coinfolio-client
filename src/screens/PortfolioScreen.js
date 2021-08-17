@@ -18,6 +18,7 @@ import Reanimated, {
 } from "react-native-reanimated";
 import AllTimeProfit from "../components/portfolio/AllTimeProfit";
 import Unauthenticated from "../components/portfolio/Unauthenticated";
+import CONSTANTS from "../Constants";
 
 const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
@@ -49,14 +50,26 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
           <>
             <CurrentValue />
             <AllTimeProfit />
-            <SummaryTabs>
+            <SummaryTabs
+              tabHeadingMarginBottom={CONSTANTS.PORTFOLIO.MARGIN_BOTTOM}
+            >
               <HistoricValue
                 tabLabel="Historic Value"
-                iconComponent={<Entypo name="line-graph" size={24} />}
+                iconComponent={
+                  <Entypo
+                    name="line-graph"
+                    size={CONSTANTS.SHARED.TAB_HEADING_ICON_SIZE}
+                  />
+                }
               />
               <Allocations
                 tabLabel="Allocations"
-                iconComponent={<Entypo name="pie-chart" size={24} />}
+                iconComponent={
+                  <Entypo
+                    name="pie-chart"
+                    size={CONSTANTS.SHARED.TAB_HEADING_ICON_SIZE}
+                  />
+                }
               />
             </SummaryTabs>
             <AssetsBreakdown />
@@ -79,7 +92,7 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10
+    padding: CONSTANTS.SHARED.SCREEN_PADDING
   },
   bottomRight: {
     position: "absolute",

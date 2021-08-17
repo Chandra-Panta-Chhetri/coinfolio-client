@@ -21,13 +21,13 @@ const AnimatedPath = Reanimated.createAnimatedComponent(Path);
 
 const LineChart = ({
   data = [],
-  chartStyle,
+  chartStyle = {},
   initialSelectedGraph = 0,
-  svgConfig = CONSTANTS.LINE_CHART_SVG_CONFIG,
-  xValueAccessor = CONSTANTS.LINE_CHART_DEFAULT_ACCESSOR_FUNC,
-  yValueAccessor = CONSTANTS.LINE_CHART_DEFAULT_ACCESSOR_FUNC,
-  percentChangeAccessor = CONSTANTS.LINE_CHART_DEFAULT_ACCESSOR_FUNC,
-  dataPointsAccessor = CONSTANTS.LINE_CHART_DEFAULT_ACCESSOR_FUNC
+  svgConfig = CONSTANTS.LINE_CHART.SVG_LINE_CONFIG,
+  xValueAccessor = CONSTANTS.LINE_CHART.DEFAULT_ACCESSOR_FUNC,
+  yValueAccessor = CONSTANTS.LINE_CHART.DEFAULT_ACCESSOR_FUNC,
+  percentChangeAccessor = CONSTANTS.LINE_CHART.DEFAULT_ACCESSOR_FUNC,
+  dataPointsAccessor = CONSTANTS.LINE_CHART.DEFAULT_ACCESSOR_FUNC
 }) => {
   const [chartDimensions, setChartDimensions] = useState({
     width: 0,

@@ -15,7 +15,7 @@ import CONSTANTS from "../../../Constants";
 const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
   const navigateToMarketScreen = () => navigation.navigate("Market");
   const dummySkeletonArray = Array(
-    CONSTANTS.TOP_COINS_NUM_SKELETON_TO_SHOW
+    CONSTANTS.TOP_COINS.NUM_SKELETON_TO_SHOW
   ).fill("1");
 
   return (

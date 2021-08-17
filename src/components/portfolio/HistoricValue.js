@@ -30,7 +30,6 @@ const HistoricValue = ({ historicValue = [] }) => {
 };
 
 const styles = StyleSheet.create({
-  cardContainer: {},
   lineChart: {
     width: "100%",
     height: 180

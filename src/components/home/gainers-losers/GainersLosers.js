@@ -20,7 +20,7 @@ const GainersLosers = ({
 }) => {
   const navigateToMarketScreen = () => navigation.navigate("Market");
   const dummySkeletonArray = Array(
-    CONSTANTS.GAINERS_LOSERS_NUM_SKELETON_TO_SHOW
+    CONSTANTS.GAINERS_LOSERS.NUM_SKELETON_TO_SHOW
   ).fill("1");
 
   return (

@@ -1,11 +1,12 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Button, Headline } from "react-native-paper";
+import CONSTANTS from "../../Constants";
 
 const HeadingWithSeeAll = ({
   headingTitle = "",
   seeAllBtnLabel = "See All",
-  onSeeAllBtnPress = () => {}
+  onSeeAllBtnPress = CONSTANTS.SHARED.EMPTY_FUNCTION
 }) => {
   return (
     <View style={styles.container}>

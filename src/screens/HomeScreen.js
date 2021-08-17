@@ -5,6 +5,7 @@ import TopCoins from "../components/home/top-coins/TopCoins";
 import GainersLosers from "../components/home/gainers-losers/GainersLosers";
 import NewsSummary from "../components/home/news-summary/NewsSummary";
 import { StyleSheet, FlatList } from "react-native";
+import CONSTANTS from "../Constants";
 
 function HomeScreen() {
   return (
@@ -27,7 +28,7 @@ function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10
+    padding: CONSTANTS.SHARED.SCREEN_PADDING
   }
 });
 

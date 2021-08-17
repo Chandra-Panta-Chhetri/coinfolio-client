@@ -16,7 +16,11 @@ const getBorderStyles = (tabIndex, totalTabs) =>
     ? styles.noLeftBorders
     : { ...styles.noRightBorders, ...styles.noLeftBorders };
 
-const Tabs = ({ children, initialActiveTab = 0 }) => {
+const Tabs = ({
+  children,
+  initialActiveTab = 0,
+  tabHeadingMarginBottom = 0
+}) => {
   const numTabs = children.length;
   const { dark: isDarkMode, colors } = useTheme();
 
@@ -44,9 +48,9 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
     translateX.value = tabHeadingContainerWidth;
     leftPosition.value = withTiming(
       newTabIndex * tabWidth,
-      CONSTANTS.TABS_SLIDE_ANIMATION_CONFIG
+      CONSTANTS.TABS.SWITCH_ANIMATION_CONFIG
     );
-    translateX.value = withTiming(0, CONSTANTS.TABS_SLIDE_ANIMATION_CONFIG);
+    translateX.value = withTiming(0, CONSTANTS.TABS.SWITCH_ANIMATION_CONFIG);
   };
 
   const handleTabClick = (tabIndex) => {
@@ -60,7 +64,10 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
   return (
     <View>
       <View
-        style={styles.tabHeadingContainer}
+        style={[
+          styles.tabHeadingContainer,
+          { marginBottom: tabHeadingMarginBottom }
+        ]}
         onLayout={(e) => {
           const containerWidth = e.nativeEvent.layout.width;
           leftPosition.value =
@@ -132,8 +139,6 @@ const Tabs = ({ children, initialActiveTab = 0 }) => {
 const styles = StyleSheet.create({
   tabHeadingContainer: {
     flexDirection: "row",
-    marginTop: 20,
-    marginBottom: 20,
     position: "relative",
     height: 35
   },

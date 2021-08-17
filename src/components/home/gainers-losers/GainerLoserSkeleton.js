@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card } from "react-native-paper";
+import CONSTANTS from "../../../Constants";
 import Skeleton from "../../shared/Skeleton";
 
 const GainerLoserSkeleton = () => (
@@ -22,7 +23,7 @@ const GainerLoserSkeleton = () => (
 const styles = StyleSheet.create({
   cardContainer: {
     marginBottom: 10,
-    borderRadius: 13
+    borderRadius: CONSTANTS.SHARED.BORDER_RADIUS
   },
   cardBody: {
     flexDirection: "row",

@@ -8,10 +8,11 @@ import {
 } from "../../redux/portfolio/portfolio.selectors";
 import { AntDesign } from "@expo/vector-icons";
 import PressableView from "../shared/PressableView";
+import CONSTANTS from "../../Constants";
 
 const styles = StyleSheet.create({
   heading: { fontWeight: "bold", marginTop: 15 },
-  dataTable: { marginBottom: 15 },
+  dataTable: { marginBottom: CONSTANTS.PORTFOLIO.MARGIN_BOTTOM },
   dataHeader: { borderBottomWidth: 0 },
   dataTitle: {
     fontWeight: "bold"
@@ -107,7 +108,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
   };
 
   return (
-    <>
+    <View>
       <Headline style={styles.heading}>Assets</Headline>
       <DataTable style={styles.dataTable}>
         <DataTable.Header style={styles.dataHeader}>
@@ -121,7 +122,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
               {columnToSortBy === th.sortByField && (
                 <AntDesign
                   name={sortAscending ? "caretup" : "caretdown"}
-                  size={12}
+                  size={CONSTANTS.ASSETS_BREAKDOWN.SORT_ICON_SIZE}
                   style={styles.sortArrow}
                   color="black"
                 />
@@ -141,7 +142,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
           >
             <View style={[styles.assetTableCell, styles.marginRight]}>
               <Avatar.Image
-                size={35}
+                size={CONSTANTS.SHARED.AVATAR_IMAGE_SIZE}
                 source={{
                   uri: asset.iconSrc
                 }}
@@ -177,7 +178,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
           </DataTable.Row>
         ))}
       </DataTable>
-    </>
+    </View>
   );
 };
 

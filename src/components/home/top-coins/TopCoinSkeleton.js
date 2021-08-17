@@ -2,6 +2,7 @@ import React from "react";
 import { Card } from "react-native-paper";
 import { StyleSheet } from "react-native";
 import Skeleton from "../../shared/Skeleton";
+import CONSTANTS from "../../../Constants";
 
 const TopCoinSkeleton = () => {
   return (
@@ -18,7 +19,7 @@ const TopCoinSkeleton = () => {
 const styles = StyleSheet.create({
   cardContainer: {
     marginRight: 10,
-    borderRadius: 13,
+    borderRadius: CONSTANTS.SHARED.BORDER_RADIUS,
     width: 125
   },
   iconSkeleton: { borderRadius: 30, width: 30, height: 30 },

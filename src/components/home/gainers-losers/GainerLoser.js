@@ -1,18 +1,19 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Paragraph, Avatar } from "react-native-paper";
+import CONSTANTS from "../../../Constants";
 import TouchableNativeOpacity from "../../shared/TouchableNativeOpacity";
 
 const GainerLoser = ({ item, navigation }) => {
   return (
     <TouchableNativeOpacity
-      activeOpacity={0.6}
+      activeOpacity={CONSTANTS.SHARED.TOUCHABLE_ACTIVE_OPACITY}
       viewContainerStyle={styles.androidContainer}
     >
       <Card style={styles.gainerLoserCard}>
         <Card.Content style={styles.gainerLoserCardBody}>
           <Avatar.Image
-            size={35}
+            size={CONSTANTS.SHARED.AVATAR_IMAGE_SIZE}
             source={{
               uri: item.image
             }}
@@ -44,7 +45,7 @@ const GainerLoser = ({ item, navigation }) => {
 
 const styles = StyleSheet.create({
   gainerLoserCard: {
-    borderRadius: 13
+    borderRadius: CONSTANTS.SHARED.BORDER_RADIUS
   },
   androidContainer: {
     marginBottom: 10
