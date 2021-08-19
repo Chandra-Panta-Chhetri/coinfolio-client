@@ -3,7 +3,10 @@ import { StyleSheet, View } from "react-native";
 import { Card, Paragraph, Avatar } from "react-native-paper";
 import CONSTANTS from "../../../Constants";
 import GlobalStyles from "../../../GlobalStyles";
-import { determineColor, appendPlusOrMinus } from "../../../GlobalUtils";
+import {
+  getStylesBasedOnPosOrNeg,
+  appendPlusOrMinus
+} from "../../../GlobalUtils";
 import TouchableNativeOpacity from "../../shared/TouchableNativeOpacity";
 
 const GainerLoser = ({ item, navigation }) => {
@@ -36,7 +39,7 @@ const GainerLoser = ({ item, navigation }) => {
               <Paragraph
                 style={[
                   styles.percentChange,
-                  determineColor(item.percentChange)
+                  getStylesBasedOnPosOrNeg(item.percentChange)
                 ]}
               >
                 {appendPlusOrMinus(item.percentChange)}%

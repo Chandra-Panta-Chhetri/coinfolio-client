@@ -7,7 +7,7 @@ import {
 } from "../../redux/portfolio/portfolio.selectors";
 import { Subheading, Card, Paragraph } from "react-native-paper";
 import GlobalStyles from "../../GlobalStyles";
-import { appendPlusOrMinus, determineColor } from "../../GlobalUtils";
+import { appendPlusOrMinus, getStylesBasedOnPosOrNeg } from "../../GlobalUtils";
 
 const AllTimeProfit = ({ isLoading, overallProfit }) => {
   return (
@@ -19,7 +19,10 @@ const AllTimeProfit = ({ isLoading, overallProfit }) => {
         <View style={styles.profitAndPercent}>
           <Subheading style={styles.text}>${overallProfit.value}</Subheading>
           <Subheading
-            style={[styles.text, determineColor(overallProfit.percentChange)]}
+            style={[
+              styles.text,
+              getStylesBasedOnPosOrNeg(overallProfit.percentChange)
+            ]}
           >
             {appendPlusOrMinus(overallProfit.percentChange)}%
           </Subheading>

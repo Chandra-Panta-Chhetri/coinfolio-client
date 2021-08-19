@@ -6,7 +6,7 @@ export const roundPercent = (num) =>
 export const appendPlusOrMinus = (num, strToAppend = " ") =>
   num >= 0 ? `+${strToAppend}${num}` : `-${strToAppend}${num * -1}`;
 
-export const determineColor = (num) =>
+export const getStylesBasedOnPosOrNeg = (num) =>
   num >= 0 ? GlobalStyles.positiveNum : GlobalStyles.negativeNum;
 
 export function appendPlusOrMinusWorklet(num, strToAppend = " ") {
@@ -14,7 +14,9 @@ export function appendPlusOrMinusWorklet(num, strToAppend = " ") {
   return num >= 0 ? `+${strToAppend}${num}` : `-${strToAppend}${num * -1}`;
 }
 
-export function determineColorWorklet(num) {
+export function getStylesBasedOnPosOrNegWorklet(num) {
   "worklet";
-  return num >= 0 ? GlobalStyles.positiveNum : GlobalStyles.negativeNum;
+  return num >= 0
+    ? { color: "green", fontWeight: "bold" }
+    : { color: "red", fontWeight: "bold" };
 }

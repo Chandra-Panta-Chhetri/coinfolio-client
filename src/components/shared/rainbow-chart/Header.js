@@ -10,8 +10,9 @@ import {
 import { formatTime } from "./chart-utils";
 import {
   appendPlusOrMinusWorklet,
-  determineColorWorklet
+  getStylesBasedOnPosOrNegWorklet
 } from "../../../GlobalUtils";
+import { negativeNumStyles, positiveNumStyles } from "../../../GlobalStyles";
 
 const Header = ({
   selectedGraph,
@@ -58,10 +59,9 @@ const Header = ({
   );
 
   const animatedPercentChange = useAnimatedStyle(() => ({
-    fontWeight: "bold",
     fontSize: 15,
-    opacity: withTiming(hasPathsBeenCalculated.value ? 1 : 0)
-    // ...determineColorWorklet(percentChange.value)
+    opacity: withTiming(hasPathsBeenCalculated.value ? 1 : 0),
+    ...getStylesBasedOnPosOrNegWorklet(percentChange.value)
   }));
 
   return (

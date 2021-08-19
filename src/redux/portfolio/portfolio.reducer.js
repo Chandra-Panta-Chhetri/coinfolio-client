@@ -10,7 +10,7 @@ const historicValue = [
   {
     label: "1d",
     data: values.day,
-    defaultTimeLabel: "Yesterday"
+    defaultTimeLabel: "Past Day"
   },
   {
     label: "1m",

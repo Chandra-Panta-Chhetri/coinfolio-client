@@ -8,7 +8,10 @@ import {
   selectCurrentPortfolioValue
 } from "../../../redux/portfolio/portfolio.selectors";
 import CurrentValueSkeleton from "./Skeleton";
-import { appendPlusOrMinus, determineColor } from "../../../GlobalUtils";
+import {
+  appendPlusOrMinus,
+  getStylesBasedOnPosOrNeg
+} from "../../../GlobalUtils";
 
 const CurrentValue = ({ currentValue, isLoading }) => {
   const { colors } = useTheme();
@@ -26,13 +29,19 @@ const CurrentValue = ({ currentValue, isLoading }) => {
         <View style={styles.valueAndPercent}>
           <Subheading style={styles.value}>${currentValue.value}</Subheading>
           <Subheading
-            style={[styles.percent, determineColor(currentValue.percent)]}
+            style={[
+              styles.percent,
+              getStylesBasedOnPosOrNeg(currentValue.percent)
+            ]}
           >
             {appendPlusOrMinus(currentValue.percent)}%
           </Subheading>
         </View>
         <Paragraph
-          style={[styles.plChange, determineColor(currentValue.plChange)]}
+          style={[
+            styles.plChange,
+            getStylesBasedOnPosOrNeg(currentValue.plChange)
+          ]}
         >
           {appendPlusOrMinus(currentValue.plChange, " $")} (24h)
         </Paragraph>

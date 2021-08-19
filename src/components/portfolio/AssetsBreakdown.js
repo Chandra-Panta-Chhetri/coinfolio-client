@@ -10,7 +10,7 @@ import { AntDesign } from "@expo/vector-icons";
 import PressableView from "../shared/PressableView";
 import CONSTANTS from "../../Constants";
 import GlobalStyles from "../../GlobalStyles";
-import { appendPlusOrMinus, determineColor } from "../../GlobalUtils";
+import { appendPlusOrMinus, getStylesBasedOnPosOrNeg } from "../../GlobalUtils";
 
 const styles = StyleSheet.create({
   heading: { fontWeight: "bold", marginTop: 15 },
@@ -161,7 +161,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
                 numberOfLines={1}
                 style={[
                   styles.rightAlign,
-                  determineColor(asset.pricePercentChange)
+                  getStylesBasedOnPosOrNeg(asset.pricePercentChange)
                 ]}
               >
                 {appendPlusOrMinus(asset.pricePercentChange)}%
