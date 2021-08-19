@@ -3,6 +3,7 @@ import { StyleSheet, View, FlatList } from "react-native";
 import { IconButton, Caption, TouchableRipple } from "react-native-paper";
 import { withNavigation } from "@react-navigation/compat";
 import CONSTANTS from "../../Constants";
+import GlobalStyles from "../../GlobalStyles";
 
 const ShortcutIcon = ({ item, navigation }) => {
   const navigateToScreen = () => navigation.navigate(item.navigateTo);
@@ -10,7 +11,7 @@ const ShortcutIcon = ({ item, navigation }) => {
   return (
     <TouchableRipple onPress={navigateToScreen}>
       <View style={styles.shortcutIconItem}>
-        <View style={styles.iconButton}>
+        <View style={[styles.iconButton, GlobalStyles.iconRoundness]}>
           <IconButton icon={item.iconName} color={item.iconColor} />
         </View>
         <Caption style={styles.bold}>{item.label}</Caption>
@@ -26,7 +27,7 @@ const ShortcutIcons = ({ navigation }) => {
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.shortcutIconContainer}
       keyExtractor={(sc) => sc.label}
-      data={CONSTANTS.SHORTCUT_ICONS.SHORTCUTS}
+      data={CONSTANTS.SHORTCUT_ICONS}
       renderItem={(props) => (
         <ShortcutIcon navigation={navigation} {...props} />
       )}
@@ -50,7 +51,6 @@ const styles = StyleSheet.create({
   },
   iconButton: {
     borderWidth: 5,
-    borderRadius: 30,
     borderColor: "white",
     backgroundColor: "#ECECEC"
   }

@@ -9,10 +9,11 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import PressableView from "../shared/PressableView";
 import CONSTANTS from "../../Constants";
+import GlobalStyles from "../../GlobalStyles";
+import { appendPlusOrMinus, determineColor } from "../../GlobalUtils";
 
 const styles = StyleSheet.create({
   heading: { fontWeight: "bold", marginTop: 15 },
-  dataTable: { marginBottom: CONSTANTS.PORTFOLIO.MARGIN_BOTTOM },
   dataHeader: { borderBottomWidth: 0 },
   dataTitle: {
     fontWeight: "bold"
@@ -108,9 +109,9 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
   };
 
   return (
-    <View>
+    <>
       <Headline style={styles.heading}>Assets</Headline>
-      <DataTable style={styles.dataTable}>
+      <DataTable style={GlobalStyles.portfolioElementMargin}>
         <DataTable.Header style={styles.dataHeader}>
           {tableHeadings.map((th) => (
             <PressableView
@@ -160,11 +161,10 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
                 numberOfLines={1}
                 style={[
                   styles.rightAlign,
-                  { color: asset.pricePercentChange >= 0 ? "green" : "red" }
+                  determineColor(asset.pricePercentChange)
                 ]}
               >
-                {asset.pricePercentChange >= 0 ? "+" : ""}
-                {asset.pricePercentChange}%
+                {appendPlusOrMinus(asset.pricePercentChange)}%
               </Paragraph>
             </View>
             <View style={styles.flex}>
@@ -178,7 +178,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
           </DataTable.Row>
         ))}
       </DataTable>
-    </View>
+    </>
   );
 };
 

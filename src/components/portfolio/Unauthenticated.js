@@ -1,13 +1,13 @@
 import React from "react";
 import { StyleSheet, View, Image } from "react-native";
 import { Button, Headline, Subheading, useTheme } from "react-native-paper";
-import CONSTANTS from "../../Constants";
+import GlobalStyles from "../../GlobalStyles";
 
 const Unauthenticated = ({ navigation }) => {
   const { colors } = useTheme();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, GlobalStyles.screenPadding]}>
       <Image
         source={require("../../../assets/images/static-pie-chart.png")}
         style={styles.staticImage}
@@ -46,7 +46,6 @@ const Unauthenticated = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: CONSTANTS.SHARED.SCREEN_PADDING,
     justifyContent: "center",
     flex: 1
   },

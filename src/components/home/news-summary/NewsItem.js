@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Paragraph, Caption } from "react-native-paper";
 import CONSTANTS from "../../../Constants";
+import GlobalStyles from "../../../GlobalStyles";
 import TouchableNativeOpacity from "../../shared/TouchableNativeOpacity";
 
 const NewsItem = ({ item }) => (
@@ -9,7 +10,7 @@ const NewsItem = ({ item }) => (
     activeOpacity={CONSTANTS.SHARED.TOUCHABLE_ACTIVE_OPACITY}
     viewContainerStyle={styles.androidContainer}
   >
-    <Card style={styles.newsCard}>
+    <Card style={GlobalStyles.borderRadius}>
       <Card.Content style={styles.newsCardBody}>
         <View style={styles.newsInfo}>
           <Paragraph style={styles.newsTitle}>{item.title}</Paragraph>
@@ -18,7 +19,7 @@ const NewsItem = ({ item }) => (
           </Caption>
         </View>
         <Card.Cover
-          style={styles.newsImagePreview}
+          style={GlobalStyles.imagePreview}
           source={{
             uri: item.imagePreview
           }}
@@ -33,9 +34,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between"
   },
-  newsCard: {
-    borderRadius: CONSTANTS.SHARED.BORDER_RADIUS
-  },
   androidContainer: {
     marginBottom: 10
   },
@@ -49,10 +47,6 @@ const styles = StyleSheet.create({
   newsInfo: {
     flex: 1,
     marginRight: 15
-  },
-  newsImagePreview: {
-    width: 90,
-    height: 90
   }
 });
 

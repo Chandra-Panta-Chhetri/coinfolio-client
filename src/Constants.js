@@ -55,48 +55,64 @@ const CONSTANTS = {
   },
   SHARED: {
     EMPTY_FUNCTION: () => {},
-    BORDER_RADIUS: 6,
     MIN_ANDROID_VERSION_FOR_TOUCHABLE_RIPPLES: 21,
     TOUCHABLE_RIPPLE_COLOR: "grey",
-    SCREEN_PADDING: 10,
     BOTTOM_TAB_ICON_SIZE: 21.5,
     AVATAR_IMAGE_SIZE: 35,
     TAB_HEADING_ICON_SIZE: 24,
     TOUCHABLE_ACTIVE_OPACITY: 0.6
   },
-  SHORTCUT_ICONS: {
-    SHORTCUTS: [
-      {
-        label: "Price Alerts",
-        iconName: "bell-alert",
-        navigateTo: "PriceAlert",
-        iconColor: "rgb(10, 132, 255)"
-      },
-      {
-        label: "Compare",
-        iconName: "compare",
-        navigateTo: "Compare",
-        iconColor: "rgb(10, 132, 255)"
-      },
-      {
-        label: "Converter",
-        iconName: "calculator",
-        navigateTo: "Converter",
-        iconColor: "rgb(10, 132, 255)"
-      },
-      {
-        label: "Watchlist",
-        iconName: "eye",
-        navigateTo: "Market",
-        iconColor: "rgb(10, 132, 255)"
-      }
-    ]
-  },
+  SHORTCUT_ICONS: [
+    {
+      label: "Price Alerts",
+      iconName: "bell-alert",
+      navigateTo: "PriceAlert",
+      iconColor: "rgb(10, 132, 255)"
+    },
+    {
+      label: "Compare",
+      iconName: "compare",
+      navigateTo: "Compare",
+      iconColor: "rgb(10, 132, 255)"
+    },
+    {
+      label: "Converter",
+      iconName: "calculator",
+      navigateTo: "Converter",
+      iconColor: "rgb(10, 132, 255)"
+    },
+    {
+      label: "Watchlist",
+      iconName: "eye",
+      navigateTo: "Market",
+      iconColor: "rgb(10, 132, 255)"
+    }
+  ],
   NOTIFICATION_SNACKBAR: {
     DURATION: 5000
   },
   ASSETS_BREAKDOWN: {
     SORT_ICON_SIZE: 12
+  },
+  GLOBAL_MARKET_SUMMARY: {
+    METRICS: [
+      {
+        label: "Market Cap",
+        valueAccessorFunc: (summary) => `$${summary["marketCap"]}`
+      },
+      {
+        label: "24h Vol",
+        valueAccessorFunc: (summary) => `$${summary["24hVolume"]}`
+      },
+      {
+        label: "BTC Dominance",
+        valueAccessorFunc: (summary) => `${summary["btcDominance"]}%`
+      },
+      {
+        label: "ETH Dominance",
+        valueAccessorFunc: (summary) => `${summary["ethDominance"]}%`
+      }
+    ]
   }
 };
 

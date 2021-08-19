@@ -7,6 +7,7 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 import CONSTANTS from "../../Constants";
+import GlobalStyles from "../../GlobalStyles";
 import PressableView from "./PressableView";
 
 const getBorderStyles = (tabIndex, totalTabs) =>
@@ -91,6 +92,7 @@ const Tabs = ({
                 {
                   borderColor: isDarkMode ? colors.border : colors.primary
                 },
+                GlobalStyles.borderRadius,
                 getBorderStyles(index, numTabs)
               ]}
             >
@@ -107,6 +109,7 @@ const Tabs = ({
         <Animated.View
           style={[
             styles.activeTabOverlay,
+            GlobalStyles.borderRadius,
             {
               width: `${numTabs === 0 ? 0 : 100 / numTabs}%`,
               backgroundColor: isDarkMode ? colors.border : colors.primary,
@@ -146,7 +149,6 @@ const styles = StyleSheet.create({
     flex: 1,
     borderWidth: 2,
     borderColor: "#007aff",
-    borderRadius: 4,
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row"
@@ -156,8 +158,7 @@ const styles = StyleSheet.create({
     height: "100%",
     top: 0,
     backgroundColor: "#007aff",
-    zIndex: -1,
-    borderRadius: 4
+    zIndex: -1
   },
   tabLabel: {
     fontWeight: "bold",

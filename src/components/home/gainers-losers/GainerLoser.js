@@ -2,6 +2,8 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Paragraph, Avatar } from "react-native-paper";
 import CONSTANTS from "../../../Constants";
+import GlobalStyles from "../../../GlobalStyles";
+import { determineColor, appendPlusOrMinus } from "../../../GlobalUtils";
 import TouchableNativeOpacity from "../../shared/TouchableNativeOpacity";
 
 const GainerLoser = ({ item, navigation }) => {
@@ -10,7 +12,7 @@ const GainerLoser = ({ item, navigation }) => {
       activeOpacity={CONSTANTS.SHARED.TOUCHABLE_ACTIVE_OPACITY}
       viewContainerStyle={styles.androidContainer}
     >
-      <Card style={styles.gainerLoserCard}>
+      <Card style={GlobalStyles.borderRadius}>
         <Card.Content style={styles.gainerLoserCardBody}>
           <Avatar.Image
             size={CONSTANTS.SHARED.AVATAR_IMAGE_SIZE}
@@ -31,9 +33,13 @@ const GainerLoser = ({ item, navigation }) => {
               <Paragraph style={styles.gainerLoserPrice}>
                 ${item.price}
               </Paragraph>
-              <Paragraph style={styles.gainerLoserPercent}>
-                {item.percentChange > 0 && "+"}
-                {item.percentChange}%
+              <Paragraph
+                style={[
+                  styles.percentChange,
+                  determineColor(item.percentChange)
+                ]}
+              >
+                {appendPlusOrMinus(item.percentChange)}%
               </Paragraph>
             </View>
           </View>
@@ -44,9 +50,6 @@ const GainerLoser = ({ item, navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  gainerLoserCard: {
-    borderRadius: CONSTANTS.SHARED.BORDER_RADIUS
-  },
   androidContainer: {
     marginBottom: 10
   },
@@ -67,8 +70,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18
   },
-  gainerLoserPercent: {
-    color: "green",
+  percentChange: {
     fontSize: 13
   },
   gainerLoserInfoContainer: {

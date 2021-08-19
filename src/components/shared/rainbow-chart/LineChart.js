@@ -16,6 +16,7 @@ import Skeleton from "../Skeleton";
 import Label from "./Label";
 import CONSTANTS from "../../../Constants";
 import PressableView from "../PressableView";
+import GlobalStyles from "../../../GlobalStyles";
 
 const AnimatedPath = Reanimated.createAnimatedComponent(Path);
 
@@ -167,6 +168,7 @@ const LineChart = ({
           <Reanimated.View
             style={[
               styles.backgroundSelection,
+              GlobalStyles.borderRadius,
               {
                 width: buttonWidth
               },
@@ -195,8 +197,7 @@ const styles = StyleSheet.create({
   },
   backgroundSelection: {
     backgroundColor: "#f3f3f3",
-    ...StyleSheet.absoluteFillObject,
-    borderRadius: 5
+    ...StyleSheet.absoluteFillObject
   },
   timeFilterContainer: {
     flexDirection: "row",

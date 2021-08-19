@@ -1,17 +1,20 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card } from "react-native-paper";
+import GlobalStyles from "../../../GlobalStyles";
 import Skeleton from "../../shared/Skeleton";
 
 const CurrentValueSkeleton = () => (
-  <Card>
+  <Card style={GlobalStyles.borderRadius}>
     <Card.Content>
       <Skeleton style={styles.subheadingSkeleton} />
       <View style={styles.rowFlexbox}>
-        <Skeleton style={styles.valueSkeleton} />
-        <Skeleton style={styles.percentSkeleton} />
+        <Skeleton style={[styles.valueSkeleton, GlobalStyles.borderRadius]} />
+        <Skeleton style={[styles.percentSkeleton, GlobalStyles.borderRadius]} />
       </View>
-      <Skeleton style={styles.subheadingSkeleton} />
+      <Skeleton
+        style={[styles.subheadingSkeleton, GlobalStyles.borderRadius]}
+      />
     </Card.Content>
   </Card>
 );
@@ -19,17 +22,14 @@ const CurrentValueSkeleton = () => (
 const styles = StyleSheet.create({
   valueSkeleton: {
     height: 25,
-    borderRadius: 6,
     width: "60%"
   },
   percentSkeleton: {
     height: 25,
-    borderRadius: 6,
     width: "25%"
   },
   subheadingSkeleton: {
     height: 20,
-    borderRadius: 6,
     marginBottom: 10,
     width: "35%"
   },

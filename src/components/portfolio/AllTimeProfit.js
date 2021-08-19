@@ -6,27 +6,22 @@ import {
   selectIsLoadingPortfolio
 } from "../../redux/portfolio/portfolio.selectors";
 import { Subheading, Card, Paragraph } from "react-native-paper";
-import CONSTANTS from "../../Constants";
+import GlobalStyles from "../../GlobalStyles";
+import { appendPlusOrMinus, determineColor } from "../../GlobalUtils";
 
 const AllTimeProfit = ({ isLoading, overallProfit }) => {
-  const isPositivePercent = overallProfit.percentChange >= 0;
-
   return (
-    <Card style={styles.container}>
+    <Card
+      style={[GlobalStyles.borderRadius, GlobalStyles.portfolioElementMargin]}
+    >
       <Card.Content>
-        <Paragraph style={styles.overallLabel}>Total Profit/Loss</Paragraph>
-        <View style={styles.overallProfitAndPercent}>
-          <Subheading style={styles.overallText}>
-            ${overallProfit.value}
-          </Subheading>
+        <Paragraph style={styles.label}>Total Profit/Loss</Paragraph>
+        <View style={styles.profitAndPercent}>
+          <Subheading style={styles.text}>${overallProfit.value}</Subheading>
           <Subheading
-            style={[
-              styles.overallText,
-              { color: isPositivePercent ? "green" : "red" }
-            ]}
+            style={[styles.text, determineColor(overallProfit.percentChange)]}
           >
-            {isPositivePercent ? "+" : ""}
-            {overallProfit.percentChange}%
+            {appendPlusOrMinus(overallProfit.percentChange)}%
           </Subheading>
         </View>
       </Card.Content>
@@ -35,19 +30,16 @@ const AllTimeProfit = ({ isLoading, overallProfit }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: CONSTANTS.PORTFOLIO.MARGIN_BOTTOM
-  },
-  overallProfitAndPercent: {
+  profitAndPercent: {
     flexDirection: "row",
     justifyContent: "space-between"
   },
-  overallText: {
+  text: {
     fontWeight: "bold",
     letterSpacing: 1,
     fontSize: 16
   },
-  overallLabel: {
+  label: {
     fontWeight: "bold",
     letterSpacing: 1,
     fontSize: 15

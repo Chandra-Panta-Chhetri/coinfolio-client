@@ -7,7 +7,7 @@ import { FAB } from "react-native-paper";
 import CurrentValue from "../components/portfolio/current-value/CurrentValue";
 import SummaryTabs from "../components/shared/Tabs";
 import HistoricValue from "../components/portfolio/HistoricValue";
-import Allocations from "../components/portfolio/Allocations";
+import Allocations from "../components/portfolio/allocations/Allocations";
 import AssetsBreakdown from "../components/portfolio/AssetsBreakdown";
 import { Entypo } from "@expo/vector-icons";
 import Reanimated, {
@@ -19,6 +19,7 @@ import Reanimated, {
 import AllTimeProfit from "../components/portfolio/AllTimeProfit";
 import Unauthenticated from "../components/portfolio/Unauthenticated";
 import CONSTANTS from "../Constants";
+import GlobalStyles from "../GlobalStyles";
 
 const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
@@ -43,7 +44,7 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
   return (
     <>
       <AnimatedFlatList
-        contentContainerStyle={styles.container}
+        contentContainerStyle={GlobalStyles.screenPadding}
         showsVerticalScrollIndicator={false}
         onScroll={scrollHandler}
         ListHeaderComponent={
@@ -79,7 +80,7 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
       />
       <Reanimated.View style={[styles.bottomRight, fabStyles]}>
         <FAB
-          style={[styles.addTransactionFab]}
+          style={[styles.addTransactionFab, GlobalStyles.iconRoundness]}
           icon="plus"
           accessibilityLabel="Add Transaction"
           color="white"
@@ -91,9 +92,6 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: CONSTANTS.SHARED.SCREEN_PADDING
-  },
   bottomRight: {
     position: "absolute",
     margin: 16,
@@ -105,8 +103,7 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 32
+    alignItems: "center"
   }
 });
 

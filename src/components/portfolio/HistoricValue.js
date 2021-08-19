@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { Card } from "react-native-paper";
 import { connect } from "react-redux";
+import GlobalStyles from "../../GlobalStyles";
 import { selectPortfolioHistoricValue } from "../../redux/portfolio/portfolio.selectors";
 import LineChart from "../shared/rainbow-chart/LineChart";
 
@@ -14,7 +15,7 @@ const HistoricValue = ({ historicValue = [] }) => {
   useEffect(() => {}, []);
 
   return (
-    <Card style={styles.cardContainer}>
+    <Card style={GlobalStyles.borderRadius}>
       <Card.Content>
         <LineChart
           data={historicValue}

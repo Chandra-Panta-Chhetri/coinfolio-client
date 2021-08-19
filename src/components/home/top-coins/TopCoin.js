@@ -3,6 +3,8 @@ import { StyleSheet } from "react-native";
 import { Card, Paragraph, Avatar } from "react-native-paper";
 import CONSTANTS from "../../../Constants";
 import TouchableNativeOpacity from "../../shared/TouchableNativeOpacity";
+import GlobalStyles from "../../../GlobalStyles";
+import { determineColor, appendPlusOrMinus } from "../../../GlobalUtils";
 
 const TopCoin = ({ item, navigation }) => {
   return (
@@ -10,7 +12,7 @@ const TopCoin = ({ item, navigation }) => {
       activeOpacity={CONSTANTS.SHARED.TOUCHABLE_ACTIVE_OPACITY}
       viewContainerStyle={styles.androidContainer}
     >
-      <Card style={styles.topCoinCard}>
+      <Card style={[GlobalStyles.borderRadius, styles.topCoinCard]}>
         <Card.Content>
           <Avatar.Image
             size={CONSTANTS.SHARED.AVATAR_IMAGE_SIZE}
@@ -20,9 +22,10 @@ const TopCoin = ({ item, navigation }) => {
           />
           <Paragraph style={styles.topCoinName}>{item.ticker}</Paragraph>
           <Paragraph style={styles.topCoinPrice}>${item.price}</Paragraph>
-          <Paragraph style={styles.topCoinPercent}>
-            {item.percentChange > 0 && "+"}
-            {item.percentChange}%
+          <Paragraph
+            style={[styles.topCoinPercent, determineColor(item.percentChange)]}
+          >
+            {appendPlusOrMinus(item.percentChange)}%
           </Paragraph>
         </Card.Content>
       </Card>
@@ -32,7 +35,6 @@ const TopCoin = ({ item, navigation }) => {
 
 const styles = StyleSheet.create({
   topCoinCard: {
-    borderRadius: CONSTANTS.SHARED.BORDER_RADIUS,
     width: 125
   },
   topCoinName: {
@@ -43,8 +45,6 @@ const styles = StyleSheet.create({
     color: "darkgray"
   },
   topCoinPercent: {
-    color: "red",
-    fontWeight: "bold",
     fontSize: 17,
     marginTop: 12
   },

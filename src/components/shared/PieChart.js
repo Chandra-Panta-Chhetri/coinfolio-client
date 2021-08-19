@@ -135,7 +135,8 @@ const PieChart = ({
                 );
               })}
               <Text {...innerLabelConfig}>
-                {selectedSlice && getInnerLabelText(data[selectedSlice])}
+                {typeof selectedSlice !== "null" &&
+                  getInnerLabelText(data[selectedSlice])}
               </Text>
             </G>
           </Svg>

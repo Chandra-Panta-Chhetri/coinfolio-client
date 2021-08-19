@@ -8,6 +8,10 @@ import {
   withTiming
 } from "react-native-reanimated";
 import { formatTime } from "./chart-utils";
+import {
+  appendPlusOrMinusWorklet,
+  determineColorWorklet
+} from "../../../GlobalUtils";
 
 const Header = ({
   selectedGraph,
@@ -48,14 +52,16 @@ const Header = ({
   );
 
   const percentChangeLabel = useDerivedValue(() =>
-    selectedGraph.value.percentChange ? `${round(percentChange.value, 3)}%` : ""
+    selectedGraph.value.percentChange
+      ? `${appendPlusOrMinusWorklet(percentChange.value)}%`
+      : ""
   );
 
   const animatedPercentChange = useAnimatedStyle(() => ({
     fontWeight: "bold",
-    color: percentChange.value >= 0 ? "green" : "red",
     fontSize: 15,
     opacity: withTiming(hasPathsBeenCalculated.value ? 1 : 0)
+    // ...determineColorWorklet(percentChange.value)
   }));
 
   return (

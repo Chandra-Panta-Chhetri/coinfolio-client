@@ -1,19 +1,23 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card } from "react-native-paper";
-import CONSTANTS from "../../../Constants";
+import GlobalStyles from "../../../GlobalStyles";
 import Skeleton from "../../shared/Skeleton";
 
 const GainerLoserSkeleton = () => (
-  <Card style={styles.cardContainer}>
+  <Card style={[styles.cardContainer, GlobalStyles.borderRadius]}>
     <Card.Content style={styles.cardBody}>
-      <Skeleton style={styles.iconSkeleton} />
+      <Skeleton style={[GlobalStyles.iconSize, GlobalStyles.iconRoundness]} />
       <View style={styles.infoContainer}>
         <View style={styles.rowFlexbox}>
-          <Skeleton style={styles.fullNamePriceSkeleton} />
+          <Skeleton
+            style={[styles.fullNamePriceSkeleton, GlobalStyles.borderRadius]}
+          />
         </View>
         <View style={styles.rowFlexbox}>
-          <Skeleton style={styles.symbolPercentSkeleton} />
+          <Skeleton
+            style={[styles.symbolPercentSkeleton, GlobalStyles.borderRadius]}
+          />
         </View>
       </View>
     </Card.Content>
@@ -22,17 +26,11 @@ const GainerLoserSkeleton = () => (
 
 const styles = StyleSheet.create({
   cardContainer: {
-    marginBottom: 10,
-    borderRadius: CONSTANTS.SHARED.BORDER_RADIUS
+    marginBottom: 10
   },
   cardBody: {
     flexDirection: "row",
     alignItems: "center"
-  },
-  iconSkeleton: {
-    borderRadius: 35,
-    width: 35,
-    height: 35
   },
   infoContainer: {
     flex: 1,
@@ -40,12 +38,10 @@ const styles = StyleSheet.create({
   },
   fullNamePriceSkeleton: {
     height: 15,
-    borderRadius: 6,
     flex: 1
   },
   symbolPercentSkeleton: {
     height: 15,
-    borderRadius: 6,
     marginTop: 10,
     flex: 1
   },

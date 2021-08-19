@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, ScrollView, View } from "react-native";
 import { Card, Paragraph } from "react-native-paper";
 import { connect } from "react-redux";
@@ -8,11 +8,13 @@ import {
 } from "../../redux/summary/summary.selectors";
 import { startGlobalSummaryFetch } from "../../redux/summary/summary.actions";
 import Skeleton from "../shared/Skeleton";
+import CONSTANTS from "../../Constants";
+import GlobalStyles from "../../GlobalStyles";
 
 const GlobalMarketSummarySkeleton = () => (
-  <Card>
+  <Card style={GlobalStyles.borderRadius}>
     <Card.Content style={styles.rowFlexbox}>
-      <Skeleton style={styles.globalSkeleton} />
+      <Skeleton style={[styles.globalSkeleton, GlobalStyles.borderRadius]} />
     </Card.Content>
   </Card>
 );
@@ -27,33 +29,19 @@ const GlobalMarketSummary = ({
   }
 
   return (
-    <Card>
+    <Card style={GlobalStyles.borderRadius}>
       <Card.Content>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <View style={styles.summaryItem}>
-            <Paragraph style={styles.summaryLabel}>Market Cap: </Paragraph>
-            <Paragraph style={styles.summaryValue}>
-              ${globalSummary["marketCap"]}
-            </Paragraph>
-          </View>
-          <View style={styles.summaryItem}>
-            <Paragraph style={styles.summaryLabel}>24h Vol: </Paragraph>
-            <Paragraph style={styles.summaryValue}>
-              ${globalSummary["24hVolume"]}
-            </Paragraph>
-          </View>
-          <View style={styles.summaryItem}>
-            <Paragraph style={styles.summaryLabel}>BTC Dominance: </Paragraph>
-            <Paragraph style={styles.summaryValue}>
-              {globalSummary["btcDominance"]}%
-            </Paragraph>
-          </View>
-          <View style={styles.summaryItem}>
-            <Paragraph style={styles.summaryLabel}>ETH Dominance: </Paragraph>
-            <Paragraph style={styles.summaryValue}>
-              {globalSummary["ethDominance"]}%
-            </Paragraph>
-          </View>
+          {CONSTANTS.GLOBAL_MARKET_SUMMARY.METRICS.map((metric) => (
+            <View style={styles.summaryItem} key={metric.label}>
+              <Paragraph style={styles.summaryLabel}>
+                {metric.label}:{" "}
+              </Paragraph>
+              <Paragraph style={styles.summaryValue}>
+                {metric.valueAccessorFunc(globalSummary)}
+              </Paragraph>
+            </View>
+          ))}
         </ScrollView>
       </Card.Content>
     </Card>
@@ -73,7 +61,6 @@ const styles = StyleSheet.create({
   },
   globalSkeleton: {
     height: 20,
-    borderRadius: 6,
     flex: 1
   },
   rowFlexbox: {

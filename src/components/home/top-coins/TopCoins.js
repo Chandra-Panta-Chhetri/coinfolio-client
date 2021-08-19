@@ -39,6 +39,7 @@ const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
           showsHorizontalScrollIndicator={false}
           style={styles.topCoinCards}
           data={dummySkeletonArray}
+          contentContainerStyle={styles.skeletonContentContainer}
           keyExtractor={(s, index) => s + index}
           renderItem={() => <TopCoinSkeleton />}
           listKey="TopCoinsSkeletonList"
@@ -54,6 +55,9 @@ const styles = StyleSheet.create({
   },
   topCoinCards: {
     marginTop: 10
+  },
+  skeletonContentContainer: {
+    paddingVertical: 5
   }
 });
 
