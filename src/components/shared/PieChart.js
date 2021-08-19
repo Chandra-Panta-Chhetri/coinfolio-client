@@ -27,7 +27,9 @@ const PieChart = ({
   selectedSlice = null,
   innerLabelConfig = {},
   getInnerLabelText = CONSTANTS.PIE_CHART
-    .DEFAULT_INNER_LABEL_VALUE_ACCESSOR_FUNCTION
+    .DEFAULT_INNER_LABEL_VALUE_ACCESSOR_FUNCTION,
+  changeSelectedSlice = CONSTANTS.SHARED.EMPTY_FUNCTION
+
   // children,
   // labelRadius,
 }) => {
@@ -119,15 +121,15 @@ const PieChart = ({
             style={{ width, height }}
           >
             <G x={width / 2} y={height / 2}>
-              {pieSlices.map((slice, index) => {
-                const { key, onPress, svg } = data[index];
+              {pieSlices.map((slice, i) => {
+                const { key, svg } = data[i];
                 return (
                   <Path
                     key={key}
-                    onPress={onPress}
                     {...svg}
+                    onPress={() => changeSelectedSlice(i)}
                     d={
-                      index === selectedSlice
+                      i === selectedSlice
                         ? selectedArcGenerator(slice)
                         : arcGenerator(slice)
                     }
@@ -135,7 +137,7 @@ const PieChart = ({
                 );
               })}
               <Text {...innerLabelConfig}>
-                {typeof selectedSlice !== "null" &&
+                {selectedSlice !== null &&
                   getInnerLabelText(data[selectedSlice])}
               </Text>
             </G>

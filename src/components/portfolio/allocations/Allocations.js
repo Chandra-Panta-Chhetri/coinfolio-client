@@ -14,6 +14,16 @@ const Allocations = ({ assets }) => {
   const [selectedSlice, setSelectedSlice] = useState(null);
   const colors = ["#21e6c1", "#278ea5", "#1f4287", "#071e3d", "#28c7fa"];
 
+  const changeSelectedSlice = (index, allowToggle = true) => {
+    if (selectedSlice !== index) {
+      return setSelectedSlice(index);
+    }
+
+    if (allowToggle) {
+      setSelectedSlice(null);
+    }
+  };
+
   useEffect(() => {
     const totalPortfolioVal = assets.reduce(
       (acc, asset) => acc + asset.holdingsVal,
@@ -27,26 +37,13 @@ const Allocations = ({ assets }) => {
         key: `${allocation.ticker}`,
         value: roundPercent((allocation.holdingsVal / totalPortfolioVal) * 100),
         svg: {
-          fill: colors[i],
-          onPress: () => changeSelectedSlice(i)
+          fill: colors[i]
         }
       }));
     setData(formattedAllocations);
   }, [assets]);
 
-  const changeSelectedSlice = (index, allowToggle = true) => {
-    if (selectedSlice !== index) {
-      return setSelectedSlice(index);
-    }
-
-    if (allowToggle) {
-      setSelectedSlice(null);
-    }
-  };
-
-  useEffect(() => {
-    console.log("rendering pie chart");
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <Card style={GlobalStyles.borderRadius}>
@@ -58,6 +55,7 @@ const Allocations = ({ assets }) => {
           innerRadius="75%"
           selectedSlice={selectedSlice}
           innerLabelConfig={CONSTANTS.PIE_CHART.INNER_LABEL_CONFIG}
+          changeSelectedSlice={changeSelectedSlice}
         />
         <Labels
           data={data}
