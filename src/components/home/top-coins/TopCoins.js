@@ -38,7 +38,6 @@ const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={styles.listContainer}
           data={dummySkeletonArray}
           contentContainerStyle={styles.skeletonContentContainer}
           keyExtractor={(s, index) => s + index}
@@ -52,7 +51,7 @@ const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
 
 const styles = StyleSheet.create({
   skeletonContentContainer: {
-    paddingVertical: 5
+    paddingVertical: 2
   },
   listContainer: {
     marginTop: 10

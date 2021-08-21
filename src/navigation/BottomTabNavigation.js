@@ -69,7 +69,7 @@ const BottomTabNavigation = () => {
       labeled={false}
       activeColor={colors.primary}
       barStyle={{ backgroundColor: colors.card }}
-      initialRouteName="Portfolio"
+      initialRouteName="Home"
     >
       <BottomTab.Screen
         name="Home"

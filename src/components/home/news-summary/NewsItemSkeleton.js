@@ -15,7 +15,9 @@ const NewsItemSkeleton = () => (
           style={[styles.subheadingSkeleton, GlobalStyles.borderRadius]}
         />
       </View>
-      <Skeleton style={GlobalStyles.imagePreview} />
+      <Skeleton
+        style={[GlobalStyles.imagePreview, GlobalStyles.borderRadius]}
+      />
     </Card.Content>
   </Card>
 );
@@ -26,7 +28,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   cardContainer: {
-    marginBottom: 10
+    marginTop: 10
   },
   infoContainer: {
     flex: 1,

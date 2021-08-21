@@ -11,10 +11,7 @@ import {
 
 const TopCoin = ({ item, navigation }) => {
   return (
-    <TouchableNativeOpacity
-      activeOpacity={CONSTANTS.SHARED.TOUCHABLE_ACTIVE_OPACITY}
-      viewContainerStyle={styles.androidContainer}
-    >
+    <TouchableNativeOpacity viewContainerStyle={styles.androidContainer}>
       <Card style={[GlobalStyles.borderRadius, styles.topCoinCard]}>
         <Card.Content>
           <Avatar.Image

@@ -1,15 +1,24 @@
 import React from "react";
 import { StyleSheet, View, FlatList } from "react-native";
-import { IconButton, Caption, TouchableRipple } from "react-native-paper";
+import {
+  IconButton,
+  Caption,
+  TouchableRipple,
+  useTheme
+} from "react-native-paper";
 import { withNavigation } from "@react-navigation/compat";
 import CONSTANTS from "../../Constants";
 import GlobalStyles from "../../GlobalStyles";
 
 const ShortcutIcon = ({ item, navigation }) => {
   const navigateToScreen = () => navigation.navigate(item.navigateTo);
+  const { colors } = useTheme();
 
   return (
-    <TouchableRipple onPress={navigateToScreen}>
+    <TouchableRipple
+      onPress={navigateToScreen}
+      rippleColor={colors.touchableRipple}
+    >
       <View style={styles.shortcutIconItem}>
         <View style={[styles.iconButton, GlobalStyles.iconRoundness]}>
           <IconButton icon={item.iconName} color={item.iconColor} />

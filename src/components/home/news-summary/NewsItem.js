@@ -6,10 +6,7 @@ import GlobalStyles from "../../../GlobalStyles";
 import TouchableNativeOpacity from "../../shared/TouchableNativeOpacity";
 
 const NewsItem = ({ item }) => (
-  <TouchableNativeOpacity
-    activeOpacity={CONSTANTS.SHARED.TOUCHABLE_ACTIVE_OPACITY}
-    viewContainerStyle={styles.androidContainer}
-  >
+  <TouchableNativeOpacity viewContainerStyle={styles.androidContainer}>
     <Card style={GlobalStyles.borderRadius}>
       <Card.Content style={styles.newsCardBody}>
         <View style={styles.newsInfo}>
@@ -19,7 +16,7 @@ const NewsItem = ({ item }) => (
           </Caption>
         </View>
         <Card.Cover
-          style={GlobalStyles.imagePreview}
+          style={[GlobalStyles.imagePreview, GlobalStyles.borderRadius]}
           source={{
             uri: item.imagePreview
           }}

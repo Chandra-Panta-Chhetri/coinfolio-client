@@ -21,7 +21,6 @@ const AllocationLabels = ({
         return (
           <TouchableNativeOpacity
             key={pieSlice.key}
-            activeOpacity={CONSTANTS.SHARED.TOUCHABLE_ACTIVE_OPACITY}
             onPress={() => changeSelectedSlice(i, false)}
             viewContainerStyle={styles.touchableOpacityContainer}
           >

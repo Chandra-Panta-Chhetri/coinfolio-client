@@ -11,10 +11,7 @@ import TouchableNativeOpacity from "../../shared/TouchableNativeOpacity";
 
 const GainerLoser = ({ item, navigation }) => {
   return (
-    <TouchableNativeOpacity
-      activeOpacity={CONSTANTS.SHARED.TOUCHABLE_ACTIVE_OPACITY}
-      viewContainerStyle={styles.androidContainer}
-    >
+    <TouchableNativeOpacity viewContainerStyle={styles.androidContainer}>
       <Card style={GlobalStyles.borderRadius}>
         <Card.Content style={styles.gainerLoserCardBody}>
           <Avatar.Image

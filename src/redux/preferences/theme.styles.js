@@ -18,7 +18,8 @@ export const DefaultTheme = {
     portfolio: {
       loginBtnBackground: "#c4c3c7",
       loginBtnText: "black"
-    }
+    },
+    touchableRipple: "lightgrey"
   }
 };
 
@@ -34,10 +35,7 @@ export const DarkTheme = {
     portfolio: {
       loginBtnBackground: "#23262d",
       loginBtnText: "white"
-    }
+    },
+    touchableRipple: "grey"
   }
 };
-
-console.log(DefaultTheme);
-
-//{ color: "#7a7a7a" }

@@ -3,7 +3,7 @@ import CONSTANTS from "./Constants";
 
 export default StyleSheet.create({
   borderRadius: {
-    borderRadius: 6
+    borderRadius: 4
   },
   iconSize: {
     width: CONSTANTS.SHARED.AVATAR_IMAGE_SIZE,
