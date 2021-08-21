@@ -11,7 +11,6 @@ import { startNewsSummaryFetch } from "../../../redux/summary/summary.actions";
 import NewsItem from "./NewsItem";
 import NewsItemSkeleton from "./NewsItemSkeleton";
 import CONSTANTS from "../../../Constants";
-import GlobalStyles from "../../../GlobalStyles";
 
 const NewsSummary = ({ navigation, news, isLoading, fetchNewsSummary }) => {
   const navigateToNewsScreen = () => navigation.navigate("News");
@@ -20,7 +19,7 @@ const NewsSummary = ({ navigation, news, isLoading, fetchNewsSummary }) => {
   ).fill("1");
 
   return (
-    <View style={GlobalStyles.componentContainer}>
+    <View>
       <HeadingWithSeeAll
         headingTitle="News"
         onSeeAllBtnPress={navigateToNewsScreen}

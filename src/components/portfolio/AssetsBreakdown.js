@@ -102,7 +102,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
   };
 
   return (
-    <View style={GlobalStyles.componentContainer}>
+    <View>
       <Headline style={[GlobalStyles.headline]}>Assets</Headline>
       <DataTable>
         <DataTable.Header style={styles.dataHeader}>

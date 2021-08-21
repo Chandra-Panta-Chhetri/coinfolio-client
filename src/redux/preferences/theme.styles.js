@@ -38,4 +38,6 @@ export const DarkTheme = {
   }
 };
 
+console.log(DefaultTheme);
+
 //{ color: "#7a7a7a" }
