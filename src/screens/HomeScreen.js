@@ -10,7 +10,7 @@ import GlobalStyles from "../GlobalStyles";
 function HomeScreen() {
   return (
     <FlatList
-      contentContainerStyle={GlobalStyles.screenPadding}
+      contentContainerStyle={GlobalStyles.screenContainer}
       showsVerticalScrollIndicator={false}
       ListHeaderComponent={
         <>

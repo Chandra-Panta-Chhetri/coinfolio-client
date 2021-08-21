@@ -5,11 +5,7 @@ import { selectCurrentUser } from "../redux/user/user.selectors";
 import { createStructuredSelector } from "reselect";
 import { FAB } from "react-native-paper";
 import CurrentValue from "../components/portfolio/current-value/CurrentValue";
-import SummaryTabs from "../components/shared/Tabs";
-import HistoricValue from "../components/portfolio/HistoricValue";
-import Allocations from "../components/portfolio/allocations/Allocations";
 import AssetsBreakdown from "../components/portfolio/AssetsBreakdown";
-import { Entypo } from "@expo/vector-icons";
 import Reanimated, {
   useSharedValue,
   useAnimatedScrollHandler,
@@ -18,8 +14,8 @@ import Reanimated, {
 } from "react-native-reanimated";
 import AllTimeProfit from "../components/portfolio/AllTimeProfit";
 import Unauthenticated from "../components/portfolio/Unauthenticated";
-import CONSTANTS from "../Constants";
 import GlobalStyles from "../GlobalStyles";
+import SummaryTabs from "../components/portfolio/SummaryTabs";
 
 const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
@@ -44,35 +40,14 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
   return (
     <>
       <AnimatedFlatList
-        contentContainerStyle={GlobalStyles.screenPadding}
+        contentContainerStyle={GlobalStyles.screenContainer}
         showsVerticalScrollIndicator={false}
         onScroll={scrollHandler}
         ListHeaderComponent={
           <>
             <CurrentValue />
             <AllTimeProfit />
-            <SummaryTabs
-              tabHeadingMarginBottom={CONSTANTS.PORTFOLIO.MARGIN_BOTTOM}
-            >
-              <HistoricValue
-                tabLabel="Historic Value"
-                iconComponent={
-                  <Entypo
-                    name="line-graph"
-                    size={CONSTANTS.SHARED.TAB_HEADING_ICON_SIZE}
-                  />
-                }
-              />
-              <Allocations
-                tabLabel="Allocations"
-                iconComponent={
-                  <Entypo
-                    name="pie-chart"
-                    size={CONSTANTS.SHARED.TAB_HEADING_ICON_SIZE}
-                  />
-                }
-              />
-            </SummaryTabs>
+            <SummaryTabs />
             <AssetsBreakdown />
           </>
         }

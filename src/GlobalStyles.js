@@ -16,22 +16,18 @@ export default StyleSheet.create({
     width: 90,
     height: 90
   },
-  screenPadding: {
-    padding: 10
+  screenContainer: {
+    paddingHorizontal: 10,
+    paddingVertical: 25
   },
-  portfolioElementMargin: {
-    marginBottom: 15
-  },
-  homeElementMargin: {
+  componentContainer: {
     marginBottom: 15
   },
   positiveNum: {
-    color: "green",
-    fontWeight: "bold"
+    color: "green"
   },
   negativeNum: {
-    color: "red",
-    fontWeight: "bold"
+    color: "red"
   },
   display4: {
     fontSize: 112,
@@ -91,5 +87,8 @@ export default StyleSheet.create({
   },
   bold: {
     fontWeight: "bold"
+  },
+  textAlignCenter: {
+    textAlign: "center"
   }
 });

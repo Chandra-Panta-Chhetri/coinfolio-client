@@ -27,7 +27,7 @@ const ShortcutIcons = ({ navigation }) => {
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={[
         styles.shortcutIconContainer,
-        GlobalStyles.homeElementMargin
+        GlobalStyles.componentContainer
       ]}
       keyExtractor={(sc) => sc.label}
       data={CONSTANTS.SHORTCUT_ICONS}

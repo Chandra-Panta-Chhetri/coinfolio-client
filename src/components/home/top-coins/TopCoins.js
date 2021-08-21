@@ -20,7 +20,7 @@ const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
   ).fill("1");
 
   return (
-    <View style={GlobalStyles.homeElementMargin}>
+    <View style={GlobalStyles.componentContainer}>
       <HeadingWithSeeAll
         headingTitle="Top Coins"
         onSeeAllBtnPress={navigateToMarketScreen}

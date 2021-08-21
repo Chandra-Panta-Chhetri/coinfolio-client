@@ -33,9 +33,7 @@ const CONSTANTS = {
     INNER_LABEL_CONFIG: {
       textAnchor: "middle",
       fill: "black",
-      dy: "0.50em",
-      fontSize: 16,
-      fontWeight: "bold"
+      dy: "0.50em"
     },
     MAX_RADIUS_OFFSET: 2,
     SELECTED_ELEVATION: 5,
@@ -48,10 +46,11 @@ const CONSTANTS = {
       `${selectedSlice.key} - ${selectedSlice.value}%`
   },
   PORTFOLIO: {
-    MARGIN_BOTTOM: 15
+    SUMMARY_TAB_HEADING_MARGIN_BOTTOM: 10
   },
   ALLOCATIONS: {
-    MAX_NUM_TO_SHOW: 5
+    MAX_NUM_TO_SHOW: 5,
+    SLICE_COLORS: ["#21e6c1", "#278ea5", "#1f4287", "#071e3d", "#28c7fa"]
   },
   SHARED: {
     EMPTY_FUNCTION: () => {},
@@ -59,7 +58,7 @@ const CONSTANTS = {
     TOUCHABLE_RIPPLE_COLOR: "grey",
     BOTTOM_TAB_ICON_SIZE: 21.5,
     AVATAR_IMAGE_SIZE: 35,
-    TAB_HEADING_ICON_SIZE: 24,
+    TAB_HEADING_ICON_SIZE: 20,
     TOUCHABLE_ACTIVE_OPACITY: 0.6
   },
   SHORTCUT_ICONS: [

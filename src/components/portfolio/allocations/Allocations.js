@@ -12,7 +12,6 @@ import Labels from "./AllocationLabels";
 const Allocations = ({ assets }) => {
   const [data, setData] = useState([]);
   const [selectedSlice, setSelectedSlice] = useState(null);
-  const colors = ["#21e6c1", "#278ea5", "#1f4287", "#071e3d", "#28c7fa"];
 
   const changeSelectedSlice = (index, allowToggle = true) => {
     if (selectedSlice !== index) {
@@ -37,7 +36,7 @@ const Allocations = ({ assets }) => {
         key: `${allocation.ticker}`,
         value: roundPercent((allocation.holdingsVal / totalPortfolioVal) * 100),
         svg: {
-          fill: colors[i]
+          fill: CONSTANTS.ALLOCATIONS.SLICE_COLORS[i]
         }
       }));
     setData(formattedAllocations);
@@ -46,7 +45,7 @@ const Allocations = ({ assets }) => {
   useEffect(() => {}, []);
 
   return (
-    <Card style={GlobalStyles.borderRadius}>
+    <Card style={[GlobalStyles.borderRadius]}>
       <Card.Content>
         <PieChart
           pieChartStyle={styles.pieChart}
@@ -54,7 +53,6 @@ const Allocations = ({ assets }) => {
           padAngle={0.05}
           innerRadius="75%"
           selectedSlice={selectedSlice}
-          innerLabelConfig={CONSTANTS.PIE_CHART.INNER_LABEL_CONFIG}
           changeSelectedSlice={changeSelectedSlice}
         />
         <Labels
@@ -69,7 +67,7 @@ const Allocations = ({ assets }) => {
 
 const styles = StyleSheet.create({
   pieChart: {
-    height: 190,
+    height: 180,
     width: "100%"
   }
 });

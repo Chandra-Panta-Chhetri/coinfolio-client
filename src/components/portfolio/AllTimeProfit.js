@@ -11,16 +11,16 @@ import { appendPlusOrMinus, getStylesBasedOnPosOrNeg } from "../../GlobalUtils";
 
 const AllTimeProfit = ({ isLoading, overallProfit }) => {
   return (
-    <Card
-      style={[GlobalStyles.borderRadius, GlobalStyles.portfolioElementMargin]}
-    >
+    <Card style={[GlobalStyles.borderRadius, GlobalStyles.componentContainer]}>
       <Card.Content>
-        <Paragraph style={styles.label}>Total Profit/Loss</Paragraph>
+        <Paragraph style={GlobalStyles.subheading}>Total Profit/Loss</Paragraph>
         <View style={styles.profitAndPercent}>
-          <Subheading style={styles.text}>${overallProfit.value}</Subheading>
+          <Subheading style={GlobalStyles.title}>
+            ${overallProfit.value}
+          </Subheading>
           <Subheading
             style={[
-              styles.text,
+              GlobalStyles.subheading,
               getStylesBasedOnPosOrNeg(overallProfit.percentChange)
             ]}
           >
@@ -35,17 +35,8 @@ const AllTimeProfit = ({ isLoading, overallProfit }) => {
 const styles = StyleSheet.create({
   profitAndPercent: {
     flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  text: {
-    fontWeight: "bold",
-    letterSpacing: 1,
-    fontSize: 16
-  },
-  label: {
-    fontWeight: "bold",
-    letterSpacing: 1,
-    fontSize: 15
+    justifyContent: "space-between",
+    alignItems: "center"
   }
 });
 

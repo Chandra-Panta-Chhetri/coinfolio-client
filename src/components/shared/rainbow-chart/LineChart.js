@@ -182,7 +182,11 @@ const LineChart = ({
             onPress={() => handleTimeFilterClick(i)}
             viewStyle={{ width: buttonWidth }}
           >
-            <Text style={styles.label}>{d.label}</Text>
+            <Text
+              style={[GlobalStyles.subheading, GlobalStyles.textAlignCenter]}
+            >
+              {d.label}
+            </Text>
           </PressableView>
         ))}
       </Reanimated.View>
@@ -203,13 +207,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignSelf: "center",
     width: "100%",
-    marginTop: 24
-  },
-  label: {
-    color: "black",
-    fontWeight: "bold",
-    textAlign: "center",
-    letterSpacing: 1
+    marginTop: 30
   },
   headerContainer: {
     marginBottom: 10

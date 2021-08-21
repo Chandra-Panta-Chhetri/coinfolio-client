@@ -7,7 +7,7 @@ const Unauthenticated = ({ navigation }) => {
   const { colors } = useTheme();
 
   return (
-    <View style={[styles.container, GlobalStyles.screenPadding]}>
+    <View style={[styles.container, GlobalStyles.screenContainer]}>
       <Image
         source={require("../../../assets/images/static-pie-chart.png")}
         style={styles.staticImage}

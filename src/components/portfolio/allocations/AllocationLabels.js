@@ -43,7 +43,9 @@ const AllocationLabels = ({
                   GlobalStyles.borderRadius
                 ]}
               />
-              <Paragraph style={styles.label}>{pieSlice.key}</Paragraph>
+              <Paragraph style={GlobalStyles.subheading}>
+                {pieSlice.key}
+              </Paragraph>
             </View>
           </TouchableNativeOpacity>
         );
@@ -54,7 +56,6 @@ const AllocationLabels = ({
 
 const styles = StyleSheet.create({
   contentContainer: {
-    marginTop: 10,
     flexGrow: 1
   },
   container: {
@@ -66,11 +67,6 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     paddingHorizontal: 4,
     justifyContent: "center"
-  },
-  label: {
-    fontWeight: "bold",
-    textTransform: "uppercase",
-    letterSpacing: 1
   },
   activeLabel: {
     backgroundColor: "#D8D8D8"

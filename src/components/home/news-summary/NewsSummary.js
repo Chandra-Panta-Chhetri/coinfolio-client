@@ -20,7 +20,7 @@ const NewsSummary = ({ navigation, news, isLoading, fetchNewsSummary }) => {
   ).fill("1");
 
   return (
-    <View style={GlobalStyles.homeElementMargin}>
+    <View style={GlobalStyles.componentContainer}>
       <HeadingWithSeeAll
         headingTitle="News"
         onSeeAllBtnPress={navigateToNewsScreen}

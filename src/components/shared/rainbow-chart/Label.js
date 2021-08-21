@@ -1,12 +1,12 @@
 import React from "react";
 import { ReText } from "react-native-redash";
-import { StyleSheet } from "react-native";
 import Reanimated, {
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue
 } from "react-native-reanimated";
 import { boundXCoordinate } from "./chart-utils";
+import GlobalStyles from "../../../GlobalStyles";
 
 const ChartLabelItem = ({
   isPanGestureActive,
@@ -55,17 +55,12 @@ const ChartLabelItem = ({
 
   return (
     <Reanimated.View style={animatedLabelContainer} onLayout={onLayout}>
-      <ReText text={labelValue} style={styles.labelVal} />
+      <ReText
+        text={labelValue}
+        style={{ ...GlobalStyles.textAlignCenter, ...GlobalStyles.body1 }}
+      />
     </Reanimated.View>
   );
 };
-
-const styles = StyleSheet.create({
-  labelVal: {
-    textAlign: "center",
-    fontSize: 15,
-    fontWeight: "bold"
-  }
-});
 
 export default ChartLabelItem;

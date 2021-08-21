@@ -15,7 +15,7 @@ const HistoricValue = ({ historicValue = [] }) => {
   useEffect(() => {}, []);
 
   return (
-    <Card style={GlobalStyles.borderRadius}>
+    <Card style={[GlobalStyles.borderRadius]}>
       <Card.Content>
         <LineChart
           data={historicValue}

@@ -13,19 +13,12 @@ import GlobalStyles from "../../GlobalStyles";
 import { appendPlusOrMinus, getStylesBasedOnPosOrNeg } from "../../GlobalUtils";
 
 const styles = StyleSheet.create({
-  heading: { fontWeight: "bold", marginTop: 15 },
   dataHeader: { borderBottomWidth: 0 },
-  dataTitle: {
-    fontWeight: "bold"
-  },
   dataRow: {
     paddingVertical: 8,
     borderTopWidth: 1,
     borderTopColor: "black",
     borderBottomColor: "black"
-  },
-  flexRow: {
-    flexDirection: "row"
   },
   rightAlign: {
     textAlign: "right"
@@ -109,9 +102,9 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
   };
 
   return (
-    <>
-      <Headline style={styles.heading}>Assets</Headline>
-      <DataTable style={GlobalStyles.portfolioElementMargin}>
+    <View style={GlobalStyles.componentContainer}>
+      <Headline style={[GlobalStyles.headline]}>Assets</Headline>
+      <DataTable>
         <DataTable.Header style={styles.dataHeader}>
           {tableHeadings.map((th) => (
             <PressableView
@@ -119,7 +112,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
               onPress={() => sortTable(th.sortByField)}
               viewStyle={th.style}
             >
-              <Paragraph style={styles.dataTitle}>{th.label}</Paragraph>
+              <Paragraph style={GlobalStyles.body1}>{th.label}</Paragraph>
               {columnToSortBy === th.sortByField && (
                 <AntDesign
                   name={sortAscending ? "caretup" : "caretdown"}
@@ -149,36 +142,50 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
                 }}
               />
               <View style={styles.assetNameAndTicker}>
-                <Paragraph numberOfLines={1}>{asset.fullName}</Paragraph>
-                <Paragraph numberOfLines={1}>{asset.ticker}</Paragraph>
+                <Paragraph numberOfLines={1} style={GlobalStyles.body1}>
+                  {asset.fullName}
+                </Paragraph>
+                <Paragraph numberOfLines={1} style={GlobalStyles.caption}>
+                  {asset.ticker}
+                </Paragraph>
               </View>
             </View>
             <View style={[styles.flex, styles.marginRight]}>
-              <Paragraph numberOfLines={1} style={styles.rightAlign}>
+              <Paragraph
+                numberOfLines={1}
+                style={[styles.rightAlign, GlobalStyles.body1]}
+              >
                 ${asset.currentPrice}
               </Paragraph>
               <Paragraph
                 numberOfLines={1}
                 style={[
                   styles.rightAlign,
-                  getStylesBasedOnPosOrNeg(asset.pricePercentChange)
+                  getStylesBasedOnPosOrNeg(asset.pricePercentChange),
+                  GlobalStyles.caption
                 ]}
               >
                 {appendPlusOrMinus(asset.pricePercentChange)}%
               </Paragraph>
             </View>
             <View style={styles.flex}>
-              <Paragraph numberOfLines={1} style={styles.rightAlign}>
+              <Paragraph
+                numberOfLines={1}
+                style={[styles.rightAlign, GlobalStyles.body1]}
+              >
                 ${asset.holdingsVal}
               </Paragraph>
-              <Paragraph numberOfLines={1} style={styles.rightAlign}>
+              <Paragraph
+                numberOfLines={1}
+                style={[styles.rightAlign, GlobalStyles.caption]}
+              >
                 {asset.totalHoldings}
               </Paragraph>
             </View>
           </DataTable.Row>
         ))}
       </DataTable>
-    </>
+    </View>
   );
 };
 

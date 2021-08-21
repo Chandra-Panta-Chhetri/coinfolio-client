@@ -5,7 +5,7 @@ import GlobalStyles from "../../../GlobalStyles";
 import Skeleton from "../../shared/Skeleton";
 
 const CurrentValueSkeleton = () => (
-  <Card style={GlobalStyles.borderRadius}>
+  <Card style={[GlobalStyles.borderRadius, GlobalStyles.componentContainer]}>
     <Card.Content>
       <Skeleton style={styles.subheadingSkeleton} />
       <View style={styles.rowFlexbox}>

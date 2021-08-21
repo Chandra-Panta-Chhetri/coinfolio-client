@@ -12,7 +12,7 @@ import {
   appendPlusOrMinusWorklet,
   getStylesBasedOnPosOrNegWorklet
 } from "../../../GlobalUtils";
-import { negativeNumStyles, positiveNumStyles } from "../../../GlobalStyles";
+import GlobalStyles from "../../../GlobalStyles";
 
 const Header = ({
   selectedGraph,
@@ -59,7 +59,6 @@ const Header = ({
   );
 
   const animatedPercentChange = useAnimatedStyle(() => ({
-    fontSize: 15,
     opacity: withTiming(hasPathsBeenCalculated.value ? 1 : 0),
     ...getStylesBasedOnPosOrNegWorklet(percentChange.value)
   }));
@@ -67,10 +66,13 @@ const Header = ({
   return (
     <>
       <View style={styles.timeAndPercent}>
-        <ReText style={styles.bold} text={xVal} />
-        <ReText style={animatedPercentChange} text={percentChangeLabel} />
+        <ReText style={GlobalStyles.subheading} text={xVal} />
+        <ReText
+          style={{ ...GlobalStyles.subheading, ...animatedPercentChange }}
+          text={percentChangeLabel}
+        />
       </View>
-      <ReText style={styles.bold} text={yVal} />
+      <ReText style={GlobalStyles.subheading} text={yVal} />
     </>
   );
 };
@@ -80,10 +82,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"
-  },
-  bold: {
-    fontWeight: "bold",
-    fontSize: 15
   }
 });
 

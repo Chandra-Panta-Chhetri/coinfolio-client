@@ -63,7 +63,7 @@ const Tabs = ({
   };
 
   return (
-    <View>
+    <>
       <View
         style={[
           styles.tabHeadingContainer,
@@ -99,7 +99,7 @@ const Tabs = ({
               {React.cloneElement(child.props.iconComponent, {
                 style: [activeStyles]
               })}
-              <Text style={[styles.tabLabel, activeStyles]}>
+              <Text style={[GlobalStyles.subheading, activeStyles]}>
                 {child.props.iconComponent && " "}
                 {child.props.tabLabel || ""}
               </Text>
@@ -117,7 +117,7 @@ const Tabs = ({
             },
             animatedTabHeadingStyle
           ]}
-        ></Animated.View>
+        />
       </View>
       <Animated.View style={animatedTabContentStyle}>
         {React.Children.map(children, (child, i) => {
@@ -135,7 +135,7 @@ const Tabs = ({
           );
         })}
       </Animated.View>
-    </View>
+    </>
   );
 };
 
@@ -159,10 +159,6 @@ const styles = StyleSheet.create({
     top: 0,
     backgroundColor: "#007aff",
     zIndex: -1
-  },
-  tabLabel: {
-    fontWeight: "bold",
-    letterSpacing: 1
   },
   noRightBorders: {
     borderRightWidth: 0,

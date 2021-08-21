@@ -25,7 +25,7 @@ const GainersLosers = ({
   ).fill("1");
 
   return (
-    <View style={GlobalStyles.homeElementMargin}>
+    <View style={GlobalStyles.componentContainer}>
       <HeadingWithSeeAll
         headingTitle="Gainers & Losers"
         subheading="Based on Top 100 Coins"

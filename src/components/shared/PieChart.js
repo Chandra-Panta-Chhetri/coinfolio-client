@@ -4,6 +4,7 @@ import * as shape from "d3-shape";
 import Svg, { G, Path, Text } from "react-native-svg";
 import Skeleton from "./Skeleton";
 import CONSTANTS from "../../Constants";
+import GlobalStyles from "../../GlobalStyles";
 
 const calculateRadius = (radiusFromProp, maxRadius, defaultRadius) => {
   if (typeof radiusFromProp === "string") {
@@ -25,7 +26,6 @@ const PieChart = ({
   startAngle = CONSTANTS.PIE_CHART.DEFAULT_START_ANGLE,
   endAngle = CONSTANTS.PIE_CHART.DEFAULT_END_ANGLE,
   selectedSlice = null,
-  innerLabelConfig = {},
   getInnerLabelText = CONSTANTS.PIE_CHART
     .DEFAULT_INNER_LABEL_VALUE_ACCESSOR_FUNCTION,
   changeSelectedSlice = CONSTANTS.SHARED.EMPTY_FUNCTION
@@ -136,7 +136,10 @@ const PieChart = ({
                   />
                 );
               })}
-              <Text {...innerLabelConfig}>
+              <Text
+                {...CONSTANTS.PIE_CHART.INNER_LABEL_CONFIG}
+                {...GlobalStyles.subheading}
+              >
                 {selectedSlice !== null &&
                   getInnerLabelText(data[selectedSlice])}
               </Text>

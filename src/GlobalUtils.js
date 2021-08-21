@@ -16,7 +16,5 @@ export function appendPlusOrMinusWorklet(num, strToAppend = " ") {
 
 export function getStylesBasedOnPosOrNegWorklet(num) {
   "worklet";
-  return num >= 0
-    ? { color: "green", fontWeight: "bold" }
-    : { color: "red", fontWeight: "bold" };
+  return num >= 0 ? { color: "green" } : { color: "red" };
 }

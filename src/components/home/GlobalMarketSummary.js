@@ -12,7 +12,7 @@ import CONSTANTS from "../../Constants";
 import GlobalStyles from "../../GlobalStyles";
 
 const GlobalMarketSummarySkeleton = () => (
-  <Card style={[GlobalStyles.borderRadius, GlobalStyles.homeElementMargin]}>
+  <Card style={[GlobalStyles.borderRadius, GlobalStyles.componentContainer]}>
     <Card.Content style={styles.rowFlexbox}>
       <Skeleton style={[styles.globalSkeleton, GlobalStyles.borderRadius]} />
     </Card.Content>
@@ -29,7 +29,7 @@ const GlobalMarketSummary = ({
   }
 
   return (
-    <Card style={[GlobalStyles.borderRadius, GlobalStyles.homeElementMargin]}>
+    <Card style={[GlobalStyles.borderRadius, GlobalStyles.componentContainer]}>
       <Card.Content>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {CONSTANTS.GLOBAL_MARKET_SUMMARY.METRICS.map((metric) => (

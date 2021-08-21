@@ -21,16 +21,16 @@ const CurrentValue = ({ currentValue, isLoading }) => {
   }
 
   return (
-    <Card
-      style={[GlobalStyles.portfolioElementMargin, GlobalStyles.borderRadius]}
-    >
+    <Card style={[GlobalStyles.componentContainer, GlobalStyles.borderRadius]}>
       <Card.Content>
-        <Paragraph style={styles.label}>Current Value</Paragraph>
+        <Paragraph style={GlobalStyles.subheading}>Current Value</Paragraph>
         <View style={styles.valueAndPercent}>
-          <Subheading style={styles.value}>${currentValue.value}</Subheading>
+          <Subheading style={GlobalStyles.title}>
+            ${currentValue.value}
+          </Subheading>
           <Subheading
             style={[
-              styles.percent,
+              GlobalStyles.subheading,
               getStylesBasedOnPosOrNeg(currentValue.percent)
             ]}
           >
@@ -39,7 +39,7 @@ const CurrentValue = ({ currentValue, isLoading }) => {
         </View>
         <Paragraph
           style={[
-            styles.plChange,
+            GlobalStyles.caption,
             getStylesBasedOnPosOrNeg(currentValue.plChange)
           ]}
         >
@@ -51,27 +51,10 @@ const CurrentValue = ({ currentValue, isLoading }) => {
 };
 
 const styles = StyleSheet.create({
-  label: {
-    fontWeight: "bold",
-    letterSpacing: 1,
-    fontSize: 15
-  },
   valueAndPercent: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 5
-  },
-  value: {
-    fontWeight: "bold",
-    fontSize: 22,
-    letterSpacing: 1
-  },
-  percent: {
-    letterSpacing: 1,
-    fontSize: 16
-  },
-  plChange: {
-    marginVertical: 0
+    alignItems: "center"
   }
 });
 
