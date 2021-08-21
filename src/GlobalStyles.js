@@ -23,7 +23,7 @@ export default StyleSheet.create({
     marginBottom: 15
   },
   homeElementMargin: {
-    marginTop: 15
+    marginBottom: 15
   },
   positiveNum: {
     color: "green",
