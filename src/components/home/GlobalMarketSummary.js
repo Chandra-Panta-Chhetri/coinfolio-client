@@ -34,10 +34,10 @@ const GlobalMarketSummary = ({
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {CONSTANTS.GLOBAL_MARKET_SUMMARY.METRICS.map((metric) => (
             <View style={styles.summaryItem} key={metric.label}>
-              <Paragraph style={styles.summaryLabel}>
+              <Paragraph style={[GlobalStyles.body2]}>
                 {metric.label}:{" "}
               </Paragraph>
-              <Paragraph style={styles.summaryValue}>
+              <Paragraph style={[GlobalStyles.body2]}>
                 {metric.valueAccessorFunc(globalSummary)}
               </Paragraph>
             </View>
@@ -52,12 +52,6 @@ const styles = StyleSheet.create({
   summaryItem: {
     marginRight: 10,
     flexDirection: "row"
-  },
-  summaryLabel: {
-    fontWeight: "bold"
-  },
-  summaryValue: {
-    color: "darkgray"
   },
   globalSkeleton: {
     height: 20,

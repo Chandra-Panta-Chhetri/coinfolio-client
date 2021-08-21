@@ -35,7 +35,9 @@ const TouchableNativeOpacity = ({
       </TouchableNativeFeedback>
     </View>
   ) : (
-    <TouchableOpacity {...otherProps}>{children}</TouchableOpacity>
+    <TouchableOpacity style={viewContainerStyle} {...otherProps}>
+      {children}
+    </TouchableOpacity>
   );
 
 const styles = StyleSheet.create({

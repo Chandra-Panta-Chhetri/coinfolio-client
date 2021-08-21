@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import { View, FlatList } from "react-native";
 import HeadingWithSeeAll from "../HeadingWithSeeAll";
 import { withNavigation } from "@react-navigation/compat";
 import { connect } from "react-redux";
@@ -11,6 +11,7 @@ import { startNewsSummaryFetch } from "../../../redux/summary/summary.actions";
 import NewsItem from "./NewsItem";
 import NewsItemSkeleton from "./NewsItemSkeleton";
 import CONSTANTS from "../../../Constants";
+import GlobalStyles from "../../../GlobalStyles";
 
 const NewsSummary = ({ navigation, news, isLoading, fetchNewsSummary }) => {
   const navigateToNewsScreen = () => navigation.navigate("News");
@@ -19,13 +20,12 @@ const NewsSummary = ({ navigation, news, isLoading, fetchNewsSummary }) => {
   ).fill("1");
 
   return (
-    <View style={styles.container}>
+    <View style={GlobalStyles.homeElementMargin}>
       <HeadingWithSeeAll
         headingTitle="News"
         onSeeAllBtnPress={navigateToNewsScreen}
       />
       <FlatList
-        style={styles.newsContainer}
         data={news}
         keyExtractor={(n) => n.title}
         renderItem={(props) => <NewsItem {...props} />}
@@ -34,7 +34,6 @@ const NewsSummary = ({ navigation, news, isLoading, fetchNewsSummary }) => {
       />
       {isLoading && news.length === 0 && (
         <FlatList
-          style={styles.newsContainer}
           data={dummySkeletonArray}
           keyExtractor={(s, index) => s + index}
           renderItem={() => <NewsItemSkeleton />}
@@ -45,15 +44,6 @@ const NewsSummary = ({ navigation, news, isLoading, fetchNewsSummary }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 10
-  },
-  newsContainer: {
-    marginTop: 10
-  }
-});
 
 const mapStateToProps = (state) => ({
   news: selectNewsSummary(state),

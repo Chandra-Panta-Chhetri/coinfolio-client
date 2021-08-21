@@ -13,8 +13,8 @@ const NewsItem = ({ item }) => (
     <Card style={GlobalStyles.borderRadius}>
       <Card.Content style={styles.newsCardBody}>
         <View style={styles.newsInfo}>
-          <Paragraph style={styles.newsTitle}>{item.title}</Paragraph>
-          <Caption style={styles.newsSubtitle}>
+          <Paragraph style={GlobalStyles.body2}>{item.title}</Paragraph>
+          <Caption style={GlobalStyles.caption}>
             {item.publishedTime} | {item.source}
           </Caption>
         </View>
@@ -32,17 +32,11 @@ const NewsItem = ({ item }) => (
 const styles = StyleSheet.create({
   newsCardBody: {
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   androidContainer: {
-    marginBottom: 10
-  },
-  newsTitle: {
-    fontSize: 15
-  },
-  newsSubtitle: {
-    color: "darkgray",
-    fontWeight: "bold"
+    marginTop: 10
   },
   newsInfo: {
     flex: 1,

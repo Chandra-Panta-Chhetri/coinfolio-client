@@ -25,20 +25,18 @@ const GainerLoser = ({ item, navigation }) => {
           />
           <View style={styles.gainerLoserInfoContainer}>
             <View>
-              <Paragraph style={styles.gainerLoserFullName}>
+              <Paragraph style={GlobalStyles.subheading}>
                 {item.fullName}
               </Paragraph>
-              <Paragraph style={styles.gainerLoserTicker}>
-                {item.ticker}
-              </Paragraph>
+              <Paragraph style={GlobalStyles.body1}>{item.ticker}</Paragraph>
             </View>
             <View style={styles.priceAndPercent}>
-              <Paragraph style={styles.gainerLoserPrice}>
+              <Paragraph style={GlobalStyles.subheading}>
                 ${item.price}
               </Paragraph>
               <Paragraph
                 style={[
-                  styles.percentChange,
+                  GlobalStyles.body1,
                   getStylesBasedOnPosOrNeg(item.percentChange)
                 ]}
               >
@@ -54,27 +52,11 @@ const GainerLoser = ({ item, navigation }) => {
 
 const styles = StyleSheet.create({
   androidContainer: {
-    marginBottom: 10
+    marginTop: 10
   },
   gainerLoserCardBody: {
     flexDirection: "row",
     alignItems: "center"
-  },
-  gainerLoserFullName: {
-    fontWeight: "bold",
-    fontSize: 18
-  },
-  gainerLoserTicker: {
-    color: "darkgray",
-    fontWeight: "bold",
-    fontSize: 13
-  },
-  gainerLoserPrice: {
-    fontWeight: "bold",
-    fontSize: 18
-  },
-  percentChange: {
-    fontSize: 13
   },
   gainerLoserInfoContainer: {
     flexDirection: "row",

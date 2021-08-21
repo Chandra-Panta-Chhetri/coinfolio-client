@@ -11,6 +11,7 @@ import { startTopCoinsFetch } from "../../../redux/summary/summary.actions";
 import TopCoin from "./TopCoin";
 import TopCoinSkeleton from "./TopCoinSkeleton";
 import CONSTANTS from "../../../Constants";
+import GlobalStyles from "../../../GlobalStyles";
 
 const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
   const navigateToMarketScreen = () => navigation.navigate("Market");
@@ -19,7 +20,7 @@ const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
   ).fill("1");
 
   return (
-    <View style={styles.container}>
+    <View style={GlobalStyles.homeElementMargin}>
       <HeadingWithSeeAll
         headingTitle="Top Coins"
         onSeeAllBtnPress={navigateToMarketScreen}
@@ -27,7 +28,7 @@ const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={styles.topCoinCards}
+        style={styles.listContainer}
         data={topCoins}
         keyExtractor={(tm) => tm.ticker}
         renderItem={(props) => <TopCoin {...props} navigation={navigation} />}
@@ -37,7 +38,7 @@ const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={styles.topCoinCards}
+          style={styles.listContainer}
           data={dummySkeletonArray}
           contentContainerStyle={styles.skeletonContentContainer}
           keyExtractor={(s, index) => s + index}
@@ -50,14 +51,11 @@ const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 10
-  },
-  topCoinCards: {
-    marginTop: 10
-  },
   skeletonContentContainer: {
     paddingVertical: 5
+  },
+  listContainer: {
+    marginTop: 10
   }
 });
 

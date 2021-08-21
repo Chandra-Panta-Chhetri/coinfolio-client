@@ -26,7 +26,7 @@ const GainerLoserSkeleton = () => (
 
 const styles = StyleSheet.create({
   cardContainer: {
-    marginBottom: 10
+    marginTop: 10
   },
   cardBody: {
     flexDirection: "row",

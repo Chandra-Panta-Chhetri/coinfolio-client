@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import { View, FlatList } from "react-native";
 import HeadingWithSeeAll from "../HeadingWithSeeAll";
 import { withNavigation } from "@react-navigation/compat";
 import { connect } from "react-redux";
@@ -11,6 +11,7 @@ import { startGainersLosersFetch } from "../../../redux/summary/summary.actions"
 import GainerLoser from "./GainerLoser";
 import GainerLoserSkeleton from "./GainerLoserSkeleton";
 import CONSTANTS from "../../../Constants";
+import GlobalStyles from "../../../GlobalStyles";
 
 const GainersLosers = ({
   navigation,
@@ -24,13 +25,13 @@ const GainersLosers = ({
   ).fill("1");
 
   return (
-    <View style={styles.container}>
+    <View style={GlobalStyles.homeElementMargin}>
       <HeadingWithSeeAll
         headingTitle="Gainers & Losers"
+        subheading="Based on Top 100 Coins"
         onSeeAllBtnPress={navigateToMarketScreen}
       />
       <FlatList
-        style={styles.gainersLosersCards}
         data={gainersLosers}
         keyExtractor={(gl) => gl.ticker}
         renderItem={(props) => (
@@ -41,7 +42,6 @@ const GainersLosers = ({
       />
       {isLoading && gainersLosers.length === 0 && (
         <FlatList
-          style={styles.gainersLosersCards}
           data={dummySkeletonArray}
           keyExtractor={(s, index) => s + index}
           renderItem={() => <GainerLoserSkeleton />}
@@ -52,13 +52,6 @@ const GainersLosers = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 10
-  },
-  gainersLosersCards: { marginTop: 10 }
-});
 
 const mapStateToProps = (state) => ({
   gainersLosers: selectGainersLosers(state),

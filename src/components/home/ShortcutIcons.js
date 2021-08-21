@@ -14,7 +14,7 @@ const ShortcutIcon = ({ item, navigation }) => {
         <View style={[styles.iconButton, GlobalStyles.iconRoundness]}>
           <IconButton icon={item.iconName} color={item.iconColor} />
         </View>
-        <Caption style={styles.bold}>{item.label}</Caption>
+        <Caption style={[GlobalStyles.body2]}>{item.label}</Caption>
       </View>
     </TouchableRipple>
   );
@@ -25,7 +25,10 @@ const ShortcutIcons = ({ navigation }) => {
     <FlatList
       horizontal
       showsHorizontalScrollIndicator={false}
-      contentContainerStyle={styles.shortcutIconContainer}
+      contentContainerStyle={[
+        styles.shortcutIconContainer,
+        GlobalStyles.homeElementMargin
+      ]}
       keyExtractor={(sc) => sc.label}
       data={CONSTANTS.SHORTCUT_ICONS}
       renderItem={(props) => (
@@ -37,13 +40,9 @@ const ShortcutIcons = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  bold: {
-    fontWeight: "bold"
-  },
   shortcutIconContainer: {
     justifyContent: "space-between",
-    flex: 1,
-    marginTop: 10
+    flex: 1
   },
   shortcutIconItem: {
     alignItems: "center",

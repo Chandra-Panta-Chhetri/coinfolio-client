@@ -37,3 +37,5 @@ export const DarkTheme = {
     }
   }
 };
+
+//{ color: "#7a7a7a" }

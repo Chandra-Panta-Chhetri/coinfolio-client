@@ -23,11 +23,11 @@ const TopCoin = ({ item, navigation }) => {
               uri: item.image
             }}
           />
-          <Paragraph style={styles.topCoinName}>{item.ticker}</Paragraph>
-          <Paragraph style={styles.topCoinPrice}>${item.price}</Paragraph>
+          <Paragraph style={[GlobalStyles.body2]}>{item.ticker}</Paragraph>
+          <Paragraph style={[GlobalStyles.body1]}>${item.price}</Paragraph>
           <Paragraph
             style={[
-              styles.topCoinPercent,
+              GlobalStyles.body1,
               getStylesBasedOnPosOrNeg(item.percentChange)
             ]}
           >
@@ -42,17 +42,6 @@ const TopCoin = ({ item, navigation }) => {
 const styles = StyleSheet.create({
   topCoinCard: {
     width: 125
-  },
-  topCoinName: {
-    fontWeight: "bold",
-    marginTop: 10
-  },
-  topCoinPrice: {
-    color: "darkgray"
-  },
-  topCoinPercent: {
-    fontSize: 17,
-    marginTop: 12
   },
   androidContainer: {
     marginRight: 10
