@@ -16,6 +16,7 @@ import AllTimeProfit from "../components/portfolio/AllTimeProfit";
 import Unauthenticated from "../components/portfolio/Unauthenticated";
 import GlobalStyles from "../GlobalStyles";
 import SummaryTabs from "../components/portfolio/SummaryTabs";
+import CardScrollView from "../components/shared/CardScrollView";
 
 const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
@@ -46,8 +47,10 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
         onScroll={scrollHandler}
         ListHeaderComponent={
           <>
-            <CurrentValue />
-            <AllTimeProfit />
+            <CardScrollView containerStyle={GlobalStyles.componentContainer}>
+              <CurrentValue />
+              <AllTimeProfit />
+            </CardScrollView>
             <SummaryTabs />
             <AssetsBreakdown />
           </>
