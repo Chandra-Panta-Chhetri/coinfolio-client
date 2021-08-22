@@ -19,7 +19,8 @@ const Header = ({
   yPanGesturePos,
   xPanGesturePos,
   hasPathsBeenCalculated,
-  isPanGestureActive
+  isPanGestureActive,
+  themeColors = {}
 }) => {
   const yVal = useDerivedValue(() => {
     if (hasPathsBeenCalculated.value && isPanGestureActive.value) {
@@ -63,16 +64,18 @@ const Header = ({
     ...getStylesBasedOnPosOrNegWorklet(percentChange.value)
   }));
 
+  const textStyles = { ...GlobalStyles.subheading, color: themeColors.text };
+
   return (
     <>
       <View style={styles.timeAndPercent}>
-        <ReText style={GlobalStyles.subheading} text={xVal} />
+        <ReText style={textStyles} text={xVal} />
         <ReText
           style={{ ...GlobalStyles.subheading, ...animatedPercentChange }}
           text={percentChangeLabel}
         />
       </View>
-      <ReText style={GlobalStyles.subheading} text={yVal} />
+      <ReText style={textStyles} text={yVal} />
     </>
   );
 };

@@ -24,10 +24,10 @@ export default StyleSheet.create({
     marginBottom: 15
   },
   positiveNum: {
-    color: "green"
+    color: "#00e600"
   },
   negativeNum: {
-    color: "red"
+    color: "#e60000"
   },
   display4: {
     fontSize: 112,

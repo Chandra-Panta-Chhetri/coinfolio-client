@@ -12,8 +12,12 @@ const Unauthenticated = ({ navigation }) => {
         source={require("../../../assets/images/static-pie-chart.png")}
         style={styles.staticImage}
       />
-      <Headline style={styles.heading}>Track Your Crypto Investments</Headline>
-      <Subheading style={styles.subheading}>
+      <Headline style={[GlobalStyles.display1, GlobalStyles.textAlignCenter]}>
+        Track Your Crypto Investments
+      </Headline>
+      <Subheading
+        style={[GlobalStyles.subheading, GlobalStyles.textAlignCenter]}
+      >
         Signup or login to track your crypto transactions, current balance and
         profit/loss.
       </Subheading>
@@ -22,7 +26,7 @@ const Unauthenticated = ({ navigation }) => {
         onPress={() => navigation.navigate("SignUp")}
         style={styles.signUpBtn}
         mode="contained"
-        labelStyle={styles.bold}
+        labelStyle={GlobalStyles.button}
       >
         Create an account
       </Button>
@@ -31,12 +35,14 @@ const Unauthenticated = ({ navigation }) => {
         mode="contained"
         uppercase={false}
         style={{
-          backgroundColor: colors.portfolio.loginBtnBackground
+          backgroundColor: colors.card
         }}
-        labelStyle={{
-          color: colors.portfolio.loginBtnText,
-          fontWeight: "bold"
-        }}
+        labelStyle={[
+          GlobalStyles.button,
+          {
+            color: colors.text
+          }
+        ]}
       >
         Login
       </Button>
@@ -49,16 +55,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1
   },
-  heading: {
-    fontWeight: "bold",
-    textAlign: "center",
-    fontSize: 22,
-    letterSpacing: 2
-  },
-  subheading: {
-    textAlign: "center",
-    letterSpacing: 1
-  },
   signUpBtn: {
     marginVertical: 10
   },
@@ -68,9 +64,6 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     resizeMode: "contain",
     marginBottom: 10
-  },
-  bold: {
-    fontWeight: "bold"
   }
 });
 

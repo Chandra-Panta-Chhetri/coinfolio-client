@@ -15,11 +15,9 @@ export const DefaultTheme = {
     ...NavigationDefaultTheme.colors,
     primaryShimmer: "gainsboro",
     secondaryShimmer: "#f8f8f8",
-    portfolio: {
-      loginBtnBackground: "#c4c3c7",
-      loginBtnText: "black"
-    },
-    touchableRipple: "lightgrey"
+    touchableRipple: "lightgrey",
+    backgroundSelection: "#f3f3f3",
+    primary: "#1a87ff"
   }
 };
 
@@ -32,10 +30,8 @@ export const DarkTheme = {
     text: "white",
     primaryShimmer: "#7d7d7d",
     secondaryShimmer: "gainsboro",
-    portfolio: {
-      loginBtnBackground: "#23262d",
-      loginBtnText: "white"
-    },
-    touchableRipple: "grey"
+    touchableRipple: "grey",
+    backgroundSelection: "#1a87ff",
+    primary: "#1a87ff"
   }
 };

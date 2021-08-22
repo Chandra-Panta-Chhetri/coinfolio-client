@@ -12,7 +12,7 @@ import GlobalStyles from "../../GlobalStyles";
 
 const ShortcutIcon = ({ item, navigation }) => {
   const navigateToScreen = () => navigation.navigate(item.navigateTo);
-  const { colors } = useTheme();
+  const { colors, dark: isDarkMode } = useTheme();
 
   return (
     <TouchableRipple
@@ -20,8 +20,14 @@ const ShortcutIcon = ({ item, navigation }) => {
       rippleColor={colors.touchableRipple}
     >
       <View style={styles.shortcutIconItem}>
-        <View style={[styles.iconButton, GlobalStyles.iconRoundness]}>
-          <IconButton icon={item.iconName} color={item.iconColor} />
+        <View
+          style={[
+            styles.iconButton,
+            GlobalStyles.iconRoundness,
+            { borderColor: isDarkMode ? colors.border : colors.card }
+          ]}
+        >
+          <IconButton icon={item.iconName} color={colors.primary} />
         </View>
         <Caption style={[GlobalStyles.body2]}>{item.label}</Caption>
       </View>
@@ -58,9 +64,7 @@ const styles = StyleSheet.create({
     padding: 5
   },
   iconButton: {
-    borderWidth: 5,
-    borderColor: "white",
-    backgroundColor: "#ECECEC"
+    borderWidth: 5
   }
 });
 

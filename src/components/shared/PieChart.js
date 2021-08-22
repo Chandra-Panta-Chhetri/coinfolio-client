@@ -28,8 +28,8 @@ const PieChart = ({
   selectedSlice = null,
   getInnerLabelText = CONSTANTS.PIE_CHART
     .DEFAULT_INNER_LABEL_VALUE_ACCESSOR_FUNCTION,
-  changeSelectedSlice = CONSTANTS.SHARED.EMPTY_FUNCTION
-
+  changeSelectedSlice = CONSTANTS.SHARED.EMPTY_FUNCTION,
+  innerLabelStyle = {}
   // children,
   // labelRadius,
 }) => {
@@ -137,7 +137,10 @@ const PieChart = ({
                 );
               })}
               <Text
-                {...CONSTANTS.PIE_CHART.INNER_LABEL_CONFIG}
+                {...{
+                  ...innerLabelStyle,
+                  ...CONSTANTS.PIE_CHART.INNER_LABEL_CONFIG
+                }}
                 {...GlobalStyles.subheading}
               >
                 {selectedSlice !== null &&

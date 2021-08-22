@@ -16,7 +16,8 @@ const Cursor = ({
   yPanGesturePos,
   isPanGestureActive,
   xPanGesturePos,
-  hasPathsBeenCalculated
+  hasPathsBeenCalculated,
+  themeColors = {}
 }) => {
   function setXAndYCoordinates(event) {
     "worklet";
@@ -70,14 +71,20 @@ const Cursor = ({
   return (
     <PanGestureHandler onGestureEvent={onGestureEvent}>
       <Reanimated.View style={StyleSheet.absoluteFill}>
-        <Reanimated.View style={[styles.verticalBar, animatedVerticalBar]} />
         <Reanimated.View
           style={[
-            styles.cursorBody,
+            styles.verticalBar,
+            animatedVerticalBar,
+            { borderLeftColor: themeColors.text }
+          ]}
+        />
+        <Reanimated.View
+          style={[
             {
               width: cursorSize,
               height: cursorSize,
-              borderRadius: cursorSize / 2
+              borderRadius: cursorSize / 2,
+              backgroundColor: themeColors.text
             },
             animatedDot
           ]}
@@ -88,12 +95,8 @@ const Cursor = ({
 };
 
 const styles = StyleSheet.create({
-  cursorBody: {
-    backgroundColor: "black"
-  },
   verticalBar: {
     borderLeftWidth: 2,
-    borderLeftColor: "black",
     position: "absolute",
     top: 0,
     bottom: 0

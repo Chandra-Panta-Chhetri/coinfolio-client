@@ -3,7 +3,7 @@ import { StyleSheet, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../redux/user/user.selectors";
 import { createStructuredSelector } from "reselect";
-import { FAB } from "react-native-paper";
+import { FAB, useTheme } from "react-native-paper";
 import CurrentValue from "../components/portfolio/current-value/CurrentValue";
 import AssetsBreakdown from "../components/portfolio/AssetsBreakdown";
 import Reanimated, {
@@ -20,6 +20,7 @@ import SummaryTabs from "../components/portfolio/SummaryTabs";
 const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
 function PortfolioScreen({ navigation, isAuthenticated }) {
+  const { colors } = useTheme();
   const isScrolling = useSharedValue(false);
   const fabStyles = useAnimatedStyle(() => ({
     transform: [{ scale: withTiming(isScrolling.value ? 0 : 1) }]
@@ -55,7 +56,10 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
       />
       <Reanimated.View style={[styles.bottomRight, fabStyles]}>
         <FAB
-          style={[styles.addTransactionFab, GlobalStyles.iconRoundness]}
+          style={[
+            styles.addTransactionFab,
+            { backgroundColor: colors.primary }
+          ]}
           icon="plus"
           accessibilityLabel="Add Transaction"
           color="white"
@@ -74,11 +78,11 @@ const styles = StyleSheet.create({
     bottom: 0
   },
   addTransactionFab: {
-    backgroundColor: "#007aff",
     width: 64,
     height: 64,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    borderRadius: 32
   }
 });
 

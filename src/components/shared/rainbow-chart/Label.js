@@ -13,7 +13,8 @@ const ChartLabelItem = ({
   indexOfCoordinates,
   selectedGraph,
   maxWidth,
-  hasPathsBeenCalculated
+  hasPathsBeenCalculated,
+  themeColors = {}
 }) => {
   const labelWidth = useSharedValue(0);
 
@@ -53,12 +54,15 @@ const ChartLabelItem = ({
     () => `$${parseFloat(labelInfo.value.val).toFixed(2)}`
   );
 
+  const styles = {
+    ...GlobalStyles.textAlignCenter,
+    ...GlobalStyles.body1,
+    color: themeColors.text
+  };
+
   return (
     <Reanimated.View style={animatedLabelContainer} onLayout={onLayout}>
-      <ReText
-        text={labelValue}
-        style={{ ...GlobalStyles.textAlignCenter, ...GlobalStyles.body1 }}
-      />
+      <ReText text={labelValue} style={styles} />
     </Reanimated.View>
   );
 };

@@ -80,9 +80,9 @@ const Tabs = ({
           const activeStyles =
             activeTab === index
               ? isDarkMode
-                ? { color: colors.primary }
+                ? { color: colors.text }
                 : { color: "white" }
-              : { color: colors.text };
+              : { color: colors.placeholder };
           return (
             <PressableView
               key={index}

@@ -5,8 +5,7 @@ const CONSTANTS = {
     MAX_NUM_POINTS_TO_SHOW: 60,
     SVG_LINE_CONFIG: {
       fill: "transparent",
-      stroke: "black",
-      strokeWidth: 3
+      strokeWidth: 2
     },
     CURSOR_SIZE: 15,
     ACTIVE_GESTURE_ANIMATION_CONFIG: {
@@ -32,7 +31,6 @@ const CONSTANTS = {
   PIE_CHART: {
     INNER_LABEL_CONFIG: {
       textAnchor: "middle",
-      fill: "black",
       dy: "0.50em"
     },
     MAX_RADIUS_OFFSET: 2,
@@ -64,26 +62,22 @@ const CONSTANTS = {
     {
       label: "Price Alerts",
       iconName: "bell-alert",
-      navigateTo: "PriceAlert",
-      iconColor: "rgb(10, 132, 255)"
+      navigateTo: "PriceAlert"
     },
     {
       label: "Compare",
       iconName: "compare",
-      navigateTo: "Compare",
-      iconColor: "rgb(10, 132, 255)"
+      navigateTo: "Compare"
     },
     {
       label: "Converter",
       iconName: "calculator",
-      navigateTo: "Converter",
-      iconColor: "rgb(10, 132, 255)"
+      navigateTo: "Converter"
     },
     {
       label: "Watchlist",
       iconName: "eye",
-      navigateTo: "Market",
-      iconColor: "rgb(10, 132, 255)"
+      navigateTo: "Market"
     }
   ],
   NOTIFICATION_SNACKBAR: {

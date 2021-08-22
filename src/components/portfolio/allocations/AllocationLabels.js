@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
-import { Paragraph } from "react-native-paper";
+import { Paragraph, useTheme } from "react-native-paper";
 import TouchableNativeOpacity from "../../shared/TouchableNativeOpacity";
 import CONSTANTS from "../../../Constants";
 import GlobalStyles from "../../../GlobalStyles";
@@ -10,6 +10,8 @@ const AllocationLabels = ({
   selectedSlice = null,
   changeSelectedSlice = CONSTANTS.SHARED.EMPTY_FUNCTION
 }) => {
+  const { colors } = useTheme();
+
   return (
     <ScrollView
       contentContainerStyle={styles.contentContainer}
@@ -17,10 +19,10 @@ const AllocationLabels = ({
       showsHorizontalScrollIndicator={false}
       style={styles.container}
     >
-      {data.map((pieSlice, i) => {
+      {data.map((d, i) => {
         return (
           <TouchableNativeOpacity
-            key={pieSlice.key}
+            key={d.key}
             onPress={() => changeSelectedSlice(i, false)}
             viewContainerStyle={styles.touchableOpacityContainer}
           >
@@ -30,7 +32,7 @@ const AllocationLabels = ({
                 i === selectedSlice
                   ? {
                       ...GlobalStyles.borderRadius,
-                      ...styles.activeLabel
+                      backgroundColor: colors.backgroundSelection
                     }
                   : null
               ]}
@@ -38,13 +40,11 @@ const AllocationLabels = ({
               <View
                 style={[
                   styles.pieSliceDot,
-                  { backgroundColor: pieSlice.svg.fill },
+                  { backgroundColor: d.svg.fill },
                   GlobalStyles.borderRadius
                 ]}
               />
-              <Paragraph style={GlobalStyles.subheading}>
-                {pieSlice.key}
-              </Paragraph>
+              <Paragraph style={GlobalStyles.subheading}>{d.key}</Paragraph>
             </View>
           </TouchableNativeOpacity>
         );
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     flexGrow: 1
   },
   container: {
-    marginVertical: 6
+    marginTop: 10
   },
   labelContainer: {
     flexDirection: "row",
@@ -66,9 +66,6 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     paddingHorizontal: 4,
     justifyContent: "center"
-  },
-  activeLabel: {
-    backgroundColor: "#D8D8D8"
   },
   pieSliceDot: {
     width: 10,

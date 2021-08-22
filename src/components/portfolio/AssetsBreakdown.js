@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { DataTable, Paragraph, Avatar, Headline } from "react-native-paper";
+import {
+  DataTable,
+  Paragraph,
+  Avatar,
+  Headline,
+  useTheme
+} from "react-native-paper";
 import { connect } from "react-redux";
 import {
   selectIsLoadingPortfolio,
@@ -70,6 +76,7 @@ const tableHeadings = [
 ];
 
 const AssetsBreakdown = ({ assets = [], isLoading }) => {
+  const { colors } = useTheme();
   const [sortCriteria, setSortCriteria] = useState({
     columnToSortBy: "fullName",
     sortAscending: true
@@ -118,7 +125,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
                   name={sortAscending ? "caretup" : "caretdown"}
                   size={CONSTANTS.ASSETS_BREAKDOWN.SORT_ICON_SIZE}
                   style={styles.sortArrow}
-                  color="black"
+                  color={colors.text}
                 />
               )}
             </PressableView>

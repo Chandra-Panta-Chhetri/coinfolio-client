@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { formatData } from "./chart-utils";
 import Reanimated, {
@@ -17,6 +17,7 @@ import Label from "./Label";
 import CONSTANTS from "../../../Constants";
 import PressableView from "../PressableView";
 import GlobalStyles from "../../../GlobalStyles";
+import { Paragraph, useTheme } from "react-native-paper";
 
 const AnimatedPath = Reanimated.createAnimatedComponent(Path);
 
@@ -30,6 +31,7 @@ const LineChart = ({
   percentChangeAccessor = CONSTANTS.LINE_CHART.DEFAULT_ACCESSOR_FUNC,
   dataPointsAccessor = CONSTANTS.LINE_CHART.DEFAULT_ACCESSOR_FUNC
 }) => {
+  const { colors: themeColors } = useTheme();
   const [chartDimensions, setChartDimensions] = useState({
     width: 0,
     height: 0,
@@ -136,11 +138,16 @@ const LineChart = ({
           xPanGesturePos={xPanGesturePos}
           hasPathsBeenCalculated={hasPathsBeenCalculated}
           isPanGestureActive={isPanGestureActive}
+          themeColors={themeColors}
         />
       </View>
       <View style={[chartStyle, styles.relativePosition]}>
         <Svg style={styles.fullContainerSpace}>
-          <AnimatedPath animatedProps={animatedPathProps} {...svgConfig} />
+          <AnimatedPath
+            animatedProps={animatedPathProps}
+            {...svgConfig}
+            stroke={themeColors.text}
+          />
         </Svg>
         <Cursor
           maxWidth={width}
@@ -149,6 +156,7 @@ const LineChart = ({
           selectedGraph={selectedGraph}
           xPanGesturePos={xPanGesturePos}
           hasPathsBeenCalculated={hasPathsBeenCalculated}
+          themeColors={themeColors}
         />
         {[1, 2].map((_, i) => (
           <Label
@@ -158,6 +166,7 @@ const LineChart = ({
             selectedGraph={selectedGraph}
             maxWidth={width}
             hasPathsBeenCalculated={hasPathsBeenCalculated}
+            themeColors={themeColors}
           />
         ))}
       </View>
@@ -167,10 +176,11 @@ const LineChart = ({
         <View style={StyleSheet.absoluteFill}>
           <Reanimated.View
             style={[
-              styles.backgroundSelection,
+              StyleSheet.absoluteFillObject,
               GlobalStyles.borderRadius,
               {
-                width: buttonWidth
+                width: buttonWidth,
+                backgroundColor: themeColors.backgroundSelection
               },
               animatedLabelOverlay
             ]}
@@ -182,11 +192,11 @@ const LineChart = ({
             onPress={() => handleTimeFilterClick(i)}
             viewStyle={{ width: buttonWidth }}
           >
-            <Text
+            <Paragraph
               style={[GlobalStyles.subheading, GlobalStyles.textAlignCenter]}
             >
               {d.label}
-            </Text>
+            </Paragraph>
           </PressableView>
         ))}
       </Reanimated.View>
@@ -198,10 +208,6 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "space-between",
     position: "relative"
-  },
-  backgroundSelection: {
-    backgroundColor: "#f3f3f3",
-    ...StyleSheet.absoluteFillObject
   },
   timeFilterContainer: {
     flexDirection: "row",

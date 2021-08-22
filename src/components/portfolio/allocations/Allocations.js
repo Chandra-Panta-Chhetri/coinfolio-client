@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet } from "react-native";
-import { Card } from "react-native-paper";
+import { Card, useTheme } from "react-native-paper";
 import PieChart from "../../shared/PieChart";
 import CONSTANTS from "../../../Constants";
 import { connect } from "react-redux";
@@ -10,6 +10,7 @@ import GlobalStyles from "../../../GlobalStyles";
 import Labels from "./AllocationLabels";
 
 const Allocations = ({ assets }) => {
+  const { colors } = useTheme();
   const [data, setData] = useState([]);
   const [selectedSlice, setSelectedSlice] = useState(null);
 
@@ -54,6 +55,7 @@ const Allocations = ({ assets }) => {
           innerRadius="75%"
           selectedSlice={selectedSlice}
           changeSelectedSlice={changeSelectedSlice}
+          innerLabelStyle={{ fill: colors.text }}
         />
         <Labels
           data={data}
