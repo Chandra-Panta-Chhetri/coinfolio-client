@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   dataHeader: { borderBottomWidth: 0 },
   dataRow: {
     paddingVertical: 8,
-    borderTopWidth: 1,
+    borderTopWidth: CONSTANTS.SHARED.TABLE_BORDER_WIDTH,
     borderTopColor: "black",
     borderBottomColor: "black"
   },
@@ -137,7 +137,10 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
             style={[
               styles.dataRow,
               {
-                borderBottomWidth: i + 1 === assets.length ? 1 : 0
+                borderBottomWidth:
+                  i + 1 === assets.length
+                    ? CONSTANTS.SHARED.TABLE_BORDER_WIDTH
+                    : 0
               }
             ]}
           >
