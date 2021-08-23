@@ -14,7 +14,10 @@ export const DefaultTheme = {
     ...PaperDefaultTheme.colors,
     ...NavigationDefaultTheme.colors,
     primaryShimmer: "gainsboro",
-    secondaryShimmer: "#f8f8f8"
+    secondaryShimmer: "#f8f8f8",
+    touchableRipple: "lightgrey",
+    backgroundSelection: "#f3f3f3",
+    primary: "#1a87ff"
   }
 };
 
@@ -26,6 +29,9 @@ export const DarkTheme = {
     ...NavigationDarkTheme.colors,
     text: "white",
     primaryShimmer: "#7d7d7d",
-    secondaryShimmer: "gainsboro"
+    secondaryShimmer: "gainsboro",
+    touchableRipple: "grey",
+    backgroundSelection: "#1a87ff",
+    primary: "#1a87ff"
   }
 };

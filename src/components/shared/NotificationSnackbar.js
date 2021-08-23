@@ -1,9 +1,10 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Snackbar, Paragraph } from "react-native-paper";
-import { selectRecentNotification } from "../redux/notification/notification.selectors";
-import { clearNotifications } from "../redux/notification/notification.actions";
+import { selectRecentNotification } from "../../redux/notification/notification.selectors";
+import { clearNotifications } from "../../redux/notification/notification.actions";
 import { connect } from "react-redux";
+import CONSTANTS from "../../Constants";
 
 const NotificationSnackbar = ({ notification, clearNotifications }) => {
   const backgroundColor = notification ? notification.backgroundColor : "black";
@@ -12,7 +13,7 @@ const NotificationSnackbar = ({ notification, clearNotifications }) => {
     <Snackbar
       visible={notification}
       onDismiss={clearNotifications}
-      duration={5000}
+      duration={CONSTANTS.NOTIFICATION_SNACKBAR.DURATION}
       action={{
         label: "X",
         onPress: clearNotifications,

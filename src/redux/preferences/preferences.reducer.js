@@ -1,7 +1,7 @@
 import PREFERENCES_ACTION_TYPES from "./preferences.action.types";
 
 const INITIAL_STATE = {
-  isThemeDark: true
+  isThemeDark: false
 };
 
 const preferencesReducer = (prevState = INITIAL_STATE, action) => {

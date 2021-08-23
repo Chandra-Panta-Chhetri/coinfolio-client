@@ -6,6 +6,7 @@ import CompareScreen from "../screens/CompareScreen";
 import PriceAlertScreen from "../screens/PriceAlertScreen";
 import ConverterScreen from "../screens/ConverterScreen";
 import BottomTabs from "./BottomTabNavigation";
+import AddTransactionScreen from "../screens/AddTransactionScreen";
 
 const Stack = createStackNavigator();
 
@@ -41,6 +42,11 @@ function MainStackNavigator() {
         name="Converter"
         component={ConverterScreen}
         options={{ headerTitle: "Currency Converter" }}
+      />
+      <Stack.Screen
+        name="AddTransaction"
+        component={AddTransactionScreen}
+        options={{ headerTitle: "Add Transaction" }}
       />
     </Stack.Navigator>
   );
