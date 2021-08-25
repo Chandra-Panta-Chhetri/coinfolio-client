@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 
-function SelectLaunchScreen() {
+function SelectHomeScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Select Launch Screen</Text>
+      <Text style={styles.text}>Select Home Screen</Text>
     </View>
   );
 }
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SelectLaunchScreen;
+export default SelectHomeScreen;

@@ -13,7 +13,7 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import { useTheme } from "react-native-paper";
 import CONSTANTS from "../Constants";
 import { connect } from "react-redux";
-import { selectLaunchScreen } from "../redux/preferences/preferences.selectors";
+import { selectHomeScreen } from "../redux/preferences/preferences.selectors";
 
 const BottomTab =
   Platform.OS === "android"
@@ -60,7 +60,7 @@ const SettingsTabIcon = ({ color }) => (
   />
 );
 
-const BottomTabNavigation = ({ launchScreen }) => {
+const BottomTabNavigation = ({ homeScreen }) => {
   const { colors } = useTheme();
 
   return (
@@ -71,7 +71,7 @@ const BottomTabNavigation = ({ launchScreen }) => {
       labeled={false}
       activeColor={colors.primary}
       barStyle={{ backgroundColor: colors.card }}
-      initialRouteName={launchScreen}
+      initialRouteName={homeScreen}
     >
       <BottomTab.Screen
         name="Home"
@@ -113,7 +113,7 @@ const BottomTabNavigation = ({ launchScreen }) => {
 };
 
 const mapStateToProps = (state) => ({
-  launchScreen: selectLaunchScreen(state)
+  homeScreen: selectHomeScreen(state)
 });
 
 export default connect(mapStateToProps)(BottomTabNavigation);

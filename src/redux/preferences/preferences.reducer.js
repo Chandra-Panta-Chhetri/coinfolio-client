@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   isThemeDark: false,
   isNotificationsOn: true,
   currencyCode: "USD",
-  launchScreen: "Settings",
+  homeScreen: "Settings",
   isBiometricAuthOn: false,
   isPrivacyModeOn: false
 };
@@ -17,8 +17,8 @@ const preferencesReducer = (prevState = INITIAL_STATE, action) => {
       return { ...prevState, isNotificationsOn: !prevState.isNotificationsOn };
     case PREFERENCES_ACTION_TYPES.CHANGE_CURRENCY:
       return { ...prevState, currencyCode: action.payload };
-    case PREFERENCES_ACTION_TYPES.CHANGE_LAUNCH_SCREEN:
-      return { ...prevState, launchScreen: action.payload };
+    case PREFERENCES_ACTION_TYPES.CHANGE_HOME_SCREEN:
+      return { ...prevState, homeScreen: action.payload };
     case PREFERENCES_ACTION_TYPES.TOGGLE_BIOMETRIC_AUTH:
       return { ...prevState, isBiometricAuthOn: !prevState.isBiometricAuthOn };
     case PREFERENCES_ACTION_TYPES.TOGGLE_PRIVACY_MODE:

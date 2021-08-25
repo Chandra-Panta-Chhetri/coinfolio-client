@@ -17,9 +17,9 @@ export const selectCurrencyCode = createSelector(
   (preferences) => preferences.currencyCode
 );
 
-export const selectLaunchScreen = createSelector(
+export const selectHomeScreen = createSelector(
   [selectPreferences],
-  (preferences) => preferences.launchScreen
+  (preferences) => preferences.homeScreen
 );
 
 export const selectIsBiometricAuthOn = createSelector(

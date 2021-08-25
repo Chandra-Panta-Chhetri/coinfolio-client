@@ -8,7 +8,7 @@ import ConverterScreen from "../screens/ConverterScreen";
 import BottomTabs from "./BottomTabNavigation";
 import AddTransactionScreen from "../screens/AddTransactionScreen";
 import SelectCurrencyScreen from "../screens/SelectCurrencyScreen";
-import SelectLaunchScreen from "../screens/SelectLaunchScreen";
+import SelectHomeScreen from "../screens/SelectHomeScreen";
 import TermsAndPrivacyScreen from "../screens/TermsAndPrivacyScreen";
 import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 import ChangeEmailOrNameScreen from "../screens/ChangeEmailOrNameScreen";
@@ -59,9 +59,9 @@ function MainStackNavigator() {
         options={{ headerTitle: "Select Currency" }}
       />
       <Stack.Screen
-        name="SelectLaunchScreen"
-        component={SelectLaunchScreen}
-        options={{ headerTitle: "Select Launch Screen" }}
+        name="SelectHomeScreen"
+        component={SelectHomeScreen}
+        options={{ headerTitle: "Select Home Screen" }}
       />
       <Stack.Screen
         name="TermsAndPrivacy"

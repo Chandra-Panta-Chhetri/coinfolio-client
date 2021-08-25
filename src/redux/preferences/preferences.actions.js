@@ -13,9 +13,9 @@ export const changeCurrency = (currencyCode) => ({
   payload: currencyCode
 });
 
-export const changeLaunchScreen = (launchScreen) => ({
-  type: PREFERENCES_ACTION_TYPES.CHANGE_LAUNCH_SCREEN,
-  payload: launchScreen
+export const changeHomeScreen = (screenName) => ({
+  type: PREFERENCES_ACTION_TYPES.CHANGE_HOME_SCREEN,
+  payload: screenName
 });
 
 export const toggleBiometricAuth = () => ({

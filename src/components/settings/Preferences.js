@@ -5,7 +5,7 @@ import {
   selectIsNotificationsOn,
   selectIsPrivacyModeOn,
   selectIsThemeDark,
-  selectLaunchScreen
+  selectHomeScreen
 } from "../../redux/preferences/preferences.selectors";
 import {
   toggleNotifications,
@@ -22,6 +22,7 @@ import { createStructuredSelector } from "reselect";
 import MoreOptions from "../shared/MoreOptions";
 import SettingGroup from "./SettingGroup";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 const Preferences = ({
   isDarkMode,
@@ -29,7 +30,7 @@ const Preferences = ({
   toggleNotifications,
   isNotificationsOn,
   currencyCode,
-  launchScreen,
+  homeScreen,
   navigation,
   togglePrivacyMode,
   isPrivacyModeOn
@@ -78,15 +79,15 @@ const Preferences = ({
       onPress: () => navigation.navigate("SelectCurrency")
     },
     {
-      label: "Launch Screen",
+      label: "Home Screen",
       iconComponent: (
-        <Ionicons name="notifications" size={CONSTANTS.SETTINGS.ICON_SIZE} />
+        <AntDesign name="home" size={CONSTANTS.SETTINGS.ICON_SIZE} />
       ),
-      iconBackgroundColor: CONSTANTS.SETTINGS.LAUNCH_SCREEN_BACKGROUND_COLOR,
-      endComponent: <MoreOptions selectedOption={launchScreen} />,
+      iconBackgroundColor: CONSTANTS.SETTINGS.HOME_SCREEN_BACKGROUND_COLOR,
+      endComponent: <MoreOptions selectedOption={homeScreen} />,
       subheading:
         "Change the screen that initially shows up once app starts up",
-      onPress: () => navigation.navigate("SelectLaunchScreen")
+      onPress: () => navigation.navigate("SelectHomeScreen")
     },
     {
       label: "Privacy Mode",
@@ -115,7 +116,7 @@ const mapStateToProps = createStructuredSelector({
   isDarkMode: selectIsThemeDark,
   isNotificationsOn: selectIsNotificationsOn,
   currencyCode: selectCurrencyCode,
-  launchScreen: selectLaunchScreen,
+  homeScreen: selectHomeScreen,
   isPrivacyModeOn: selectIsPrivacyModeOn
 });
 
