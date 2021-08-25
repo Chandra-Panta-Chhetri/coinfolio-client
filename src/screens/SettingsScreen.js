@@ -12,6 +12,7 @@ import SettingOption from "../components/shared/SettingOption";
 import CONSTANTS from "../Constants";
 import MoreOptions from "../components/shared/MoreOptions";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Paragraph } from "react-native-paper";
 
 const LogOut = ({ logOut }) => (
   <SettingOption
@@ -25,6 +26,18 @@ const LogOut = ({ logOut }) => (
   />
 );
 
+const UserDetails = ({ currentUser }) => (
+  <View
+    style={[
+      GlobalStyles.componentContainer,
+      { justifyContent: "center", alignItems: "center", minHeight: 130 }
+    ]}
+  >
+    <Paragraph style={GlobalStyles.title}>{currentUser.name}</Paragraph>
+    <Paragraph style={GlobalStyles.body1}>{currentUser.email}</Paragraph>
+  </View>
+);
+
 function SettingsScreen({ logOut, currentUser }) {
   return (
     <FlatList
@@ -32,6 +45,7 @@ function SettingsScreen({ logOut, currentUser }) {
       showsVerticalScrollIndicator={false}
       ListHeaderComponent={
         <>
+          {currentUser && <UserDetails currentUser={currentUser} />}
           {currentUser && <Account />}
           <Preferences />
           <Security />
