@@ -3,11 +3,13 @@ import { connect } from "react-redux";
 import {
   selectCurrencyCode,
   selectIsNotificationsOn,
+  selectIsPrivacyModeOn,
   selectIsThemeDark,
   selectLaunchScreen
 } from "../../redux/preferences/preferences.selectors";
 import {
   toggleNotifications,
+  togglePrivacyMode,
   toggleTheme
 } from "../../redux/preferences/preferences.actions";
 import { withNavigation } from "@react-navigation/compat";
@@ -19,6 +21,7 @@ import CONSTANTS from "../../Constants";
 import { createStructuredSelector } from "reselect";
 import MoreOptions from "../shared/MoreOptions";
 import SettingGroup from "./SettingGroup";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Preferences = ({
   isDarkMode,
@@ -27,7 +30,9 @@ const Preferences = ({
   isNotificationsOn,
   currencyCode,
   launchScreen,
-  navigation
+  navigation,
+  togglePrivacyMode,
+  isPrivacyModeOn
 }) => {
   const { colors } = useTheme();
   const settingOptions = [
@@ -82,6 +87,24 @@ const Preferences = ({
       subheading:
         "Change the screen that initially shows up once app starts up",
       onPress: () => navigation.navigate("SelectLaunchScreen")
+    },
+    {
+      label: "Privacy Mode",
+      iconComponent: (
+        <MaterialCommunityIcons
+          name="shield-lock"
+          size={CONSTANTS.SETTINGS.ICON_SIZE}
+        />
+      ),
+      iconBackgroundColor: CONSTANTS.SETTINGS.PRIVACY_MODE_BACKGROUND_COLOR,
+      endComponent: (
+        <Switch
+          value={isPrivacyModeOn}
+          onValueChange={togglePrivacyMode}
+          color={colors.primary}
+        />
+      ),
+      subheading: "Hide or show values in your portfolio"
     }
   ];
 
@@ -92,12 +115,14 @@ const mapStateToProps = createStructuredSelector({
   isDarkMode: selectIsThemeDark,
   isNotificationsOn: selectIsNotificationsOn,
   currencyCode: selectCurrencyCode,
-  launchScreen: selectLaunchScreen
+  launchScreen: selectLaunchScreen,
+  isPrivacyModeOn: selectIsPrivacyModeOn
 });
 
 const mapDispatchToProps = (dispatch) => ({
   toggleDarkMode: () => dispatch(toggleTheme()),
-  toggleNotifications: () => dispatch(toggleNotifications())
+  toggleNotifications: () => dispatch(toggleNotifications()),
+  togglePrivacyMode: () => dispatch(togglePrivacyMode())
 });
 
 export default compose(

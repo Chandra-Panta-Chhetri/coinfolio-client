@@ -21,3 +21,7 @@ export const changeLaunchScreen = (launchScreen) => ({
 export const toggleBiometricAuth = () => ({
   type: PREFERENCES_ACTION_TYPES.TOGGLE_BIOMETRIC_AUTH
 });
+
+export const togglePrivacyMode = () => ({
+  type: PREFERENCES_ACTION_TYPES.TOGGLE_PRIVACY_MODE
+});

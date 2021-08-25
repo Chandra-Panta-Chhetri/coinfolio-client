@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, View, StyleSheet } from "react-native";
 import GlobalStyles from "../GlobalStyles";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../redux/user/user.selectors";
@@ -27,12 +27,7 @@ const LogOut = ({ logOut }) => (
 );
 
 const UserDetails = ({ currentUser }) => (
-  <View
-    style={[
-      GlobalStyles.componentContainer,
-      { justifyContent: "center", alignItems: "center", minHeight: 130 }
-    ]}
-  >
+  <View style={[GlobalStyles.componentContainer, styles.container]}>
     <Paragraph style={GlobalStyles.title}>{currentUser.name}</Paragraph>
     <Paragraph style={GlobalStyles.body1}>{currentUser.email}</Paragraph>
   </View>
@@ -57,6 +52,10 @@ function SettingsScreen({ logOut, currentUser }) {
     />
   );
 }
+
+const styles = StyleSheet.create({
+  container: { justifyContent: "center", alignItems: "center", minHeight: 130 }
+});
 
 const mapStateToProps = (state) => ({
   currentUser: selectCurrentUser(state)

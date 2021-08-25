@@ -5,7 +5,8 @@ const INITIAL_STATE = {
   isNotificationsOn: true,
   currencyCode: "USD",
   launchScreen: "Settings",
-  isBiometricAuthOn: false
+  isBiometricAuthOn: false,
+  isPrivacyModeOn: false
 };
 
 const preferencesReducer = (prevState = INITIAL_STATE, action) => {
@@ -20,6 +21,8 @@ const preferencesReducer = (prevState = INITIAL_STATE, action) => {
       return { ...prevState, launchScreen: action.payload };
     case PREFERENCES_ACTION_TYPES.TOGGLE_BIOMETRIC_AUTH:
       return { ...prevState, isBiometricAuthOn: !prevState.isBiometricAuthOn };
+    case PREFERENCES_ACTION_TYPES.TOGGLE_PRIVACY_MODE:
+      return { ...prevState, isPrivacyModeOn: !prevState.isPrivacyModeOn };
     default:
       return prevState;
   }

@@ -26,3 +26,8 @@ export const selectIsBiometricAuthOn = createSelector(
   [selectPreferences],
   (preferences) => preferences.isBiometricAuthOn
 );
+
+export const selectIsPrivacyModeOn = createSelector(
+  [selectPreferences],
+  (preferences) => preferences.isPrivacyModeOn
+);
