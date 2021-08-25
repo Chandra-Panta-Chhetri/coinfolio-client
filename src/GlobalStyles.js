@@ -90,5 +90,8 @@ export default StyleSheet.create({
   },
   textAlignCenter: {
     textAlign: "center"
+  },
+  textAlignRight: {
+    textAlign: "right"
   }
 });

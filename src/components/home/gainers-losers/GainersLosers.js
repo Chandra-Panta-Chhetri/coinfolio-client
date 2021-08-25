@@ -3,6 +3,7 @@ import { View, FlatList } from "react-native";
 import HeadingWithSeeAll from "../HeadingWithSeeAll";
 import { withNavigation } from "@react-navigation/compat";
 import { connect } from "react-redux";
+import { compose } from "redux";
 import {
   selectGainersLosers,
   selectIsLoadingSummary
@@ -62,7 +63,7 @@ const mapDispatchToProps = (dispatch) => ({
   fetchGainersLosers: () => dispatch(startGainersLosersFetch())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withNavigation(GainersLosers));
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withNavigation
+)(GainersLosers);

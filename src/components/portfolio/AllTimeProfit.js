@@ -9,9 +9,9 @@ import { Subheading, Paragraph } from "react-native-paper";
 import GlobalStyles from "../../GlobalStyles";
 import { appendPlusOrMinus, getStylesBasedOnPosOrNeg } from "../../GlobalUtils";
 
-const AllTimeProfit = ({ isLoading, overallProfit, width }) => {
+const AllTimeProfit = ({ isLoading, overallProfit, width = "100%" }) => {
   return (
-    <View style={{ width: width || "100%" }}>
+    <View style={{ width }}>
       <Paragraph style={GlobalStyles.subheading}>Total Profit/Loss</Paragraph>
       <View style={styles.profitAndPercent}>
         <Subheading style={GlobalStyles.title}>

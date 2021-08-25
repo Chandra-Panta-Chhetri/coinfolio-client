@@ -12,6 +12,8 @@ import PortfolioScreen from "../screens/PortfolioScreen";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { useTheme } from "react-native-paper";
 import CONSTANTS from "../Constants";
+import { connect } from "react-redux";
+import { selectLaunchScreen } from "../redux/preferences/preferences.selectors";
 
 const BottomTab =
   Platform.OS === "android"
@@ -58,7 +60,7 @@ const SettingsTabIcon = ({ color }) => (
   />
 );
 
-const BottomTabNavigation = () => {
+const BottomTabNavigation = ({ launchScreen }) => {
   const { colors } = useTheme();
 
   return (
@@ -69,7 +71,7 @@ const BottomTabNavigation = () => {
       labeled={false}
       activeColor={colors.primary}
       barStyle={{ backgroundColor: colors.card }}
-      initialRouteName="Portfolio"
+      initialRouteName={launchScreen}
     >
       <BottomTab.Screen
         name="Home"
@@ -110,4 +112,8 @@ const BottomTabNavigation = () => {
   );
 };
 
-export default BottomTabNavigation;
+const mapStateToProps = (state) => ({
+  launchScreen: selectLaunchScreen(state)
+});
+
+export default connect(mapStateToProps)(BottomTabNavigation);

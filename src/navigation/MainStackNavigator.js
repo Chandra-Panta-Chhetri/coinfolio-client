@@ -7,6 +7,11 @@ import PriceAlertScreen from "../screens/PriceAlertScreen";
 import ConverterScreen from "../screens/ConverterScreen";
 import BottomTabs from "./BottomTabNavigation";
 import AddTransactionScreen from "../screens/AddTransactionScreen";
+import SelectCurrencyScreen from "../screens/SelectCurrencyScreen";
+import SelectLaunchScreen from "../screens/SelectLaunchScreen";
+import TermsAndPrivacyScreen from "../screens/TermsAndPrivacyScreen";
+import ChangePasswordScreen from "../screens/ChangePasswordScreen";
+import ChangeEmailOrNameScreen from "../screens/ChangeEmailOrNameScreen";
 
 const Stack = createStackNavigator();
 
@@ -47,6 +52,31 @@ function MainStackNavigator() {
         name="AddTransaction"
         component={AddTransactionScreen}
         options={{ headerTitle: "Add Transaction" }}
+      />
+      <Stack.Screen
+        name="SelectCurrency"
+        component={SelectCurrencyScreen}
+        options={{ headerTitle: "Select Currency" }}
+      />
+      <Stack.Screen
+        name="SelectLaunchScreen"
+        component={SelectLaunchScreen}
+        options={{ headerTitle: "Select Launch Screen" }}
+      />
+      <Stack.Screen
+        name="TermsAndPrivacy"
+        component={TermsAndPrivacyScreen}
+        options={{ headerTitle: "Terms and Privacy" }}
+      />
+      <Stack.Screen
+        name="ChangePassword"
+        component={ChangePasswordScreen}
+        options={{ headerTitle: "Change Password" }}
+      />
+      <Stack.Screen
+        name="ChangeEmailOrName"
+        component={ChangeEmailOrNameScreen}
+        options={{ headerTitle: "Change Email or Name" }}
       />
     </Stack.Navigator>
   );

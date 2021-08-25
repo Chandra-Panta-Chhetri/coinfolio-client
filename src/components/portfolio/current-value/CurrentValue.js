@@ -13,13 +13,13 @@ import {
   getStylesBasedOnPosOrNeg
 } from "../../../GlobalUtils";
 
-const CurrentValue = ({ currentValue, isLoading, width }) => {
+const CurrentValue = ({ currentValue, isLoading, width = "100%" }) => {
   if (isLoading && currentValue === null) {
     return <CurrentValueSkeleton />;
   }
 
   return (
-    <View style={{ width: width || "100%" }}>
+    <View style={{ width }}>
       <Paragraph style={GlobalStyles.subheading}>Current Value</Paragraph>
       <View style={styles.valueAndPercent}>
         <Subheading style={GlobalStyles.title}>

@@ -1,13 +1,25 @@
 import PREFERENCES_ACTION_TYPES from "./preferences.action.types";
 
 const INITIAL_STATE = {
-  isThemeDark: false
+  isThemeDark: false,
+  isNotificationsOn: true,
+  currencyCode: "USD",
+  launchScreen: "Settings",
+  isBiometricAuthOn: false
 };
 
 const preferencesReducer = (prevState = INITIAL_STATE, action) => {
   switch (action.type) {
     case PREFERENCES_ACTION_TYPES.TOGGLE_THEME:
       return { ...prevState, isThemeDark: !prevState.isThemeDark };
+    case PREFERENCES_ACTION_TYPES.TOGGLE_NOTIFICATIONS:
+      return { ...prevState, isNotificationsOn: !prevState.isNotificationsOn };
+    case PREFERENCES_ACTION_TYPES.CHANGE_CURRENCY:
+      return { ...prevState, currencyCode: action.payload };
+    case PREFERENCES_ACTION_TYPES.CHANGE_LAUNCH_SCREEN:
+      return { ...prevState, launchScreen: action.payload };
+    case PREFERENCES_ACTION_TYPES.TOGGLE_BIOMETRIC_AUTH:
+      return { ...prevState, isBiometricAuthOn: !prevState.isBiometricAuthOn };
     default:
       return prevState;
   }
