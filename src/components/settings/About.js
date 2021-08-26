@@ -13,7 +13,7 @@ const About = ({ navigation }) => {
   const { colors } = useTheme();
   const settingOptions = [
     {
-      label: "Terms & Privacy",
+      label: "Terms & privacy",
       iconComponent: (
         <FontAwesome name="legal" size={CONSTANTS.SETTINGS.ICON_SIZE} />
       ),

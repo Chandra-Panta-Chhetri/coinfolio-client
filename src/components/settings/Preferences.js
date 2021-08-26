@@ -79,7 +79,7 @@ const Preferences = ({
       onPress: () => navigation.navigate("SelectCurrency")
     },
     {
-      label: "Home Screen",
+      label: "Home screen",
       iconComponent: (
         <AntDesign name="home" size={CONSTANTS.SETTINGS.ICON_SIZE} />
       ),
@@ -90,7 +90,7 @@ const Preferences = ({
       onPress: () => navigation.navigate("SelectHomeScreen")
     },
     {
-      label: "Privacy Mode",
+      label: "Privacy mode",
       iconComponent: (
         <MaterialCommunityIcons
           name="shield-lock"

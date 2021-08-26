@@ -11,7 +11,7 @@ const Security = ({ isBiometricAuthOn, toggleBiometricAuth }) => {
   const { colors } = useTheme();
   const settingOptions = [
     {
-      label: "Biometric Authentication",
+      label: "Biometric authentication",
       iconComponent: (
         <FontAwesome5 name="fingerprint" size={CONSTANTS.SETTINGS.ICON_SIZE} />
       ),

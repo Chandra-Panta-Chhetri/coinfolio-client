@@ -2,7 +2,10 @@ import React from "react";
 import { FlatList, View, StyleSheet } from "react-native";
 import GlobalStyles from "../GlobalStyles";
 import { connect } from "react-redux";
-import { selectCurrentUser } from "../redux/user/user.selectors";
+import {
+  selectCurrentUser,
+  selectIsChangingAuthState
+} from "../redux/user/user.selectors";
 import { startLogOut } from "../redux/user/user.actions";
 import Preferences from "../components/settings/Preferences";
 import About from "../components/settings/About";
@@ -13,8 +16,9 @@ import CONSTANTS from "../Constants";
 import MoreOptions from "../components/shared/MoreOptions";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Paragraph } from "react-native-paper";
+import useConfirmationDialog from "../hooks/useConfirmationDialog";
 
-const LogOut = ({ logOut }) => (
+const LogOutButton = ({ onPress }) => (
   <SettingOption
     label="Logout"
     iconComponent={
@@ -22,7 +26,7 @@ const LogOut = ({ logOut }) => (
     }
     iconBackgroundColor={CONSTANTS.SETTINGS.LOG_OUT_BACKGROUND_COLOR}
     endComponent={<MoreOptions />}
-    onPress={logOut}
+    onPress={onPress}
   />
 );
 
@@ -33,7 +37,14 @@ const UserDetails = ({ currentUser }) => (
   </View>
 );
 
-function SettingsScreen({ logOut, currentUser }) {
+function SettingsScreen({ logOut, currentUser, isLoggingOut }) {
+  const { openDialog, dialogComponent } = useConfirmationDialog(
+    "Logout Confirmation",
+    "Are you sure you want to log out?",
+    logOut,
+    isLoggingOut
+  );
+
   return (
     <FlatList
       contentContainerStyle={GlobalStyles.screenContainer}
@@ -45,7 +56,12 @@ function SettingsScreen({ logOut, currentUser }) {
           <Preferences />
           <Security />
           <About />
-          {currentUser && <LogOut logOut={logOut} />}
+          {currentUser && (
+            <>
+              <LogOutButton onPress={openDialog} />
+              {dialogComponent}
+            </>
+          )}
         </>
       }
       listKey="SettingsScreenList"
@@ -58,7 +74,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
-  currentUser: selectCurrentUser(state)
+  currentUser: selectCurrentUser(state),
+  isLoggingOut: selectIsChangingAuthState(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

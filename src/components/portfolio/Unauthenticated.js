@@ -34,9 +34,7 @@ const Unauthenticated = ({ navigation }) => {
         onPress={() => navigation.navigate("Login")}
         mode="contained"
         uppercase={false}
-        style={{
-          backgroundColor: colors.card
-        }}
+        color={colors.card}
         labelStyle={[
           GlobalStyles.button,
           {
