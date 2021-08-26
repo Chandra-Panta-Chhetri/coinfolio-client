@@ -4,8 +4,14 @@ import GlobalStyles from "../../GlobalStyles";
 import { Headline } from "react-native-paper";
 import SettingOption from "../shared/SettingOption";
 
-const SettingGroup = ({ settingOptions = [], heading = "" }) => (
-  <View style={GlobalStyles.componentContainer}>
+const SettingGroup = ({
+  settingOptions = [],
+  heading = "",
+  includeComponentContainerStyle = true
+}) => (
+  <View
+    style={includeComponentContainerStyle && GlobalStyles.componentContainer}
+  >
     <Headline style={[GlobalStyles.title, styles.heading]}>{heading}</Headline>
     {settingOptions.map((settingOption) => (
       <SettingOption key={settingOption.label} {...settingOption} />

@@ -22,7 +22,6 @@ const Unauthenticated = ({ navigation }) => {
         profit/loss.
       </Subheading>
       <Button
-        uppercase={false}
         onPress={() => navigation.navigate("SignUp")}
         style={styles.signUpBtn}
         mode="contained"
@@ -33,7 +32,6 @@ const Unauthenticated = ({ navigation }) => {
       <Button
         onPress={() => navigation.navigate("Login")}
         mode="contained"
-        uppercase={false}
         color={colors.card}
         labelStyle={[
           GlobalStyles.button,

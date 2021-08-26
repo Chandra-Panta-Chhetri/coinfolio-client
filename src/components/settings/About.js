@@ -1,6 +1,6 @@
 import React from "react";
 import { withNavigation } from "@react-navigation/compat";
-import { Paragraph, useTheme } from "react-native-paper";
+import { Paragraph } from "react-native-paper";
 import CONSTANTS from "../../Constants";
 import MoreOptions from "../shared/MoreOptions";
 import SettingGroup from "./SettingGroup";
@@ -9,8 +9,7 @@ import GlobalStyles from "../../GlobalStyles";
 import { FontAwesome } from "@expo/vector-icons";
 import { expo } from "../../../app.json";
 
-const About = ({ navigation }) => {
-  const { colors } = useTheme();
+const About = ({ navigation, includeComponentContainerStyle }) => {
   const settingOptions = [
     {
       label: "Terms & privacy",
@@ -36,7 +35,13 @@ const About = ({ navigation }) => {
     }
   ];
 
-  return <SettingGroup heading="About" settingOptions={settingOptions} />;
+  return (
+    <SettingGroup
+      heading="About"
+      settingOptions={settingOptions}
+      includeComponentContainerStyle={includeComponentContainerStyle}
+    />
+  );
 };
 
 export default withNavigation(About);

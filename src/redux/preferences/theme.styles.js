@@ -35,5 +35,3 @@ export const DarkTheme = {
     primary: "#1a87ff"
   }
 };
-
-console.log(DarkTheme.colors);

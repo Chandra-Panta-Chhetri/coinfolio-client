@@ -5,6 +5,7 @@ import { selectRecentNotification } from "../../redux/notification/notification.
 import { clearNotifications } from "../../redux/notification/notification.actions";
 import { connect } from "react-redux";
 import CONSTANTS from "../../Constants";
+import GlobalStyles from "../../GlobalStyles";
 
 const NotificationSnackbar = ({ notification, clearNotifications }) => {
   const backgroundColor = notification ? notification.backgroundColor : "black";
@@ -13,15 +14,15 @@ const NotificationSnackbar = ({ notification, clearNotifications }) => {
     <Snackbar
       visible={notification}
       onDismiss={clearNotifications}
-      duration={CONSTANTS.NOTIFICATION_SNACKBAR.DURATION}
+      duration={CONSTANTS.SNACKBAR.DURATION}
       action={{
         label: "X",
         onPress: clearNotifications,
-        labelStyle: styles.text
+        labelStyle: styles.notificationMsg
       }}
       style={[styles.snackbar, { backgroundColor }]}
     >
-      <Paragraph style={styles.text}>
+      <Paragraph style={[GlobalStyles.body2, styles.notificationMsg]}>
         {notification && notification.message}
       </Paragraph>
     </Snackbar>
@@ -32,8 +33,7 @@ const styles = StyleSheet.create({
   snackbar: {
     bottom: 52
   },
-  text: {
-    fontWeight: "bold",
+  notificationMsg: {
     color: "white"
   }
 });

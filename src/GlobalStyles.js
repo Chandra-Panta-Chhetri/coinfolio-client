@@ -24,7 +24,7 @@ export default StyleSheet.create({
     marginBottom: 15
   },
   positiveNum: {
-    color: "#00e600"
+    color: "#4ecf3b"
   },
   negativeNum: {
     color: "#e60000"

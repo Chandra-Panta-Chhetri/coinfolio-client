@@ -61,15 +61,15 @@ function* handleSignInSuccess({ payload: loggedInUser }) {
   const hasAutoLoggedIn = yield select(selectHasAutoSignedIn);
   if (!hasAutoLoggedIn) {
     yield put(addSuccessNotification(`Welcome back ${loggedInUser.fullName}!`));
-    yield AsyncStorage.setItem("hasAutoSignedIn", true);
+    yield AsyncStorage.setItem("hasAutoSignedIn", JSON.stringify(true));
   }
   yield AsyncStorage.setItem("user", JSON.stringify(loggedInUser));
 }
 
 function* handleLogOutSuccess() {
   yield AsyncStorage.removeItem("user");
-  yield AsyncStorage.setItem("hasAutoSignedIn", false);
-  yield put(addSuccessNotification("See you next time!"));
+  yield AsyncStorage.setItem("hasAutoSignedIn", JSON.stringify(false));
+  yield put(addSuccessNotification("Logged out successfully"));
 }
 
 function* watchEmailSignIn() {

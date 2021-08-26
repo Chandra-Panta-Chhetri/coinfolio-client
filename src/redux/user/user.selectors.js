@@ -1,4 +1,4 @@
-import { createSelector } from "reselect";
+import { createSelector, createStructuredSelector } from "reselect";
 
 const selectUser = (state) => state.user;
 
@@ -25,4 +25,9 @@ export const selectWasSignedIn = createSelector(
 export const selectHasAutoSignedIn = createSelector(
   [selectUser],
   (user) => user.hasAutoSignedIn
+);
+
+export const isUserAuthenticated = createStructuredSelector(
+  [selectCurrentUser],
+  (user) => user !== null
 );

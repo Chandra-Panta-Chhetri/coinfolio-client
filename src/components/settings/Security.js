@@ -23,7 +23,7 @@ const Security = ({ isBiometricAuthOn, toggleBiometricAuth }) => {
           onValueChange={toggleBiometricAuth}
         />
       ),
-      subheading: "Unlock app with fingerprint or facial recognition"
+      subheading: "Unlock with fingerprint or facial recognition"
     }
   ];
 

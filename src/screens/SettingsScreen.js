@@ -15,7 +15,7 @@ import SettingOption from "../components/shared/SettingOption";
 import CONSTANTS from "../Constants";
 import MoreOptions from "../components/shared/MoreOptions";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Paragraph } from "react-native-paper";
+import { Paragraph, Button, Card } from "react-native-paper";
 import useConfirmationDialog from "../hooks/useConfirmationDialog";
 
 const LogOutButton = ({ onPress }) => (
@@ -30,14 +30,43 @@ const LogOutButton = ({ onPress }) => (
   />
 );
 
+const LogInOrCreateAccount = ({ navigation }) => (
+  <Card style={[GlobalStyles.componentContainer]}>
+    <Card.Content>
+      <Paragraph style={GlobalStyles.title}>Get More Features!</Paragraph>
+      <Paragraph style={GlobalStyles.body1}>
+        Login or create an account to get access to features such as custom
+        price alerts, watchlist, portfolio tracker & more!
+      </Paragraph>
+      <View style={styles.logInCreateButtonContainer}>
+        <Button
+          labelStyle={GlobalStyles.button}
+          onPress={() => navigation.navigate("Login")}
+          mode="contained"
+          style={styles.logInButton}
+        >
+          Login
+        </Button>
+        <Button
+          labelStyle={GlobalStyles.button}
+          onPress={() => navigation.navigate("SignUp")}
+          mode="contained"
+        >
+          Create an account
+        </Button>
+      </View>
+    </Card.Content>
+  </Card>
+);
+
 const UserDetails = ({ currentUser }) => (
-  <View style={[GlobalStyles.componentContainer, styles.container]}>
+  <View style={[GlobalStyles.componentContainer, styles.userDetailsContainer]}>
     <Paragraph style={GlobalStyles.title}>{currentUser.name}</Paragraph>
     <Paragraph style={GlobalStyles.body1}>{currentUser.email}</Paragraph>
   </View>
 );
 
-function SettingsScreen({ logOut, currentUser, isLoggingOut }) {
+function SettingsScreen({ logOut, currentUser, isLoggingOut, navigation }) {
   const { openDialog, dialogComponent } = useConfirmationDialog(
     "Logout Confirmation",
     "Are you sure you want to log out?",
@@ -51,11 +80,12 @@ function SettingsScreen({ logOut, currentUser, isLoggingOut }) {
       showsVerticalScrollIndicator={false}
       ListHeaderComponent={
         <>
+          {!currentUser && <LogInOrCreateAccount navigation={navigation} />}
           {currentUser && <UserDetails currentUser={currentUser} />}
           {currentUser && <Account />}
           <Preferences />
           <Security />
-          <About />
+          <About includeComponentContainerStyle={!!currentUser} />
           {currentUser && (
             <>
               <LogOutButton onPress={openDialog} />
@@ -70,7 +100,17 @@ function SettingsScreen({ logOut, currentUser, isLoggingOut }) {
 }
 
 const styles = StyleSheet.create({
-  container: { justifyContent: "center", alignItems: "center", minHeight: 130 }
+  userDetailsContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: 130
+  },
+  logInCreateButtonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginVertical: 10
+  },
+  logInButton: { marginRight: 10, flex: 1 }
 });
 
 const mapStateToProps = (state) => ({
