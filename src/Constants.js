@@ -118,6 +118,7 @@ const CONSTANTS = {
     PRIVACY_MODE_BACKGROUND_COLOR: "#8c32fb",
     BIOMETRIC_BACKGROUND_COLOR: "#f85a27",
     TERMS_AND_PRIVACY_BACKGROUND_COLOR: "#44484b",
+    SHARE_BACKGROUND_COLOR: "#8c32fb",
     VERSION_BACKGROUND_COLOR: "#1a87ff"
   },
   SNACKBAR: {
@@ -126,6 +127,11 @@ const CONSTANTS = {
     INFO: "#1a87ff",
     WARNING: "#f0ad4e",
     DURATION: 2300
+  },
+  SHARE_DOWNLOAD_LINK: {
+    IOS: "https://play.google.com/store/apps/details?id=com.coinmarketcap.android",
+    ANDROID:
+      "https://play.google.com/store/apps/details?id=com.coinmarketcap.android"
   }
 };
 
