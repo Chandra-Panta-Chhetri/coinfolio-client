@@ -20,45 +20,30 @@ const BottomTab =
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
 
-const HomeTabIcon = ({ color }) => (
-  <AntDesign
-    name="home"
-    size={CONSTANTS.SHARED.BOTTOM_TAB_ICON_SIZE}
-    color={color}
-  />
-);
+export const HomeTabIcon = ({
+  color,
+  size = CONSTANTS.SHARED.BOTTOM_TAB_ICON_SIZE
+}) => <AntDesign name="home" size={size} color={color} />;
 
-const MarketTabIcon = ({ color }) => (
-  <AntDesign
-    name="barschart"
-    size={CONSTANTS.SHARED.BOTTOM_TAB_ICON_SIZE}
-    color={color}
-  />
-);
+export const MarketTabIcon = ({
+  color,
+  size = CONSTANTS.SHARED.BOTTOM_TAB_ICON_SIZE
+}) => <AntDesign name="barschart" size={size} color={color} />;
 
-const PortfolioTabIcon = ({ color }) => (
-  <Feather
-    name="pie-chart"
-    size={CONSTANTS.SHARED.BOTTOM_TAB_ICON_SIZE}
-    color={color}
-  />
-);
+export const PortfolioTabIcon = ({
+  color,
+  size = CONSTANTS.SHARED.BOTTOM_TAB_ICON_SIZE
+}) => <Feather name="pie-chart" size={size} color={color} />;
 
-const NewsTabIcon = ({ color }) => (
-  <FontAwesome
-    name="newspaper-o"
-    size={CONSTANTS.SHARED.BOTTOM_TAB_ICON_SIZE}
-    color={color}
-  />
-);
+export const NewsTabIcon = ({
+  color,
+  size = CONSTANTS.SHARED.BOTTOM_TAB_ICON_SIZE
+}) => <FontAwesome name="newspaper-o" size={size} color={color} />;
 
-const SettingsTabIcon = ({ color }) => (
-  <AntDesign
-    name="setting"
-    size={CONSTANTS.SHARED.BOTTOM_TAB_ICON_SIZE}
-    color={color}
-  />
-);
+const SettingsTabIcon = ({
+  color,
+  size = CONSTANTS.SHARED.BOTTOM_TAB_ICON_SIZE
+}) => <AntDesign name="setting" size={size} color={color} />;
 
 const BottomTabNavigation = ({ homeScreen }) => {
   const { colors } = useTheme();

@@ -7,7 +7,6 @@ import {
   Portal,
   useTheme
 } from "react-native-paper";
-import Constants from "../../Constants";
 import GlobalStyles from "../../GlobalStyles";
 
 const ConfirmationDialog = ({
