@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Card, Paragraph } from "react-native-paper";
+import { Card, Text } from "react-native-paper";
 import CONSTANTS from "../../Constants";
 import GlobalStyles from "../../GlobalStyles";
 import TouchableNativeOpacity from "./TouchableNativeOpacity";
@@ -31,9 +31,9 @@ const SettingOption = ({
             })}
           </View>
           <View style={styles.labelContainer}>
-            <Paragraph style={[GlobalStyles.subheading]}>{label}</Paragraph>
+            <Text style={[GlobalStyles.subheading]}>{label}</Text>
             {subheading ? (
-              <Paragraph style={[GlobalStyles.caption]}>{subheading}</Paragraph>
+              <Text style={[GlobalStyles.caption]}>{subheading}</Text>
             ) : null}
           </View>
         </View>

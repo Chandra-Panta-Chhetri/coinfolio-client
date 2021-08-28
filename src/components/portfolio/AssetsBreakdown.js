@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import {
-  DataTable,
-  Paragraph,
-  Avatar,
-  Headline,
-  useTheme
-} from "react-native-paper";
+import { DataTable, Text, Avatar, useTheme } from "react-native-paper";
 import { connect } from "react-redux";
 import {
   selectIsLoadingPortfolio,
@@ -110,7 +104,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
 
   return (
     <View>
-      <Headline style={[GlobalStyles.headline]}>Assets</Headline>
+      <Text style={[GlobalStyles.headline]}>Assets</Text>
       <DataTable>
         <DataTable.Header style={styles.dataHeader}>
           {tableHeadings.map((th) => (
@@ -119,7 +113,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
               onPress={() => sortTable(th.sortByField)}
               viewStyle={th.style}
             >
-              <Paragraph style={GlobalStyles.body1}>{th.label}</Paragraph>
+              <Text style={GlobalStyles.body1}>{th.label}</Text>
               {columnToSortBy === th.sortByField && (
                 <AntDesign
                   name={sortAscending ? "caretup" : "caretdown"}
@@ -152,22 +146,22 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
                 }}
               />
               <View style={styles.assetNameAndTicker}>
-                <Paragraph numberOfLines={1} style={GlobalStyles.body1}>
+                <Text numberOfLines={1} style={GlobalStyles.body1}>
                   {asset.fullName}
-                </Paragraph>
-                <Paragraph numberOfLines={1} style={GlobalStyles.caption}>
+                </Text>
+                <Text numberOfLines={1} style={GlobalStyles.caption}>
                   {asset.ticker}
-                </Paragraph>
+                </Text>
               </View>
             </View>
             <View style={[styles.flex, styles.marginRight]}>
-              <Paragraph
+              <Text
                 numberOfLines={1}
                 style={[styles.rightAlign, GlobalStyles.body1]}
               >
                 ${asset.currentPrice}
-              </Paragraph>
-              <Paragraph
+              </Text>
+              <Text
                 numberOfLines={1}
                 style={[
                   styles.rightAlign,
@@ -176,21 +170,21 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
                 ]}
               >
                 {appendPlusOrMinus(asset.pricePercentChange)}%
-              </Paragraph>
+              </Text>
             </View>
             <View style={styles.flex}>
-              <Paragraph
+              <Text
                 numberOfLines={1}
                 style={[styles.rightAlign, GlobalStyles.body1]}
               >
                 ${asset.holdingsVal}
-              </Paragraph>
-              <Paragraph
+              </Text>
+              <Text
                 numberOfLines={1}
                 style={[styles.rightAlign, GlobalStyles.caption]}
               >
                 {asset.totalHoldings}
-              </Paragraph>
+              </Text>
             </View>
           </DataTable.Row>
         ))}

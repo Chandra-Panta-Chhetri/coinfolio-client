@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Card, Paragraph, Avatar } from "react-native-paper";
+import { Card, Text, Avatar } from "react-native-paper";
 import CONSTANTS from "../../../Constants";
 import GlobalStyles from "../../../GlobalStyles";
 import {
@@ -22,23 +22,19 @@ const GainerLoser = ({ item, navigation }) => {
           />
           <View style={styles.gainerLoserInfoContainer}>
             <View>
-              <Paragraph style={GlobalStyles.subheading}>
-                {item.fullName}
-              </Paragraph>
-              <Paragraph style={GlobalStyles.body1}>{item.ticker}</Paragraph>
+              <Text style={GlobalStyles.subheading}>{item.fullName}</Text>
+              <Text style={GlobalStyles.body1}>{item.ticker}</Text>
             </View>
             <View style={styles.priceAndPercent}>
-              <Paragraph style={GlobalStyles.subheading}>
-                ${item.price}
-              </Paragraph>
-              <Paragraph
+              <Text style={GlobalStyles.subheading}>${item.price}</Text>
+              <Text
                 style={[
                   GlobalStyles.body1,
                   getStylesBasedOnPosOrNeg(item.percentChange)
                 ]}
               >
                 {appendPlusOrMinus(item.percentChange)}%
-              </Paragraph>
+              </Text>
             </View>
           </View>
         </Card.Content>

@@ -1,12 +1,6 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import {
-  Button,
-  Paragraph,
-  Dialog,
-  Portal,
-  useTheme
-} from "react-native-paper";
+import { Button, Text, Dialog, Portal, useTheme } from "react-native-paper";
 import GlobalStyles from "../../GlobalStyles";
 
 const ConfirmationDialog = ({
@@ -28,9 +22,7 @@ const ConfirmationDialog = ({
       >
         <Dialog.Title style={styles.title}>{confirmationTitle}</Dialog.Title>
         <Dialog.Content>
-          <Paragraph style={GlobalStyles.subheading}>
-            {confirmationText}
-          </Paragraph>
+          <Text style={GlobalStyles.subheading}>{confirmationText}</Text>
         </Dialog.Content>
         <Dialog.Actions>
           <Button

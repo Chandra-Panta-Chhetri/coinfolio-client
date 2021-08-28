@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Paragraph, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
 import CONSTANTS from "../../Constants";
 import GlobalStyles from "../../GlobalStyles";
@@ -11,9 +11,7 @@ const MoreOptions = ({ selectedOption }) => {
   return (
     <View style={styles.container}>
       {selectedOption ? (
-        <Paragraph style={[GlobalStyles.body1, styles.label]}>
-          {selectedOption}
-        </Paragraph>
+        <Text style={[GlobalStyles.body1, styles.label]}>{selectedOption}</Text>
       ) : null}
       <MaterialIcons
         name="keyboard-arrow-right"

@@ -15,7 +15,7 @@ import SettingOption from "../components/shared/SettingOption";
 import CONSTANTS from "../Constants";
 import MoreOptions from "../components/shared/MoreOptions";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Paragraph, Button, Card } from "react-native-paper";
+import { Text, Button, Card } from "react-native-paper";
 import useConfirmationDialog from "../hooks/useConfirmationDialog";
 
 const LogOutButton = ({ onPress }) => (
@@ -33,11 +33,11 @@ const LogOutButton = ({ onPress }) => (
 const LogInOrCreateAccount = ({ navigation }) => (
   <Card style={[GlobalStyles.componentContainer]}>
     <Card.Content>
-      <Paragraph style={GlobalStyles.title}>Get More Features!</Paragraph>
-      <Paragraph style={GlobalStyles.body1}>
+      <Text style={GlobalStyles.title}>Get More Features!</Text>
+      <Text style={GlobalStyles.body1}>
         Login or create an account to get access to features such as custom
         price alerts, watchlist, portfolio tracker & more!
-      </Paragraph>
+      </Text>
       <View style={styles.logInCreateButtonContainer}>
         <Button
           labelStyle={GlobalStyles.button}
@@ -61,8 +61,8 @@ const LogInOrCreateAccount = ({ navigation }) => (
 
 const UserDetails = ({ currentUser }) => (
   <View style={[GlobalStyles.componentContainer, styles.userDetailsContainer]}>
-    <Paragraph style={GlobalStyles.title}>{currentUser.name}</Paragraph>
-    <Paragraph style={GlobalStyles.body1}>{currentUser.email}</Paragraph>
+    <Text style={GlobalStyles.title}>{currentUser.name}</Text>
+    <Text style={GlobalStyles.body1}>{currentUser.email}</Text>
   </View>
 );
 

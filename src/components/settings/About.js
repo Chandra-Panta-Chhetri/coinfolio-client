@@ -1,6 +1,6 @@
 import React from "react";
 import { withNavigation } from "@react-navigation/compat";
-import { Paragraph } from "react-native-paper";
+import { Text } from "react-native-paper";
 import CONSTANTS from "../../Constants";
 import MoreOptions from "../shared/MoreOptions";
 import SettingGroup from "./SettingGroup";
@@ -60,9 +60,9 @@ const About = ({
       ),
       iconBackgroundColor: CONSTANTS.SETTINGS.VERSION_BACKGROUND_COLOR,
       endComponent: (
-        <Paragraph style={[GlobalStyles.body1, GlobalStyles.textAlignRight]}>
+        <Text style={[GlobalStyles.body1, GlobalStyles.textAlignRight]}>
           {expo.version}
-        </Paragraph>
+        </Text>
       )
     }
   ];

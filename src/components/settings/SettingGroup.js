@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
-import { Headline } from "react-native-paper";
+import { Text } from "react-native-paper";
 import SettingOption from "../shared/SettingOption";
 
 const SettingGroup = ({
@@ -12,7 +12,7 @@ const SettingGroup = ({
   <View
     style={includeComponentContainerStyle && GlobalStyles.componentContainer}
   >
-    <Headline style={[GlobalStyles.title, styles.heading]}>{heading}</Headline>
+    <Text style={[GlobalStyles.title, styles.heading]}>{heading}</Text>
     {settingOptions.map((settingOption) => (
       <SettingOption key={settingOption.label} {...settingOption} />
     ))}

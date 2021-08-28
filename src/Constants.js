@@ -48,7 +48,7 @@ const CONSTANTS = {
   },
   ALLOCATIONS: {
     MAX_NUM_TO_SHOW: 5,
-    SLICE_COLORS: ["#21e6c1", "#278ea5", "#1f4287", "#071e3d", "#28c7fa"]
+    SLICE_COLORS: ["#ced6e5", "#f8921c", "#627eea", "#f2ba31", "#4c9d7c"]
   },
   SHARED: {
     EMPTY_FUNCTION: () => {},

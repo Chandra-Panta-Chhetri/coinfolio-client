@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Button, Headline, Subheading } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 import CONSTANTS from "../../Constants";
 import GlobalStyles from "../../GlobalStyles";
 
@@ -13,7 +13,7 @@ const HeadingWithSeeAll = ({
   return (
     <>
       <View style={styles.container}>
-        <Headline style={[GlobalStyles.headline]}>{headingTitle}</Headline>
+        <Text style={[GlobalStyles.headline]}>{headingTitle}</Text>
         <Button
           compact
           onPress={onSeeAllBtnPress}
@@ -22,9 +22,7 @@ const HeadingWithSeeAll = ({
           {seeAllBtnLabel}
         </Button>
       </View>
-      {subheading && (
-        <Subheading style={[GlobalStyles.body1]}>{subheading}</Subheading>
-      )}
+      {subheading && <Text style={[GlobalStyles.body1]}>{subheading}</Text>}
     </>
   );
 };

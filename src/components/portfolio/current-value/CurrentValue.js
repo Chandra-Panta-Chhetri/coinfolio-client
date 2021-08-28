@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Paragraph, Subheading } from "react-native-paper";
+import { Text } from "react-native-paper";
 import { connect } from "react-redux";
 import GlobalStyles from "../../../GlobalStyles";
 import {
@@ -20,28 +20,26 @@ const CurrentValue = ({ currentValue, isLoading, width = "100%" }) => {
 
   return (
     <View style={{ width }}>
-      <Paragraph style={GlobalStyles.subheading}>Current Value</Paragraph>
+      <Text style={GlobalStyles.subheading}>Current Value</Text>
       <View style={styles.valueAndPercent}>
-        <Subheading style={GlobalStyles.title}>
-          ${currentValue.value}
-        </Subheading>
-        <Subheading
+        <Text style={GlobalStyles.title}>${currentValue.value}</Text>
+        <Text
           style={[
             GlobalStyles.subheading,
             getStylesBasedOnPosOrNeg(currentValue.percent)
           ]}
         >
           {appendPlusOrMinus(currentValue.percent)}%
-        </Subheading>
+        </Text>
       </View>
-      <Paragraph
+      <Text
         style={[
           GlobalStyles.caption,
           getStylesBasedOnPosOrNeg(currentValue.plChange)
         ]}
       >
         {appendPlusOrMinus(currentValue.plChange, " $")} (24h)
-      </Paragraph>
+      </Text>
     </View>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet } from "react-native";
-import { Snackbar, Paragraph } from "react-native-paper";
+import { Snackbar, Text } from "react-native-paper";
 import { selectRecentNotification } from "../../redux/notification/notification.selectors";
 import { clearNotifications } from "../../redux/notification/notification.actions";
 import { connect } from "react-redux";
@@ -28,9 +28,9 @@ const NotificationSnackbar = ({ notification, clearNotifications }) => {
       }}
       style={[styles.snackbar, { backgroundColor: prevBackgroundColor }]}
     >
-      <Paragraph style={[GlobalStyles.body2, styles.notificationMsg]}>
+      <Text style={[GlobalStyles.body2, styles.notificationMsg]}>
         {notification && notification.message}
-      </Paragraph>
+      </Text>
     </Snackbar>
   );
 };

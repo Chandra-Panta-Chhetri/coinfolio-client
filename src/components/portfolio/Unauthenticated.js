@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View, Image } from "react-native";
-import { Button, Headline, Subheading, useTheme } from "react-native-paper";
+import { Button, Text, useTheme } from "react-native-paper";
 import GlobalStyles from "../../GlobalStyles";
 
 const Unauthenticated = ({ navigation }) => {
@@ -12,15 +12,13 @@ const Unauthenticated = ({ navigation }) => {
         source={require("../../../assets/images/static-pie-chart.png")}
         style={styles.staticImage}
       />
-      <Headline style={[GlobalStyles.display1, GlobalStyles.textAlignCenter]}>
+      <Text style={[GlobalStyles.display1, GlobalStyles.textAlignCenter]}>
         Track Your Crypto Investments
-      </Headline>
-      <Subheading
-        style={[GlobalStyles.subheading, GlobalStyles.textAlignCenter]}
-      >
+      </Text>
+      <Text style={[GlobalStyles.subheading, GlobalStyles.textAlignCenter]}>
         Signup or login to track your crypto transactions, current balance and
         profit/loss.
-      </Subheading>
+      </Text>
       <Button
         onPress={() => navigation.navigate("SignUp")}
         style={styles.signUpBtn}
