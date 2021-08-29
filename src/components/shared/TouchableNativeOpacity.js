@@ -3,8 +3,7 @@ import {
   TouchableOpacity,
   TouchableNativeFeedback,
   Platform,
-  View,
-  StyleSheet
+  View
 } from "react-native";
 import CONSTANTS from "../../Constants";
 import GlobalStyles from "../../GlobalStyles";
@@ -20,13 +19,7 @@ const TouchableNativeOpacity = ({
   return Platform.OS === "android" &&
     Platform.Version >=
       CONSTANTS.SHARED.MIN_ANDROID_VERSION_FOR_TOUCHABLE_RIPPLES ? (
-    <View
-      style={[
-        styles.rippleContainer,
-        viewContainerStyle,
-        GlobalStyles.borderRadius
-      ]}
-    >
+    <View style={[viewContainerStyle, GlobalStyles.borderRadius]}>
       <TouchableNativeFeedback
         {...otherProps}
         background={TouchableNativeFeedback.Ripple(
@@ -49,12 +42,5 @@ const TouchableNativeOpacity = ({
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  rippleContainer: {
-    flex: 1,
-    overflow: "hidden"
-  }
-});
 
 export default TouchableNativeOpacity;

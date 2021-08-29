@@ -1,7 +1,10 @@
 import USER_ACTION_TYPES from "./user.action.types";
 
 const INITIAL_STATE = {
-  currentUser: {},
+  currentUser: {
+    name: "Chandra Panta Chhetri",
+    email: "chandra@outlook.com"
+  },
   isChangingAuthState: false,
   loadingText: "",
   hasAutoSignedIn: false

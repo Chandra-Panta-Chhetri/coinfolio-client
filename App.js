@@ -2,13 +2,14 @@ import React from "react";
 import MainStackNavigator from "./src/navigation/MainStackNavigator";
 import { Provider as StoreProvider } from "react-redux";
 import { Provider as PaperProvider } from "react-native-paper";
-import { store } from "./src/redux/store.js";
+import { store, persistor } from "./src/redux/store.js";
 import { DarkTheme, DefaultTheme } from "./src/redux/preferences/theme.styles";
-import { SafeAreaView, StatusBar, View } from "react-native";
+import { SafeAreaView, StatusBar, View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { connect } from "react-redux";
 import { selectIsThemeDark } from "./src/redux/preferences/preferences.selectors";
 import NotificationSnackbar from "./src/components/shared/NotificationSnackbar";
+import { PersistGate } from "redux-persist/integration/react";
 
 const App = ({ isThemeDark }) => {
   const theme = isThemeDark ? DarkTheme : DefaultTheme;
@@ -37,7 +38,9 @@ const AppWithState = connect(mapStateToProps)(App);
 export default function () {
   return (
     <StoreProvider store={store}>
-      <AppWithState />
+      <PersistGate loading={<Text>Loading App...</Text>} persistor={persistor}>
+        <AppWithState />
+      </PersistGate>
     </StoreProvider>
   );
 }

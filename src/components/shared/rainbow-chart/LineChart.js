@@ -17,7 +17,7 @@ import Label from "./Label";
 import CONSTANTS from "../../../Constants";
 import PressableView from "../PressableView";
 import GlobalStyles from "../../../GlobalStyles";
-import { Paragraph, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 
 const AnimatedPath = Reanimated.createAnimatedComponent(Path);
 
@@ -192,11 +192,11 @@ const LineChart = ({
             onPress={() => handleTimeFilterClick(i)}
             viewStyle={{ width: buttonWidth }}
           >
-            <Paragraph
+            <Text
               style={[GlobalStyles.subheading, GlobalStyles.textAlignCenter]}
             >
               {d.label}
-            </Paragraph>
+            </Text>
           </PressableView>
         ))}
       </Reanimated.View>

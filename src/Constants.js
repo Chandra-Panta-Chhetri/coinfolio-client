@@ -48,7 +48,7 @@ const CONSTANTS = {
   },
   ALLOCATIONS: {
     MAX_NUM_TO_SHOW: 5,
-    SLICE_COLORS: ["#21e6c1", "#278ea5", "#1f4287", "#071e3d", "#28c7fa"]
+    SLICE_COLORS: ["#ced6e5", "#f8921c", "#627eea", "#f2ba31", "#4c9d7c"]
   },
   SHARED: {
     EMPTY_FUNCTION: () => {},
@@ -81,9 +81,6 @@ const CONSTANTS = {
       navigateTo: "Market"
     }
   ],
-  NOTIFICATION_SNACKBAR: {
-    DURATION: 5000
-  },
   ASSETS_BREAKDOWN: {
     SORT_ICON_SIZE: 12
   },
@@ -106,6 +103,35 @@ const CONSTANTS = {
         valueAccessorFunc: (summary) => `${summary["ethDominance"]}%`
       }
     ]
+  },
+  SETTINGS: {
+    ICON_SIZE: 18,
+    MORE_OPTIONS_ARROW_ICON_SIZE: 25,
+    ICON_COLOR: "white",
+    CHANGE_PASSWORD_BACKGROUND_COLOR: "#1a87ff",
+    CHANGE_EMAIL_BACKGROUND_COLOR: "#4ecf3b",
+    LOG_OUT_BACKGROUND_COLOR: "#eb1c1b",
+    DARK_MODE_BACKGROUND_COLOR: "#44484b",
+    RECEIVE_NOTIFICATIONS_BACKGROUND_COLOR: "#f85a27",
+    CURRENCY_BACKGROUND_COLOR: "#4ecf3b",
+    HOME_SCREEN_BACKGROUND_COLOR: "#1a87ff",
+    PRIVACY_MODE_BACKGROUND_COLOR: "#8c32fb",
+    BIOMETRIC_BACKGROUND_COLOR: "#f85a27",
+    TERMS_AND_PRIVACY_BACKGROUND_COLOR: "#44484b",
+    SHARE_BACKGROUND_COLOR: "#8c32fb",
+    VERSION_BACKGROUND_COLOR: "#1a87ff"
+  },
+  SNACKBAR: {
+    SUCCESS: "#4ecf3b",
+    ERROR: "#eb1c1b",
+    INFO: "#1a87ff",
+    WARNING: "#f0ad4e",
+    DURATION: 2300
+  },
+  SHARE_DOWNLOAD_LINK: {
+    IOS: "https://play.google.com/store/apps/details?id=com.coinmarketcap.android",
+    ANDROID:
+      "https://play.google.com/store/apps/details?id=com.coinmarketcap.android"
   }
 };
 

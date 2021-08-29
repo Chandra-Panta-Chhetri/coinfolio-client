@@ -3,6 +3,7 @@ import { StyleSheet, View, FlatList } from "react-native";
 import HeadingWithSeeAll from "../HeadingWithSeeAll";
 import { withNavigation } from "@react-navigation/compat";
 import { connect } from "react-redux";
+import { compose } from "redux";
 import {
   selectTopCoins,
   selectIsLoadingSummary
@@ -67,7 +68,7 @@ const mapDispatchToProps = (dispatch) => ({
   fetchTopCoins: () => dispatch(startTopCoinsFetch())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withNavigation(TopCoins));
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withNavigation
+)(TopCoins);

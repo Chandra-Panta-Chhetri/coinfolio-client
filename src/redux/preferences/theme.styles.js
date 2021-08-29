@@ -31,7 +31,7 @@ export const DarkTheme = {
     primaryShimmer: "#7d7d7d",
     secondaryShimmer: "gainsboro",
     touchableRipple: "grey",
-    backgroundSelection: "#1a87ff",
+    backgroundSelection: "#a3cfff",
     primary: "#1a87ff"
   }
 };

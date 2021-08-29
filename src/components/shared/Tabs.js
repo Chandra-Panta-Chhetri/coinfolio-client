@@ -70,10 +70,12 @@ const Tabs = ({
           { marginBottom: tabHeadingMarginBottom }
         ]}
         onLayout={(e) => {
-          const containerWidth = e.nativeEvent.layout.width;
-          leftPosition.value =
-            numTabs === 0 ? 0 : initialActiveTab * (containerWidth / numTabs);
-          setTabHeadingContainerWidth(containerWidth);
+          if (tabHeadingContainerWidth === 0) {
+            const containerWidth = e.nativeEvent.layout.width;
+            leftPosition.value =
+              numTabs === 0 ? 0 : initialActiveTab * (containerWidth / numTabs);
+            setTabHeadingContainerWidth(containerWidth);
+          }
         }}
       >
         {children.map((child, index) => {

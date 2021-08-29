@@ -1,29 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet } from "react-native";
-import { Snackbar, Paragraph } from "react-native-paper";
+import { Snackbar, Text } from "react-native-paper";
 import { selectRecentNotification } from "../../redux/notification/notification.selectors";
 import { clearNotifications } from "../../redux/notification/notification.actions";
 import { connect } from "react-redux";
 import CONSTANTS from "../../Constants";
+import GlobalStyles from "../../GlobalStyles";
 
 const NotificationSnackbar = ({ notification, clearNotifications }) => {
-  const backgroundColor = notification ? notification.backgroundColor : "black";
+  const [prevBackgroundColor, setPrevBackgroundColor] = useState(null);
+
+  useEffect(() => {
+    if (notification !== null) {
+      setPrevBackgroundColor(notification.backgroundColor);
+    }
+  }, [notification]);
 
   return (
     <Snackbar
       visible={notification}
       onDismiss={clearNotifications}
-      duration={CONSTANTS.NOTIFICATION_SNACKBAR.DURATION}
+      duration={CONSTANTS.SNACKBAR.DURATION}
       action={{
         label: "X",
         onPress: clearNotifications,
-        labelStyle: styles.text
+        labelStyle: styles.notificationMsg
       }}
-      style={[styles.snackbar, { backgroundColor }]}
+      style={[styles.snackbar, { backgroundColor: prevBackgroundColor }]}
     >
-      <Paragraph style={styles.text}>
+      <Text style={[GlobalStyles.body2, styles.notificationMsg]}>
         {notification && notification.message}
-      </Paragraph>
+      </Text>
     </Snackbar>
   );
 };
@@ -32,8 +39,7 @@ const styles = StyleSheet.create({
   snackbar: {
     bottom: 52
   },
-  text: {
-    fontWeight: "bold",
+  notificationMsg: {
     color: "white"
   }
 });

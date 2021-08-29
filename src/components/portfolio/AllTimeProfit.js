@@ -5,26 +5,24 @@ import {
   selectOverallProfit,
   selectIsLoadingPortfolio
 } from "../../redux/portfolio/portfolio.selectors";
-import { Subheading, Paragraph } from "react-native-paper";
+import { Text } from "react-native-paper";
 import GlobalStyles from "../../GlobalStyles";
 import { appendPlusOrMinus, getStylesBasedOnPosOrNeg } from "../../GlobalUtils";
 
-const AllTimeProfit = ({ isLoading, overallProfit, width }) => {
+const AllTimeProfit = ({ isLoading, overallProfit, width = "100%" }) => {
   return (
-    <View style={{ width: width || "100%" }}>
-      <Paragraph style={GlobalStyles.subheading}>Total Profit/Loss</Paragraph>
+    <View style={{ width }}>
+      <Text style={GlobalStyles.subheading}>Total Profit/Loss</Text>
       <View style={styles.profitAndPercent}>
-        <Subheading style={GlobalStyles.title}>
-          ${overallProfit.value}
-        </Subheading>
-        <Subheading
+        <Text style={GlobalStyles.title}>${overallProfit.value}</Text>
+        <Text
           style={[
             GlobalStyles.subheading,
             getStylesBasedOnPosOrNeg(overallProfit.percentChange)
           ]}
         >
           {appendPlusOrMinus(overallProfit.percentChange)}%
-        </Subheading>
+        </Text>
       </View>
     </View>
   );

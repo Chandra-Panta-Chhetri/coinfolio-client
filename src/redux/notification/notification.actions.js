@@ -1,10 +1,11 @@
+import CONSTANTS from "../../Constants";
 import NOTIFICATION_ACTION_TYPES from "./notification.action.types";
 
 export const addSuccessNotification = (message) => ({
   type: NOTIFICATION_ACTION_TYPES.ADD_SUCCESS_NOTIFICATION,
   payload: {
     message,
-    backgroundColor: "#5cb85c"
+    backgroundColor: CONSTANTS.SNACKBAR.SUCCESS
   }
 });
 
@@ -12,7 +13,7 @@ export const addErrorNotification = (message) => ({
   type: NOTIFICATION_ACTION_TYPES.ADD_ERROR_NOTIFICATION,
   payload: {
     message,
-    backgroundColor: "#d9534f"
+    backgroundColor: CONSTANTS.SNACKBAR.ERROR
   }
 });
 
@@ -20,7 +21,7 @@ export const addInfoNotification = (message) => ({
   type: NOTIFICATION_ACTION_TYPES.ADD_INFO_NOTIFICATION,
   payload: {
     message,
-    backgroundColor: "#5bc0de"
+    backgroundColor: CONSTANTS.SNACKBAR.INFO
   }
 });
 
@@ -28,7 +29,7 @@ export const addWarningNotification = (message) => ({
   type: NOTIFICATION_ACTION_TYPES.ADD_WARNING_NOTIFICATION,
   payload: {
     message,
-    backgroundColor: "#f0ad4e"
+    backgroundColor: CONSTANTS.SNACKBAR.WARNING
   }
 });
 

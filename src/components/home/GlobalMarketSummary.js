@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { StyleSheet, ScrollView, View } from "react-native";
-import { Card, Paragraph } from "react-native-paper";
+import { Card, Text } from "react-native-paper";
 import { connect } from "react-redux";
 import {
   selectGlobalSummary,
@@ -34,12 +34,10 @@ const GlobalMarketSummary = ({
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {CONSTANTS.GLOBAL_MARKET_SUMMARY.METRICS.map((metric) => (
             <View style={styles.summaryItem} key={metric.label}>
-              <Paragraph style={[GlobalStyles.body2]}>
-                {metric.label}:{" "}
-              </Paragraph>
-              <Paragraph style={[GlobalStyles.body2]}>
+              <Text style={[GlobalStyles.body2]}>{metric.label}: </Text>
+              <Text style={[GlobalStyles.body2]}>
                 {metric.valueAccessorFunc(globalSummary)}
-              </Paragraph>
+              </Text>
             </View>
           ))}
         </ScrollView>
