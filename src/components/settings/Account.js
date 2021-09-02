@@ -1,11 +1,13 @@
 import React from "react";
-import { withNavigation } from "@react-navigation/compat";
+import { useNavigation } from "@react-navigation/native";
 import CONSTANTS from "../../Constants";
 import MoreOptions from "../shared/MoreOptions";
 import SettingGroup from "./SettingGroup";
 import { Entypo } from "@expo/vector-icons";
 
-const Account = ({ navigation }) => {
+const Account = () => {
+  const navigation = useNavigation();
+
   const settingOptions = [
     {
       label: "Change password",
@@ -28,4 +30,4 @@ const Account = ({ navigation }) => {
   return <SettingGroup heading="Account" settingOptions={settingOptions} />;
 };
 
-export default withNavigation(Account);
+export default Account;

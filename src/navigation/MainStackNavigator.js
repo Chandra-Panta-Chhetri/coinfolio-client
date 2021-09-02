@@ -19,7 +19,7 @@ function MainStackNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Home"
+        name="BottomTabsHome"
         component={BottomTabs}
         options={{ headerShown: false }}
       />

@@ -1,9 +1,8 @@
 import React from "react";
 import { View, FlatList } from "react-native";
 import HeadingWithSeeAll from "../HeadingWithSeeAll";
-import { withNavigation } from "@react-navigation/compat";
+import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
-import { compose } from "redux";
 import {
   selectNewsSummary,
   selectIsLoadingSummary
@@ -13,7 +12,8 @@ import NewsItem from "./NewsItem";
 import NewsItemSkeleton from "./NewsItemSkeleton";
 import CONSTANTS from "../../../Constants";
 
-const NewsSummary = ({ navigation, news, isLoading, fetchNewsSummary }) => {
+const NewsSummary = ({ news, isLoading, fetchNewsSummary }) => {
+  const navigation = useNavigation();
   const navigateToNewsScreen = () => navigation.navigate("News");
   const dummySkeletonArray = Array(
     CONSTANTS.NEWS_SUMMARY.NUM_SKELETON_TO_SHOW
@@ -54,7 +54,4 @@ const mapDispatchToProps = (dispatch) => ({
   fetchNewsSummary: () => dispatch(startNewsSummaryFetch())
 });
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  withNavigation
-)(NewsSummary);
+export default connect(mapStateToProps, mapDispatchToProps)(NewsSummary);

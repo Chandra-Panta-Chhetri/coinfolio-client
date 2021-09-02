@@ -1,9 +1,8 @@
 import React from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import HeadingWithSeeAll from "../HeadingWithSeeAll";
-import { withNavigation } from "@react-navigation/compat";
+import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
-import { compose } from "redux";
 import {
   selectTopCoins,
   selectIsLoadingSummary
@@ -14,7 +13,8 @@ import TopCoinSkeleton from "./TopCoinSkeleton";
 import CONSTANTS from "../../../Constants";
 import GlobalStyles from "../../../GlobalStyles";
 
-const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
+const TopCoins = ({ topCoins, isLoading, fetchTopCoins }) => {
+  const navigation = useNavigation();
   const navigateToMarketScreen = () => navigation.navigate("Market");
   const dummySkeletonArray = Array(
     CONSTANTS.TOP_COINS.NUM_SKELETON_TO_SHOW
@@ -68,7 +68,4 @@ const mapDispatchToProps = (dispatch) => ({
   fetchTopCoins: () => dispatch(startTopCoinsFetch())
 });
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  withNavigation
-)(TopCoins);
+export default connect(mapStateToProps, mapDispatchToProps)(TopCoins);

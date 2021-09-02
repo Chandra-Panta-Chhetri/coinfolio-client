@@ -1,9 +1,8 @@
 import React from "react";
 import { View, FlatList } from "react-native";
 import HeadingWithSeeAll from "../HeadingWithSeeAll";
-import { withNavigation } from "@react-navigation/compat";
+import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
-import { compose } from "redux";
 import {
   selectGainersLosers,
   selectIsLoadingSummary
@@ -14,12 +13,8 @@ import GainerLoserSkeleton from "./GainerLoserSkeleton";
 import CONSTANTS from "../../../Constants";
 import GlobalStyles from "../../../GlobalStyles";
 
-const GainersLosers = ({
-  navigation,
-  gainersLosers,
-  isLoading,
-  fetchGainersLosers
-}) => {
+const GainersLosers = ({ gainersLosers, isLoading, fetchGainersLosers }) => {
+  const navigation = useNavigation();
   const navigateToMarketScreen = () => navigation.navigate("Market");
   const dummySkeletonArray = Array(
     CONSTANTS.GAINERS_LOSERS.NUM_SKELETON_TO_SHOW
@@ -63,7 +58,4 @@ const mapDispatchToProps = (dispatch) => ({
   fetchGainersLosers: () => dispatch(startGainersLosersFetch())
 });
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  withNavigation
-)(GainersLosers);
+export default connect(mapStateToProps, mapDispatchToProps)(GainersLosers);

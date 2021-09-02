@@ -6,11 +6,12 @@ import {
   TouchableRipple,
   useTheme
 } from "react-native-paper";
-import { withNavigation } from "@react-navigation/compat";
+import { useNavigation } from "@react-navigation/native";
 import CONSTANTS from "../../Constants";
 import GlobalStyles from "../../GlobalStyles";
 
-const ShortcutIcon = ({ item, navigation }) => {
+const ShortcutIcon = ({ item }) => {
+  const navigation = useNavigation();
   const navigateToScreen = () => navigation.navigate(item.navigateTo);
   const { colors, dark: isDarkMode } = useTheme();
 
@@ -68,4 +69,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withNavigation(ShortcutIcons);
+export default ShortcutIcons;

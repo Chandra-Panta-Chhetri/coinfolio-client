@@ -12,8 +12,7 @@ import {
   togglePrivacyMode,
   toggleTheme
 } from "../../redux/preferences/preferences.actions";
-import { withNavigation } from "@react-navigation/compat";
-import { compose } from "redux";
+import { useNavigation } from "@react-navigation/native";
 import { Switch, useTheme } from "react-native-paper";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -31,10 +30,10 @@ const Preferences = ({
   isNotificationsOn,
   currencyCode,
   homeScreen,
-  navigation,
   togglePrivacyMode,
   isPrivacyModeOn
 }) => {
+  const navigation = useNavigation();
   const { colors } = useTheme();
   const settingOptions = [
     {
@@ -126,7 +125,4 @@ const mapDispatchToProps = (dispatch) => ({
   togglePrivacyMode: () => dispatch(togglePrivacyMode())
 });
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  withNavigation
-)(Preferences);
+export default connect(mapStateToProps, mapDispatchToProps)(Preferences);
