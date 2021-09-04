@@ -7,13 +7,13 @@ import { Feather } from "@expo/vector-icons";
 import HomeScreen from "../screens/HomeScreen";
 import MarketScreen from "../screens/MarketScreen";
 import SettingsScreen from "../screens/SettingsScreen";
-import NewsScreen from "../screens/NewsScreen";
 import PortfolioScreen from "../screens/PortfolioScreen";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { useTheme } from "react-native-paper";
 import CONSTANTS from "../Constants";
 import { connect } from "react-redux";
 import { selectHomeScreen } from "../redux/preferences/preferences.selectors";
+import NewsScreen from "../screens/NewsScreen";
 
 const BottomTab =
   Platform.OS === "android"

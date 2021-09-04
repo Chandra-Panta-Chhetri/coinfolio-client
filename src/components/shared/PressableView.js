@@ -5,9 +5,10 @@ import CONSTANTS from "../../Constants";
 const PressableView = ({
   onPress = CONSTANTS.SHARED.EMPTY_FUNCTION,
   viewStyle = {},
-  children
+  children,
+  ...otherProps
 }) => (
-  <TouchableWithoutFeedback onPress={onPress}>
+  <TouchableWithoutFeedback onPress={onPress} {...otherProps}>
     <View style={viewStyle}>{children}</View>
   </TouchableWithoutFeedback>
 );
