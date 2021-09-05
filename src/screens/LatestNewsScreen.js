@@ -1,14 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import GlobalStyles from "../GlobalStyles";
+import { Picker } from "@react-native-picker/picker";
+import CONSTANTS from "../Constants";
 
 const LatestNewsScreen = () => {
-  useEffect(() => {
-    console.log("in latest news screen");
-  }, []);
+  const [selectedFilter, setSelectedFilter] = useState(null);
+
+  const fetchNewsWithFilter = (selectedFilter) => {};
 
   return (
     <View style={[GlobalStyles.screenContainer, { paddingTop: 0 }]}>
+      {/* <Picker
+        selectedValue={selectedFilter}
+        onValueChange={fetchNewsWithFilter}
+      >
+        {<Picker.Item />}
+      </Picker> */}
       <Text style={styles.text}>Latest News Screen</Text>
     </View>
   );

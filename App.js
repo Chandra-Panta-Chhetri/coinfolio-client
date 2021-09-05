@@ -17,8 +17,16 @@ const App = ({ isThemeDark }) => {
   return (
     <PaperProvider theme={theme}>
       <SafeAreaView style={{ flex: 1 }}>
-        <StatusBar />
-        <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+        <StatusBar
+          backgroundColor={theme.colors.card}
+          barStyle={isThemeDark ? "light-content" : "dark-content"}
+        />
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: theme.colors.background
+          }}
+        >
           <NavigationContainer theme={theme}>
             <MainStackNavigator />
           </NavigationContainer>

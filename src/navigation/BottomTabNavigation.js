@@ -47,50 +47,57 @@ const SettingsTabIcon = ({
 
 const BottomTabNavigation = ({ homeScreen }) => {
   const { colors } = useTheme();
+  const tabBarStyle = { backgroundColor: colors.card };
 
   return (
     <BottomTab.Navigator
-      tabBarOptions={{
-        showLabel: false
+      screenOptions={{
+        tabBarStyle,
+        tabBarShowLabel: false
       }}
       labeled={false}
       activeColor={colors.primary}
-      barStyle={{ backgroundColor: colors.card }}
+      barStyle={tabBarStyle}
       initialRouteName={homeScreen}
     >
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarIcon: HomeTabIcon
+          tabBarIcon: HomeTabIcon,
+          headerShown: false
         }}
       />
       <BottomTab.Screen
         name="Market"
         component={MarketScreen}
         options={{
-          tabBarIcon: MarketTabIcon
+          tabBarIcon: MarketTabIcon,
+          headerShown: false
         }}
       />
       <BottomTab.Screen
         name="News"
         component={NewsScreen}
         options={{
-          tabBarIcon: NewsTabIcon
+          tabBarIcon: NewsTabIcon,
+          headerShown: false
         }}
       />
       <BottomTab.Screen
         name="Portfolio"
         component={PortfolioScreen}
         options={{
-          tabBarIcon: PortfolioTabIcon
+          tabBarIcon: PortfolioTabIcon,
+          headerShown: false
         }}
       />
       <BottomTab.Screen
         name="Settings"
         component={SettingsScreen}
         options={{
-          tabBarIcon: SettingsTabIcon
+          tabBarIcon: SettingsTabIcon,
+          headerShown: false
         }}
       />
     </BottomTab.Navigator>
