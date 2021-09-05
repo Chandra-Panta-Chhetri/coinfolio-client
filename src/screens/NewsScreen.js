@@ -3,14 +3,12 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import LatestNewsScreen from "../screens/LatestNewsScreen";
 import LatestEventsScreen from "../screens/LatestEventsScreen";
 import GlobalStyles from "../GlobalStyles";
-import { View, Text, StyleSheet } from "react-native";
-import PressableView from "../components/shared/PressableView";
-import { useTheme } from "react-native-paper";
+import { View, StyleSheet } from "react-native";
+import Badge from "../components/shared/Badge";
 
 const Tab = createMaterialTopTabNavigator();
 
 const BadgeTabBar = ({ state, descriptors, navigation }) => {
-  const { colors, dark: isDarkMode } = useTheme();
   const numTabs = state.routes.length;
 
   return (
@@ -29,15 +27,6 @@ const BadgeTabBar = ({ state, descriptors, navigation }) => {
             : options.title !== undefined
             ? options.title
             : route.name;
-        const activeStyles = {
-          backgroundColor: isDarkMode ? colors.text : colors.primary,
-          color: isDarkMode ? colors.border : "white"
-        };
-
-        const inactiveStyles = {
-          color: colors.text,
-          backgroundColor: isDarkMode ? colors.border : "lightgrey"
-        };
 
         const isFocused = state.index === i;
 
@@ -59,32 +48,23 @@ const BadgeTabBar = ({ state, descriptors, navigation }) => {
           }
         };
 
+        const tabContainerStyle = styles.tabContainer;
+        if (numTabs === i + 1) {
+          tabContainerStyle.marginRight = 0;
+        }
+
         return (
-          <PressableView
+          <Badge
+            containerStyle={tabContainerStyle}
             key={i}
-            viewStyle={[
-              styles.tabContainer,
-              GlobalStyles.iconRoundness,
-              isFocused ? activeStyles : inactiveStyles,
-              numTabs === i + 1 && { marginRight: 0 }
-            ]}
             accessibilityRole="button"
             onLongPress={onLongPress}
             onPress={onPress}
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
-          >
-            <Text
-              style={[
-                GlobalStyles.subheading,
-                {
-                  color: isFocused ? activeStyles.color : inactiveStyles.color
-                }
-              ]}
-            >
-              {label}
-            </Text>
-          </PressableView>
+            label={label}
+            isActive={isFocused}
+          />
         );
       })}
     </View>
