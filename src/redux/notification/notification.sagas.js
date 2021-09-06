@@ -6,6 +6,7 @@ import {
   addErrorNotification,
   addSuccessNotification
 } from "./notification.actions";
+import NEWS_ACTION_TYPES from "../news/news.action.types";
 
 function* showErrorNotification({ payload: { errorMsg } }) {
   yield put(addErrorNotification(errorMsg));
@@ -30,7 +31,9 @@ function* watchErrorNotifications() {
       PORTFOLIO_ACTION_TYPES.DELETE_TRANSACTION_BY_ID_FAIL,
       PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_BY_ID_FAIL,
       PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTIONS_FOR_ASSET_FAIL,
-      PORTFOLIO_ACTION_TYPES.REMOVE_ALL_TRANSACTIONS_FOR_ASSET_FAIL
+      PORTFOLIO_ACTION_TYPES.REMOVE_ALL_TRANSACTIONS_FOR_ASSET_FAIL,
+      NEWS_ACTION_TYPES.EVENTS_FETCH_FAIL,
+      NEWS_ACTION_TYPES.NEWS_FETCH_FAIL
     ],
     showErrorNotification
   );

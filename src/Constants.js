@@ -132,6 +132,22 @@ const CONSTANTS = {
     IOS: "https://play.google.com/store/apps/details?id=com.coinmarketcap.android",
     ANDROID:
       "https://play.google.com/store/apps/details?id=com.coinmarketcap.android"
+  },
+  LATEST_NEWS: {
+    FILTERS: [
+      {
+        label: "Important",
+        value: "important"
+      },
+      {
+        label: "Rising",
+        value: "rising"
+      },
+      {
+        label: "Hot",
+        value: "hot"
+      }
+    ]
   }
 };
 

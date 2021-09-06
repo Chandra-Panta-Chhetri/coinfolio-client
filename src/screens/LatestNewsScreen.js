@@ -7,29 +7,28 @@ import CONSTANTS from "../Constants";
 const LatestNewsScreen = () => {
   const [selectedFilter, setSelectedFilter] = useState(null);
 
-  const fetchNewsWithFilter = (selectedFilter) => {};
+  const fetchNewsWithFilter = (selectedFilter) => {
+    //call redux function
+    setSelectedFilter(selectedFilter);
+  };
 
   return (
-    <View style={[GlobalStyles.screenContainer, { paddingTop: 0 }]}>
-      {/* <Picker
+    <View style={[GlobalStyles.screenContainer, styles.container]}>
+      <Picker
         selectedValue={selectedFilter}
         onValueChange={fetchNewsWithFilter}
       >
-        {<Picker.Item />}
-      </Picker> */}
-      <Text style={styles.text}>Latest News Screen</Text>
+        {CONSTANTS.LATEST_NEWS.FILTERS.map((filter) => (
+          <Picker.Item {...filter} />
+        ))}
+      </Picker>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 1
-  },
-  text: {
-    color: "#101010",
-    fontSize: 24,
-    fontWeight: "bold"
+    paddingTop: 0
   }
 });
 
