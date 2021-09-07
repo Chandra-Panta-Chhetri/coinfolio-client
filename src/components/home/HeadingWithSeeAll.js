@@ -9,26 +9,27 @@ const HeadingWithSeeAll = ({
   seeAllBtnLabel = "See All",
   subheading,
   onSeeAllBtnPress = CONSTANTS.SHARED.EMPTY_FUNCTION
-}) => {
-  return (
-    <>
-      <View style={styles.container}>
-        <Text style={[GlobalStyles.headline]}>{headingTitle}</Text>
-        <Button
-          compact
-          onPress={onSeeAllBtnPress}
-          labelStyle={[GlobalStyles.button]}
-        >
-          {seeAllBtnLabel}
-        </Button>
-      </View>
-      {subheading && <Text style={[GlobalStyles.body1]}>{subheading}</Text>}
-    </>
-  );
-};
+}) => (
+  <View style={styles.container}>
+    <View style={styles.headingAndSellAll}>
+      <Text style={[GlobalStyles.headline]}>{headingTitle}</Text>
+      <Button
+        compact
+        onPress={onSeeAllBtnPress}
+        labelStyle={[GlobalStyles.button]}
+      >
+        {seeAllBtnLabel}
+      </Button>
+    </View>
+    {subheading && <Text style={[GlobalStyles.body1]}>{subheading}</Text>}
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {
+    marginBottom: 10
+  },
+  headingAndSellAll: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"

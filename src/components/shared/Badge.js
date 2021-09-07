@@ -6,7 +6,8 @@ import PressableView from "./PressableView";
 const Badge = ({
   isActive = false,
   containerStyle = {},
-  label,
+  label = "",
+  icon: Icon = null,
   ...otherProps
 }) => {
   const { colors, dark: isDarkMode } = useTheme();
@@ -20,6 +21,8 @@ const Badge = ({
     backgroundColor: isDarkMode ? colors.border : "lightgrey"
   };
 
+  const textColor = isActive ? activeStyles.color : inactiveStyles.color;
+
   return (
     <PressableView
       viewStyle={[
@@ -29,11 +32,13 @@ const Badge = ({
       ]}
       {...otherProps}
     >
+      {Icon && <Icon color={textColor} />}
       <Text
         style={[
           GlobalStyles.subheading,
           {
-            color: isActive ? activeStyles.color : inactiveStyles.color
+            color: textColor,
+            marginLeft: Icon ? 5 : 0
           }
         ]}
       >

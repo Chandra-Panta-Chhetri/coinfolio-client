@@ -53,7 +53,7 @@ const CONSTANTS = {
   SHARED: {
     EMPTY_FUNCTION: () => {},
     MIN_ANDROID_VERSION_FOR_TOUCHABLE_RIPPLES: 21,
-    BOTTOM_TAB_ICON_SIZE: 21.5,
+    TAB_ICON_SIZE: 21.5,
     AVATAR_IMAGE_SIZE: 35,
     TAB_HEADING_ICON_SIZE: 20,
     TOUCHABLE_ACTIVE_OPACITY: 0.6,
@@ -147,7 +147,13 @@ const CONSTANTS = {
         label: "Hot",
         value: "hot"
       }
-    ]
+    ],
+    NUM_NEWS_TO_SHOW: 12,
+    DEFAULT_FILTER: "hot"
+  },
+  LATEST_EVENTS: {
+    FILTERS: [],
+    NUM_EVENTS_TO_SHOW: 12
   }
 };
 

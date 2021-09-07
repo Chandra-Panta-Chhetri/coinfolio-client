@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import HeadingWithSeeAll from "../HeadingWithSeeAll";
 import { useNavigation } from "@react-navigation/native";
@@ -20,6 +20,10 @@ const TopCoins = ({ topCoins, isLoading, fetchTopCoins }) => {
     CONSTANTS.TOP_COINS.NUM_SKELETON_TO_SHOW
   ).fill("1");
 
+  useEffect(() => {
+    //fetchTopCoins()
+  }, []);
+
   return (
     <View style={GlobalStyles.componentContainer}>
       <HeadingWithSeeAll
@@ -29,7 +33,6 @@ const TopCoins = ({ topCoins, isLoading, fetchTopCoins }) => {
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={styles.listContainer}
         data={topCoins}
         keyExtractor={(tm) => tm.ticker}
         renderItem={(props) => <TopCoin {...props} navigation={navigation} />}
@@ -53,9 +56,6 @@ const TopCoins = ({ topCoins, isLoading, fetchTopCoins }) => {
 const styles = StyleSheet.create({
   skeletonContentContainer: {
     paddingVertical: 2
-  },
-  listContainer: {
-    marginTop: 10
   }
 });
 

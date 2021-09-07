@@ -5,6 +5,18 @@ import LatestEventsScreen from "../screens/LatestEventsScreen";
 import GlobalStyles from "../GlobalStyles";
 import { View, StyleSheet } from "react-native";
 import Badge from "../components/shared/Badge";
+import { Ionicons } from "@expo/vector-icons";
+import CONSTANTS from "../Constants";
+
+const LatestNewsTabIcon = ({
+  color,
+  size = CONSTANTS.SHARED.TAB_ICON_SIZE
+}) => <Ionicons name="newspaper-outline" size={size} color={color} />;
+
+const LatestEventsTabIcon = ({
+  color,
+  size = CONSTANTS.SHARED.TAB_ICON_SIZE
+}) => <Ionicons name="calendar-sharp" size={size} color={color} />;
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -64,6 +76,7 @@ const BadgeTabBar = ({ state, descriptors, navigation }) => {
             accessibilityLabel={options.tabBarAccessibilityLabel}
             label={label}
             isActive={isFocused}
+            icon={options.tabBarIcon}
           />
         );
       })}
@@ -85,16 +98,18 @@ const NewsScreen = () => (
       name="LatestNews"
       component={LatestNewsScreen}
       options={{
-        title: "Latest News",
-        tabBarLabelStyle: GlobalStyles.body1
+        title: "News",
+        tabBarLabelStyle: GlobalStyles.body1,
+        tabBarIcon: LatestNewsTabIcon
       }}
     />
     <Tab.Screen
       name="LatestEvents"
       component={LatestEventsScreen}
       options={{
-        title: "Latest Events",
-        tabBarLabelStyle: GlobalStyles.body1
+        title: "Events",
+        tabBarLabelStyle: GlobalStyles.body1,
+        tabBarIcon: LatestEventsTabIcon
       }}
     />
   </Tab.Navigator>

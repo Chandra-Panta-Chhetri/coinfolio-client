@@ -1,5 +1,5 @@
-import React from "react";
-import { View, FlatList } from "react-native";
+import React, { useEffect } from "react";
+import { View, FlatList, StyleSheet } from "react-native";
 import HeadingWithSeeAll from "../HeadingWithSeeAll";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -19,6 +19,10 @@ const GainersLosers = ({ gainersLosers, isLoading, fetchGainersLosers }) => {
   const dummySkeletonArray = Array(
     CONSTANTS.GAINERS_LOSERS.NUM_SKELETON_TO_SHOW
   ).fill("1");
+
+  useEffect(() => {
+    // fetchGainersLosers();
+  }, []);
 
   return (
     <View style={GlobalStyles.componentContainer}>
@@ -40,7 +44,11 @@ const GainersLosers = ({ gainersLosers, isLoading, fetchGainersLosers }) => {
         <FlatList
           data={dummySkeletonArray}
           keyExtractor={(s, index) => s + index}
-          renderItem={() => <GainerLoserSkeleton />}
+          renderItem={({ index }) => (
+            <GainerLoserSkeleton
+              containerStyle={index !== 0 ? styles.itemContainer : null}
+            />
+          )}
           scrollEnabled={false}
           listKey="GainersLosersSkeletonList"
         />
@@ -48,6 +56,12 @@ const GainersLosers = ({ gainersLosers, isLoading, fetchGainersLosers }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  itemContainer: {
+    marginTop: 10
+  }
+});
 
 const mapStateToProps = (state) => ({
   gainersLosers: selectGainersLosers(state),

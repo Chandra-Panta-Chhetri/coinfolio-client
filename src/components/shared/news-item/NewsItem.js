@@ -1,12 +1,13 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Text, Caption } from "react-native-paper";
-import CONSTANTS from "../../../Constants";
 import GlobalStyles from "../../../GlobalStyles";
 import TouchableNativeOpacity from "../../shared/TouchableNativeOpacity";
 
-const NewsItem = ({ item }) => (
-  <TouchableNativeOpacity viewContainerStyle={styles.androidContainer}>
+const NewsItem = ({ item, index }) => (
+  <TouchableNativeOpacity
+    viewContainerStyle={index !== 0 ? styles.androidContainer : null}
+  >
     <Card style={GlobalStyles.borderRadius}>
       <Card.Content style={styles.newsCardBody}>
         <View style={styles.newsInfo}>

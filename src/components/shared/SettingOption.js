@@ -21,8 +21,7 @@ const SettingOption = ({
             style={[
               styles.iconContainer,
               {
-                backgroundColor: iconBackgroundColor,
-                borderRadius: CONSTANTS.SETTINGS.ICON_SIZE
+                backgroundColor: iconBackgroundColor
               }
             ]}
           >
@@ -69,7 +68,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     overflow: "hidden",
-    padding: 7
+    justifyContent: "center",
+    borderRadius: CONSTANTS.SETTINGS.ICON_SIZE,
+    width: CONSTANTS.SETTINGS.ICON_SIZE * 2,
+    height: CONSTANTS.SETTINGS.ICON_SIZE * 2
   },
   labelContainer: {
     marginLeft: 8,

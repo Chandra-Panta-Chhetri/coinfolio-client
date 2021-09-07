@@ -36,24 +36,20 @@ const ShortcutIcon = ({ item }) => {
   );
 };
 
-const ShortcutIcons = ({ navigation }) => {
-  return (
-    <FlatList
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={[
-        styles.shortcutIconContainer,
-        GlobalStyles.componentContainer
-      ]}
-      keyExtractor={(sc) => sc.label}
-      data={CONSTANTS.SHORTCUT_ICONS}
-      renderItem={(props) => (
-        <ShortcutIcon navigation={navigation} {...props} />
-      )}
-      listKey="ShortcutIconsList"
-    />
-  );
-};
+const ShortcutIcons = ({ navigation }) => (
+  <FlatList
+    horizontal
+    showsHorizontalScrollIndicator={false}
+    contentContainerStyle={[
+      styles.shortcutIconContainer,
+      GlobalStyles.componentContainer
+    ]}
+    keyExtractor={(sc) => sc.label}
+    data={CONSTANTS.SHORTCUT_ICONS}
+    renderItem={(props) => <ShortcutIcon navigation={navigation} {...props} />}
+    listKey="ShortcutIconsList"
+  />
+);
 
 const styles = StyleSheet.create({
   shortcutIconContainer: {

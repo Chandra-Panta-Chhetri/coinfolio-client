@@ -9,9 +9,11 @@ import {
 } from "../../../GlobalUtils";
 import TouchableNativeOpacity from "../../shared/TouchableNativeOpacity";
 
-const GainerLoser = ({ item, navigation }) => {
+const GainerLoser = ({ item, navigation, index }) => {
   return (
-    <TouchableNativeOpacity viewContainerStyle={styles.androidContainer}>
+    <TouchableNativeOpacity
+      viewContainerStyle={index !== 0 ? styles.androidContainer : null}
+    >
       <Card style={GlobalStyles.borderRadius}>
         <Card.Content style={styles.gainerLoserCardBody}>
           <Avatar.Image

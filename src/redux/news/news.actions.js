@@ -1,8 +1,11 @@
 import NEWS_ACTION_TYPES from "./news.action.types";
+import CONSTANTS from "../../Constants";
 
-export const startNewsFetch = (limit = 0, filter = "") => ({
+export const startNewsFetch = (
+  filter = CONSTANTS.LATEST_NEWS.DEFAULT_FILTER
+) => ({
   type: NEWS_ACTION_TYPES.START_NEWS_FETCH,
-  payload: { limit, filter }
+  payload: { limit: CONSTANTS.LATEST_NEWS.NUM_NEWS_ITEMS_TO_SHOW, filter }
 });
 
 export const newsFetchSuccess = (data) => ({
@@ -15,9 +18,9 @@ export const newsFetchFail = (errorMsg) => ({
   payload: { errorMsg }
 });
 
-export const startEventsFetch = (limit = 0, filter = "") => ({
+export const startEventsFetch = (filter = "") => ({
   type: NEWS_ACTION_TYPES.START_EVENTS_FETCH,
-  payload: { limit, filter }
+  payload: { limit: CONSTANTS.LATEST_EVENTS.NUM_EVENTS_TO_SHOW, filter }
 });
 
 export const eventsFetchSuccess = (data) => ({
