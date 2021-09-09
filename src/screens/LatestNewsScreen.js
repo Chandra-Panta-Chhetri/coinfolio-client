@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View } from "react-native";
 import GlobalStyles from "../GlobalStyles";
 import { Picker } from "@react-native-picker/picker";
 import CONSTANTS from "../Constants";
@@ -26,13 +26,7 @@ const LatestNewsScreen = ({ isLoading, newsData, fetchNews }) => {
   };
 
   return (
-    <View
-      style={[
-        GlobalStyles.screenContainer,
-        styles.container,
-        GlobalStyles.componentContainer
-      ]}
-    >
+    <View style={[GlobalStyles.screenContainer, styles.container]}>
       <View style={[GlobalStyles.componentContainer]}>
         <Picker
           selectedValue={selectedFilter}
@@ -47,7 +41,11 @@ const LatestNewsScreen = ({ isLoading, newsData, fetchNews }) => {
         isLoading={isLoading}
         newsData={newsData}
         numSkeletonsToShow={CONSTANTS.LATEST_NEWS.NUM_NEWS_TO_SHOW}
-        scrollEnabled={true}
+        scrollEnabled
+        skeletonStyleProps={{
+          contentContainerStyle: styles.skeletonContentContainer,
+          style: GlobalStyles.componentContainer
+        }}
       />
     </View>
   );
@@ -56,6 +54,9 @@ const LatestNewsScreen = ({ isLoading, newsData, fetchNews }) => {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 0
+  },
+  skeletonContentContainer: {
+    paddingBottom: GlobalStyles.screenContainer.paddingVertical
   }
 });
 
