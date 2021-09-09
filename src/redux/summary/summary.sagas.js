@@ -45,12 +45,21 @@ function* fetchTopCoins() {
         image: "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
       }
     ];
+    // yield delayJS(7000);
     yield put(topCoinsFetchSuccess(topCoins));
   } catch (err) {
     yield put(
       topCoinsFetchFail("There was a server error while fetching the top coins")
     );
   }
+}
+
+function delayJS(delayInms) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(2);
+    }, delayInms);
+  });
 }
 
 function* fetchGlobalSummary() {
@@ -61,6 +70,7 @@ function* fetchGlobalSummary() {
       btcDominance: 42.4,
       ethDominance: 19.4
     };
+    // yield delayJS(5000);
     yield put(globalSummaryFetchSuccess(globalSummary));
   } catch (err) {
     yield put(
@@ -103,6 +113,7 @@ function* fetchGainersLosers() {
         image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png"
       }
     ];
+    // yield delayJS(9000);
     yield put(gainersLosersFetchSuccess(gainersLosers));
   } catch (err) {
     yield put(
@@ -139,6 +150,7 @@ function* fetchNewsSummary() {
           "https://www.trustnodes.com/wp-content/uploads/2021/05/xelon-musk.jpg.pagespeed.ic.jLiFCP5v7B.webp"
       }
     ];
+    // yield delayJS(11000);
     yield put(newsSummaryFetchSuccess(newsSummary));
   } catch (err) {
     yield put(
@@ -155,21 +167,21 @@ function* watchTopCoinsFetchStart() {
 
 function* watchGlobalSummaryFetchStart() {
   yield takeLatest(
-    SUMMARY_ACTION_TYPES.START_TOP_COINS_FETCH,
+    SUMMARY_ACTION_TYPES.START_GLOBAL_SUMMARY_FETCH,
     fetchGlobalSummary
   );
 }
 
 function* watchGainersLosersFetchStart() {
   yield takeLatest(
-    SUMMARY_ACTION_TYPES.START_TOP_COINS_FETCH,
+    SUMMARY_ACTION_TYPES.START_GAINERS_LOSERS_FETCH,
     fetchGainersLosers
   );
 }
 
 function* watchNewsSummaryFetchStart() {
   yield takeLatest(
-    SUMMARY_ACTION_TYPES.START_TOP_COINS_FETCH,
+    SUMMARY_ACTION_TYPES.START_NEWS_SUMMARY_FETCH,
     fetchNewsSummary
   );
 }

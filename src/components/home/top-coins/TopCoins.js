@@ -21,7 +21,7 @@ const TopCoins = ({ topCoins, isLoading, fetchTopCoins }) => {
   ).fill("1");
 
   useEffect(() => {
-    //fetchTopCoins()
+    fetchTopCoins();
   }, []);
 
   return (

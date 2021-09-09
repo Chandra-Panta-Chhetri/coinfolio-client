@@ -25,7 +25,7 @@ const GlobalMarketSummary = ({
   isLoading
 }) => {
   useEffect(() => {
-    //fetchGlobalSummary();
+    fetchGlobalSummary();
   }, []);
 
   if (isLoading && globalSummary === null) {

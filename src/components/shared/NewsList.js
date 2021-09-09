@@ -23,7 +23,7 @@ const NewsList = ({
             containerStyle={index !== 0 ? styles.itemContainer : null}
           />
         )}
-        {...skeletonStyleProps}
+        // {...skeletonStyleProps}
         listKey="NewsSkeletonList"
         showsVerticalScrollIndicator={false}
         scrollEnabled={scrollEnabled}
@@ -39,7 +39,7 @@ const NewsList = ({
       listKey="NewsList"
       showsVerticalScrollIndicator={false}
       scrollEnabled={scrollEnabled}
-      {...contentStyleProps}
+      ListFooterComponent={<View style={{ paddingTop: 25 }} />}
     />
   );
 };

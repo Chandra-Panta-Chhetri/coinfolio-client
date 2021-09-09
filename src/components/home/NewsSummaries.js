@@ -16,7 +16,7 @@ const NewsSummaries = ({ news, isLoading, fetchNewsSummary }) => {
   const navigateToNewsScreen = () => navigation.navigate("News");
 
   useEffect(() => {
-    //fetchNewsSummary()
+    fetchNewsSummary();
   }, []);
 
   return (

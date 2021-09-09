@@ -21,7 +21,7 @@ const GainersLosers = ({ gainersLosers, isLoading, fetchGainersLosers }) => {
   ).fill("1");
 
   useEffect(() => {
-    // fetchGainersLosers();
+    fetchGainersLosers();
   }, []);
 
   return (

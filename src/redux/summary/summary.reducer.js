@@ -10,6 +10,14 @@ const INITIAL_STATE = {
 
 const notificationReducer = (prevState = INITIAL_STATE, action) => {
   switch (action.type) {
+    case SUMMARY_ACTION_TYPES.START_GAINERS_LOSERS_FETCH:
+    case SUMMARY_ACTION_TYPES.START_GLOBAL_SUMMARY_FETCH:
+    case SUMMARY_ACTION_TYPES.START_NEWS_SUMMARY_FETCH:
+    case SUMMARY_ACTION_TYPES.START_TOP_COINS_FETCH:
+      return {
+        ...prevState,
+        numLoadingReq: prevState.numLoadingReq + 1
+      };
     case SUMMARY_ACTION_TYPES.TOP_COINS_FETCH_FAIL:
     case SUMMARY_ACTION_TYPES.NEWS_SUMMARY_FETCH_FAIL:
     case SUMMARY_ACTION_TYPES.GAINERS_LOSERS_FETCH_FAIL:

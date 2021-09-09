@@ -10,6 +10,7 @@ import {
   selectIsLoadingNewsData
 } from "../redux/news/news.selectors";
 import NewsList from "../components/shared/NewsList";
+import { useTheme } from "react-native-paper";
 
 const LatestNewsScreen = ({ isLoading, newsData, fetchNews }) => {
   const [selectedFilter, setSelectedFilter] = useState(
@@ -25,15 +26,25 @@ const LatestNewsScreen = ({ isLoading, newsData, fetchNews }) => {
     setSelectedFilter(selectedFilter);
   };
 
+  const { colors } = useTheme();
+
   return (
     <View style={[GlobalStyles.screenContainer, styles.container]}>
-      <View style={[GlobalStyles.componentContainer]}>
+      <View style={[GlobalStyles.componentContainer, { paddingTop: 25 }]}>
         <Picker
           selectedValue={selectedFilter}
           onValueChange={fetchNewsWithFilter}
+          prompt="Select a filter"
+          dropdownIconColor={colors.text}
+          dropdownIconRippleColor={colors.touchableRipple}
         >
           {CONSTANTS.LATEST_NEWS.FILTERS.map((filter) => (
-            <Picker.Item {...filter} key={filter.label} />
+            <Picker.Item
+              color={colors.text}
+              style={{ borderWidth: 1 }}
+              {...filter}
+              key={filter.label}
+            />
           ))}
         </Picker>
       </View>
@@ -42,10 +53,8 @@ const LatestNewsScreen = ({ isLoading, newsData, fetchNews }) => {
         newsData={newsData}
         numSkeletonsToShow={CONSTANTS.LATEST_NEWS.NUM_NEWS_TO_SHOW}
         scrollEnabled
-        skeletonStyleProps={{
-          contentContainerStyle: styles.skeletonContentContainer,
-          style: GlobalStyles.componentContainer
-        }}
+        skeletonStyleProps={newsListStyle}
+        contentStyleProps={newsListStyle}
       />
     </View>
   );
@@ -59,6 +68,11 @@ const styles = StyleSheet.create({
     paddingBottom: GlobalStyles.screenContainer.paddingVertical
   }
 });
+
+const newsListStyle = {
+  contentContainerStyle: styles.skeletonContentContainer,
+  style: GlobalStyles.componentContainer
+};
 
 const mapStateToProps = (state) => ({
   isLoading: selectIsLoadingNewsData(state),

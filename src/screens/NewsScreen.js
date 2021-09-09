@@ -24,13 +24,7 @@ const BadgeTabBar = ({ state, descriptors, navigation }) => {
   const numTabs = state.routes.length;
 
   return (
-    <View
-      style={[
-        GlobalStyles.screenContainer,
-        GlobalStyles.componentContainer,
-        styles.tabs
-      ]}
-    >
+    <View style={[GlobalStyles.screenContainer, styles.tabs]}>
       {state.routes.map((route, i) => {
         const { options } = descriptors[route.key];
         const label =

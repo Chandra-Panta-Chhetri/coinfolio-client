@@ -4,8 +4,8 @@ import { Card } from "react-native-paper";
 import GlobalStyles from "../../../GlobalStyles";
 import Skeleton from "../Skeleton";
 
-const NewsItemSkeleton = ({ containerStyle = {} }) => (
-  <Card style={[containerStyle, GlobalStyles.borderRadius]}>
+const NewsItemSkeleton = ({ containerStyle }) => (
+  <Card style={[GlobalStyles.borderRadius, containerStyle]}>
     <Card.Content style={styles.cardBody}>
       <View style={styles.infoContainer}>
         <View style={styles.rowFlexbox}>
