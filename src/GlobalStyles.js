@@ -23,6 +23,9 @@ export default StyleSheet.create({
   componentContainer: {
     marginBottom: 15
   },
+  flatListContentContainer: {
+    padding: 1
+  },
   positiveNum: {
     color: "#4ecf3b"
   },

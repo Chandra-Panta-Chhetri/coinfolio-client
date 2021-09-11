@@ -4,20 +4,18 @@ import { StyleSheet } from "react-native";
 import Skeleton from "../../shared/Skeleton";
 import GlobalStyles from "../../../GlobalStyles";
 
-const TopCoinSkeleton = () => {
-  return (
-    <Card style={[styles.cardContainer, GlobalStyles.borderRadius]}>
-      <Card.Content>
-        <Skeleton style={[GlobalStyles.iconRoundness, GlobalStyles.iconSize]} />
-        <Skeleton style={[styles.symbolSkeleton, GlobalStyles.borderRadius]} />
-        <Skeleton
-          style={[styles.priceSkeleton, GlobalStyles.borderRadius]}
-          count={2}
-        />
-      </Card.Content>
-    </Card>
-  );
-};
+const TopCoinSkeleton = () => (
+  <Card style={[styles.cardContainer, GlobalStyles.borderRadius]}>
+    <Card.Content>
+      <Skeleton style={[GlobalStyles.iconRoundness, GlobalStyles.iconSize]} />
+      <Skeleton style={[styles.symbolSkeleton, GlobalStyles.borderRadius]} />
+      <Skeleton
+        style={[styles.priceSkeleton, GlobalStyles.borderRadius]}
+        count={2}
+      />
+    </Card.Content>
+  </Card>
+);
 
 const styles = StyleSheet.create({
   cardContainer: {

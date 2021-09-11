@@ -11,7 +11,9 @@ const NewsItem = ({ item, index }) => (
     <Card style={GlobalStyles.borderRadius}>
       <Card.Content style={styles.newsCardBody}>
         <View style={styles.newsInfo}>
-          <Text style={GlobalStyles.body2}>{item.title}</Text>
+          <Text style={GlobalStyles.body2} numberOfLines={2}>
+            {item.title}
+          </Text>
           <Caption style={GlobalStyles.caption}>
             {item.publishedTime} | {item.source}
           </Caption>

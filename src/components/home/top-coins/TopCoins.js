@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import { View, FlatList } from "react-native";
 import HeadingWithSeeAll from "../HeadingWithSeeAll";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -34,6 +34,7 @@ const TopCoins = ({ topCoins, isLoading, fetchTopCoins }) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         data={topCoins}
+        contentContainerStyle={GlobalStyles.flatListContentContainer}
         keyExtractor={(tm) => tm.ticker}
         renderItem={(props) => <TopCoin {...props} navigation={navigation} />}
         listKey="TopCoinsList"
@@ -43,7 +44,7 @@ const TopCoins = ({ topCoins, isLoading, fetchTopCoins }) => {
           horizontal
           showsHorizontalScrollIndicator={false}
           data={dummySkeletonArray}
-          contentContainerStyle={styles.skeletonContentContainer}
+          contentContainerStyle={GlobalStyles.flatListContentContainer}
           keyExtractor={(s, index) => s + index}
           renderItem={() => <TopCoinSkeleton />}
           listKey="TopCoinsSkeletonList"
@@ -52,12 +53,6 @@ const TopCoins = ({ topCoins, isLoading, fetchTopCoins }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  skeletonContentContainer: {
-    paddingVertical: 2
-  }
-});
 
 const mapStateToProps = (state) => ({
   topCoins: selectTopCoins(state),

@@ -111,8 +111,7 @@ const NewsScreen = () => (
 
 const styles = StyleSheet.create({
   tabs: {
-    flexDirection: "row",
-    paddingBottom: 0
+    flexDirection: "row"
   },
   tabContainer: {
     flexGrow: 1,

@@ -1,5 +1,6 @@
 import React from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
+import GlobalStyles from "../../GlobalStyles";
 import NewsItem from "./news-item/NewsItem";
 import NewsItemSkeleton from "./news-item/NewsItemSkeleton";
 
@@ -8,8 +9,7 @@ const NewsList = ({
   newsData = [],
   numSkeletonsToShow = 1,
   scrollEnabled = false,
-  skeletonStyleProps = {},
-  contentStyleProps = {}
+  contentContainerStyle = {}
 }) => {
   const dummySkeletonArray = Array(numSkeletonsToShow).fill("1");
 
@@ -23,10 +23,11 @@ const NewsList = ({
             containerStyle={index !== 0 ? styles.itemContainer : null}
           />
         )}
-        // {...skeletonStyleProps}
         listKey="NewsSkeletonList"
         showsVerticalScrollIndicator={false}
         scrollEnabled={scrollEnabled}
+        style={[GlobalStyles.flatListContentContainer]}
+        contentContainerStyle={contentContainerStyle}
       />
     );
   }
@@ -39,7 +40,8 @@ const NewsList = ({
       listKey="NewsList"
       showsVerticalScrollIndicator={false}
       scrollEnabled={scrollEnabled}
-      ListFooterComponent={<View style={{ paddingTop: 25 }} />}
+      style={GlobalStyles.flatListContentContainer}
+      contentContainerStyle={contentContainerStyle}
     />
   );
 };

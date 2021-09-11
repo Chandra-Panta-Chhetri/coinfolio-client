@@ -38,6 +38,7 @@ const GainersLosers = ({ gainersLosers, isLoading, fetchGainersLosers }) => {
           <GainerLoser {...props} navigation={navigation} />
         )}
         scrollEnabled={false}
+        style={GlobalStyles.flatListContentContainer}
         listKey="GainersLosersList"
       />
       {isLoading && gainersLosers.length === 0 && (
@@ -50,6 +51,7 @@ const GainersLosers = ({ gainersLosers, isLoading, fetchGainersLosers }) => {
             />
           )}
           scrollEnabled={false}
+          style={GlobalStyles.flatListContentContainer}
           listKey="GainersLosersSkeletonList"
         />
       )}
