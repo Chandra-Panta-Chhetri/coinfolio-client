@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet } from "react-native";
 import GlobalStyles from "../GlobalStyles";
 import CONSTANTS from "../Constants";
 import { connect } from "react-redux";
@@ -12,24 +12,18 @@ import NewsList from "../components/shared/NewsList";
 import DropDown from "../components/shared/DropDown";
 
 const LatestNewsScreen = ({ isLoading, newsData, fetchNews }) => {
-  const [selectedFilter, setSelectedFilter] = useState(
-    CONSTANTS.LATEST_NEWS.DEFAULT_FILTER
-  );
-
   useEffect(() => {
     fetchNews();
   }, []);
 
-  const fetchNewsWithFilter = (selectedFilter) => {
-    fetchNews(selectedFilter);
-    setSelectedFilter(selectedFilter);
-  };
-
   return (
     <>
-      <View style={styles.dropDownContainer}>
-        <DropDown />
-      </View>
+      <DropDown
+        onSelect={fetchNews}
+        initialSelectedIndex={CONSTANTS.LATEST_NEWS.DEFAULT_FILTER_INDEX}
+        options={CONSTANTS.LATEST_NEWS.FILTERS}
+        containerStyle={styles.dropDownContainer}
+      />
       <NewsList
         isLoading={isLoading}
         newsData={newsData}
@@ -44,8 +38,7 @@ const LatestNewsScreen = ({ isLoading, newsData, fetchNews }) => {
 const styles = StyleSheet.create({
   dropDownContainer: {
     ...GlobalStyles.componentContainer,
-    ...GlobalStyles.screenContainer,
-    paddingVertical: 0
+    marginHorizontal: GlobalStyles.screenContainer.paddingHorizontal
   },
   newsListContentContainer: {
     ...GlobalStyles.screenContainer,

@@ -149,7 +149,7 @@ const CONSTANTS = {
       }
     ],
     NUM_NEWS_TO_SHOW: 12,
-    DEFAULT_FILTER: "hot"
+    DEFAULT_FILTER_INDEX: 2
   },
   LATEST_EVENTS: {
     FILTERS: [],

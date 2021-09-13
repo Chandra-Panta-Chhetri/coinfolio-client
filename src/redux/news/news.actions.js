@@ -2,7 +2,9 @@ import NEWS_ACTION_TYPES from "./news.action.types";
 import CONSTANTS from "../../Constants";
 
 export const startNewsFetch = (
-  filter = CONSTANTS.LATEST_NEWS.DEFAULT_FILTER
+  filter = CONSTANTS.LATEST_NEWS.FILTERS[
+    CONSTANTS.LATEST_NEWS.DEFAULT_FILTER_INDEX
+  ].value
 ) => ({
   type: NEWS_ACTION_TYPES.START_NEWS_FETCH,
   payload: { limit: CONSTANTS.LATEST_NEWS.NUM_NEWS_ITEMS_TO_SHOW, filter }
