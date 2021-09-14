@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   },
   tabContainer: {
     flex: 1,
-    borderWidth: 2,
+    borderWidth: CONSTANTS.SHARED.BORDER_WIDTH,
     borderColor: "#007aff",
     justifyContent: "center",
     alignItems: "center",

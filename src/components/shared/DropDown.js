@@ -10,7 +10,8 @@ const DropDown = ({
   initialSelectedIndex = 0,
   onSelect = CONSTANTS.SHARED.EMPTY_FUNCTION,
   options = [],
-  containerStyle = {}
+  containerStyle = {},
+  hasBorders = true
 }) => {
   const { colors } = useTheme();
 
@@ -45,10 +46,11 @@ const DropDown = ({
       onPress={toggleDropDownVisibility}
       viewContainerStyle={[
         containerStyle,
-        styles.anchorTouchableContainer,
         {
-          borderColor: colors.primary
-        }
+          borderColor: colors.primary,
+          borderWidth: hasBorders ? CONSTANTS.SHARED.BORDER_WIDTH : 0
+        },
+        GlobalStyles.borderRadius
       ]}
       onLayout={onLayout}
     >
@@ -106,9 +108,6 @@ const DropDown = ({
 };
 
 const styles = StyleSheet.create({
-  anchorTouchableContainer: {
-    borderWidth: 1
-  },
   anchorContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -125,7 +124,8 @@ const styles = StyleSheet.create({
     padding: 10
   },
   menuContent: {
-    paddingVertical: 0
+    paddingVertical: 0,
+    ...GlobalStyles.borderRadius
   }
 });
 
