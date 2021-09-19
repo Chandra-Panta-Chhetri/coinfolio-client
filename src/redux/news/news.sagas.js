@@ -7,6 +7,14 @@ import {
   newsFetchSuccess
 } from "./news.actions";
 
+function delayJS(delayInms) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(2);
+    }, delayInms);
+  });
+}
+
 function* getNews({ payload: { limit, filter } }) {
   try {
     const news = yield [];
@@ -237,6 +245,7 @@ function* getNews({ payload: { limit, filter } }) {
         );
         break;
     }
+    yield delayJS(5000);
     yield put(newsFetchSuccess(news));
   } catch (err) {
     yield put(
@@ -245,9 +254,10 @@ function* getNews({ payload: { limit, filter } }) {
   }
 }
 
-function* getEvents({ payload: { limit, filter } }) {
+function* getEvents({ payload: filters }) {
   try {
     const events = yield [];
+    yield delayJS(5000);
     yield put(eventsFetchSuccess(events));
   } catch (err) {
     yield put(

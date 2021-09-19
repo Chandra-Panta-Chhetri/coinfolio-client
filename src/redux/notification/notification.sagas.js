@@ -9,6 +9,7 @@ import {
 import NEWS_ACTION_TYPES from "../news/news.action.types";
 
 function* showErrorNotification({ payload: { errorMsg } }) {
+  console.log(errorMsg);
   yield put(addErrorNotification(errorMsg));
 }
 

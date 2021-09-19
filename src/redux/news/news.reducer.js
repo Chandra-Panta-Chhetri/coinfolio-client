@@ -9,10 +9,15 @@ const INITIAL_STATE = {
 const newsReducer = (prevState = INITIAL_STATE, action) => {
   switch (action.type) {
     case NEWS_ACTION_TYPES.START_NEWS_FETCH:
-    case NEWS_ACTION_TYPES.START_EVENTS_FETCH:
       return {
         ...prevState,
         news: [],
+        numLoadingReq: prevState.numLoadingReq + 1
+      };
+    case NEWS_ACTION_TYPES.START_EVENTS_FETCH:
+      return {
+        ...prevState,
+        events: [],
         numLoadingReq: prevState.numLoadingReq + 1
       };
     case NEWS_ACTION_TYPES.NEWS_FETCH_SUCCESS:

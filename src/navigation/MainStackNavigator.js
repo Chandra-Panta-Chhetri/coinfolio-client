@@ -12,6 +12,7 @@ import SelectHomeScreen from "../screens/SelectHomeScreen";
 import TermsAndPrivacyScreen from "../screens/TermsAndPrivacyScreen";
 import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 import ChangeEmailOrNameScreen from "../screens/ChangeEmailOrNameScreen";
+import SelectEventFiltersScreen from "../screens/SelectEventFiltersScreen";
 
 const Stack = createStackNavigator();
 
@@ -77,6 +78,11 @@ function MainStackNavigator() {
         name="ChangeEmailOrName"
         component={ChangeEmailOrNameScreen}
         options={{ headerTitle: "Change Email or Name" }}
+      />
+      <Stack.Screen
+        name="SelectEventFilters"
+        component={SelectEventFiltersScreen}
+        options={{ headerTitle: "Select Filters" }}
       />
     </Stack.Navigator>
   );
