@@ -1,11 +1,13 @@
 import NEWS_ACTION_TYPES from "./news.action.types";
-import { takeLatest, put, call, all } from "redux-saga/effects";
+import { takeLatest, put, call, all, select } from "redux-saga/effects";
 import {
   eventsFetchFail,
   eventsFetchSuccess,
   newsFetchFail,
   newsFetchSuccess
 } from "./news.actions";
+import { selectEventFilters } from "./news.selectors";
+import CONSTANTS from "../../Constants";
 
 function delayJS(delayInms) {
   return new Promise((resolve) => {
@@ -254,9 +256,74 @@ function* getNews({ payload: { limit, filter } }) {
   }
 }
 
-function* getEvents({ payload: filters }) {
+function* getEvents() {
   try {
+    const filters = yield select(selectEventFilters);
+    filters.showOnly = yield CONSTANTS.LATEST_EVENTS.SHOW_ONLY_FILTERS[
+      filters.showOnly
+    ].value;
     const events = yield [];
+    if (filters.showOnly === "trending") {
+      yield events.push(
+        ...[
+          {
+            id: 1,
+            title: "Token Burn - Trending",
+            description: "",
+            verified: true,
+            canOccurBefore: true,
+            date: "2018-11-30T00:00:00+01:00",
+            coins: [
+              {
+                fullName: "Bitcoin (BTC)",
+                imageUrl: ""
+              }
+            ],
+            type: "Tokenomics"
+          }
+        ]
+      );
+    } else if (filters.showOnly === "significant") {
+      yield events.push(
+        ...[
+          {
+            id: 1,
+            title: "Weekly AMA - Significant",
+            description: "",
+            verified: true,
+            canOccurBefore: true,
+            date: "2018-11-30T00:00:00+01:00",
+            coins: [
+              {
+                fullName: "Bitcoin (BTC)",
+                imageUrl: ""
+              }
+            ],
+            type: "AMA"
+          }
+        ]
+      );
+    } else if (filters.showOnly === "hot") {
+      yield events.push(
+        ...[
+          {
+            id: 1,
+            title: "Listing on Coinbase - Hot",
+            description: "",
+            verified: true,
+            canOccurBefore: true,
+            date: "2018-11-30T00:00:00+01:00",
+            coins: [
+              {
+                fullName: "Bitcoin (BTC)",
+                imageUrl: ""
+              }
+            ],
+            type: "Listing"
+          }
+        ]
+      );
+    }
     yield delayJS(5000);
     yield put(eventsFetchSuccess(events));
   } catch (err) {

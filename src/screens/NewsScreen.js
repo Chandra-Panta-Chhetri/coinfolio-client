@@ -80,7 +80,6 @@ const BadgeTabBar = ({ state, descriptors, navigation }) => {
 
 const NewsScreen = () => (
   <Tab.Navigator
-    initialRouteName="LatestNews"
     screenOptions={{
       swipeEnabled: false,
       lazy: true,

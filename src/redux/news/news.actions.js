@@ -20,9 +20,8 @@ export const newsFetchFail = (errorMsg) => ({
   payload: { errorMsg }
 });
 
-export const startEventsFetch = (filters = {}) => ({
-  type: NEWS_ACTION_TYPES.START_EVENTS_FETCH,
-  payload: { ...filters, limit: CONSTANTS.LATEST_EVENTS.NUM_EVENTS_TO_SHOW }
+export const startEventsFetch = () => ({
+  type: NEWS_ACTION_TYPES.START_EVENTS_FETCH
 });
 
 export const eventsFetchSuccess = (data) => ({
@@ -33,4 +32,9 @@ export const eventsFetchSuccess = (data) => ({
 export const eventsFetchFail = (errorMsg) => ({
   type: NEWS_ACTION_TYPES.EVENTS_FETCH_FAIL,
   payload: { errorMsg }
+});
+
+export const updateEventFilters = (filters) => ({
+  type: NEWS_ACTION_TYPES.UPDATE_EVENT_FILTERS,
+  payload: filters
 });

@@ -83,7 +83,7 @@ const DropDown = ({
           <TouchableNativeOpacity
             onPress={() => {
               if (selectedIndex !== i) {
-                onSelect(op.value);
+                onSelect(op.value, i);
                 setSelectedIndex(i);
               }
               hideDropDown();

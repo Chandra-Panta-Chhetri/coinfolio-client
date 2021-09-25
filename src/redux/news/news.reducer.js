@@ -1,9 +1,15 @@
 import NEWS_ACTION_TYPES from "./news.action.types";
+import CONSTANTS from "../../Constants";
 
 const INITIAL_STATE = {
   numLoadingReq: 2,
   news: [],
-  events: []
+  events: [],
+  eventFilters: {
+    dateRange: null,
+    showOnly: CONSTANTS.LATEST_EVENTS.DEFAULT_SHOW_ONLY_FILTER_INDEX,
+    limit: CONSTANTS.LATEST_EVENTS.NUM_EVENTS_TO_SHOW
+  }
 };
 
 const newsReducer = (prevState = INITIAL_STATE, action) => {
@@ -37,6 +43,14 @@ const newsReducer = (prevState = INITIAL_STATE, action) => {
       return {
         ...prevState,
         numLoadingReq: prevState.numLoadingReq - 1
+      };
+    case NEWS_ACTION_TYPES.UPDATE_EVENT_FILTERS:
+      return {
+        ...prevState,
+        eventFilters: {
+          ...prevState.eventFilters,
+          ...action.payload
+        }
       };
     default:
       return prevState;

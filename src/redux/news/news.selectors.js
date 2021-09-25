@@ -15,3 +15,8 @@ export const selectIsLoadingNewsData = createSelector(
   [selectNumLoadingReq],
   (numLoadingReq) => numLoadingReq > 0
 );
+
+export const selectEventFilters = createSelector(
+  [selectNews],
+  (news) => news.eventFilters
+);

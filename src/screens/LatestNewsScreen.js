@@ -16,10 +16,12 @@ const LatestNewsScreen = ({ isLoading, newsData, fetchNews }) => {
     fetchNews();
   }, []);
 
+  const onFilterSelect = (value) => fetchNews(value);
+
   return (
     <>
       <DropDown
-        onSelect={fetchNews}
+        onSelect={onFilterSelect}
         initialSelectedIndex={CONSTANTS.LATEST_NEWS.DEFAULT_FILTER_INDEX}
         options={CONSTANTS.LATEST_NEWS.FILTERS}
         containerStyle={styles.dropDownContainer}

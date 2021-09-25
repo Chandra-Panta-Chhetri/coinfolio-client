@@ -153,8 +153,22 @@ const CONSTANTS = {
     DEFAULT_FILTER_INDEX: 2
   },
   LATEST_EVENTS: {
-    FILTERS: [],
-    NUM_EVENTS_TO_SHOW: 12
+    SHOW_ONLY_FILTERS: [
+      {
+        label: "Trending",
+        value: "trending"
+      },
+      {
+        label: "Significant",
+        value: "significant"
+      },
+      {
+        label: "Hot",
+        value: "hot"
+      }
+    ],
+    NUM_EVENTS_TO_SHOW: 12,
+    DEFAULT_SHOW_ONLY_FILTER_INDEX: 0
   }
 };
 

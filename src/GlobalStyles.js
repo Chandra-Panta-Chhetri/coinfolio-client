@@ -85,7 +85,7 @@ export default StyleSheet.create({
   button: {
     fontSize: 14,
     lineHeight: 20,
-    textTransform: "capitalize",
+    textTransform: "uppercase",
     fontWeight: "700"
   },
   bold: {

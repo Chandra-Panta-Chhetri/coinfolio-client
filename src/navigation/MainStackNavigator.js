@@ -13,10 +13,14 @@ import TermsAndPrivacyScreen from "../screens/TermsAndPrivacyScreen";
 import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 import ChangeEmailOrNameScreen from "../screens/ChangeEmailOrNameScreen";
 import SelectEventFiltersScreen from "../screens/SelectEventFiltersScreen";
+import { AntDesign } from "@expo/vector-icons";
+import { useTheme } from "react-native-paper";
 
 const Stack = createStackNavigator();
 
-function MainStackNavigator() {
+const MainStackNavigator = () => {
+  const { colors } = useTheme();
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -82,10 +86,23 @@ function MainStackNavigator() {
       <Stack.Screen
         name="SelectEventFilters"
         component={SelectEventFiltersScreen}
-        options={{ headerTitle: "Select Filters" }}
+        options={({ navigation }) => ({
+          headerTitle: "Select Filters",
+          headerTitleAlign: "center",
+          headerLeft: null,
+          headerRight: () => (
+            <AntDesign
+              name="close"
+              size={25}
+              style={{ marginRight: 10 }}
+              color={colors.text}
+              onPress={() => navigation.goBack()}
+            />
+          )
+        })}
       />
     </Stack.Navigator>
   );
-}
+};
 
 export default MainStackNavigator;
