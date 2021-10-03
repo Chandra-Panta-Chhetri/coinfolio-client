@@ -4,8 +4,7 @@ import DropDown from "../components/shared/DropDown";
 import { connect } from "react-redux";
 import {
   startEventsFetch,
-  updateEventFilters,
-  resetEventFilters
+  updateEventFilters
 } from "../redux/news/news.actions";
 import { selectEventFilters } from "../redux/news/news.selectors";
 import GlobalStyles from "../GlobalStyles";
@@ -16,15 +15,14 @@ const SelectEventFiltersScreen = ({
   fetchEvents,
   updateEventFilters,
   navigation,
-  appliedFilters,
-  resetEventFilters
+  appliedFilters
 }) => {
   const { colors } = useTheme();
   const [filters, setFilters] = useState(appliedFilters);
 
   const applyFilter = () => {
     updateEventFilters(filters);
-    //fetchEvents();
+    fetchEvents();
     navigation.navigate("News", { screen: "LatestEvents" });
   };
 
@@ -37,7 +35,6 @@ const SelectEventFiltersScreen = ({
       showOnly: CONSTANTS.LATEST_EVENTS.DEFAULT_SHOW_ONLY_FILTER_INDEX,
       limit: CONSTANTS.LATEST_EVENTS.NUM_EVENTS_TO_SHOW
     });
-    resetEventFilters();
   };
 
   return (
@@ -104,8 +101,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchEvents: () => dispatch(startEventsFetch()),
-  updateEventFilters: (filters) => dispatch(updateEventFilters(filters)),
-  resetEventFilters: () => dispatch(resetEventFilters())
+  updateEventFilters: (filters) => dispatch(updateEventFilters(filters))
 });
 
 export default connect(

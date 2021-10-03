@@ -13,12 +13,13 @@ import GainerLoserSkeleton from "./GainerLoserSkeleton";
 import CONSTANTS from "../../../Constants";
 import GlobalStyles from "../../../GlobalStyles";
 
+const dummySkeletonArray = Array(
+  CONSTANTS.GAINERS_LOSERS.NUM_SKELETON_TO_SHOW
+).fill("1");
+
 const GainersLosers = ({ gainersLosers, isLoading, fetchGainersLosers }) => {
   const navigation = useNavigation();
   const navigateToMarketScreen = () => navigation.navigate("Market");
-  const dummySkeletonArray = Array(
-    CONSTANTS.GAINERS_LOSERS.NUM_SKELETON_TO_SHOW
-  ).fill("1");
 
   useEffect(() => {
     fetchGainersLosers();

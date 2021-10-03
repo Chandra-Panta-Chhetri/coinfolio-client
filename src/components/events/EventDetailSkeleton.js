@@ -29,11 +29,11 @@ const styles = StyleSheet.create({
   },
   title: {
     height: 15,
-    width: "65%"
+    width: "60%"
   },
   date: {
     height: 15,
-    width: "50%",
+    width: "30%",
     marginBottom: 5
   },
   description: {

@@ -18,29 +18,15 @@ const EventDetail = ({ item, navigation, index }) => {
     >
       <Card style={GlobalStyles.borderRadius}>
         <Card.Content>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <View style={styles.iconCoinLabel}>
             <Avatar.Image
               size={CONSTANTS.SHARED.AVATAR_IMAGE_SIZE}
               source={{
                 uri: item.coins[0].imageUrl
               }}
             />
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                flex: 1
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  flex: 1,
-                  marginLeft: 7,
-                  flex: 1,
-                  alignItems: "center"
-                }}
-              >
+            <View style={styles.coinLabel}>
+              <View style={styles.coinsInvolvedContainer}>
                 <Text style={[GlobalStyles.body1]} numberOfLines={1}>
                   {item.coins[0].fullName}
                   {item.coins.length > 1 ? ` + ${item.coins.length - 1}` : ""}
@@ -56,10 +42,7 @@ const EventDetail = ({ item, navigation, index }) => {
               </View>
               <Badge
                 label={item.type.label}
-                containerStyle={{
-                  paddingHorizontal: 10,
-                  paddingVertical: 2
-                }}
+                containerStyle={styles.eventType}
                 isHighlighted
                 highlightedStyle={{
                   color: "white",
@@ -95,6 +78,23 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     marginTop: 10
+  },
+  iconCoinLabel: { flexDirection: "row", alignItems: "center" },
+  coinLabel: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    flex: 1
+  },
+  coinsInvolvedContainer: {
+    flexDirection: "row",
+    flex: 1,
+    marginLeft: 7,
+    flex: 1,
+    alignItems: "center"
+  },
+  eventType: {
+    paddingHorizontal: 10,
+    paddingVertical: 2
   }
 });
 

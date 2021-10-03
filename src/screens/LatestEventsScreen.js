@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, FlatList, Text } from "react-native";
+import { StyleSheet, FlatList } from "react-native";
 import GlobalStyles from "../GlobalStyles";
 import useHiddenFABOnScroll from "../hooks/useHiddenFABOnScroll";
 import { connect } from "react-redux";
@@ -14,12 +14,11 @@ import EventDetail from "../components/events/EventDetail";
 import EventDetailSkeleton from "../components/events/EventDetailSkeleton";
 
 const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
+const dummySkeletonArray = Array(
+  CONSTANTS.LATEST_EVENTS.NUM_EVENTS_TO_SHOW
+).fill("1");
 
 const LatestEventsScreen = ({ navigation, fetchEvents, events, isLoading }) => {
-  const dummySkeletonArray = Array(
-    CONSTANTS.LATEST_EVENTS.NUM_EVENTS_TO_SHOW
-  ).fill("1");
-
   const navigateToFiltersScreen = () =>
     navigation.navigate("SelectEventFilters");
 
@@ -29,7 +28,7 @@ const LatestEventsScreen = ({ navigation, fetchEvents, events, isLoading }) => {
   });
 
   useEffect(() => {
-    //fetchEvents();
+    fetchEvents();
   }, []);
 
   return (
@@ -84,7 +83,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchEvents: (filters) => dispatch(startEventsFetch(filters))
+  fetchEvents: () => dispatch(startEventsFetch())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LatestEventsScreen);

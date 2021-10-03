@@ -13,12 +13,13 @@ import TopCoinSkeleton from "./TopCoinSkeleton";
 import CONSTANTS from "../../../Constants";
 import GlobalStyles from "../../../GlobalStyles";
 
+const dummySkeletonArray = Array(CONSTANTS.TOP_COINS.NUM_SKELETON_TO_SHOW).fill(
+  "1"
+);
+
 const TopCoins = ({ topCoins, isLoading, fetchTopCoins }) => {
   const navigation = useNavigation();
   const navigateToMarketScreen = () => navigation.navigate("Market");
-  const dummySkeletonArray = Array(
-    CONSTANTS.TOP_COINS.NUM_SKELETON_TO_SHOW
-  ).fill("1");
 
   useEffect(() => {
     fetchTopCoins();
