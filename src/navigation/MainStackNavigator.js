@@ -13,6 +13,7 @@ import TermsAndPrivacyScreen from "../screens/TermsAndPrivacyScreen";
 import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 import ChangeEmailOrNameScreen from "../screens/ChangeEmailOrNameScreen";
 import SelectEventFiltersScreen from "../screens/SelectEventFiltersScreen";
+import EventDetailScreen from "../screens/EventDetailScreen";
 import { AntDesign } from "@expo/vector-icons";
 import { useTheme } from "react-native-paper";
 
@@ -100,6 +101,11 @@ const MainStackNavigator = () => {
             />
           )
         })}
+      />
+      <Stack.Screen
+        name="EventDetails"
+        component={EventDetailScreen}
+        options={{ headerTitle: "Event Details" }}
       />
     </Stack.Navigator>
   );
