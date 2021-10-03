@@ -10,6 +10,8 @@ import {
 } from "../redux/news/news.selectors";
 import Reanimated from "react-native-reanimated";
 import CONSTANTS from "../Constants";
+import EventDetail from "../components/events/EventDetail";
+import EventDetailSkeleton from "../components/events/EventDetailSkeleton";
 
 const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
@@ -38,8 +40,12 @@ const LatestEventsScreen = ({ navigation, fetchEvents, events, isLoading }) => {
           data={dummySkeletonArray}
           keyExtractor={(s, i) => s + i}
           renderItem={({ index }) => (
-            <Text style={{ borderWidth: 1, height: 100 }}>Hi</Text>
+            <EventDetailSkeleton
+              containerStyle={index !== 0 ? styles.itemContainer : null}
+            />
           )}
+          style={GlobalStyles.flatListContentContainer}
+          contentContainerStyle={styles.eventListContentContainer}
           listKey="EventsSkeletonList"
           showsVerticalScrollIndicator={false}
         />
@@ -47,8 +53,12 @@ const LatestEventsScreen = ({ navigation, fetchEvents, events, isLoading }) => {
         <AnimatedFlatList
           data={events}
           keyExtractor={(e) => e.title}
-          renderItem={(props) => null}
+          renderItem={(props) => (
+            <EventDetail {...props} navigation={navigation} />
+          )}
           listKey="EventsList"
+          style={GlobalStyles.flatListContentContainer}
+          contentContainerStyle={styles.eventListContentContainer}
           showsVerticalScrollIndicator={false}
         />
       )}
@@ -58,8 +68,12 @@ const LatestEventsScreen = ({ navigation, fetchEvents, events, isLoading }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    borderWidth: 1
+  itemContainer: {
+    marginTop: 10
+  },
+  eventListContentContainer: {
+    ...GlobalStyles.screenContainer,
+    paddingTop: 0
   }
 });
 

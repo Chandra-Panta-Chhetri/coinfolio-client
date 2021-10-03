@@ -38,3 +38,10 @@ export const updateEventFilters = (filters) => ({
   type: NEWS_ACTION_TYPES.UPDATE_EVENT_FILTERS,
   payload: filters
 });
+
+export const resetEventFilters = () =>
+  updateEventFilters({
+    dateRange: null,
+    showOnly: CONSTANTS.LATEST_EVENTS.DEFAULT_SHOW_ONLY_FILTER_INDEX,
+    limit: CONSTANTS.LATEST_EVENTS.NUM_EVENTS_TO_SHOW
+  });

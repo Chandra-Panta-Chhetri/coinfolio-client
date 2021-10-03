@@ -7,7 +7,7 @@ import { AntDesign } from "@expo/vector-icons";
 import GlobalStyles from "../../GlobalStyles";
 
 const DropDown = ({
-  initialSelectedIndex = 0,
+  selectedIndex = 0,
   onSelect = CONSTANTS.SHARED.EMPTY_FUNCTION,
   options = [],
   containerStyle = {},
@@ -16,7 +16,6 @@ const DropDown = ({
   const { colors } = useTheme();
 
   const anchorRef = useRef(null);
-  const [selectedIndex, setSelectedIndex] = useState(initialSelectedIndex);
   const [anchorDimensions, setAnchorDimensions] = useState({
     width: 0,
     pageX: 0,
@@ -25,16 +24,17 @@ const DropDown = ({
   });
   const [showDropDown, setShowDropDown] = useState(false);
 
-  const onLayout = () => {
+  const onLayout = async () => {
     if (anchorRef.current && !anchorDimensions.hasBeenCalculated) {
-      anchorRef.current.measure((x, y, width, height, pageX, pageY) =>
-        setAnchorDimensions({
-          hasBeenCalculated: true,
-          width,
-          pageX,
-          pageY: pageY + height + 1
-        })
+      const [x, y, width, height] = await new Promise((resolve) =>
+        anchorRef.current.measureInWindow((...args) => resolve(args))
       );
+      setAnchorDimensions({
+        hasBeenCalculated: true,
+        width,
+        pageX: x,
+        pageY: y + height + 2
+      });
     }
   };
 
@@ -84,7 +84,6 @@ const DropDown = ({
             onPress={() => {
               if (selectedIndex !== i) {
                 onSelect(op.value, i);
-                setSelectedIndex(i);
               }
               hideDropDown();
             }}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import GlobalStyles from "../GlobalStyles";
 import CONSTANTS from "../Constants";
@@ -16,13 +16,20 @@ const LatestNewsScreen = ({ isLoading, newsData, fetchNews }) => {
     fetchNews();
   }, []);
 
-  const onFilterSelect = (value) => fetchNews(value);
+  const onFilterSelect = (selectedVal, selectedIndex) => {
+    setNewsFilterIndex(selectedIndex);
+    fetchNews(selectedVal);
+  };
+
+  const [newsFilterIndex, setNewsFilterIndex] = useState(
+    CONSTANTS.LATEST_NEWS.DEFAULT_FILTER_INDEX
+  );
 
   return (
     <>
       <DropDown
         onSelect={onFilterSelect}
-        initialSelectedIndex={CONSTANTS.LATEST_NEWS.DEFAULT_FILTER_INDEX}
+        selectedIndex={newsFilterIndex}
         options={CONSTANTS.LATEST_NEWS.FILTERS}
         containerStyle={styles.dropDownContainer}
       />
