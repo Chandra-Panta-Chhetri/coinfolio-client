@@ -52,6 +52,7 @@ const LatestEventsScreen = ({ navigation, fetchEvents, events, isLoading }) => {
       ) : (
         <AnimatedFlatList
           data={events}
+          onScroll={scrollHandler}
           keyExtractor={(e) => e.title}
           renderItem={(props) => (
             <EventDetail {...props} navigation={navigation} />

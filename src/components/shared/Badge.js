@@ -4,30 +4,38 @@ import GlobalStyles from "../../GlobalStyles";
 import PressableView from "./PressableView";
 
 const Badge = ({
-  isActive = false,
+  isHighlighted = false,
   containerStyle = {},
   label = "",
   icon: Icon = null,
+  highlightedStyle,
+  defaultStyle,
   ...otherProps
 }) => {
   const { colors, dark: isDarkMode } = useTheme();
-  const activeStyles = {
-    backgroundColor: isDarkMode ? colors.text : colors.primary,
-    color: isDarkMode ? colors.border : "white"
-  };
+  const highlightedStyles = highlightedStyle
+    ? highlightedStyle
+    : {
+        backgroundColor: isDarkMode ? colors.text : colors.primary,
+        color: isDarkMode ? colors.border : "white"
+      };
 
-  const inactiveStyles = {
-    color: colors.text,
-    backgroundColor: isDarkMode ? colors.border : "lightgrey"
-  };
+  const defaultStyles = defaultStyle
+    ? defaultStyle
+    : {
+        color: colors.text,
+        backgroundColor: isDarkMode ? colors.border : "lightgrey"
+      };
 
-  const textColor = isActive ? activeStyles.color : inactiveStyles.color;
+  const textColor = isHighlighted
+    ? highlightedStyles.color
+    : defaultStyles.color;
 
   return (
     <PressableView
       viewStyle={[
         GlobalStyles.iconRoundness,
-        isActive ? activeStyles : inactiveStyles,
+        isHighlighted ? highlightedStyles : defaultStyles,
         containerStyle
       ]}
       {...otherProps}

@@ -15,6 +15,7 @@ const EventDetailSkeleton = ({ containerStyle }) => (
         </View>
       </View>
       <View style={styles.infoContainer}>
+        <Skeleton style={[styles.date, GlobalStyles.borderRadius]} />
         <Skeleton style={[styles.title, GlobalStyles.borderRadius]} />
         <Skeleton style={[styles.description, GlobalStyles.borderRadius]} />
       </View>
@@ -28,13 +29,16 @@ const styles = StyleSheet.create({
   },
   title: {
     height: 15,
-    flex: 1,
     width: "65%"
+  },
+  date: {
+    height: 15,
+    width: "50%",
+    marginBottom: 5
   },
   description: {
     height: 15,
-    marginTop: 10,
-    flex: 1,
+    marginTop: 8,
     width: "100%"
   },
   iconCoinLabel: {

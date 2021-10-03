@@ -69,7 +69,7 @@ const BadgeTabBar = ({ state, descriptors, navigation }) => {
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
             label={label}
-            isActive={isFocused}
+            isHighlighted={isFocused}
             icon={options.tabBarIcon}
           />
         );

@@ -4,7 +4,126 @@ import CONSTANTS from "../../Constants";
 const INITIAL_STATE = {
   numLoadingReq: 2,
   news: [],
-  events: [],
+  events: [
+    {
+      id: 1,
+      title: "Listing on Coinbase - Hot",
+      description:
+        "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+      verified: true,
+      canOccurBefore: true,
+      date: "2018-11-30T00:00:00+01:00",
+      coins: [
+        {
+          fullName: "Bitcoin (BTC)",
+          imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+        }
+      ],
+      type: {
+        label: "Listing",
+        backgroundColor: "purple"
+      }
+    },
+    {
+      id: 2,
+      title: "Listing on Coinbase 2 - Hot",
+      description:
+        "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+      verified: true,
+      canOccurBefore: true,
+      date: "2018-11-30T00:00:00+01:00",
+      coins: [
+        {
+          fullName: "Bitcoin (BTC)",
+          imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+        },
+        {
+          fullName: "Bitcoin (BTC)",
+          imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+        }
+      ],
+      type: {
+        label: "Tokenomics",
+        backgroundColor: "red"
+      }
+    },
+    {
+      id: 3,
+      title: "Listing on Coinbase 3 - Hot",
+      description:
+        "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+      verified: true,
+      canOccurBefore: true,
+      date: "2018-11-30T00:00:00+01:00",
+      coins: [
+        {
+          fullName: "Bitcoin (BTC)",
+          imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+        }
+      ],
+      type: {
+        label: "AMA",
+        backgroundColor: "blue"
+      }
+    },
+    {
+      id: 4,
+      title: "Listing on Coinbase 4 - Hot",
+      description:
+        "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+      verified: true,
+      canOccurBefore: true,
+      date: "2018-11-30T00:00:00+01:00",
+      coins: [
+        {
+          fullName: "Bitcoin (BTC)",
+          imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+        }
+      ],
+      type: {
+        label: "Tokenomics",
+        backgroundColor: "red"
+      }
+    },
+    {
+      id: 5,
+      title: "Listing on Coinbase 5 - Hot",
+      description:
+        "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+      verified: true,
+      canOccurBefore: true,
+      date: "2018-11-30T00:00:00+01:00",
+      coins: [
+        {
+          fullName: "Bitcoin (BTC)",
+          imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+        }
+      ],
+      type: {
+        label: "Tokenomics",
+        backgroundColor: "red"
+      }
+    },
+    {
+      id: 6,
+      title: "Listing on Coinbase 6 - Hot",
+      description:
+        "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+      verified: true,
+      canOccurBefore: true,
+      date: "2018-11-30T00:00:00+01:00",
+      coins: [
+        {
+          fullName: "Bitcoin (BTC)",
+          imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+        }
+      ],
+      type: {
+        label: "Tokenomics",
+        backgroundColor: "red"
+      }
+    }
+  ],
   eventFilters: {
     dateRange: null,
     showOnly: CONSTANTS.LATEST_EVENTS.DEFAULT_SHOW_ONLY_FILTER_INDEX,
