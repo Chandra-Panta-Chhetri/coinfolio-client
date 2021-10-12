@@ -13,7 +13,7 @@ import DropDown from "../components/shared/DropDown";
 
 const LatestNewsScreen = ({ isLoading, newsData, fetchNews }) => {
   useEffect(() => {
-    fetchNews();
+    //fetchNews();
   }, []);
 
   const onFilterSelect = (selectedVal, selectedIndex) => {

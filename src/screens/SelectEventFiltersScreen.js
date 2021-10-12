@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import DropDown from "../components/shared/DropDown";
 import { connect } from "react-redux";
@@ -10,6 +10,7 @@ import { selectEventFilters } from "../redux/news/news.selectors";
 import GlobalStyles from "../GlobalStyles";
 import { Button, Text, useTheme } from "react-native-paper";
 import CONSTANTS from "../Constants";
+import DatePicker from "../components/shared/DatePicker";
 
 const SelectEventFiltersScreen = ({
   fetchEvents,
@@ -20,9 +21,15 @@ const SelectEventFiltersScreen = ({
   const { colors } = useTheme();
   const [filters, setFilters] = useState(appliedFilters);
 
+  const onDateRangeConfirm = (dateRange) =>
+    setFilters({
+      ...filters,
+      dateRange: dateRange
+    });
+
   const applyFilter = () => {
     updateEventFilters(filters);
-    fetchEvents();
+    //fetchEvents();
     navigation.navigate("News", { screen: "LatestEvents" });
   };
 
@@ -31,7 +38,10 @@ const SelectEventFiltersScreen = ({
 
   const resetFilters = () => {
     setFilters({
-      dateRange: null,
+      dateRange: {
+        start: null,
+        end: null
+      },
       showOnly: CONSTANTS.LATEST_EVENTS.DEFAULT_SHOW_ONLY_FILTER_INDEX,
       limit: CONSTANTS.LATEST_EVENTS.NUM_EVENTS_TO_SHOW
     });
@@ -44,6 +54,11 @@ const SelectEventFiltersScreen = ({
           <Text style={[GlobalStyles.subheading, styles.filterLabel]}>
             Date range
           </Text>
+          <DatePicker
+            onConfirm={onDateRangeConfirm}
+            initialEndDate={filters.dateRange.end}
+            initialStartDate={filters.dateRange.start}
+          />
         </View>
         <View>
           <Text style={[GlobalStyles.subheading, styles.filterLabel]}>

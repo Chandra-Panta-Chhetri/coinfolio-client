@@ -41,7 +41,10 @@ export const updateEventFilters = (filters) => ({
 
 export const resetEventFilters = () =>
   updateEventFilters({
-    dateRange: null,
+    dateRange: {
+      start: null,
+      end: null
+    },
     showOnly: CONSTANTS.LATEST_EVENTS.DEFAULT_SHOW_ONLY_FILTER_INDEX,
     limit: CONSTANTS.LATEST_EVENTS.NUM_EVENTS_TO_SHOW
   });
