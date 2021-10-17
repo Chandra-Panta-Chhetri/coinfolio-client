@@ -29,7 +29,7 @@ const SelectEventFiltersScreen = ({
 
   const applyFilter = () => {
     updateEventFilters(filters);
-    //fetchEvents();
+    fetchEvents();
     navigation.navigate("News", { screen: "LatestEvents" });
   };
 

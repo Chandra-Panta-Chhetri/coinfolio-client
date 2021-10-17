@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Menu, useTheme, Text } from "react-native-paper";
 import { StyleSheet, View, ScrollView } from "react-native";
 import CONSTANTS from "../../Constants";
@@ -15,25 +15,17 @@ const DropDown = ({
 }) => {
   const { colors } = useTheme();
 
-  const anchorRef = useRef(null);
-  const [anchorDimensions, setAnchorDimensions] = useState({
+  const [dropDownWidth, setDropDownWidth] = useState({
     width: 0,
-    pageX: 0,
-    pageY: 0,
     hasBeenCalculated: false
   });
   const [showDropDown, setShowDropDown] = useState(false);
 
-  const onLayout = async () => {
-    if (anchorRef.current && !anchorDimensions.hasBeenCalculated) {
-      const [x, y, width, height] = await new Promise((resolve) =>
-        anchorRef.current.measureInWindow((...args) => resolve(args))
-      );
-      setAnchorDimensions({
-        hasBeenCalculated: true,
-        width,
-        pageX: x,
-        pageY: y + height + 2
+  const onLayout = (event) => {
+    if (!dropDownWidth.hasBeenCalculated) {
+      setDropDownWidth({
+        width: event.nativeEvent.layout.width,
+        hasBeenCalculated: true
       });
     }
   };
@@ -41,82 +33,77 @@ const DropDown = ({
   const hideDropDown = () => setShowDropDown(false);
   const toggleDropDownVisibility = () => setShowDropDown(!showDropDown);
 
-  const AnchorComponent = () => (
-    <TouchableNativeOpacity
-      onPress={toggleDropDownVisibility}
-      viewContainerStyle={[
-        containerStyle,
-        {
+  return (
+    <View style={containerStyle}>
+      <TouchableNativeOpacity
+        onPress={toggleDropDownVisibility}
+        viewContainerStyle={{
           borderColor: colors.primary,
           borderWidth: hasBorders ? CONSTANTS.SHARED.BORDER_WIDTH : 0
-        },
-        GlobalStyles.borderRadius
-      ]}
-      onLayout={onLayout}
-    >
-      <View style={styles.anchorContainer} ref={anchorRef}>
-        <Text style={[GlobalStyles.body1]}>{options[selectedIndex].label}</Text>
-        <AntDesign
-          name={showDropDown ? "caretup" : "caretdown"}
-          color={colors.text}
-          style={GlobalStyles.body1}
-        />
-      </View>
-    </TouchableNativeOpacity>
-  );
-
-  return (
-    <Menu
-      visible={showDropDown}
-      onDismiss={hideDropDown}
-      anchor={<AnchorComponent />}
-      style={{
-        maxWidth: anchorDimensions.width,
-        width: anchorDimensions.width,
-        top: anchorDimensions.pageY,
-        left: anchorDimensions.pageX
-      }}
-      contentStyle={styles.menuContent}
-    >
-      <ScrollView style={styles.menuItemScrollView}>
-        {options.map((op, i) => (
-          <TouchableNativeOpacity
-            onPress={() => {
-              if (selectedIndex !== i) {
-                onSelect(op.value, i);
-              }
-              hideDropDown();
-            }}
-            key={op.value}
-          >
-            <View style={styles.menuItem}>
-              <Text style={[GlobalStyles.body1]}>{op.label}</Text>
-              {selectedIndex === i && (
-                <AntDesign
-                  name="check"
-                  style={GlobalStyles.body1}
-                  color={colors.text}
-                />
-              )}
-            </View>
-          </TouchableNativeOpacity>
-        ))}
-      </ScrollView>
-    </Menu>
+        }}
+        onLayout={onLayout}
+      >
+        <View style={styles.container}>
+          <Text style={[GlobalStyles.body1]}>
+            {options[selectedIndex].label}
+          </Text>
+          <AntDesign
+            name={showDropDown ? "caretup" : "caretdown"}
+            color={colors.text}
+            style={GlobalStyles.body1}
+          />
+        </View>
+      </TouchableNativeOpacity>
+      <Menu
+        visible={showDropDown}
+        onDismiss={hideDropDown}
+        anchor={<View style={styles.dropDownAnchor} />}
+        style={{
+          width: dropDownWidth.width
+        }}
+        contentStyle={styles.menuContent}
+        statusBarHeight={0}
+      >
+        <ScrollView style={styles.optionsContainer}>
+          {options.map((op, i) => (
+            <TouchableNativeOpacity
+              onPress={() => {
+                if (selectedIndex !== i) {
+                  onSelect(op.value, i);
+                }
+                hideDropDown();
+              }}
+              key={op.value}
+            >
+              <View style={styles.option}>
+                <Text style={GlobalStyles.body1}>{op.label}</Text>
+                {selectedIndex === i && (
+                  <AntDesign
+                    name="check"
+                    style={GlobalStyles.body1}
+                    color={colors.text}
+                  />
+                )}
+              </View>
+            </TouchableNativeOpacity>
+          ))}
+        </ScrollView>
+      </Menu>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  anchorContainer: {
+  container: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     padding: 10
   },
-  menuItemScrollView: {
+  optionsContainer: {
     maxHeight: 200
   },
-  menuItem: {
+  option: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -125,6 +112,9 @@ const styles = StyleSheet.create({
   menuContent: {
     paddingVertical: 0,
     ...GlobalStyles.borderRadius
+  },
+  dropDownAnchor: {
+    height: 1
   }
 });
 

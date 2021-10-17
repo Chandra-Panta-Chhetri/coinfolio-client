@@ -13,7 +13,7 @@ import DropDown from "../components/shared/DropDown";
 
 const LatestNewsScreen = ({ isLoading, newsData, fetchNews }) => {
   useEffect(() => {
-    //fetchNews();
+    fetchNews();
   }, []);
 
   const onFilterSelect = (selectedVal, selectedIndex) => {
@@ -46,7 +46,7 @@ const LatestNewsScreen = ({ isLoading, newsData, fetchNews }) => {
 
 const styles = StyleSheet.create({
   dropDownContainer: {
-    ...GlobalStyles.componentContainer,
+    marginBottom: GlobalStyles.componentContainer.marginBottom - 1,
     marginHorizontal: GlobalStyles.screenContainer.paddingHorizontal
   },
   newsListContentContainer: {

@@ -28,7 +28,7 @@ const LatestEventsScreen = ({ navigation, fetchEvents, events, isLoading }) => {
   });
 
   useEffect(() => {
-    //fetchEvents();
+    fetchEvents();
   }, []);
 
   return (

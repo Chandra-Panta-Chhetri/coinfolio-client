@@ -12,7 +12,7 @@ import { useTheme } from "react-native-paper";
 const TouchableNativeOpacity = ({
   children,
   viewContainerStyle = {},
-  onLayout = null,
+  onLayout = undefined,
   ...otherProps
 }) => {
   const { colors } = useTheme();
