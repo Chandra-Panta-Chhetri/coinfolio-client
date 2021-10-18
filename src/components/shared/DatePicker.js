@@ -78,7 +78,10 @@ const DatePicker = ({
         <Modal
           visible={isModalVisible}
           onDismiss={hideModal}
-          contentContainerStyle={styles.modalContainer}
+          contentContainerStyle={[
+            styles.modalContainer,
+            { backgroundColor: colors.card }
+          ]}
           style={styles.modalWrapper}
           dismissable={false}
         >
@@ -86,11 +89,20 @@ const DatePicker = ({
             startFromMonday
             allowRangeSelection={isRangePicker}
             todayBackgroundColor={colors.text}
+            todayTextStyle={{
+              color: colors.card
+            }}
             selectedDayColor={colors.primary}
             selectedDayTextColor="#FFFFFF"
             onDateChange={onDateChange}
             selectedEndDate={endDate}
             selectedStartDate={startDate}
+            textStyle={{
+              color: colors.text
+            }}
+            dayLabelsWrapper={{
+              borderColor: colors.text
+            }}
             nextComponent={
               <MaterialIcons
                 name="navigate-next"
@@ -107,7 +119,11 @@ const DatePicker = ({
             }
           />
           <View style={styles.modalActionButtons}>
-            <Button labelStyle={GlobalStyles.button} onPress={closePicker}>
+            <Button
+              labelStyle={GlobalStyles.button}
+              onPress={closePicker}
+              color={colors.notification}
+            >
               Cancel
             </Button>
             <Button
@@ -126,7 +142,6 @@ const DatePicker = ({
 
 const styles = StyleSheet.create({
   modalContainer: {
-    backgroundColor: "white",
     paddingHorizontal: 10,
     paddingVertical: 20,
     ...GlobalStyles.borderRadius
