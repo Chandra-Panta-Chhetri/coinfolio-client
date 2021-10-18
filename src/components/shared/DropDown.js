@@ -38,8 +38,8 @@ const DropDown = ({
       <TouchableNativeOpacity
         onPress={toggleDropDownVisibility}
         viewContainerStyle={{
-          borderColor: colors.primary,
-          borderWidth: hasBorders ? CONSTANTS.SHARED.BORDER_WIDTH : 0
+          borderWidth: hasBorders ? CONSTANTS.SHARED.BORDER_WIDTH : 0,
+          borderColor: colors.text
         }}
         onLayout={onLayout}
       >

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import CalendarPicker from "react-native-calendar-picker";
 import CONSTANTS from "../../Constants";
-import { useTheme, Portal, Modal, Button } from "react-native-paper";
+import { useTheme, Portal, Modal, Button, Text } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import GlobalStyles from "../../GlobalStyles";
 import { MaterialIcons } from "@expo/vector-icons";
+import TouchableNativeOpacity from "./TouchableNativeOpacity";
 
 const DatePicker = ({
   isRangePicker = true,
@@ -54,13 +55,32 @@ const DatePicker = ({
 
   return (
     <>
-      <Button onPress={showModal}>Show Picker</Button>
+      <TouchableNativeOpacity
+        onPress={showModal}
+        viewContainerStyle={[
+          styles.touchableNativeContainer,
+          { borderColor: colors.text }
+        ]}
+      >
+        <View style={styles.dateOutputContainer}>
+          <Text style={GlobalStyles.body1}>
+            {startDate ? new Date(startDate).toDateString() : "..."}
+          </Text>
+          {isRangePicker && endDate && (
+            <Text style={GlobalStyles.body1}>
+              {" "}
+              - {new Date(endDate).toDateString()}
+            </Text>
+          )}
+        </View>
+      </TouchableNativeOpacity>
       <Portal>
         <Modal
           visible={isModalVisible}
           onDismiss={hideModal}
           contentContainerStyle={styles.modalContainer}
           style={styles.modalWrapper}
+          dismissable={false}
         >
           <CalendarPicker
             startFromMonday
@@ -117,6 +137,12 @@ const styles = StyleSheet.create({
   modalActionButtons: {
     flexDirection: "row",
     justifyContent: "flex-end"
+  },
+  touchableNativeContainer: { borderWidth: CONSTANTS.SHARED.BORDER_WIDTH },
+  dateOutputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10
   }
 });
 
