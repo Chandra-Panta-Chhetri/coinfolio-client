@@ -4,8 +4,8 @@ import { Card } from "react-native-paper";
 import GlobalStyles from "../../../GlobalStyles";
 import Skeleton from "../../shared/Skeleton";
 
-const GainerLoserSkeleton = () => (
-  <Card style={[styles.cardContainer, GlobalStyles.borderRadius]}>
+const GainerLoserSkeleton = ({ containerStyle }) => (
+  <Card style={[containerStyle, GlobalStyles.borderRadius]}>
     <Card.Content style={styles.cardBody}>
       <Skeleton style={[GlobalStyles.iconSize, GlobalStyles.iconRoundness]} />
       <View style={styles.infoContainer}>
@@ -25,9 +25,6 @@ const GainerLoserSkeleton = () => (
 );
 
 const styles = StyleSheet.create({
-  cardContainer: {
-    marginTop: 10
-  },
   cardBody: {
     flexDirection: "row",
     alignItems: "center"

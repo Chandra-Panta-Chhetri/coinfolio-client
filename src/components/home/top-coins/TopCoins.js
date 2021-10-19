@@ -1,9 +1,8 @@
-import React from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import React, { useEffect } from "react";
+import { View, FlatList } from "react-native";
 import HeadingWithSeeAll from "../HeadingWithSeeAll";
-import { withNavigation } from "@react-navigation/compat";
+import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
-import { compose } from "redux";
 import {
   selectTopCoins,
   selectIsLoadingSummary
@@ -14,11 +13,17 @@ import TopCoinSkeleton from "./TopCoinSkeleton";
 import CONSTANTS from "../../../Constants";
 import GlobalStyles from "../../../GlobalStyles";
 
-const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
+const dummySkeletonArray = Array(CONSTANTS.TOP_COINS.NUM_SKELETON_TO_SHOW).fill(
+  "1"
+);
+
+const TopCoins = ({ topCoins, isLoading, fetchTopCoins }) => {
+  const navigation = useNavigation();
   const navigateToMarketScreen = () => navigation.navigate("Market");
-  const dummySkeletonArray = Array(
-    CONSTANTS.TOP_COINS.NUM_SKELETON_TO_SHOW
-  ).fill("1");
+
+  useEffect(() => {
+    fetchTopCoins();
+  }, []);
 
   return (
     <View style={GlobalStyles.componentContainer}>
@@ -29,8 +34,8 @@ const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={styles.listContainer}
         data={topCoins}
+        contentContainerStyle={GlobalStyles.flatListContentContainer}
         keyExtractor={(tm) => tm.ticker}
         renderItem={(props) => <TopCoin {...props} navigation={navigation} />}
         listKey="TopCoinsList"
@@ -40,7 +45,7 @@ const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
           horizontal
           showsHorizontalScrollIndicator={false}
           data={dummySkeletonArray}
-          contentContainerStyle={styles.skeletonContentContainer}
+          contentContainerStyle={GlobalStyles.flatListContentContainer}
           keyExtractor={(s, index) => s + index}
           renderItem={() => <TopCoinSkeleton />}
           listKey="TopCoinsSkeletonList"
@@ -49,15 +54,6 @@ const TopCoins = ({ navigation, topCoins, isLoading, fetchTopCoins }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  skeletonContentContainer: {
-    paddingVertical: 2
-  },
-  listContainer: {
-    marginTop: 10
-  }
-});
 
 const mapStateToProps = (state) => ({
   topCoins: selectTopCoins(state),
@@ -68,7 +64,4 @@ const mapDispatchToProps = (dispatch) => ({
   fetchTopCoins: () => dispatch(startTopCoinsFetch())
 });
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  withNavigation
-)(TopCoins);
+export default connect(mapStateToProps, mapDispatchToProps)(TopCoins);

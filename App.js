@@ -4,7 +4,7 @@ import { Provider as StoreProvider } from "react-redux";
 import { Provider as PaperProvider } from "react-native-paper";
 import { store, persistor } from "./src/redux/store.js";
 import { DarkTheme, DefaultTheme } from "./src/redux/preferences/theme.styles";
-import { SafeAreaView, StatusBar, View, Text } from "react-native";
+import { SafeAreaView, StatusBar, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { connect } from "react-redux";
 import { selectIsThemeDark } from "./src/redux/preferences/preferences.selectors";
@@ -13,12 +13,16 @@ import { PersistGate } from "redux-persist/integration/react";
 
 const App = ({ isThemeDark }) => {
   const theme = isThemeDark ? DarkTheme : DefaultTheme;
+  const containerStyles = { flex: 1, backgroundColor: theme.colors.card };
 
   return (
     <PaperProvider theme={theme}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <StatusBar />
-        <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+      <SafeAreaView style={containerStyles}>
+        <StatusBar
+          backgroundColor={theme.colors.card}
+          barStyle={isThemeDark ? "light-content" : "dark-content"}
+        />
+        <View style={containerStyles}>
           <NavigationContainer theme={theme}>
             <MainStackNavigator />
           </NavigationContainer>
@@ -38,7 +42,7 @@ const AppWithState = connect(mapStateToProps)(App);
 export default function () {
   return (
     <StoreProvider store={store}>
-      <PersistGate loading={<Text>Loading App...</Text>} persistor={persistor}>
+      <PersistGate loading={null} persistor={persistor}>
         <AppWithState />
       </PersistGate>
     </StoreProvider>

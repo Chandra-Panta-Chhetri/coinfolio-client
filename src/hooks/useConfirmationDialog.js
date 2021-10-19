@@ -13,7 +13,7 @@ const useConfirmationDialog = (
 
   return {
     openDialog,
-    dialogComponent: (
+    ConfirmationDialog: (
       <ConfirmationDialog
         isVisible={isVisible}
         hideDialog={closeDialog}

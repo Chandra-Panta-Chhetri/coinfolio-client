@@ -6,11 +6,12 @@ import {
   TouchableRipple,
   useTheme
 } from "react-native-paper";
-import { withNavigation } from "@react-navigation/compat";
+import { useNavigation } from "@react-navigation/native";
 import CONSTANTS from "../../Constants";
 import GlobalStyles from "../../GlobalStyles";
 
-const ShortcutIcon = ({ item, navigation }) => {
+const ShortcutIcon = ({ item }) => {
+  const navigation = useNavigation();
   const navigateToScreen = () => navigation.navigate(item.navigateTo);
   const { colors, dark: isDarkMode } = useTheme();
 
@@ -35,24 +36,20 @@ const ShortcutIcon = ({ item, navigation }) => {
   );
 };
 
-const ShortcutIcons = ({ navigation }) => {
-  return (
-    <FlatList
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={[
-        styles.shortcutIconContainer,
-        GlobalStyles.componentContainer
-      ]}
-      keyExtractor={(sc) => sc.label}
-      data={CONSTANTS.SHORTCUT_ICONS}
-      renderItem={(props) => (
-        <ShortcutIcon navigation={navigation} {...props} />
-      )}
-      listKey="ShortcutIconsList"
-    />
-  );
-};
+const ShortcutIcons = ({ navigation }) => (
+  <FlatList
+    horizontal
+    showsHorizontalScrollIndicator={false}
+    contentContainerStyle={[
+      styles.shortcutIconContainer,
+      GlobalStyles.componentContainer
+    ]}
+    keyExtractor={(sc) => sc.label}
+    data={CONSTANTS.SHORTCUT_ICONS}
+    renderItem={(props) => <ShortcutIcon navigation={navigation} {...props} />}
+    listKey="ShortcutIconsList"
+  />
+);
 
 const styles = StyleSheet.create({
   shortcutIconContainer: {
@@ -68,4 +65,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withNavigation(ShortcutIcons);
+export default ShortcutIcons;

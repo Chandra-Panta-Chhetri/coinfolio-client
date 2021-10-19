@@ -2,10 +2,10 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card } from "react-native-paper";
 import GlobalStyles from "../../../GlobalStyles";
-import Skeleton from "../../shared/Skeleton";
+import Skeleton from "../Skeleton";
 
-const NewsItemSkeleton = () => (
-  <Card style={[styles.cardContainer, GlobalStyles.borderRadius]}>
+const NewsItemSkeleton = ({ containerStyle }) => (
+  <Card style={[GlobalStyles.borderRadius, containerStyle]}>
     <Card.Content style={styles.cardBody}>
       <View style={styles.infoContainer}>
         <View style={styles.rowFlexbox}>
@@ -26,9 +26,6 @@ const styles = StyleSheet.create({
   cardBody: {
     flexDirection: "row",
     justifyContent: "space-between"
-  },
-  cardContainer: {
-    marginTop: 10
   },
   infoContainer: {
     flex: 1,

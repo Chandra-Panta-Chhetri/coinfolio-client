@@ -53,11 +53,12 @@ const CONSTANTS = {
   SHARED: {
     EMPTY_FUNCTION: () => {},
     MIN_ANDROID_VERSION_FOR_TOUCHABLE_RIPPLES: 21,
-    BOTTOM_TAB_ICON_SIZE: 21.5,
+    TAB_ICON_SIZE: 21.5,
     AVATAR_IMAGE_SIZE: 35,
     TAB_HEADING_ICON_SIZE: 20,
     TOUCHABLE_ACTIVE_OPACITY: 0.6,
-    TABLE_BORDER_WIDTH: 0.4
+    TABLE_BORDER_WIDTH: 0.4,
+    BORDER_WIDTH: 2
   },
   SHORTCUT_ICONS: [
     {
@@ -132,6 +133,42 @@ const CONSTANTS = {
     IOS: "https://play.google.com/store/apps/details?id=com.coinmarketcap.android",
     ANDROID:
       "https://play.google.com/store/apps/details?id=com.coinmarketcap.android"
+  },
+  LATEST_NEWS: {
+    FILTERS: [
+      {
+        label: "Important",
+        value: "important"
+      },
+      {
+        label: "Rising",
+        value: "rising"
+      },
+      {
+        label: "Hot",
+        value: "hot"
+      }
+    ],
+    NUM_NEWS_TO_SHOW: 12,
+    DEFAULT_FILTER_INDEX: 2
+  },
+  LATEST_EVENTS: {
+    SHOW_ONLY_FILTERS: [
+      {
+        label: "Trending",
+        value: "trending"
+      },
+      {
+        label: "Significant",
+        value: "significant"
+      },
+      {
+        label: "Hot",
+        value: "hot"
+      }
+    ],
+    NUM_EVENTS_TO_SHOW: 12,
+    DEFAULT_SHOW_ONLY_FILTER_INDEX: 0
   }
 };
 

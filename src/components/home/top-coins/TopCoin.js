@@ -41,8 +41,7 @@ const styles = StyleSheet.create({
     width: 125
   },
   androidContainer: {
-    marginRight: 7,
-    padding: 1
+    marginRight: 7
   }
 });
 

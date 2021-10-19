@@ -23,6 +23,9 @@ export default StyleSheet.create({
   componentContainer: {
     marginBottom: 15
   },
+  flatListContentContainer: {
+    padding: 1
+  },
   positiveNum: {
     color: "#4ecf3b"
   },
@@ -82,7 +85,7 @@ export default StyleSheet.create({
   button: {
     fontSize: 14,
     lineHeight: 20,
-    textTransform: "capitalize",
+    textTransform: "uppercase",
     fontWeight: "700"
   },
   bold: {

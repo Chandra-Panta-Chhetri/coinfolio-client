@@ -24,6 +24,10 @@ const GlobalMarketSummary = ({
   fetchGlobalSummary,
   isLoading
 }) => {
+  useEffect(() => {
+    fetchGlobalSummary();
+  }, []);
+
   if (isLoading && globalSummary === null) {
     return <GlobalMarketSummarySkeleton />;
   }

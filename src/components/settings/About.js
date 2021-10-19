@@ -1,5 +1,5 @@
 import React from "react";
-import { withNavigation } from "@react-navigation/compat";
+import { useNavigation } from "@react-navigation/native";
 import { Text } from "react-native-paper";
 import CONSTANTS from "../../Constants";
 import MoreOptions from "../shared/MoreOptions";
@@ -12,13 +12,10 @@ import { expo } from "../../../app.json";
 import { Share, Platform } from "react-native";
 import { addErrorNotification } from "../../redux/notification/notification.actions";
 import { connect } from "react-redux";
-import { compose } from "redux";
 
-const About = ({
-  navigation,
-  includeComponentContainerStyle,
-  showErrorNotification
-}) => {
+const About = ({ includeComponentContainerStyle, showErrorNotification }) => {
+  const navigation = useNavigation();
+
   const onShare = async () => {
     try {
       await Share.share({
@@ -85,7 +82,4 @@ const mapDispatchToProps = (dispatch) => ({
     )
 });
 
-export default compose(
-  connect(null, mapDispatchToProps),
-  withNavigation
-)(About);
+export default connect(null, mapDispatchToProps)(About);

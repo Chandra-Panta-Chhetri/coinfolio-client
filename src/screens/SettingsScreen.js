@@ -67,7 +67,7 @@ const UserDetails = ({ currentUser }) => (
 );
 
 function SettingsScreen({ logOut, currentUser, isLoggingOut, navigation }) {
-  const { openDialog, dialogComponent } = useConfirmationDialog(
+  const { openDialog, ConfirmationDialog } = useConfirmationDialog(
     "Logout Confirmation",
     "Are you sure you want to log out?",
     logOut,
@@ -89,7 +89,7 @@ function SettingsScreen({ logOut, currentUser, isLoggingOut, navigation }) {
           {currentUser && (
             <>
               <LogOutButton onPress={openDialog} />
-              {dialogComponent}
+              {ConfirmationDialog}
             </>
           )}
         </>

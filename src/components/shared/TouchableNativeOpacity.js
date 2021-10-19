@@ -12,6 +12,7 @@ import { useTheme } from "react-native-paper";
 const TouchableNativeOpacity = ({
   children,
   viewContainerStyle = {},
+  onLayout = undefined,
   ...otherProps
 }) => {
   const { colors } = useTheme();
@@ -19,7 +20,10 @@ const TouchableNativeOpacity = ({
   return Platform.OS === "android" &&
     Platform.Version >=
       CONSTANTS.SHARED.MIN_ANDROID_VERSION_FOR_TOUCHABLE_RIPPLES ? (
-    <View style={[viewContainerStyle, GlobalStyles.borderRadius]}>
+    <View
+      style={[viewContainerStyle, GlobalStyles.borderRadius]}
+      onLayout={onLayout}
+    >
       <TouchableNativeFeedback
         {...otherProps}
         background={TouchableNativeFeedback.Ripple(
