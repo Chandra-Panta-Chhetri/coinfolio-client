@@ -1,4 +1,3 @@
-import PORTFOLIO_ACTION_TYPES from "./portfolio.action.types";
 import { takeLatest, put, call, all, select } from "redux-saga/effects";
 import {
   portfolioFetchFail,
@@ -14,8 +13,9 @@ import {
   transactionsForAssetFetchSuccess,
   removeAllTransactionsForAssetSuccess
 } from "./portfolio.actions";
-import { selectCurrentUser } from "../user/user.selectors";
+import PORTFOLIO_ACTION_TYPES from "./portfolio.action.types";
 import { selectTransactions } from "./portfolio.selectors";
+import { selectCurrentUser } from "../user";
 
 function* fetchPortfolio() {
   try {

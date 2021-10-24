@@ -1,9 +1,9 @@
 import { all, call } from "redux-saga/effects";
-import userSagas from "./user/user.sagas";
-import notificationSagas from "./notification/notification.sagas";
-import summarySagas from "./summary/summary.sagas";
-import portfolioSagas from "./portfolio/portfolio.sagas";
-import newsSagas from "./news/news.sagas";
+import { userSagas } from "./user";
+import { notificationSagas } from "./notification";
+import { summarySagas } from "./summary";
+import { portfolioSagas } from "./portfolio";
+import { newsSagas } from "./news";
 
 function* rootSaga() {
   yield all([

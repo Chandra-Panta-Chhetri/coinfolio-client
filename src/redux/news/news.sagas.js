@@ -1,4 +1,3 @@
-import NEWS_ACTION_TYPES from "./news.action.types";
 import { takeLatest, put, call, all, select } from "redux-saga/effects";
 import {
   eventsFetchFail,
@@ -6,16 +5,10 @@ import {
   newsFetchFail,
   newsFetchSuccess
 } from "./news.actions";
+import NEWS_ACTION_TYPES from "./news.action.types";
 import { selectEventFilters } from "./news.selectors";
-import CONSTANTS from "../../Constants";
-
-function delayJS(delayInms) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(2);
-    }, delayInms);
-  });
-}
+import { LATEST_EVENTS_CONSTANTS } from "../../constants";
+import { delayJS } from "../../utils";
 
 function* getNews({ payload: { limit, filter } }) {
   try {
@@ -258,7 +251,7 @@ function* getNews({ payload: { limit, filter } }) {
 function* getEvents() {
   try {
     const filters = yield select(selectEventFilters);
-    const showOnly = yield CONSTANTS.LATEST_EVENTS.SHOW_ONLY_FILTERS[
+    const showOnly = yield LATEST_EVENTS_CONSTANTS.SHOW_ONLY_FILTERS[
       filters.showOnly
     ].value;
     const events = yield [];

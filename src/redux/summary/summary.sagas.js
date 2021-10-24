@@ -1,4 +1,3 @@
-import SUMMARY_ACTION_TYPES from "./summary.action.types";
 import {
   topCoinsFetchSuccess,
   newsSummaryFetchSuccess,
@@ -8,8 +7,10 @@ import {
   newsSummaryFetchFail,
   gainersLosersFetchFail,
   globalSummaryFetchFail
-} from "../summary/summary.actions";
+} from "./summary.actions";
+import SUMMARY_ACTION_TYPES from "./summary.action.types";
 import { all, call, put, takeLatest } from "redux-saga/effects";
+import { delayJS } from "../../utils";
 
 function* fetchTopCoins() {
   try {
@@ -52,14 +53,6 @@ function* fetchTopCoins() {
       topCoinsFetchFail("There was a server error while fetching the top coins")
     );
   }
-}
-
-function delayJS(delayInms) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(2);
-    }, delayInms);
-  });
 }
 
 function* fetchGlobalSummary() {
