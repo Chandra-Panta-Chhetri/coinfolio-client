@@ -7,23 +7,23 @@ import { Card } from "react-native-paper";
 const EventDetailSkeleton = ({ containerStyle }) => (
   <Card style={[containerStyle, GLOBAL_STYLES.borderRadius]}>
     <Card.Content>
-      <View style={styles.iconCoinLabel}>
-        <Skeleton style={styles.icon} />
-        <View style={styles.coinLabel}>
-          <Skeleton style={styles.coinsInvolved} />
-          <Skeleton style={styles.label} />
+      <View style={STYLES.iconCoinLabel}>
+        <Skeleton style={STYLES.icon} />
+        <View style={STYLES.coinLabel}>
+          <Skeleton style={STYLES.coinsInvolved} />
+          <Skeleton style={STYLES.label} />
         </View>
       </View>
-      <View style={styles.infoContainer}>
-        <Skeleton style={styles.date} />
-        <Skeleton style={styles.title} />
-        <Skeleton style={styles.description} />
+      <View style={STYLES.infoContainer}>
+        <Skeleton style={STYLES.date} />
+        <Skeleton style={STYLES.title} />
+        <Skeleton style={STYLES.description} />
       </View>
     </Card.Content>
   </Card>
 );
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   infoContainer: {
     marginTop: 10
   },

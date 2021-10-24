@@ -25,18 +25,18 @@ const NotificationSnackbar = ({ notification, clearNotifications }) => {
       action={{
         label: "X",
         onPress: clearNotifications,
-        labelStyle: styles.notificationMsg
+        labelStyle: STYLES.notificationMsg
       }}
-      style={[styles.snackbar, { backgroundColor: prevBackgroundColor }]}
+      style={[STYLES.snackbar, { backgroundColor: prevBackgroundColor }]}
     >
-      <Text style={styles.notificationMsg}>
+      <Text style={STYLES.notificationMsg}>
         {notification && notification.message}
       </Text>
     </Snackbar>
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   snackbar: {
     bottom: 52
   },

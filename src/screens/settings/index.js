@@ -22,7 +22,7 @@ import {
 } from "./components";
 
 const UserDetails = ({ currentUser }) => (
-  <View style={styles.userDetailsContainer}>
+  <View style={STYLES.userDetailsContainer}>
     <Text style={TYPOGRAPHY.title}>{currentUser.name}</Text>
     <Text style={TYPOGRAPHY.body1}>{currentUser.email}</Text>
   </View>
@@ -74,7 +74,7 @@ const SettingsScreen = ({ logOut, currentUser, isLoggingOut, navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   userDetailsContainer: {
     ...GLOBAL_STYLES.componentContainer,
     justifyContent: "center",

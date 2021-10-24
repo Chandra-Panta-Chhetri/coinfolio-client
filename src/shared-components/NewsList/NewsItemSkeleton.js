@@ -6,12 +6,12 @@ import Skeleton from "../Skeleton";
 
 const NewsItemSkeleton = ({ containerStyle }) => (
   <Card style={[GLOBAL_STYLES.borderRadius, containerStyle]}>
-    <Card.Content style={styles.cardBody}>
-      <View style={styles.infoContainer}>
-        <View style={styles.rowFlexbox}>
-          <Skeleton style={styles.titleSkeleton} />
+    <Card.Content style={STYLES.cardBody}>
+      <View style={STYLES.infoContainer}>
+        <View style={STYLES.rowFlexbox}>
+          <Skeleton style={STYLES.titleSkeleton} />
         </View>
-        <Skeleton style={styles.subheadingSkeleton} />
+        <Skeleton style={STYLES.subheadingSkeleton} />
       </View>
       <Skeleton
         style={[GLOBAL_STYLES.imagePreview, GLOBAL_STYLES.borderRadius]}
@@ -20,7 +20,7 @@ const NewsItemSkeleton = ({ containerStyle }) => (
   </Card>
 );
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   cardBody: {
     flexDirection: "row",
     justifyContent: "space-between"

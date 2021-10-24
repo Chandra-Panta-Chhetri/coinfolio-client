@@ -29,9 +29,9 @@ export const useHiddenFABOnScroll = ({
     scrollHandler,
     isScrolling,
     Fab: () => (
-      <Reanimated.View style={[styles.fabPosition, fabContainer]}>
+      <Reanimated.View style={[STYLES.fabPosition, fabContainer]}>
         <FAB
-          style={[styles.fab, { backgroundColor: colors.primary }]}
+          style={[STYLES.fab, { backgroundColor: colors.primary }]}
           {...otherProps}
           icon={icon}
           color="white"
@@ -42,7 +42,7 @@ export const useHiddenFABOnScroll = ({
   };
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   fabPosition: {
     position: "absolute",
     margin: 15,

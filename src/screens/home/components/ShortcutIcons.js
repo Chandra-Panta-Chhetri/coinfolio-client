@@ -42,10 +42,10 @@ const ShortcutIcon = ({ item }) => {
       onPress={navigateToScreen}
       rippleColor={colors.touchableRipple}
     >
-      <View style={styles.shortcutIconItem}>
+      <View style={STYLES.shortcutIconItem}>
         <View
           style={[
-            styles.iconButton,
+            STYLES.iconButton,
             { borderColor: isDarkMode ? colors.border : colors.card }
           ]}
         >
@@ -61,7 +61,7 @@ const ShortcutIcons = ({ navigation }) => (
   <FlatList
     horizontal
     showsHorizontalScrollIndicator={false}
-    contentContainerStyle={styles.shortcutIconContainer}
+    contentContainerStyle={STYLES.shortcutIconContainer}
     keyExtractor={(sc) => sc.label}
     data={SHORTCUT_ICONS}
     renderItem={(props) => <ShortcutIcon navigation={navigation} {...props} />}
@@ -69,7 +69,7 @@ const ShortcutIcons = ({ navigation }) => (
   />
 );
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   shortcutIconContainer: {
     ...GLOBAL_STYLES.componentContainer,
     justifyContent: "space-between",

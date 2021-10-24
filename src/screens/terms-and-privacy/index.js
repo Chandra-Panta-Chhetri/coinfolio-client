@@ -3,13 +3,13 @@ import { StyleSheet, View, Text } from "react-native";
 
 function TermsAndPrivacyScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Terms And Privacy Screen</Text>
+    <View style={STYLES.container}>
+      <Text style={STYLES.text}>Terms And Privacy Screen</Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",

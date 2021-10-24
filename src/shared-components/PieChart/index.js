@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { View, Platform } from "react-native";
 import * as shape from "d3-shape";
 import Svg, { G, Path, Text } from "react-native-svg";
-import Skeleton from "./Skeleton";
-import { PIE_CHART_CONSTANTS, GLOBAL_CONSTANTS } from "../constants";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../styles";
+import Skeleton from "../Skeleton";
+import { GLOBAL_CONSTANTS } from "../../constants";
+import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
+import PIE_CHART_CONSTANTS from "./constants";
 
 const calculateRadius = (radiusFromProp, maxRadius, defaultRadius) => {
   if (typeof radiusFromProp === "string") {

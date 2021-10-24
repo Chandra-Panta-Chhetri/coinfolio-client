@@ -27,15 +27,15 @@ const SelectHomeScreen = ({ currentHomeScreen, changeHomeScreen }) => {
       {HOME_SCREEN_OPTIONS.map((op) => (
         <TouchableNativeFeedback
           key={op.label}
-          viewContainerStyle={styles.touchableNativeContainer}
+          viewContainerStyle={STYLES.touchableNativeContainer}
           onPress={() => changeHomeScreen(op.label)}
         >
-          <View style={styles.radioButtonGroup}>
-            <View style={styles.iconAndLabel}>
+          <View style={STYLES.radioButtonGroup}>
+            <View style={STYLES.iconAndLabel}>
               {React.cloneElement(op.icon, {
                 color: colors.text
               })}
-              <Text style={styles.radioButtonLabel}>{op.label}</Text>
+              <Text style={STYLES.radioButtonLabel}>{op.label}</Text>
             </View>
             <View pointerEvents={"none"}>
               <RadioButton
@@ -53,7 +53,7 @@ const SelectHomeScreen = ({ currentHomeScreen, changeHomeScreen }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   touchableNativeContainer: { marginBottom: 10 },
   radioButtonGroup: {
     flexDirection: "row",

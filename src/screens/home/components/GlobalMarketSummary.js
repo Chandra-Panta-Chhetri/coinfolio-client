@@ -30,9 +30,9 @@ const METRICS = [
 ];
 
 const GlobalMarketSummarySkeleton = () => (
-  <Card style={styles.container}>
-    <Card.Content style={styles.rowFlexbox}>
-      <Skeleton style={styles.globalSkeleton} />
+  <Card style={STYLES.container}>
+    <Card.Content style={STYLES.rowFlexbox}>
+      <Skeleton style={STYLES.globalSkeleton} />
     </Card.Content>
   </Card>
 );
@@ -51,11 +51,11 @@ const GlobalMarketSummary = ({
   }
 
   return (
-    <Card style={styles.container}>
+    <Card style={STYLES.container}>
       <Card.Content>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {METRICS.map((metric) => (
-            <View style={styles.summaryItem} key={metric.label}>
+            <View style={STYLES.summaryItem} key={metric.label}>
               <Text style={TYPOGRAPHY.body2}>{metric.label}: </Text>
               <Text style={TYPOGRAPHY.body2}>
                 {metric.valueAccessorFunc(globalSummary)}
@@ -68,7 +68,7 @@ const GlobalMarketSummary = ({
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   summaryItem: {
     marginRight: 10,
     flexDirection: "row"

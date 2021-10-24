@@ -10,8 +10,8 @@ const HeadingWithSeeAll = ({
   subheading,
   onSeeAllBtnPress = GLOBAL_CONSTANTS.EMPTY_FUNCTION
 }) => (
-  <View style={styles.container}>
-    <View style={styles.headingAndSellAll}>
+  <View style={STYLES.container}>
+    <View style={STYLES.headingAndSellAll}>
       <Text style={TYPOGRAPHY.headline}>{headingTitle}</Text>
       <Button compact onPress={onSeeAllBtnPress} labelStyle={TYPOGRAPHY.button}>
         {seeAllBtnLabel}
@@ -21,7 +21,7 @@ const HeadingWithSeeAll = ({
   </View>
 );
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   container: {
     marginBottom: 10
   },

@@ -5,19 +5,19 @@ import { GLOBAL_STYLES } from "../../../../styles";
 import { Skeleton } from "../../../../shared-components";
 
 const CurrentValueSkeleton = () => (
-  <Card style={styles.container}>
+  <Card style={STYLES.container}>
     <Card.Content>
-      <Skeleton style={styles.subheadingSkeleton} />
-      <View style={styles.rowFlexbox}>
-        <Skeleton style={styles.valueSkeleton} />
-        <Skeleton style={styles.percentSkeleton} />
+      <Skeleton style={STYLES.subheadingSkeleton} />
+      <View style={STYLES.rowFlexbox}>
+        <Skeleton style={STYLES.valueSkeleton} />
+        <Skeleton style={STYLES.percentSkeleton} />
       </View>
-      <Skeleton style={styles.subheadingSkeleton} />
+      <Skeleton style={STYLES.subheadingSkeleton} />
     </Card.Content>
   </Card>
 );
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   container: {
     ...GLOBAL_STYLES.borderRadius,
     ...GLOBAL_STYLES.componentContainer

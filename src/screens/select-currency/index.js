@@ -3,13 +3,13 @@ import { StyleSheet, View, Text } from "react-native";
 
 function SelectCurrencyScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Select Currency Screen</Text>
+    <View style={STYLES.container}>
+      <Text style={STYLES.text}>Select Currency Screen</Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",

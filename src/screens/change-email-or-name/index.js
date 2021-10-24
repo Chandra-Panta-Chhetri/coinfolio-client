@@ -3,13 +3,13 @@ import { StyleSheet, View, Text } from "react-native";
 
 function ChangeEmailOrNameScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Change Email or Name Screen</Text>
+    <View style={STYLES.container}>
+      <Text style={STYLES.text}>Change Email or Name Screen</Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",

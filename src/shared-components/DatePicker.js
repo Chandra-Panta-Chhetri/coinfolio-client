@@ -62,7 +62,7 @@ const DatePicker = ({
           { borderColor: colors.text }
         ]}
       >
-        <View style={styles.dateOutputContainer}>
+        <View style={STYLES.dateOutputContainer}>
           <Text style={TYPOGRAPHY.body1}>
             {startDate ? new Date(startDate).toDateString() : "..."}
           </Text>
@@ -79,10 +79,10 @@ const DatePicker = ({
           visible={isModalVisible}
           onDismiss={hideModal}
           contentContainerStyle={[
-            styles.modalContainer,
+            STYLES.modalContainer,
             { backgroundColor: colors.card }
           ]}
-          style={styles.modalWrapper}
+          style={STYLES.modalWrapper}
           dismissable={false}
         >
           <CalendarPicker
@@ -118,7 +118,7 @@ const DatePicker = ({
               />
             }
           />
-          <View style={styles.modalActionButtons}>
+          <View style={STYLES.modalActionButtons}>
             <Button
               labelStyle={TYPOGRAPHY.button}
               onPress={closePicker}
@@ -140,7 +140,7 @@ const DatePicker = ({
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   modalContainer: {
     paddingHorizontal: 10,
     paddingVertical: 20,

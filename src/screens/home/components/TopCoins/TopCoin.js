@@ -8,8 +8,8 @@ import { getStylesBasedOnSign, formatNumBasedOnSign } from "../../../../utils";
 
 const TopCoin = ({ item, navigation }) => {
   return (
-    <TouchableNativeFeedback viewContainerStyle={styles.androidContainer}>
-      <Card style={styles.topCoinCard}>
+    <TouchableNativeFeedback viewContainerStyle={STYLES.androidContainer}>
+      <Card style={STYLES.topCoinCard}>
         <Card.Content>
           <Avatar.Image
             size={GLOBAL_CONSTANTS.AVATAR_IMAGE_SIZE}
@@ -30,7 +30,7 @@ const TopCoin = ({ item, navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   topCoinCard: {
     ...GLOBAL_STYLES.borderRadius,
     width: 125

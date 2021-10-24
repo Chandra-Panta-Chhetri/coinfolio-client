@@ -14,12 +14,12 @@ const SettingItem = ({
   onPress
 }) => {
   const mainComponent = (
-    <Card style={styles.container}>
-      <Card.Content style={styles.cardContent}>
-        <View style={styles.iconAndLabel}>
+    <Card style={STYLES.container}>
+      <Card.Content style={STYLES.cardContent}>
+        <View style={STYLES.iconAndLabel}>
           <View
             style={[
-              styles.iconContainer,
+              STYLES.iconContainer,
               {
                 backgroundColor: iconBackgroundColor
               }
@@ -29,14 +29,14 @@ const SettingItem = ({
               color: SETTINGS_CONSTANTS.ICON_COLOR
             })}
           </View>
-          <View style={styles.labelContainer}>
+          <View style={STYLES.labelContainer}>
             <Text style={TYPOGRAPHY.subheading}>{label}</Text>
             {subheading ? (
               <Text style={TYPOGRAPHY.caption}>{subheading}</Text>
             ) : null}
           </View>
         </View>
-        <View style={styles.endComponentContainer}>{endComponent}</View>
+        <View style={STYLES.endComponentContainer}>{endComponent}</View>
       </Card.Content>
     </Card>
   );
@@ -52,7 +52,7 @@ const SettingItem = ({
   return mainComponent;
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   container: { marginTop: 10 },
   cardContent: {
     flexDirection: "row",

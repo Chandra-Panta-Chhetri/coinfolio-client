@@ -19,7 +19,7 @@ const HistoricValue = ({ historicValue = [] }) => {
       <Card.Content>
         <LineChart
           data={historicValue}
-          chartStyle={styles.lineChart}
+          chartStyle={STYLES.lineChart}
           xValueAccessor={xValueAccessor}
           yValueAccessor={yValueAccessor}
           percentChangeAccessor={percentChangeAccessor}
@@ -30,7 +30,7 @@ const HistoricValue = ({ historicValue = [] }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   lineChart: {
     width: "100%",
     height: 180

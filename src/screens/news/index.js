@@ -24,7 +24,7 @@ const BadgeTabBar = ({ state, descriptors, navigation }) => {
   const numTabs = state.routes.length;
 
   return (
-    <View style={styles.tabs}>
+    <View style={STYLES.tabs}>
       {state.routes.map((route, i) => {
         const { options } = descriptors[route.key];
         const label =
@@ -54,7 +54,7 @@ const BadgeTabBar = ({ state, descriptors, navigation }) => {
           }
         };
 
-        const tabContainerStyle = styles.tabContainer;
+        const tabContainerStyle = STYLES.tabContainer;
         if (numTabs === i + 1) {
           tabContainerStyle.marginRight = 0;
         }
@@ -108,7 +108,7 @@ const NewsScreen = () => (
   </Tab.Navigator>
 );
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   tabs: {
     flexDirection: "row",
     ...GLOBAL_STYLES.screenContainer

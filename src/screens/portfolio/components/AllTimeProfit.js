@@ -13,7 +13,7 @@ const AllTimeProfit = ({ isLoading, overallProfit, width = "100%" }) => {
   return (
     <View style={{ width }}>
       <Text style={TYPOGRAPHY.subheading}>Total Profit/Loss</Text>
-      <View style={styles.profitAndPercent}>
+      <View style={STYLES.profitAndPercent}>
         <Text style={TYPOGRAPHY.title}>${overallProfit.value}</Text>
         <Text
           style={[
@@ -28,7 +28,7 @@ const AllTimeProfit = ({ isLoading, overallProfit, width = "100%" }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   profitAndPercent: {
     flexDirection: "row",
     justifyContent: "space-between",

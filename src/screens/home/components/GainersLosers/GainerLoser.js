@@ -9,22 +9,22 @@ import { TouchableNativeFeedback } from "../../../../shared-components";
 const GainerLoser = ({ item, navigation, index }) => {
   return (
     <TouchableNativeFeedback
-      viewContainerStyle={index !== 0 ? styles.androidContainer : null}
+      viewContainerStyle={index !== 0 ? STYLES.androidContainer : null}
     >
       <Card style={GLOBAL_STYLES.borderRadius}>
-        <Card.Content style={styles.gainerLoserCardBody}>
+        <Card.Content style={STYLES.gainerLoserCardBody}>
           <Avatar.Image
             size={GLOBAL_CONSTANTS.AVATAR_IMAGE_SIZE}
             source={{
               uri: item.image
             }}
           />
-          <View style={styles.gainerLoserInfoContainer}>
+          <View style={STYLES.gainerLoserInfoContainer}>
             <View>
               <Text style={TYPOGRAPHY.subheading}>{item.fullName}</Text>
               <Text style={TYPOGRAPHY.body1}>{item.ticker}</Text>
             </View>
-            <View style={styles.priceAndPercent}>
+            <View style={STYLES.priceAndPercent}>
               <Text style={TYPOGRAPHY.subheading}>${item.price}</Text>
               <Text
                 style={[
@@ -42,7 +42,7 @@ const GainerLoser = ({ item, navigation, index }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   androidContainer: {
     marginTop: 10
   },

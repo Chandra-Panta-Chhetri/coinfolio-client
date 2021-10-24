@@ -7,7 +7,7 @@ import Reanimated, {
   withSpring
 } from "react-native-reanimated";
 import { getYForX } from "react-native-redash";
-import { RAINBOW_CHART_CONSTANTS } from "../../constants";
+import RAINBOW_CHART_CONSTANTS from "./constants";
 
 const Cursor = ({
   selectedGraph,
@@ -73,7 +73,7 @@ const Cursor = ({
       <Reanimated.View style={StyleSheet.absoluteFill}>
         <Reanimated.View
           style={[
-            styles.verticalBar,
+            STYLES.verticalBar,
             animatedVerticalBar,
             { borderLeftColor: themeColors.text }
           ]}
@@ -94,7 +94,7 @@ const Cursor = ({
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   verticalBar: {
     borderLeftWidth: 2,
     position: "absolute",

@@ -51,7 +51,7 @@ const Allocations = ({ assets }) => {
     <Card style={GLOBAL_STYLES.borderRadius}>
       <Card.Content>
         <PieChart
-          pieChartStyle={styles.pieChart}
+          pieChartStyle={STYLES.pieChart}
           data={data}
           padAngle={0.05}
           innerRadius="75%"
@@ -69,7 +69,7 @@ const Allocations = ({ assets }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   pieChart: {
     height: 180,
     width: "100%"

@@ -10,14 +10,14 @@ const SettingGroup = ({
   includeContainerStyle = true
 }) => (
   <View style={includeContainerStyle && GLOBAL_STYLES.componentContainer}>
-    <Text style={styles.heading}>{heading}</Text>
+    <Text style={STYLES.heading}>{heading}</Text>
     {settingOptions.map((settingOption) => (
       <SettingItem key={settingOption.label} {...settingOption} />
     ))}
   </View>
 );
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   heading: { ...TYPOGRAPHY.title, fontWeight: "normal" }
 });
 

@@ -39,11 +39,11 @@ const LatestEventsScreen = ({ navigation, fetchEvents, events, isLoading }) => {
           keyExtractor={(s, i) => s + i}
           renderItem={({ index }) => (
             <EventItemSkeleton
-              containerStyle={index !== 0 ? styles.itemContainer : null}
+              containerStyle={index !== 0 ? STYLES.itemContainer : null}
             />
           )}
           style={GLOBAL_STYLES.flatListContentContainer}
-          contentContainerStyle={styles.eventListContentContainer}
+          contentContainerStyle={STYLES.eventListContentContainer}
           listKey="EventsSkeletonList"
           showsVerticalScrollIndicator={false}
         />
@@ -57,7 +57,7 @@ const LatestEventsScreen = ({ navigation, fetchEvents, events, isLoading }) => {
           )}
           listKey="EventsList"
           style={GLOBAL_STYLES.flatListContentContainer}
-          contentContainerStyle={styles.eventListContentContainer}
+          contentContainerStyle={STYLES.eventListContentContainer}
           showsVerticalScrollIndicator={false}
         />
       )}
@@ -66,7 +66,7 @@ const LatestEventsScreen = ({ navigation, fetchEvents, events, isLoading }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   itemContainer: {
     marginTop: 10
   },

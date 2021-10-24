@@ -3,15 +3,15 @@ import { StyleSheet, View, Text } from "react-native";
 
 function EventDetailScreen({ route }) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>
+    <View style={STYLES.container}>
+      <Text style={STYLES.text}>
         Event Detail Screen - {route.params.eventName}
       </Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",

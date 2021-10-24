@@ -16,7 +16,7 @@ const PagingDots = ({ numOfDots = 0, activeDot, containerWidth = 0 }) => {
   };
 
   return (
-    <View style={[styles.pagingDots, { right: containerWidth / 2 }]}>
+    <View style={[STYLES.pagingDots, { right: containerWidth / 2 }]}>
       {dots.map((_, i) => (
         <Text
           key={i}
@@ -52,7 +52,7 @@ const CardScrollView = ({ children, containerStyle = {} }) => {
   };
 
   return (
-    <Card style={[styles.container, containerStyle]}>
+    <Card style={[STYLES.container, containerStyle]}>
       <Card.Content>
         <ScrollView
           horizontal
@@ -77,7 +77,7 @@ const CardScrollView = ({ children, containerStyle = {} }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   container: {
     position: "relative",
     ...GLOBAL_STYLES.borderRadius

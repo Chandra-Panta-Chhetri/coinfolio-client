@@ -14,20 +14,20 @@ const AllocationLabels = ({
 
   return (
     <ScrollView
-      contentContainerStyle={styles.contentContainer}
+      contentContainerStyle={STYLES.contentContainer}
       horizontal
       showsHorizontalScrollIndicator={false}
-      style={styles.container}
+      style={STYLES.container}
     >
       {data.map((d, i) => (
         <TouchableNativeFeedback
           key={d.key}
           onPress={() => changeSelectedSlice(i, false)}
-          viewContainerStyle={styles.touchableOpacityContainer}
+          viewContainerStyle={STYLES.touchableOpacityContainer}
         >
           <View
             style={[
-              styles.labelContainer,
+              STYLES.labelContainer,
               i === selectedSlice
                 ? {
                     ...GLOBAL_STYLES.borderRadius,
@@ -37,7 +37,7 @@ const AllocationLabels = ({
             ]}
           >
             <View
-              style={[styles.pieSliceDot, { backgroundColor: d.svg.fill }]}
+              style={[STYLES.pieSliceDot, { backgroundColor: d.svg.fill }]}
             />
             <Text style={TYPOGRAPHY.subheading}>{d.key}</Text>
           </View>
@@ -47,7 +47,7 @@ const AllocationLabels = ({
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   contentContainer: {
     flexGrow: 1
   },

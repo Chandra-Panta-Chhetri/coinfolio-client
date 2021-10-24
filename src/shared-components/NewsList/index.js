@@ -20,7 +20,7 @@ const NewsList = ({
         keyExtractor={(s, i) => s + i}
         renderItem={({ index }) => (
           <NewsItemSkeleton
-            containerStyle={index !== 0 ? styles.itemContainer : null}
+            containerStyle={index !== 0 ? STYLES.itemContainer : null}
           />
         )}
         listKey="NewsSkeletonList"
@@ -46,7 +46,7 @@ const NewsList = ({
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   itemContainer: {
     marginTop: 10
   }

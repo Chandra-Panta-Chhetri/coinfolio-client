@@ -17,10 +17,10 @@ const SWITCH_ANIMATION_CONFIG = {
 
 const getBorderStyles = (tabIndex, totalTabs) =>
   tabIndex === 0
-    ? styles.noRightBorders
+    ? STYLES.noRightBorders
     : tabIndex + 1 === totalTabs
-    ? styles.noLeftBorders
-    : { ...styles.noRightBorders, ...styles.noLeftBorders };
+    ? STYLES.noLeftBorders
+    : { ...STYLES.noRightBorders, ...STYLES.noLeftBorders };
 
 const Tabs = ({
   children,
@@ -71,7 +71,7 @@ const Tabs = ({
     <>
       <View
         style={[
-          styles.tabHeadingContainer,
+          STYLES.tabHeadingContainer,
           { marginBottom: tabHeadingMarginBottom }
         ]}
         onLayout={(e) => {
@@ -95,7 +95,7 @@ const Tabs = ({
               key={index}
               onPress={() => handleTabClick(index)}
               viewStyle={[
-                styles.tabContainer,
+                STYLES.tabContainer,
                 {
                   borderColor: isDarkMode ? colors.border : colors.primary
                 },
@@ -114,7 +114,7 @@ const Tabs = ({
         })}
         <Animated.View
           style={[
-            styles.activeTabOverlay,
+            STYLES.activeTabOverlay,
             GLOBAL_STYLES.borderRadius,
             {
               width: `${numTabs === 0 ? 0 : 100 / numTabs}%`,
@@ -145,7 +145,7 @@ const Tabs = ({
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   tabHeadingContainer: {
     flexDirection: "row",
     position: "relative",

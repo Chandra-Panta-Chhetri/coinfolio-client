@@ -12,7 +12,7 @@ import { GLOBAL_CONSTANTS } from "../../../constants";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 import { formatNumBasedOnSign, getStylesBasedOnSign } from "../../../utils";
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   dataHeader: { borderBottomWidth: 0 },
   dataRow: {
     paddingVertical: 8,
@@ -51,17 +51,17 @@ const styles = StyleSheet.create({
 const tableHeadings = [
   {
     label: "Asset",
-    style: styles.assetTableHeading,
+    style: STYLES.assetTableHeading,
     sortByField: "fullName"
   },
   {
     label: "Price",
-    style: styles.rightAlignedTableHeading,
+    style: STYLES.rightAlignedTableHeading,
     sortByField: "currentPrice"
   },
   {
     label: "Holdings",
-    style: styles.rightAlignedTableHeading,
+    style: STYLES.rightAlignedTableHeading,
     sortByField: "holdingsVal"
   }
 ];
@@ -103,7 +103,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
     <View>
       <Text style={TYPOGRAPHY.headline}>Assets</Text>
       <DataTable>
-        <DataTable.Header style={styles.dataHeader}>
+        <DataTable.Header style={STYLES.dataHeader}>
           {tableHeadings.map((th) => (
             <PressableView
               key={th.label}
@@ -115,7 +115,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
                 <AntDesign
                   name={sortAscending ? "caretup" : "caretdown"}
                   size={12}
-                  style={styles.sortArrow}
+                  style={STYLES.sortArrow}
                   color={colors.text}
                 />
               )}
@@ -126,20 +126,20 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
           <DataTable.Row
             key={asset.ticker}
             style={[
-              styles.dataRow,
+              STYLES.dataRow,
               i + 1 === assets.length
                 ? GLOBAL_STYLES.tableBottomBorderWidth
                 : { borderBottomWidth: 0 }
             ]}
           >
-            <View style={[styles.assetTableCell, styles.marginRight]}>
+            <View style={[STYLES.assetTableCell, STYLES.marginRight]}>
               <Avatar.Image
                 size={GLOBAL_CONSTANTS.AVATAR_IMAGE_SIZE}
                 source={{
                   uri: asset.iconSrc
                 }}
               />
-              <View style={styles.assetNameAndTicker}>
+              <View style={STYLES.assetNameAndTicker}>
                 <Text numberOfLines={1} style={TYPOGRAPHY.body1}>
                   {asset.fullName}
                 </Text>
@@ -148,7 +148,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
                 </Text>
               </View>
             </View>
-            <View style={[styles.flex, styles.marginRight]}>
+            <View style={[STYLES.flex, STYLES.marginRight]}>
               <Text
                 numberOfLines={1}
                 style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}
@@ -166,7 +166,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
                 {formatNumBasedOnSign(asset.pricePercentChange)}%
               </Text>
             </View>
-            <View style={styles.flex}>
+            <View style={STYLES.flex}>
               <Text
                 numberOfLines={1}
                 style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}

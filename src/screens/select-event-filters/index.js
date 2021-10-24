@@ -47,10 +47,10 @@ const SelectEventFiltersScreen = ({
   };
 
   return (
-    <View style={[GLOBAL_STYLES.screenContainer, styles.flex]}>
-      <View style={styles.flex}>
+    <View style={[GLOBAL_STYLES.screenContainer, STYLES.flex]}>
+      <View style={STYLES.flex}>
         <View style={GLOBAL_STYLES.componentContainer}>
-          <Text style={styles.filterLabel}>Date range</Text>
+          <Text style={STYLES.filterLabel}>Date range</Text>
           <DatePicker
             onConfirm={onDateRangeConfirm}
             initialEndDate={filters.dateRange.end}
@@ -58,7 +58,7 @@ const SelectEventFiltersScreen = ({
           />
         </View>
         <View>
-          <Text style={styles.filterLabel}>Show only</Text>
+          <Text style={STYLES.filterLabel}>Show only</Text>
           <DropDown
             onSelect={onShowOnlyDropDownSelect}
             options={LATEST_EVENTS_CONSTANTS.SHOW_ONLY_FILTERS}
@@ -66,12 +66,12 @@ const SelectEventFiltersScreen = ({
           />
         </View>
       </View>
-      <View style={styles.buttonContainer}>
+      <View style={STYLES.buttonContainer}>
         <Button
           labelStyle={TYPOGRAPHY.button}
           mode="contained"
           onPress={applyFilter}
-          style={[styles.applyButton, styles.flex]}
+          style={[STYLES.applyButton, STYLES.flex]}
         >
           Apply
         </Button>
@@ -80,7 +80,7 @@ const SelectEventFiltersScreen = ({
           mode="contained"
           onPress={resetFilters}
           color={colors.card}
-          style={styles.flex}
+          style={STYLES.flex}
         >
           Reset
         </Button>
@@ -89,7 +89,7 @@ const SelectEventFiltersScreen = ({
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   flex: {
     flex: 1
   },

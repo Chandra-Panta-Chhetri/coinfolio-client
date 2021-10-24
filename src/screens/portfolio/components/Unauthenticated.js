@@ -7,19 +7,19 @@ const Unauthenticated = ({ navigation }) => {
   const { colors } = useTheme();
 
   return (
-    <View style={styles.container}>
+    <View style={STYLES.container}>
       <Image
         source={require("../../../assets/images/static-pie-chart.png")}
-        style={styles.staticImage}
+        style={STYLES.staticImage}
       />
-      <Text style={styles.heading}>Track Your Crypto Investments</Text>
-      <Text style={styles.subheading}>
+      <Text style={STYLES.heading}>Track Your Crypto Investments</Text>
+      <Text style={STYLES.subheading}>
         Signup or login to track your crypto transactions, current balance and
         profit/loss.
       </Text>
       <Button
         onPress={() => navigation.navigate("SignUp")}
-        style={styles.signUpBtn}
+        style={STYLES.signUpBtn}
         mode="contained"
         labelStyle={TYPOGRAPHY.button}
       >
@@ -42,7 +42,7 @@ const Unauthenticated = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   container: {
     ...GLOBAL_STYLES.screenContainer,
     justifyContent: "center",

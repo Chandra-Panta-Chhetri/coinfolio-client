@@ -30,20 +30,20 @@ const LatestNewsScreen = ({ isLoading, newsData, fetchNews }) => {
         onSelect={onFilterSelect}
         selectedIndex={newsFilterIndex}
         options={LATEST_NEWS_CONSTANTS.FILTERS}
-        containerStyle={styles.dropDownContainer}
+        containerStyle={STYLES.dropDownContainer}
       />
       <NewsList
         isLoading={isLoading}
         newsData={newsData}
         numSkeletonsToShow={12}
         scrollEnabled
-        contentContainerStyle={styles.newsListContentContainer}
+        contentContainerStyle={STYLES.newsListContentContainer}
       />
     </>
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   dropDownContainer: {
     marginBottom: GLOBAL_STYLES.componentContainer.marginBottom - 1,
     marginHorizontal: GLOBAL_STYLES.screenContainer.paddingHorizontal

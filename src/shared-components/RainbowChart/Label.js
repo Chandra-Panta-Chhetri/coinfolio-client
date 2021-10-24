@@ -54,7 +54,7 @@ const ChartLabelItem = ({
     () => `$${parseFloat(labelInfo.value.val).toFixed(2)}`
   );
 
-  const styles = {
+  const STYLES = {
     ...TYPOGRAPHY.textAlignCenter,
     ...TYPOGRAPHY.body1,
     color: themeColors.text
@@ -62,7 +62,7 @@ const ChartLabelItem = ({
 
   return (
     <Reanimated.View style={animatedLabelContainer} onLayout={onLayout}>
-      <ReText text={labelValue} style={styles} />
+      <ReText text={labelValue} style={STYLES} />
     </Reanimated.View>
   );
 };

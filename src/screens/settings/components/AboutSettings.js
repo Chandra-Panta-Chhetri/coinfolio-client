@@ -58,7 +58,7 @@ const AboutSettings = ({ includeContainerStyle, showErrorNotification }) => {
         <Octicons name="versions" size={SETTINGS_CONSTANTS.ICON_SIZE} />
       ),
       iconBackgroundColor: SETTINGS_CONSTANTS.VERSION_BACKGROUND_COLOR,
-      endComponent: <Text style={styles.versionLabel}>{expo.version}</Text>
+      endComponent: <Text style={STYLES.versionLabel}>{expo.version}</Text>
     }
   ];
 
@@ -80,7 +80,7 @@ const mapDispatchToProps = (dispatch) => ({
     )
 });
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   versionLabel: {
     ...TYPOGRAPHY.body1,
     ...Typography.textAlignCenter

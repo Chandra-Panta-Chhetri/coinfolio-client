@@ -5,16 +5,16 @@ import { Skeleton } from "../../../../shared-components";
 import { GLOBAL_STYLES } from "../../../../styles";
 
 const TopCoinSkeleton = () => (
-  <Card style={styles.cardContainer}>
+  <Card style={STYLES.cardContainer}>
     <Card.Content>
-      <Skeleton style={styles.icon} />
-      <Skeleton style={styles.symbol} />
-      <Skeleton style={styles.price} count={2} />
+      <Skeleton style={STYLES.icon} />
+      <Skeleton style={STYLES.symbol} />
+      <Skeleton style={STYLES.price} count={2} />
     </Card.Content>
   </Card>
 );
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   cardContainer: {
     ...GLOBAL_STYLES.borderRadius,
     marginRight: 10,

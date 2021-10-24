@@ -42,7 +42,7 @@ const DropDown = ({
         }}
         onLayout={onLayout}
       >
-        <View style={styles.container}>
+        <View style={STYLES.container}>
           <Text style={[TYPOGRAPHY.body1]}>{options[selectedIndex].label}</Text>
           <AntDesign
             name={showDropDown ? "caretup" : "caretdown"}
@@ -54,14 +54,14 @@ const DropDown = ({
       <Menu
         visible={showDropDown}
         onDismiss={hideDropDown}
-        anchor={<View style={styles.dropDownAnchor} />}
+        anchor={<View style={STYLES.dropDownAnchor} />}
         style={{
           width: dropDownWidth.width
         }}
-        contentStyle={styles.menuContent}
+        contentStyle={STYLES.menuContent}
         statusBarHeight={0}
       >
-        <ScrollView style={styles.optionsContainer}>
+        <ScrollView style={STYLES.optionsContainer}>
           {options.map((op, i) => (
             <TouchableNativeFeedback
               onPress={() => {
@@ -72,7 +72,7 @@ const DropDown = ({
               }}
               key={op.value}
             >
-              <View style={styles.option}>
+              <View style={STYLES.option}>
                 <Text style={TYPOGRAPHY.body1}>{op.label}</Text>
                 {selectedIndex === i && (
                   <AntDesign
@@ -90,7 +90,7 @@ const DropDown = ({
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",

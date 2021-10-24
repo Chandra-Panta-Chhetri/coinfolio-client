@@ -71,7 +71,7 @@ const Header = ({
 
   return (
     <>
-      <View style={styles.timeAndPercent}>
+      <View style={STYLES.timeAndPercent}>
         <ReText style={textStyles} text={xVal} />
         <ReText
           style={{ ...TYPOGRAPHY.subheading, ...animatedPercentChange }}
@@ -83,7 +83,7 @@ const Header = ({
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   timeAndPercent: {
     flexDirection: "row",
     justifyContent: "space-between",

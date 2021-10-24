@@ -6,11 +6,11 @@ import TouchableNativeFeedback from "../TouchableNativeFeedback";
 
 const NewsItem = ({ item, index }) => (
   <TouchableNativeFeedback
-    viewContainerStyle={index !== 0 ? styles.androidContainer : null}
+    viewContainerStyle={index !== 0 ? STYLES.androidContainer : null}
   >
     <Card style={GLOBAL_STYLES.borderRadius}>
-      <Card.Content style={styles.newsCardBody}>
-        <View style={styles.newsInfo}>
+      <Card.Content style={STYLES.newsCardBody}>
+        <View style={STYLES.newsInfo}>
           <Text style={TYPOGRAPHY.body2} numberOfLines={2}>
             {item.title}
           </Text>
@@ -29,7 +29,7 @@ const NewsItem = ({ item, index }) => (
   </TouchableNativeFeedback>
 );
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   newsCardBody: {
     flexDirection: "row",
     justifyContent: "space-between",

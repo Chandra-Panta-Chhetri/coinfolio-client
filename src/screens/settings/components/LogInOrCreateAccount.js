@@ -11,12 +11,12 @@ const LogInOrCreateAccount = ({ navigation }) => (
         Login or create an account to get access to features such as custom
         price alerts, watchlist, portfolio tracker & more!
       </Text>
-      <View style={styles.container}>
+      <View style={STYLES.container}>
         <Button
           labelStyle={TYPOGRAPHY.button}
           onPress={() => navigation.navigate("Login")}
           mode="contained"
-          style={styles.logInButton}
+          style={STYLES.logInButton}
         >
           Login
         </Button>
@@ -32,7 +32,7 @@ const LogInOrCreateAccount = ({ navigation }) => (
   </Card>
 );
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-between",

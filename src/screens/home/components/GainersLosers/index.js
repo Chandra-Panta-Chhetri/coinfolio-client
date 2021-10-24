@@ -46,7 +46,7 @@ const GainersLosers = ({ gainersLosers, isLoading, fetchGainersLosers }) => {
           keyExtractor={(s, index) => s + index}
           renderItem={({ index }) => (
             <GainerLoserSkeleton
-              containerStyle={index !== 0 ? styles.itemContainer : null}
+              containerStyle={index !== 0 ? STYLES.itemContainer : null}
             />
           )}
           scrollEnabled={false}
@@ -58,7 +58,7 @@ const GainersLosers = ({ gainersLosers, isLoading, fetchGainersLosers }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   itemContainer: {
     marginTop: 10
   }

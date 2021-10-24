@@ -6,21 +6,21 @@ import { Skeleton } from "../../../../shared-components";
 
 const GainerLoserSkeleton = ({ containerStyle }) => (
   <Card style={[containerStyle, GLOBAL_STYLES.borderRadius]}>
-    <Card.Content style={styles.cardBody}>
-      <Skeleton style={styles.icon} />
-      <View style={styles.infoContainer}>
-        <View style={styles.rowFlexbox}>
-          <Skeleton style={styles.fullNamePrice} />
+    <Card.Content style={STYLES.cardBody}>
+      <Skeleton style={STYLES.icon} />
+      <View style={STYLES.infoContainer}>
+        <View style={STYLES.rowFlexbox}>
+          <Skeleton style={STYLES.fullNamePrice} />
         </View>
-        <View style={styles.rowFlexbox}>
-          <Skeleton style={styles.symbolPercent} />
+        <View style={STYLES.rowFlexbox}>
+          <Skeleton style={STYLES.symbolPercent} />
         </View>
       </View>
     </Card.Content>
   </Card>
 );
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   cardBody: {
     flexDirection: "row",
     alignItems: "center"

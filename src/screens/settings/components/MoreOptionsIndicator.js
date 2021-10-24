@@ -8,9 +8,9 @@ const MoreOptionsIndicator = ({ selectedOption }) => {
   const { colors } = useTheme();
 
   return (
-    <View style={styles.container}>
+    <View style={STYLES.container}>
       {selectedOption ? (
-        <Text style={styles.label}>{selectedOption}</Text>
+        <Text style={STYLES.label}>{selectedOption}</Text>
       ) : null}
       <MaterialIcons
         name="keyboard-arrow-right"
@@ -22,7 +22,7 @@ const MoreOptionsIndicator = ({ selectedOption }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",

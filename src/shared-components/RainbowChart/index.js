@@ -15,7 +15,7 @@ import Header from "./Header";
 import Skeleton from "../Skeleton";
 import PressableView from "../PressableView";
 import Label from "./Label";
-import { RAINBOW_CHART_CONSTANTS } from "../../constants";
+import RAINBOW_CHART_CONSTANTS from "./constants";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { Text, useTheme } from "react-native-paper";
 
@@ -130,8 +130,8 @@ const LineChart = ({
   }
 
   return (
-    <View style={[styles.container, { width: chartStyle.width || "100%" }]}>
-      <View style={styles.headerContainer}>
+    <View style={[STYLES.container, { width: chartStyle.width || "100%" }]}>
+      <View style={STYLES.headerContainer}>
         <Header
           yPanGesturePos={yPanGesturePos}
           selectedGraph={selectedGraph}
@@ -141,7 +141,7 @@ const LineChart = ({
           themeColors={themeColors}
         />
       </View>
-      <View style={[chartStyle, styles.relativePosition]}>
+      <View style={[chartStyle, STYLES.relativePosition]}>
         <Svg style={GLOBAL_STYLES.fullContainerDimension}>
           <AnimatedPath
             animatedProps={animatedPathProps}
@@ -171,12 +171,12 @@ const LineChart = ({
         ))}
       </View>
       <Reanimated.View
-        style={[styles.timeFilterContainer, animatedTimeFilters]}
+        style={[STYLES.timeFilterContainer, animatedTimeFilters]}
       >
         <View style={StyleSheet.absoluteFill}>
           <Reanimated.View
             style={[
-              styles.timeFilterOverlay,
+              STYLES.timeFilterOverlay,
               {
                 width: buttonWidth,
                 backgroundColor: themeColors.backgroundSelection
@@ -201,7 +201,7 @@ const LineChart = ({
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   container: {
     justifyContent: "space-between",
     position: "relative"

@@ -3,13 +3,13 @@ import { StyleSheet, View, Text } from "react-native";
 
 function MarketScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Market Screen</Text>
+    <View style={STYLES.container}>
+      <Text style={STYLES.text}>Market Screen</Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",

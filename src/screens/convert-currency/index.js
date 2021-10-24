@@ -3,13 +3,13 @@ import { StyleSheet, View, Text } from "react-native";
 
 function ConverterScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Converter Screen</Text>
+    <View style={STYLES.container}>
+      <Text style={STYLES.text}>Converter Screen</Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",

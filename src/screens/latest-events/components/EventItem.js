@@ -10,22 +10,22 @@ const EventDetail = ({ item, navigation, index }) => {
   const { colors } = useTheme();
   return (
     <TouchableNativeFeedback
-      viewContainerStyle={index !== 0 ? styles.androidContainer : null}
+      viewContainerStyle={index !== 0 ? STYLES.androidContainer : null}
       onPress={() =>
         navigation.navigate("EventDetails", { eventName: item.title })
       }
     >
       <Card style={GLOBAL_STYLES.borderRadius}>
         <Card.Content>
-          <View style={styles.iconCoinLabel}>
+          <View style={STYLES.iconCoinLabel}>
             <Avatar.Image
               size={GLOBAL_CONSTANTS.AVATAR_IMAGE_SIZE}
               source={{
                 uri: item.coins[0].imageUrl
               }}
             />
-            <View style={styles.coinLabel}>
-              <View style={styles.coinsInvolvedContainer}>
+            <View style={STYLES.coinLabel}>
+              <View style={STYLES.coinsInvolvedContainer}>
                 <Text style={[TYPOGRAPHY.body1]} numberOfLines={1}>
                   {item.coins[0].fullName}
                   {item.coins.length > 1 ? ` + ${item.coins.length - 1}` : ""}
@@ -41,7 +41,7 @@ const EventDetail = ({ item, navigation, index }) => {
               </View>
               <Badge
                 label={item.type.label}
-                containerStyle={styles.eventType}
+                containerStyle={STYLES.eventType}
                 isHighlighted
                 highlightedStyle={{
                   color: "white",
@@ -50,12 +50,12 @@ const EventDetail = ({ item, navigation, index }) => {
               />
             </View>
           </View>
-          <View style={styles.infoContainer}>
+          <View style={STYLES.infoContainer}>
             <Text style={TYPOGRAPHY.caption} numberOfLines={1}>
               {new Date(item.date).toDateString()}
               {item.canOccurBefore && " (or earlier)"}
             </Text>
-            <Text numberOfLines={1} style={styles.eventTitle}>
+            <Text numberOfLines={1} style={STYLES.eventTitle}>
               {item.title}
             </Text>
             <Text numberOfLines={2} style={TYPOGRAPHY.body1}>
@@ -68,7 +68,7 @@ const EventDetail = ({ item, navigation, index }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   androidContainer: {
     marginTop: 10
   },

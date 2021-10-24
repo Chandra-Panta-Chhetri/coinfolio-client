@@ -18,7 +18,7 @@ const CurrentValue = ({ currentValue, isLoading, width = "100%" }) => {
   return (
     <View style={{ width }}>
       <Text style={TYPOGRAPHY.subheading}>Current Value</Text>
-      <View style={styles.valueAndPercent}>
+      <View style={STYLES.valueAndPercent}>
         <Text style={TYPOGRAPHY.title}>${currentValue.value}</Text>
         <Text
           style={[
@@ -41,7 +41,7 @@ const CurrentValue = ({ currentValue, isLoading, width = "100%" }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   valueAndPercent: {
     flexDirection: "row",
     justifyContent: "space-between",
