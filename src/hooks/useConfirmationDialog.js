@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import ConfirmationDialog from "../components/shared/ConfirmationDialog";
+import { ConfirmationDialog as Dialog } from "../shared-components";
 
-const useConfirmationDialog = (
+export const useConfirmationDialog = (
   confirmationTitle,
   confirmationText,
   onConfirmCb,
@@ -13,8 +13,8 @@ const useConfirmationDialog = (
 
   return {
     openDialog,
-    ConfirmationDialog: (
-      <ConfirmationDialog
+    ConfirmationDialog: () => (
+      <Dialog
         isVisible={isVisible}
         hideDialog={closeDialog}
         onConfirmCb={onConfirmCb}
@@ -25,5 +25,3 @@ const useConfirmationDialog = (
     )
   };
 };
-
-export default useConfirmationDialog;

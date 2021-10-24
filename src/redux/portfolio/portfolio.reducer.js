@@ -1,5 +1,6 @@
 import PORTFOLIO_ACTION_TYPES from "./portfolio.action.types";
-import dummydata from "../../components/shared/rainbow-chart/dummydata.json";
+import dummydata from "./dummydata.json";
+
 const values = dummydata.data.prices;
 const historicValue = [
   {

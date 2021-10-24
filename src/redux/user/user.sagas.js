@@ -1,4 +1,3 @@
-import USER_ACTION_TYPES from "./user.action.types";
 import { takeLatest, put, call, all, select } from "redux-saga/effects";
 import {
   signInSuccess,
@@ -8,8 +7,9 @@ import {
   logOutFail,
   startEmailSignIn
 } from "./user.actions";
-import { addSuccessNotification } from "../notification/notification.actions";
+import USER_ACTION_TYPES from "./user.action.types";
 import { selectHasAutoSignedIn } from "./user.selectors";
+import { addSuccessNotification } from "../notification";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function* setUserFromAuth(user) {

@@ -7,11 +7,11 @@ import Reanimated, {
   useAnimatedStyle,
   withTiming
 } from "react-native-reanimated";
-import CONSTANTS from "../Constants";
+import { GLOBAL_CONSTANTS } from "../constants";
 
-const useHiddenFABOnScroll = ({
+export const useHiddenFABOnScroll = ({
   icon,
-  onFABClick = CONSTANTS.SHARED.EMPTY_FUNCTION,
+  onFABClick = GLOBAL_CONSTANTS.EMPTY_FUNCTION,
   ...otherProps
 }) => {
   const { colors } = useTheme();
@@ -28,10 +28,10 @@ const useHiddenFABOnScroll = ({
   return {
     scrollHandler,
     isScrolling,
-    FAB: (
-      <Reanimated.View style={[styles.fabPosition, fabContainer]}>
+    Fab: () => (
+      <Reanimated.View style={[STYLES.fabPosition, fabContainer]}>
         <FAB
-          style={[styles.fab, { backgroundColor: colors.primary }]}
+          style={[STYLES.fab, { backgroundColor: colors.primary }]}
           {...otherProps}
           icon={icon}
           color="white"
@@ -42,7 +42,7 @@ const useHiddenFABOnScroll = ({
   };
 };
 
-const styles = StyleSheet.create({
+const STYLES = StyleSheet.create({
   fabPosition: {
     position: "absolute",
     margin: 15,
@@ -57,5 +57,3 @@ const styles = StyleSheet.create({
     borderRadius: 32
   }
 });
-
-export default useHiddenFABOnScroll;
