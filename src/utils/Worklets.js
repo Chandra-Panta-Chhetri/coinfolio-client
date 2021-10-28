@@ -38,5 +38,5 @@ export function formatNumBasedOnSignWorklet(num, strToAppend = " ") {
 
 export function getStylesBasedOnSignWorklet(num) {
   "worklet";
-  return num >= 0 ? { color: "#4ecf3b" } : { color: "#e60000" };
+  return num >= 0 ? { color: "#4ecf3b" } : { color: "#eb1c1b" };
 }

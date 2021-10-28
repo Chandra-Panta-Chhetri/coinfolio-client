@@ -7,7 +7,10 @@ import {
 } from "../../../redux/portfolio";
 import { Text } from "react-native-paper";
 import { TYPOGRAPHY } from "../../../styles";
-import { formatNumBasedOnSign, getStylesBasedOnSign } from "../../../utils";
+import {
+  formatNumBasedOnSignWorklet,
+  getStylesBasedOnSign
+} from "../../../utils";
 
 const AllTimeProfit = ({ isLoading, overallProfit, width = "100%" }) => {
   return (
@@ -21,7 +24,7 @@ const AllTimeProfit = ({ isLoading, overallProfit, width = "100%" }) => {
             getStylesBasedOnSign(overallProfit.percentChange)
           ]}
         >
-          {formatNumBasedOnSign(overallProfit.percentChange)}%
+          {formatNumBasedOnSignWorklet(overallProfit.percentChange)}%
         </Text>
       </View>
     </View>
