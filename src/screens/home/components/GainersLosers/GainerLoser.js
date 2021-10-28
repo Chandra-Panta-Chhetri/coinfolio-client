@@ -3,7 +3,10 @@ import { StyleSheet, View } from "react-native";
 import { Card, Text, Avatar } from "react-native-paper";
 import { GLOBAL_CONSTANTS } from "../../../../constants";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../styles";
-import { getStylesBasedOnSign, formatNumBasedOnSign } from "../../../../utils";
+import {
+  getStylesBasedOnSign,
+  formatNumBasedOnSignWorklet
+} from "../../../../utils";
 import { TouchableNativeFeedback } from "../../../../shared-components";
 
 const GainerLoser = ({ item, navigation, index }) => {
@@ -32,7 +35,7 @@ const GainerLoser = ({ item, navigation, index }) => {
                   getStylesBasedOnSign(item.percentChange)
                 ]}
               >
-                {formatNumBasedOnSign(item.percentChange)}%
+                {formatNumBasedOnSignWorklet(item.percentChange)}%
               </Text>
             </View>
           </View>

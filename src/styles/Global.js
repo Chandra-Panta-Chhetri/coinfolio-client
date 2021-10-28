@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { GLOBAL_CONSTANTS } from "../constants";
+import { GLOBAL_CONSTANTS, COLORS } from "../constants";
 
 export default StyleSheet.create({
   borderRadius: {
@@ -36,10 +36,10 @@ export default StyleSheet.create({
     padding: 1
   },
   positiveNum: {
-    color: "#4ecf3b"
+    color: COLORS.SUCCESS
   },
   negativeNum: {
-    color: "#e60000"
+    color: COLORS.ERROR
   },
   fullContainerDimension: {
     height: "100%",

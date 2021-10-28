@@ -10,7 +10,10 @@ import { AntDesign } from "@expo/vector-icons";
 import { PressableView } from "../../../shared-components";
 import { GLOBAL_CONSTANTS } from "../../../constants";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
-import { formatNumBasedOnSign, getStylesBasedOnSign } from "../../../utils";
+import {
+  formatNumBasedOnSignWorklet,
+  getStylesBasedOnSign
+} from "../../../utils";
 
 const STYLES = StyleSheet.create({
   dataHeader: { borderBottomWidth: 0 },
@@ -163,7 +166,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
                   TYPOGRAPHY.caption
                 ]}
               >
-                {formatNumBasedOnSign(asset.pricePercentChange)}%
+                {formatNumBasedOnSignWorklet(asset.pricePercentChange)}%
               </Text>
             </View>
             <View style={STYLES.flex}>

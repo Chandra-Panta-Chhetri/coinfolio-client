@@ -4,7 +4,10 @@ import { Card, Text, Avatar } from "react-native-paper";
 import { GLOBAL_CONSTANTS } from "../../../../constants";
 import { TouchableNativeFeedback } from "../../../../shared-components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../styles";
-import { getStylesBasedOnSign, formatNumBasedOnSign } from "../../../../utils";
+import {
+  getStylesBasedOnSign,
+  formatNumBasedOnSignWorklet
+} from "../../../../utils";
 
 const TopCoin = ({ item, navigation }) => {
   return (
@@ -22,7 +25,7 @@ const TopCoin = ({ item, navigation }) => {
           <Text
             style={[TYPOGRAPHY.body1, getStylesBasedOnSign(item.percentChange)]}
           >
-            {formatNumBasedOnSign(item.percentChange)}%
+            {formatNumBasedOnSignWorklet(item.percentChange)}%
           </Text>
         </Card.Content>
       </Card>

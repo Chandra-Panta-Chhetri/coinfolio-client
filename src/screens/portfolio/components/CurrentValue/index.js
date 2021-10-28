@@ -8,7 +8,10 @@ import {
   selectCurrentPortfolioValue
 } from "../../../../redux/portfolio";
 import CurrentValueSkeleton from "./Skeleton";
-import { formatNumBasedOnSign, getStylesBasedOnSign } from "../../../../utils";
+import {
+  formatNumBasedOnSignWorklet,
+  getStylesBasedOnSign
+} from "../../../../utils";
 
 const CurrentValue = ({ currentValue, isLoading, width = "100%" }) => {
   if (isLoading && currentValue === null) {
@@ -26,7 +29,7 @@ const CurrentValue = ({ currentValue, isLoading, width = "100%" }) => {
             getStylesBasedOnSign(currentValue.percent)
           ]}
         >
-          {formatNumBasedOnSign(currentValue.percent)}%
+          {formatNumBasedOnSignWorklet(currentValue.percent)}%
         </Text>
       </View>
       <Text
@@ -35,7 +38,7 @@ const CurrentValue = ({ currentValue, isLoading, width = "100%" }) => {
           getStylesBasedOnSign(currentValue.plChange)
         ]}
       >
-        {formatNumBasedOnSign(currentValue.plChange, " $")} (24h)
+        {formatNumBasedOnSignWorklet(currentValue.plChange, " $")} (24h)
       </Text>
     </View>
   );
