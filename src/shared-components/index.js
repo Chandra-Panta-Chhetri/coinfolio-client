@@ -10,3 +10,5 @@ export { default as Tabs } from "./Tabs";
 export { default as TouchableNativeFeedback } from "./TouchableNativeFeedback";
 export { default as NewsList } from "./NewsList";
 export { default as LineChart } from "./RainbowChart";
+export { default as CloseIconButton } from "./CloseIconButton";
+export { default as SearchIconButton } from "./SearchIconButton";

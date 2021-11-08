@@ -19,3 +19,4 @@ export { default as SettingsScreen } from "./settings";
 export { default as SignUpScreen } from "./sign-up";
 export { default as SplashScreen } from "./splash";
 export { default as TermsAndPrivacyScreen } from "./terms-and-privacy";
+export { default as SearchCryptoScreen } from "./search-crypto";

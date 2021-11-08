@@ -1,15 +1,13 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
-import { Header } from "./components";
-import { GLOBAL_STYLES } from "../../styles";
 
-const MarketOverviewScreen = () => {
+function SearchCryptoScreen() {
   return (
-    <View style={GLOBAL_STYLES.screenContainer}>
-      <Header />
+    <View style={STYLES.container}>
+      <Text style={STYLES.text}>Search Crypto Screen</Text>
     </View>
   );
-};
+}
 
 const STYLES = StyleSheet.create({
   container: {
@@ -24,4 +22,4 @@ const STYLES = StyleSheet.create({
   }
 });
 
-export default MarketOverviewScreen;
+export default SearchCryptoScreen;
