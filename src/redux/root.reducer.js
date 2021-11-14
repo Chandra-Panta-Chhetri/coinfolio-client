@@ -5,6 +5,7 @@ import { summaryReducer } from "./summary";
 import { portfolioReducer } from "./portfolio";
 import { newsReducer } from "./news";
 import { combineReducers } from "redux";
+import { marketReducer } from "./market";
 
 export default combineReducers({
   user: userReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
   preferences: preferencesReducer,
   summary: summaryReducer,
   portfolio: portfolioReducer,
-  news: newsReducer
+  news: newsReducer,
+  market: marketReducer
 });

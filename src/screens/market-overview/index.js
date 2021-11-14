@@ -1,27 +1,17 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { Header } from "./components";
+import { StyleSheet, View } from "react-native";
+import { Header, Filters } from "./components";
 import { GLOBAL_STYLES } from "../../styles";
 
 const MarketOverviewScreen = () => {
   return (
     <View style={GLOBAL_STYLES.screenContainer}>
       <Header />
+      <Filters />
     </View>
   );
 };
 
-const STYLES = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  text: {
-    color: "#101010",
-    fontSize: 24,
-    fontWeight: "bold"
-  }
-});
+const STYLES = StyleSheet.create({});
 
 export default MarketOverviewScreen;
