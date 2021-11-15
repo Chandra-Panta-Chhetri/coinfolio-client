@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { selectShowOnlyFilter } from "../../../../redux/market/market.selectors";
+import { selectSortOrderFilter } from "../../../../redux/market/market.selectors";
 import { updateFilters } from "../../../../redux/market/market.actions";
 import { FilterBadge } from "../../../../shared-components";
 
-const ShowOnlyFilter = ({ activeFilter, updateMarketFilters }) => {
+const SortOrderFilter = ({ activeFilter, updateMarketFilters }) => {
   console.log(activeFilter);
 
   const onPress = () => {
-    console.log("Show Only Filter clicked");
+    console.log("Sort Order Filter clicked");
   };
 
   return (
     <FilterBadge
-      label={`Showing only`}
+      label={`Sorting in`}
       onPress={onPress}
       containerStyle={{ marginRight: 10, flexGrow: 1 }}
     />
@@ -21,11 +21,11 @@ const ShowOnlyFilter = ({ activeFilter, updateMarketFilters }) => {
 };
 
 const mapStateToProps = (state) => ({
-  activeFilter: selectShowOnlyFilter(state)
+  activeFilter: selectSortOrderFilter(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   updateMarketFilters: (val) => dispatch(updateFilters({ sortOrder: val }))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShowOnlyFilter);
+export default connect(mapStateToProps, mapDispatchToProps)(SortOrderFilter);

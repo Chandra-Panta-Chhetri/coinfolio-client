@@ -1,13 +1,32 @@
-import { View } from "react-native";
-import { Text } from "react-native-paper";
-import React from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { selectSortByFilter } from "../../../../redux/market/market.selectors";
+import { updateFilters } from "../../../../redux/market/market.actions";
+import { GLOBAL_STYLES } from "../../../../styles";
+import { FilterBadge } from "../../../../shared-components";
 
-const SortByFilter = () => {
+const SortByFilter = ({ activeFilter, updateMarketFilters }) => {
+  console.log(activeFilter);
+
+  const onPress = () => {
+    console.log("Sort By Filter clicked");
+  };
+
   return (
-    <View>
-      <Text>Limit Filter</Text>
-    </View>
+    <FilterBadge
+      label={`Sorting by`}
+      onPress={onPress}
+      containerStyle={{ marginRight: 10, flexGrow: 1 }}
+    />
   );
 };
 
-export default SortByFilter;
+const mapStateToProps = (state) => ({
+  activeFilter: selectSortByFilter(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  updateMarketFilters: (val) => dispatch(updateFilters({ sortBy: val }))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SortByFilter);

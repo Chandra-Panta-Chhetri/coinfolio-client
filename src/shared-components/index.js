@@ -12,3 +12,4 @@ export { default as NewsList } from "./NewsList";
 export { default as LineChart } from "./RainbowChart";
 export { default as CloseIconButton } from "./CloseIconButton";
 export { default as SearchIconButton } from "./SearchIconButton";
+export { default as FilterBadge } from "./FilterBadge";

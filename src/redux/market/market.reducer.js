@@ -1,4 +1,5 @@
 import MARKET_ACTION_TYPES from "./market.action.types";
+import { MARKET_OVERVIEW_CONSTANTS } from "../../constants";
 
 const INITIAL_STATE = {
   markets: [],
@@ -6,7 +7,12 @@ const INITIAL_STATE = {
   perPage: 100,
   hasMoreMarkets: true,
   pageNum: 1,
-  filters: {}
+  filters: {
+    sortBy: MARKET_OVERVIEW_CONSTANTS.SORT_BY.DEFAULT_FILTER,
+    sortOrder: "asc",
+    limit: MARKET_OVERVIEW_CONSTANTS.LIMIT.DEFAULT_FILTER,
+    showOnly: "all"
+  }
 };
 
 const marketReducer = (prevState = INITIAL_STATE, action) => {

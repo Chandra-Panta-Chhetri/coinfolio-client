@@ -1,13 +1,31 @@
-import React from "react";
-import { View } from "react-native";
-import { Text } from "react-native-paper";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { selectLimitFilter } from "../../../../redux/market/market.selectors";
+import { updateFilters } from "../../../../redux/market/market.actions";
+import { FilterBadge } from "../../../../shared-components";
 
-const LimitFilter = () => {
+const LimitFilter = ({ activeFilter, updateMarketFilters }) => {
+  console.log(activeFilter);
+
+  const onPress = () => {
+    console.log("Limit Filter clicked");
+  };
+
   return (
-    <View>
-      <Text>Limit Filter</Text>
-    </View>
+    <FilterBadge
+      label={`Limit to`}
+      onPress={onPress}
+      containerStyle={{ marginRight: 10, flexGrow: 1 }}
+    />
   );
 };
 
-export default LimitFilter;
+const mapStateToProps = (state) => ({
+  activeFilter: selectLimitFilter(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  updateMarketFilters: (val) => dispatch(updateFilters({ sortOrder: val }))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LimitFilter);

@@ -3,18 +3,17 @@ import { ScrollView } from "react-native";
 import LimitFilter from "./LimitFilter";
 import ShowOnlyFilter from "./ShowOnlyFilter";
 import SortByFilter from "./SortByFilter";
+import SortOrderFilter from "./SortOrderFilter";
 
 const Filters = () => {
-  const [filters, setFilters] = useState({
-    limit: 100,
-    sortBy: "",
-    showOnly: "",
-    sortOrder: "asc"
-  });
-
   return (
-    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={{ flexGrow: 1 }}
+    >
       <SortByFilter />
+      <SortOrderFilter />
       <LimitFilter />
       <ShowOnlyFilter />
     </ScrollView>

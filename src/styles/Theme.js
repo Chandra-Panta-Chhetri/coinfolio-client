@@ -15,7 +15,7 @@ export const LIGHT = {
     ...NavigationDefaultTheme.colors,
     primaryShimmer: "gainsboro",
     secondaryShimmer: "#f8f8f8",
-    touchableRipple: "lightgrey",
+    touchableRipple: "#a9a9a9",
     backgroundSelection: "#f3f3f3",
     primary: "#1a87ff"
   }

@@ -27,7 +27,27 @@ export const selectCurrentPage = createSelector(
   (market) => market.pageNum
 );
 
-export const selectMarketFilters = createSelector(
+const selectMarketFilters = createSelector(
   [selectMarket],
   (market) => market.filters
+);
+
+export const selectSortByFilter = createSelector(
+  [selectMarketFilters],
+  (filters) => filters.sortBy
+);
+
+export const selectLimitFilter = createSelector(
+  [selectMarketFilters],
+  (filters) => filters.limit
+);
+
+export const selectSortOrderFilter = createSelector(
+  [selectMarketFilters],
+  (filters) => filters.sortOrder
+);
+
+export const selectShowOnlyFilter = createSelector(
+  [selectMarketFilters],
+  (filters) => filters.showOnly
 );

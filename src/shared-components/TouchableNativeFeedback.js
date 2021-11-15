@@ -13,6 +13,7 @@ const TouchableNativeFeedback = ({
   children,
   viewContainerStyle = {},
   onLayout = undefined,
+  onPress = undefined,
   ...otherProps
 }) => {
   const { colors } = useTheme();
@@ -30,6 +31,7 @@ const TouchableNativeFeedback = ({
           colors.touchableRipple,
           false
         )}
+        onPress={onPress}
       >
         {children}
       </RNTouchableNativeFeedback>
