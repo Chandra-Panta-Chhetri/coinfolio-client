@@ -5,15 +5,13 @@ import { updateFilters } from "../../../../redux/market/market.actions";
 import { FilterBadge } from "../../../../shared-components";
 
 const ShowOnlyFilter = ({ activeFilter, updateMarketFilters }) => {
-  console.log(activeFilter);
-
   const onPress = () => {
     console.log("Show Only Filter clicked");
   };
 
   return (
     <FilterBadge
-      label={`Showing only`}
+      label={`Showing ${activeFilter}`}
       onPress={onPress}
       containerStyle={{ marginRight: 10, flexGrow: 1 }}
     />

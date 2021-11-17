@@ -6,15 +6,13 @@ import { GLOBAL_STYLES } from "../../../../styles";
 import { FilterBadge } from "../../../../shared-components";
 
 const SortByFilter = ({ activeFilter, updateMarketFilters }) => {
-  console.log(activeFilter);
-
   const onPress = () => {
     console.log("Sort By Filter clicked");
   };
 
   return (
     <FilterBadge
-      label={`Sorting by`}
+      label={`Sorting by ${activeFilter.label}`}
       onPress={onPress}
       containerStyle={{ marginRight: 10, flexGrow: 1 }}
     />

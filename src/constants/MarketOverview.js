@@ -26,7 +26,7 @@ const SORT_BY = {
     }
   ],
   get DEFAULT_FILTER() {
-    return this.FILTERS[0].value;
+    return this.FILTERS[0];
   }
 };
 
@@ -46,7 +46,7 @@ const LIMIT = {
     }
   ],
   get DEFAULT_FILTER() {
-    return this.FILTERS[0].value;
+    return this.FILTERS[0];
   }
 };
 
