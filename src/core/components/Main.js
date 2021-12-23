@@ -7,6 +7,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { connect } from "react-redux";
 import { selectIsThemeDark } from "../../redux/preferences/preferences.selectors";
 import NotificationSnackbar from "./NotificationSnackbar";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 const Main = ({ isThemeDark }) => {
   const theme = isThemeDark ? THEME.DARK : THEME.LIGHT;
@@ -15,13 +16,12 @@ const Main = ({ isThemeDark }) => {
   return (
     <PaperProvider theme={theme}>
       <SafeAreaView style={containerStyles}>
-        <StatusBar
-          backgroundColor={theme.colors.card}
-          barStyle={isThemeDark ? "light-content" : "dark-content"}
-        />
+        <StatusBar backgroundColor={theme.colors.card} barStyle={isThemeDark ? "light-content" : "dark-content"} />
         <View style={containerStyles}>
           <NavigationContainer theme={theme}>
-            <RootNavigator />
+            <BottomSheetModalProvider>
+              <RootNavigator />
+            </BottomSheetModalProvider>
           </NavigationContainer>
         </View>
         <NotificationSnackbar />

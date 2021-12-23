@@ -3,18 +3,25 @@ import { connect } from "react-redux";
 import { selectSortOrderFilter } from "../../../../redux/market/market.selectors";
 import { updateFilters } from "../../../../redux/market/market.actions";
 import { FilterBadge } from "../../../../shared-components";
+import { useBottomSheet } from "../../../../hooks";
+import { View, Text } from "react-native";
 
 const SortOrderFilter = ({ activeFilter, updateMarketFilters }) => {
-  const onPress = () => {
-    console.log("Sort Order Filter clicked");
-  };
+  const { openBottomSheet, BottomSheet } = useBottomSheet({ name: "sort-order-filters" });
 
   return (
-    <FilterBadge
-      label={`Sorting in ${activeFilter}`}
-      onPress={onPress}
-      containerStyle={{ marginRight: 10, flexGrow: 1 }}
-    />
+    <>
+      <FilterBadge
+        label={`Sorting in ${activeFilter}`}
+        onPress={openBottomSheet}
+        containerStyle={{ marginRight: 10, flexGrow: 1 }}
+      />
+      <BottomSheet>
+        <View style={{ flex: 1 }}>
+          <Text>Awesome Sort Order</Text>
+        </View>
+      </BottomSheet>
+    </>
   );
 };
 

@@ -3,18 +3,25 @@ import { connect } from "react-redux";
 import { selectShowOnlyFilter } from "../../../../redux/market/market.selectors";
 import { updateFilters } from "../../../../redux/market/market.actions";
 import { FilterBadge } from "../../../../shared-components";
+import { useBottomSheet } from "../../../../hooks";
+import { View, Text } from "react-native";
 
 const ShowOnlyFilter = ({ activeFilter, updateMarketFilters }) => {
-  const onPress = () => {
-    console.log("Show Only Filter clicked");
-  };
+  const { openBottomSheet, BottomSheet } = useBottomSheet({ name: "show-only-filters" });
 
   return (
-    <FilterBadge
-      label={`Showing ${activeFilter}`}
-      onPress={onPress}
-      containerStyle={{ marginRight: 10, flexGrow: 1 }}
-    />
+    <>
+      <FilterBadge
+        label={`Showing ${activeFilter}`}
+        onPress={openBottomSheet}
+        containerStyle={{ marginRight: 10, flexGrow: 1 }}
+      />
+      <BottomSheet>
+        <View style={{ flex: 1 }}>
+          <Text>Awesome Show Only</Text>
+        </View>
+      </BottomSheet>
+    </>
   );
 };
 

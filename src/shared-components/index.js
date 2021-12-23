@@ -13,3 +13,4 @@ export { default as LineChart } from "./RainbowChart";
 export { default as CloseIconButton } from "./CloseIconButton";
 export { default as SearchIconButton } from "./SearchIconButton";
 export { default as FilterBadge } from "./FilterBadge";
+export { default as BottomSheet } from "./BottomSheet";
