@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { selectIsThemeDark } from "../../redux/preferences/preferences.selectors";
 import NotificationSnackbar from "./NotificationSnackbar";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const Main = ({ isThemeDark }) => {
   const theme = isThemeDark ? THEME.DARK : THEME.LIGHT;
@@ -17,13 +18,13 @@ const Main = ({ isThemeDark }) => {
     <PaperProvider theme={theme}>
       <SafeAreaView style={containerStyles}>
         <StatusBar backgroundColor={theme.colors.card} barStyle={isThemeDark ? "light-content" : "dark-content"} />
-        <View style={containerStyles}>
+        <GestureHandlerRootView style={containerStyles}>
           <NavigationContainer theme={theme}>
             <BottomSheetModalProvider>
               <RootNavigator />
             </BottomSheetModalProvider>
           </NavigationContainer>
-        </View>
+        </GestureHandlerRootView>
         <NotificationSnackbar />
       </SafeAreaView>
     </PaperProvider>
