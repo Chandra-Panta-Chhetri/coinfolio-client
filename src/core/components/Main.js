@@ -2,13 +2,14 @@ import React from "react";
 import RootNavigator from "../navigators/Root";
 import { Provider as PaperProvider } from "react-native-paper";
 import { THEME } from "../../styles";
-import { SafeAreaView, StatusBar, View } from "react-native";
+import { SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { connect } from "react-redux";
 import { selectIsThemeDark } from "../../redux/preferences/preferences.selectors";
 import NotificationSnackbar from "./NotificationSnackbar";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { StatusBar } from "expo-status-bar";
 
 const Main = ({ isThemeDark }) => {
   const theme = isThemeDark ? THEME.DARK : THEME.LIGHT;
@@ -17,8 +18,8 @@ const Main = ({ isThemeDark }) => {
   return (
     <PaperProvider theme={theme}>
       <SafeAreaView style={containerStyles}>
-        <StatusBar backgroundColor={theme.colors.card} barStyle={isThemeDark ? "light-content" : "dark-content"} />
-        <GestureHandlerRootView style={containerStyles}>
+        <StatusBar backgroundColor={theme.colors.card} style={isThemeDark ? "light" : "dark"} />
+        <GestureHandlerRootView style={[containerStyles, { marginTop: 40 }]}>
           <NavigationContainer theme={theme}>
             <BottomSheetModalProvider>
               <RootNavigator />
