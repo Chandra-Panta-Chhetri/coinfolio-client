@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import RootNavigator from "../navigators/Root";
 import { Provider as PaperProvider } from "react-native-paper";
 import { THEME } from "../../styles";
@@ -16,9 +16,11 @@ const Main = ({ isThemeDark }) => {
   const theme = isThemeDark ? THEME.DARK : THEME.LIGHT;
   const containerStyles = { flex: 1, backgroundColor: theme.colors.card };
 
-  if (Platform.OS === "android") {
-    NavigationBar.setBackgroundColorAsync(theme.colors.card);
-  }
+  useEffect(() => {
+    if (Platform.OS === "android") {
+      NavigationBar.setBackgroundColorAsync(theme.colors.card);
+    }
+  }, [isThemeDark]);
 
   return (
     <PaperProvider theme={theme}>
