@@ -7,7 +7,11 @@ import SortOrderFilter from "./SortOrderFilter";
 
 const Filters = () => {
   return (
-    <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1 }}>
+    <ScrollView
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={{ flexGrow: 1, marginBottom: 5 }}
+    >
       <SortByFilter />
       <SortOrderFilter />
       <LimitFilter />
