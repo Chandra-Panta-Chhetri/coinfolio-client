@@ -1,11 +1,8 @@
 import React from "react";
-import { FlatList, StyleSheet, View } from "react-native";
-import { Header, Filters } from "./components";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
-import { Avatar, Text, useTheme } from "react-native-paper";
-import { GLOBAL_CONSTANTS } from "../../constants";
-import { formatNumBasedOnSignWorklet, getStylesBasedOnSign } from "../../utils";
-import SparkLine from "../../shared-components/SparkLine";
+import { FlatList, StyleSheet } from "react-native";
+import { Header, Filters, OverviewItem } from "./components";
+import { GLOBAL_STYLES } from "../../styles";
+import { useTheme } from "react-native-paper";
 
 import dummydata from "../../redux/portfolio/dummydata.json";
 
@@ -30,7 +27,7 @@ const MARKETS = [
   }
 ];
 
-const MarketOverviewScreen = () => {
+const MarketOverviewScreen = ({ markets = MARKETS }) => {
   const { colors } = useTheme();
 
   return (
@@ -43,61 +40,21 @@ const MarketOverviewScreen = () => {
       }
       contentContainerStyle={GLOBAL_STYLES.screenContainer}
       showsVerticalScrollIndicator={false}
-      data={MARKETS}
+      data={markets}
       keyExtractor={(m) => m.rank}
-      ListHeaderComponentStyle={{ marginBottom: 10, backgroundColor: colors.background }}
+      ListHeaderComponentStyle={[STYLES.listHeader, { backgroundColor: colors.background }]}
       stickyHeaderIndices={[0]}
       renderItem={({ item, index }) => (
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginBottom: index !== MARKETS.length - 1 ? 6 : 0,
-            flex: 1
-          }}
-        >
-          <Avatar.Image
-            size={GLOBAL_CONSTANTS.AVATAR_IMAGE_SIZE}
-            source={{
-              uri: item.iconUrl
-            }}
-          />
-          <View style={{ flex: 1, marginLeft: 5 }}>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text
-                style={[
-                  { borderWidth: 1, borderRadius: 4, padding: 3, marginRight: 5, textAlign: "center" },
-                  TYPOGRAPHY.body1
-                ]}
-              >
-                {item.rank}
-              </Text>
-              <Text numberOfLines={1} style={[TYPOGRAPHY.body2]}>
-                {item.symbol}
-              </Text>
-            </View>
-            <Text numberOfLines={1} style={[TYPOGRAPHY.body1]}>
-              MCap - {item.marketCap}
-            </Text>
-          </View>
-          <SparkLine
-            data={item.sparkLine}
-            isPositive={item.percentChange >= 0}
-            svgConfig={{ fill: "transparent", strokeWidth: 2 }}
-            chartStyle={{ width: "100%", height: "100%", flex: 1 }}
-          />
-          <View style={{ alignItems: "flex-end" }}>
-            <Text style={[TYPOGRAPHY.body2]}>${item.price}</Text>
-            <Text style={[getStylesBasedOnSign(item.percentChange), TYPOGRAPHY.body1]}>
-              {formatNumBasedOnSignWorklet(item.percentChange)}%
-            </Text>
-          </View>
-        </View>
+        <OverviewItem item={item} containerStyle={{ marginBottom: index !== markets.length - 1 ? 6 : 0 }} />
       )}
     />
   );
 };
 
-const STYLES = StyleSheet.create({});
+const STYLES = StyleSheet.create({
+  listHeader: {
+    marginBottom: 10
+  }
+});
 
 export default MarketOverviewScreen;

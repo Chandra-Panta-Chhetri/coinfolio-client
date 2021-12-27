@@ -52,5 +52,8 @@ const LIMIT = {
 
 export default {
   LIMIT,
-  SORT_BY
+  SORT_BY,
+  SPARK_LINE: {
+    MAX_NUM_POINTS_TO_SHOW: 30
+  }
 };

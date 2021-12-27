@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Path } from "react-native-svg";
-import { formatData } from "./chart-utils";
+import { formatData } from "../../utils";
 import Reanimated, {
   useAnimatedStyle,
   useAnimatedProps,
@@ -55,12 +55,7 @@ const LineChart = ({
       percentChangeAccessor,
       dataPointsAccessor
     };
-    const formattedData = formatData(
-      data,
-      chartWidth,
-      chartHeight,
-      valueAccessors
-    );
+    const formattedData = formatData(data, chartWidth, chartHeight, valueAccessors);
     setModifiedData(formattedData);
   };
 
@@ -73,28 +68,19 @@ const LineChart = ({
   const xPanGesturePos = useSharedValue(0);
   const isPanGestureActive = useSharedValue(false);
 
-  const selectedGraph = useDerivedValue(
-    () => modifiedData[currentSelected.value].data,
-    [modifiedData]
-  );
+  const selectedGraph = useDerivedValue(() => modifiedData[currentSelected.value].data, [modifiedData]);
 
-  const hasPathsBeenCalculated = useDerivedValue(
-    () => !!selectedGraph.value.path
-  );
+  const hasPathsBeenCalculated = useDerivedValue(() => !!selectedGraph.value.path);
 
   const animatedLabelOverlay = useAnimatedStyle(
     () => ({
-      transform: [
-        { translateX: withTiming(buttonWidth * currentSelected.value) }
-      ]
+      transform: [{ translateX: withTiming(buttonWidth * currentSelected.value) }]
     }),
     [buttonWidth]
   );
 
   const animatedTimeFilters = useAnimatedStyle(() => ({
-    opacity: withTiming(
-      isPanGestureActive.value || !hasPathsBeenCalculated.value ? 0 : 1
-    )
+    opacity: withTiming(isPanGestureActive.value || !hasPathsBeenCalculated.value ? 0 : 1)
   }));
 
   const animatedPathProps = useAnimatedProps(() => {
@@ -102,14 +88,8 @@ const LineChart = ({
     const currentPath = modifiedData[currentSelected.value].data.path;
 
     return {
-      d: !previousPath
-        ? ""
-        : mixPath(pathTransistion.value, previousPath, currentPath),
-      strokeWidth: withTiming(
-        isPanGestureActive.value
-          ? svgConfig.strokeWidth + 1
-          : svgConfig.strokeWidth
-      )
+      d: !previousPath ? "" : mixPath(pathTransistion.value, previousPath, currentPath),
+      strokeWidth: withTiming(isPanGestureActive.value ? svgConfig.strokeWidth + 1 : svgConfig.strokeWidth)
     };
   }, [modifiedData, svgConfig]);
 
@@ -143,11 +123,7 @@ const LineChart = ({
       </View>
       <View style={[chartStyle, STYLES.relativePosition]}>
         <Svg style={GLOBAL_STYLES.fullContainerDimension}>
-          <AnimatedPath
-            animatedProps={animatedPathProps}
-            {...svgConfig}
-            stroke={themeColors.text}
-          />
+          <AnimatedPath animatedProps={animatedPathProps} {...svgConfig} stroke={themeColors.text} />
         </Svg>
         <Cursor
           maxWidth={width}
@@ -170,9 +146,7 @@ const LineChart = ({
           />
         ))}
       </View>
-      <Reanimated.View
-        style={[STYLES.timeFilterContainer, animatedTimeFilters]}
-      >
+      <Reanimated.View style={[STYLES.timeFilterContainer, animatedTimeFilters]}>
         <View style={StyleSheet.absoluteFill}>
           <Reanimated.View
             style={[
@@ -186,14 +160,8 @@ const LineChart = ({
           />
         </View>
         {data.map((d, i) => (
-          <PressableView
-            key={d.label}
-            onPress={() => handleTimeFilterClick(i)}
-            viewStyle={{ width: buttonWidth }}
-          >
-            <Text style={[TYPOGRAPHY.subheading, TYPOGRAPHY.textAlignCenter]}>
-              {d.label}
-            </Text>
+          <PressableView key={d.label} onPress={() => handleTimeFilterClick(i)} viewStyle={{ width: buttonWidth }}>
+            <Text style={[TYPOGRAPHY.subheading, TYPOGRAPHY.textAlignCenter]}>{d.label}</Text>
           </PressableView>
         ))}
       </Reanimated.View>

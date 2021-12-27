@@ -1,7 +1,8 @@
 import * as shape from "d3-shape";
 import { scaleLinear } from "d3-scale";
 import { parse } from "react-native-redash";
-import RAINBOW_CHART_CONSTANTS from "./constants";
+import RAINBOW_CHART_CONSTANTS from "../shared-components/RainbowChart/constants";
+import { MARKET_OVERVIEW_CONSTANTS } from "../constants";
 
 const findMaxAndMinYX = (dataPoints) => {
   if (dataPoints.length === 0) {
@@ -56,12 +57,29 @@ const findMaxAndMinYX = (dataPoints) => {
   };
 };
 
-export const buildLineChart = (
+export const buildSparkLine = (
   data = [],
   chartWidth = 0,
   chartHeight = 0,
-  { xValueAccessor, yValueAccessor, percentChangeAccessor, dataPointsAccessor },
-  maxPointsToShow = RAINBOW_CHART_CONSTANTS.MAX_NUM_POINTS_TO_SHOW
+  { xValueAccessor, yValueAccessor, dataPointsAccessor },
+  maxPointsToShow = MARKET_OVERVIEW_CONSTANTS.SPARK_LINE.MAX_NUM_POINTS_TO_SHOW
+) => {
+  const { path } = getSvgPath(
+    data,
+    chartWidth,
+    chartHeight,
+    { xValueAccessor, yValueAccessor, dataPointsAccessor },
+    maxPointsToShow
+  );
+  return path;
+};
+
+const getSvgPath = (
+  data = [],
+  chartWidth = 0,
+  chartHeight = 0,
+  { xValueAccessor, yValueAccessor, dataPointsAccessor },
+  maxPointsToShow
 ) => {
   const dataPoints = dataPointsAccessor(data).slice(0, maxPointsToShow);
   const parsedDataPoints = dataPoints.map((dp) => [parseFloat(xValueAccessor(dp)), parseFloat(yValueAccessor(dp))]);
@@ -80,20 +98,7 @@ export const buildLineChart = (
     .curve(shape.curveBasis)(parsedDataPoints);
 
   return {
-    percentChange: percentChangeAccessor(data),
-    path: parse(svgPath),
-    labelCoordinates: [
-      {
-        x: scaleX(parsedDataPoints[extremas.y.indexOfMaxYVal][0]),
-        y: -25,
-        val: extremas.y.maxVal
-      },
-      {
-        x: scaleX(parsedDataPoints[extremas.y.indexOfMinYVal][0]),
-        y: chartHeight - 4,
-        val: extremas.y.minVal
-      }
-    ],
+    path: svgPath,
     xAxis: {
       domain: scaleXDomain,
       range: scaleXRange
@@ -101,7 +106,45 @@ export const buildLineChart = (
     yAxis: {
       domain: scaleYDomain,
       range: scaleYRange
-    }
+    },
+    dataPoints: parsedDataPoints,
+    extremas,
+    scaleX,
+    scaleY
+  };
+};
+
+export const buildLineChart = (
+  data = [],
+  chartWidth = 0,
+  chartHeight = 0,
+  { xValueAccessor, yValueAccessor, percentChangeAccessor, dataPointsAccessor },
+  maxPointsToShow = RAINBOW_CHART_CONSTANTS.MAX_NUM_POINTS_TO_SHOW
+) => {
+  const { path, dataPoints, extremas, xAxis, yAxis, scaleX } = getSvgPath(
+    data,
+    chartWidth,
+    chartHeight,
+    { xValueAccessor, yValueAccessor, dataPointsAccessor },
+    maxPointsToShow
+  );
+  return {
+    percentChange: percentChangeAccessor(data),
+    path: parse(path),
+    labelCoordinates: [
+      {
+        x: scaleX(dataPoints[extremas.y.indexOfMaxYVal][0]),
+        y: -25,
+        val: extremas.y.maxVal
+      },
+      {
+        x: scaleX(dataPoints[extremas.y.indexOfMinYVal][0]),
+        y: chartHeight - 4,
+        val: extremas.y.minVal
+      }
+    ],
+    xAxis,
+    yAxis
   };
 };
 
