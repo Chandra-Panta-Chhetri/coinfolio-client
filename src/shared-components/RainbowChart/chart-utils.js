@@ -56,18 +56,15 @@ const findMaxAndMinYX = (dataPoints) => {
   };
 };
 
-const buildLineChart = (
-  data,
+export const buildLineChart = (
+  data = [],
   chartWidth = 0,
   chartHeight = 0,
   { xValueAccessor, yValueAccessor, percentChangeAccessor, dataPointsAccessor },
   maxPointsToShow = RAINBOW_CHART_CONSTANTS.MAX_NUM_POINTS_TO_SHOW
 ) => {
   const dataPoints = dataPointsAccessor(data).slice(0, maxPointsToShow);
-  const parsedDataPoints = dataPoints.map((dp) => [
-    parseFloat(xValueAccessor(dp)),
-    parseFloat(yValueAccessor(dp))
-  ]);
+  const parsedDataPoints = dataPoints.map((dp) => [parseFloat(xValueAccessor(dp)), parseFloat(yValueAccessor(dp))]);
   const extremas = findMaxAndMinYX(parsedDataPoints);
   const scaleXDomain = [extremas.x.minVal, extremas.x.maxVal];
   const scaleYDomain = [extremas.y.minVal, extremas.y.maxVal];

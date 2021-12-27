@@ -5,6 +5,9 @@ import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { Avatar, Text, useTheme } from "react-native-paper";
 import { GLOBAL_CONSTANTS } from "../../constants";
 import { formatNumBasedOnSignWorklet, getStylesBasedOnSign } from "../../utils";
+import SparkLine from "../../shared-components/SparkLine";
+
+import dummydata from "../../redux/portfolio/dummydata.json";
 
 const MARKETS = [
   {
@@ -12,7 +15,7 @@ const MARKETS = [
     rank: 1,
     symbol: "BTC",
     marketCap: 123032,
-    sparkLine: [],
+    sparkLine: dummydata.data.prices.week,
     price: 64000,
     percentChange: 2.3
   },
@@ -21,106 +24,7 @@ const MARKETS = [
     rank: 2,
     symbol: "ETH",
     marketCap: 23032,
-    sparkLine: [],
-    price: 4000,
-    percentChange: -5.2
-  },
-  {
-    iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
-    rank: 3,
-    symbol: "ETH",
-    marketCap: 23032,
-    sparkLine: [],
-    price: 4000,
-    percentChange: -5.2
-  },
-  {
-    iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
-    rank: 4,
-    symbol: "ETH",
-    marketCap: 23032,
-    sparkLine: [],
-    price: 4000,
-    percentChange: -5.2
-  },
-  {
-    iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
-    rank: 5,
-    symbol: "ETH",
-    marketCap: 23032,
-    sparkLine: [],
-    price: 4000,
-    percentChange: -5.2
-  },
-  {
-    iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
-    rank: 6,
-    symbol: "ETH",
-    marketCap: 23032,
-    sparkLine: [],
-    price: 4000,
-    percentChange: -5.2
-  },
-  {
-    iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
-    rank: 7,
-    symbol: "ETH",
-    marketCap: 23032,
-    sparkLine: [],
-    price: 4000,
-    percentChange: -5.2
-  },
-  {
-    iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
-    rank: 8,
-    symbol: "ETH",
-    marketCap: 23032,
-    sparkLine: [],
-    price: 4000,
-    percentChange: -5.2
-  },
-  {
-    iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
-    rank: 9,
-    symbol: "ETH",
-    marketCap: 23032,
-    sparkLine: [],
-    price: 4000,
-    percentChange: -5.2
-  },
-  {
-    iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
-    rank: 10,
-    symbol: "ETH",
-    marketCap: 23032,
-    sparkLine: [],
-    price: 4000,
-    percentChange: -5.2
-  },
-  {
-    iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
-    rank: 11,
-    symbol: "ETH",
-    marketCap: 23032,
-    sparkLine: [],
-    price: 4000,
-    percentChange: -5.2
-  },
-  {
-    iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
-    rank: 12,
-    symbol: "ETH",
-    marketCap: 23032,
-    sparkLine: [],
-    price: 4000,
-    percentChange: -5.2
-  },
-  {
-    iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
-    rank: 13,
-    symbol: "ETH",
-    marketCap: 23032,
-    sparkLine: [],
+    sparkLine: dummydata.data.prices.week,
     price: 4000,
     percentChange: -5.2
   }
@@ -148,7 +52,8 @@ const MarketOverviewScreen = () => {
           style={{
             flexDirection: "row",
             alignItems: "center",
-            marginBottom: index !== MARKETS.length - 1 ? 6 : 0
+            marginBottom: index !== MARKETS.length - 1 ? 6 : 0,
+            flex: 1
           }}
         >
           <Avatar.Image
@@ -175,8 +80,13 @@ const MarketOverviewScreen = () => {
               MCap - {item.marketCap}
             </Text>
           </View>
-          <View style={{ flex: 1 }}></View>
-          <View style={{ flex: 1, alignItems: "flex-end" }}>
+          <SparkLine
+            data={item.sparkLine}
+            isPositive={item.percentChange >= 0}
+            svgConfig={{ fill: "transparent", strokeWidth: 2 }}
+            chartStyle={{ width: "100%", height: "100%", flex: 1 }}
+          />
+          <View style={{ alignItems: "flex-end" }}>
             <Text style={[TYPOGRAPHY.body2]}>${item.price}</Text>
             <Text style={[getStylesBasedOnSign(item.percentChange), TYPOGRAPHY.body1]}>
               {formatNumBasedOnSignWorklet(item.percentChange)}%
