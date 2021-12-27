@@ -4,7 +4,7 @@ import { MARKET_OVERVIEW_CONSTANTS } from "../../constants";
 const INITIAL_STATE = {
   markets: [],
   isFetchingMarkets: false,
-  perPage: 100,
+  perPage: 15,
   hasMoreMarkets: true,
   pageNum: 1,
   filters: {
