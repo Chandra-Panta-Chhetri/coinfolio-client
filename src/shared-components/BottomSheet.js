@@ -1,13 +1,21 @@
 import { BottomSheetBackdrop, BottomSheetModal } from "@gorhom/bottom-sheet";
 import React, { useMemo } from "react";
+import { useTheme } from "react-native-paper";
 
 const Backdrop = (props) => <BottomSheetBackdrop {...props} opacity={0.6} appearsOnIndex={0} disappearsOnIndex={-1} />;
 
 const BottomSheet = React.forwardRef(({ children, snapPoints = ["45%"], name }, ref) => {
   const memoizedSnapPoints = useMemo(() => snapPoints, []);
+  const { colors } = useTheme();
 
   return (
-    <BottomSheetModal ref={ref} name={name} snapPoints={memoizedSnapPoints} backdropComponent={Backdrop}>
+    <BottomSheetModal
+      backgroundStyle={{ backgroundColor: colors.border }}
+      ref={ref}
+      name={name}
+      snapPoints={memoizedSnapPoints}
+      backdropComponent={Backdrop}
+    >
       {children}
     </BottomSheetModal>
   );
