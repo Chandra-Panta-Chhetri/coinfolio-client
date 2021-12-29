@@ -14,7 +14,7 @@ const BottomSheet = React.forwardRef(({ children, name }, ref) => {
 
   return (
     <BottomSheetModal
-      backgroundStyle={{ backgroundColor: colors.border }}
+      backgroundStyle={{ backgroundColor: colors.bottomSheet }}
       ref={ref}
       name={name}
       snapPoints={animatedSnapPoints}

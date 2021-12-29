@@ -11,7 +11,8 @@ export const LIGHT = {
     secondaryShimmer: "#f8f8f8",
     touchableRipple: "#a9a9a9",
     backgroundSelection: "#f3f3f3",
-    primary: "#1a87ff"
+    primary: "#1a87ff",
+    bottomSheet: "#f2f2f2"
   }
 };
 
@@ -26,6 +27,7 @@ export const DARK = {
     secondaryShimmer: "gainsboro",
     touchableRipple: "grey",
     backgroundSelection: "#a3cfff",
-    primary: "#1a87ff"
+    primary: "#1a87ff",
+    bottomSheet: "#272729"
   }
 };

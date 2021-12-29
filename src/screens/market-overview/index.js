@@ -7,6 +7,13 @@ import { connect } from "react-redux";
 import { selectIsFetchingMarkets, selectMarkets, startMarketsFetch, selectMarketsPerPage } from "../../redux/market";
 import { Skeleton } from "../../shared-components";
 
+const ListHeaderComponent = () => (
+  <>
+    <Header />
+    <Filters />
+  </>
+);
+
 const MarketOverviewScreen = ({ markets = [], getMarkets, isLoadingMarkets, perPage }) => {
   useEffect(() => {
     getMarkets();
@@ -15,28 +22,37 @@ const MarketOverviewScreen = ({ markets = [], getMarkets, isLoadingMarkets, perP
   const { colors } = useTheme();
   const DUMMY_SKELETON_ARRAY = Array(perPage).fill("1");
 
+  if (isLoadingMarkets) {
+    return (
+      <FlatList
+        ListHeaderComponent={ListHeaderComponent}
+        contentContainerStyle={GLOBAL_STYLES.screenContainer}
+        showsVerticalScrollIndicator={false}
+        data={DUMMY_SKELETON_ARRAY}
+        keyExtractor={(_, i) => i}
+        ListHeaderComponentStyle={[STYLES.listHeader, { backgroundColor: colors.background }]}
+        stickyHeaderIndices={[0]}
+        renderItem={({ _, index }) => (
+          <Skeleton
+            style={[STYLES.overviewItemSkeleton, { marginBottom: index !== DUMMY_SKELETON_ARRAY.length - 1 ? 6 : 0 }]}
+          />
+        )}
+      />
+    );
+  }
+
   return (
     <FlatList
-      ListHeaderComponent={
-        <>
-          <Header />
-          <Filters />
-        </>
-      }
+      ListHeaderComponent={ListHeaderComponent}
       contentContainerStyle={GLOBAL_STYLES.screenContainer}
       showsVerticalScrollIndicator={false}
-      data={isLoadingMarkets ? DUMMY_SKELETON_ARRAY : markets}
-      keyExtractor={(m, i) => (m.rank || 0) + i}
+      data={markets}
+      keyExtractor={(m) => m.rank}
       ListHeaderComponentStyle={[STYLES.listHeader, { backgroundColor: colors.background }]}
       stickyHeaderIndices={[0]}
-      renderItem={({ item, index }) => {
-        const marginBottom = { marginBottom: index !== markets.length - 1 ? 6 : 0 };
-        return isLoadingMarkets ? (
-          <Skeleton style={[STYLES.overviewItemSkeleton, marginBottom]} />
-        ) : (
-          <OverviewItem item={item} containerStyle={marginBottom} />
-        );
-      }}
+      renderItem={({ item, index }) => (
+        <OverviewItem item={item} containerStyle={{ marginBottom: index !== markets.length - 1 ? 6 : 0 }} />
+      )}
     />
   );
 };

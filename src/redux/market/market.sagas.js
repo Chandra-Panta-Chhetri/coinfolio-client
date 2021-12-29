@@ -23,10 +23,10 @@ function* fetchMarkets() {
     const perPage = yield select(selectMarketsPerPage);
     const currentMarkets = yield select(selectMarkets);
 
-    const newMarkets = [
+    let newMarkets = [
       {
         iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png",
-        rank: 1,
+        rank: Math.floor(Math.random() * 500),
         symbol: "BTC",
         marketCap: 123032,
         sparkLine: dummydata.data.prices.week,
@@ -35,7 +35,7 @@ function* fetchMarkets() {
       },
       {
         iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
-        rank: 2,
+        rank: Math.floor(Math.random() * 500),
         symbol: "ETH",
         marketCap: 23032,
         sparkLine: dummydata.data.prices.week,
@@ -43,6 +43,7 @@ function* fetchMarkets() {
         percentChange: -5.2
       }
     ];
+
     if (newMarkets.length === 0) {
       return yield put(noMoreMarkets());
     }
