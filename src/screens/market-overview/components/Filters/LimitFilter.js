@@ -11,7 +11,11 @@ const LimitFilter = ({ activeFilter, updateMarketFilters }) => {
 
   return (
     <>
-      <FilterBadge label={`Limit to`} onPress={openBottomSheet} containerStyle={{ marginRight: 10, flexGrow: 1 }} />
+      <FilterBadge
+        label={`Limit to ${activeFilter.label}`}
+        onPress={openBottomSheet}
+        containerStyle={{ marginRight: 10, flexGrow: 1 }}
+      />
       <BottomSheet>
         <View style={{ flex: 1 }}>
           <Text>Awesome Limit</Text>

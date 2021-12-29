@@ -15,3 +15,4 @@ export { default as SearchIconButton } from "./SearchIconButton";
 export { default as FilterBadge } from "./FilterBadge";
 export { default as BottomSheet } from "./BottomSheet";
 export { default as SparkLine } from "./SparkLine";
+export { default as TouchableSelectOption } from "./TouchableSelectOption";

@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { BottomSheet } from "../shared-components";
 
-export const useBottomSheet = ({ name, snapPoints }) => {
+export const useBottomSheet = ({ name }) => {
   const bottomSheetRef = useRef(null);
 
   const openBottomSheet = () => bottomSheetRef.current && bottomSheetRef.current.present();
@@ -11,7 +11,7 @@ export const useBottomSheet = ({ name, snapPoints }) => {
     openBottomSheet,
     closeBottomSheet,
     BottomSheet: ({ children }) => (
-      <BottomSheet snapPoints={snapPoints} name={name} ref={bottomSheetRef}>
+      <BottomSheet name={name} ref={bottomSheetRef}>
         {children}
       </BottomSheet>
     )

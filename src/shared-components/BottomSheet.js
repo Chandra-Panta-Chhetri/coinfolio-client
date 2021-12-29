@@ -1,11 +1,15 @@
-import { BottomSheetBackdrop, BottomSheetModal } from "@gorhom/bottom-sheet";
+import { BottomSheetBackdrop, BottomSheetModal, useBottomSheetDynamicSnapPoints } from "@gorhom/bottom-sheet";
 import React, { useMemo } from "react";
+import { View, Dimensions } from "react-native";
 import { useTheme } from "react-native-paper";
 
 const Backdrop = (props) => <BottomSheetBackdrop {...props} opacity={0.6} appearsOnIndex={0} disappearsOnIndex={-1} />;
+const DEVICE_HEIGHT = Dimensions.get("window").height;
 
-const BottomSheet = React.forwardRef(({ children, snapPoints = ["45%"], name }, ref) => {
-  const memoizedSnapPoints = useMemo(() => snapPoints, []);
+const BottomSheet = React.forwardRef(({ children, name }, ref) => {
+  const memoizedSnapPoints = useMemo(() => ["CONTENT_HEIGHT"], []);
+  const { animatedHandleHeight, animatedSnapPoints, animatedContentHeight, handleContentLayout } =
+    useBottomSheetDynamicSnapPoints(memoizedSnapPoints);
   const { colors } = useTheme();
 
   return (
@@ -13,10 +17,16 @@ const BottomSheet = React.forwardRef(({ children, snapPoints = ["45%"], name }, 
       backgroundStyle={{ backgroundColor: colors.border }}
       ref={ref}
       name={name}
-      snapPoints={memoizedSnapPoints}
+      snapPoints={animatedSnapPoints}
       backdropComponent={Backdrop}
+      handleIndicatorStyle={{ backgroundColor: colors.text }}
+      handleHeight={animatedHandleHeight}
+      contentHeight={animatedContentHeight}
+      enablePanDownToClose
     >
-      {children}
+      <View onLayout={handleContentLayout} style={{ maxHeight: DEVICE_HEIGHT }}>
+        {children}
+      </View>
     </BottomSheetModal>
   );
 });

@@ -56,7 +56,14 @@ const STYLES = StyleSheet.create({
   },
   rankSymbolMarketCap: { flex: 1, marginLeft: 5 },
   rankSymbol: { flexDirection: "row", alignItems: "center" },
-  rank: { ...GLOBAL_STYLES.borderRadius, borderWidth: 1, padding: 3, marginRight: 5, textAlign: "center" },
+  rank: {
+    ...GLOBAL_STYLES.borderRadius,
+    borderWidth: 1,
+    padding: 3,
+    marginRight: 5,
+    textAlign: "center",
+    borderColor: "grey"
+  },
   sparkline: {
     height: "100%",
     flex: 1,

@@ -3,9 +3,10 @@ import { connect } from "react-redux";
 import { selectSortByFilter } from "../../../../redux/market/market.selectors";
 import { updateFilters } from "../../../../redux/market/market.actions";
 import { GLOBAL_STYLES } from "../../../../styles";
-import { FilterBadge } from "../../../../shared-components";
+import { FilterBadge, TouchableSelectOption } from "../../../../shared-components";
 import { View, Text } from "react-native";
 import { useBottomSheet } from "../../../../hooks";
+import { MARKET_OVERVIEW_CONSTANTS } from "../../../../constants";
 
 const SortByFilter = ({ activeFilter, updateMarketFilters }) => {
   const { openBottomSheet, BottomSheet } = useBottomSheet({ name: "sort-by-filters" });
@@ -18,9 +19,16 @@ const SortByFilter = ({ activeFilter, updateMarketFilters }) => {
         containerStyle={{ marginRight: 10, flexGrow: 1 }}
       />
       <BottomSheet>
-        <View style={{ flex: 1 }}>
-          <Text>Awesome 🎉</Text>
-        </View>
+        {MARKET_OVERVIEW_CONSTANTS.SORT_BY.FILTERS.map((f) => (
+          <TouchableSelectOption
+            label={f.label}
+            onSelect={() => {
+              updateMarketFilters(f);
+            }}
+            isSelected={activeFilter.value === f.value}
+            key={f.value}
+          />
+        ))}
       </BottomSheet>
     </>
   );
@@ -31,7 +39,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  updateMarketFilters: (val) => dispatch(updateFilters({ sortBy: val }))
+  updateMarketFilters: (filter) => dispatch(updateFilters({ sortBy: filter }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SortByFilter);

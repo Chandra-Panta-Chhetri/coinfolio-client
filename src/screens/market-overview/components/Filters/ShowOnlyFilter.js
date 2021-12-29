@@ -11,7 +11,7 @@ const ShowOnlyFilter = ({ activeFilter, updateMarketFilters }) => {
 
   return (
     <>
-      <FilterBadge label={`Showing ${activeFilter}`} onPress={openBottomSheet} containerStyle={{ flexGrow: 1 }} />
+      <FilterBadge label={`Showing ${activeFilter.label}`} onPress={openBottomSheet} containerStyle={{ flexGrow: 1 }} />
       <BottomSheet>
         <View style={{ flex: 1 }}>
           <Text>Awesome Show Only</Text>

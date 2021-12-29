@@ -12,7 +12,7 @@ const SortOrderFilter = ({ activeFilter, updateMarketFilters }) => {
   return (
     <>
       <FilterBadge
-        label={`Sorting in ${activeFilter}`}
+        label={`Sorting in ${activeFilter.label}`}
         onPress={openBottomSheet}
         containerStyle={{ marginRight: 10, flexGrow: 1 }}
       />
