@@ -7,19 +7,12 @@ import Reanimated from "react-native-reanimated";
 import { GLOBAL_STYLES } from "../../styles";
 import { CardScrollView } from "../../shared-components";
 import { useHiddenFABOnScroll } from "../../hooks";
-import {
-  CurrentValue,
-  AssetsBreakdown,
-  AllTimeProfit,
-  SummaryTabs,
-  Unauthenticated
-} from "./components";
+import { CurrentValue, AssetsBreakdown, AllTimeProfit, SummaryTabs, Unauthenticated } from "./components";
 
 const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
 function PortfolioScreen({ navigation, isAuthenticated }) {
-  const navigateToAddTransactionScreen = () =>
-    navigation.navigate("AddTransaction");
+  const navigateToAddTransactionScreen = () => navigation.navigate("AddTransaction");
 
   const { scrollHandler, Fab } = useHiddenFABOnScroll({
     icon: "plus",
