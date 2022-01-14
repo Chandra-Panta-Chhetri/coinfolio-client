@@ -5,15 +5,15 @@ import { GLOBAL_CONSTANTS } from "../../../constants";
 import { TYPOGRAPHY } from "../../../styles";
 
 const HeadingWithSeeAll = ({
-  headingTitle = "",
+  title = "",
   seeAllBtnLabel = "See All",
   subheading,
-  onSeeAllBtnPress = GLOBAL_CONSTANTS.EMPTY_FUNCTION
+  onSeeAllPress = GLOBAL_CONSTANTS.EMPTY_FUNCTION
 }) => (
   <View style={STYLES.container}>
     <View style={STYLES.headingAndSellAll}>
-      <Text style={TYPOGRAPHY.headline}>{headingTitle}</Text>
-      <Button compact onPress={onSeeAllBtnPress} labelStyle={TYPOGRAPHY.button}>
+      <Text style={TYPOGRAPHY.headline}>{title}</Text>
+      <Button compact onPress={onSeeAllPress} labelStyle={TYPOGRAPHY.button}>
         {seeAllBtnLabel}
       </Button>
     </View>

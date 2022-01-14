@@ -3,17 +3,11 @@ import { StyleSheet } from "react-native";
 import { GLOBAL_STYLES } from "../../styles";
 import { LATEST_NEWS_CONSTANTS } from "../../constants";
 import { connect } from "react-redux";
-import {
-  selectNewsData,
-  selectIsLoadingNewsData,
-  startNewsFetch
-} from "../../redux/news";
+import { selectNewsData, selectIsLoadingNewsData, startNewsFetch } from "../../redux/news";
 import { NewsList, DropDown } from "../../shared-components";
 
-const LatestNewsScreen = ({ isLoading, newsData, fetchNews }) => {
-  const [newsFilterIndex, setNewsFilterIndex] = useState(
-    LATEST_NEWS_CONSTANTS.DEFAULT_FILTER_INDEX
-  );
+const LatestNewsScreen = ({ isLoading, news, fetchNews }) => {
+  const [newsFilterIndex, setNewsFilterIndex] = useState(LATEST_NEWS_CONSTANTS.DEFAULT_FILTER_INDEX);
 
   useEffect(() => {
     fetchNews();
@@ -34,7 +28,7 @@ const LatestNewsScreen = ({ isLoading, newsData, fetchNews }) => {
       />
       <NewsList
         isLoading={isLoading}
-        newsData={newsData}
+        news={news}
         numSkeletonsToShow={12}
         scrollEnabled
         contentContainerStyle={STYLES.newsListContentContainer}
@@ -56,7 +50,7 @@ const STYLES = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   isLoading: selectIsLoadingNewsData(state),
-  newsData: selectNewsData(state)
+  news: selectNewsData(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

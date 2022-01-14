@@ -4,24 +4,22 @@ import { Card, Text, Caption } from "react-native-paper";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import TouchableNativeFeedback from "../TouchableNativeFeedback";
 
-const NewsItem = ({ item, index }) => (
-  <TouchableNativeFeedback
-    viewContainerStyle={index !== 0 ? STYLES.androidContainer : null}
-  >
+const NewsItem = ({ news, containerStyle }) => (
+  <TouchableNativeFeedback viewContainerStyle={containerStyle}>
     <Card style={GLOBAL_STYLES.borderRadius}>
       <Card.Content style={STYLES.newsCardBody}>
         <View style={STYLES.newsInfo}>
           <Text style={TYPOGRAPHY.body2} numberOfLines={2}>
-            {item.title}
+            {news.title}
           </Text>
           <Caption style={TYPOGRAPHY.caption}>
-            {item.publishedTime} | {item.source}
+            {news.publishedTime} | {news.source}
           </Caption>
         </View>
         <Card.Cover
           style={[GLOBAL_STYLES.imagePreview, GLOBAL_STYLES.borderRadius]}
           source={{
-            uri: item.imagePreview
+            uri: news.imagePreview
           }}
         />
       </Card.Content>
@@ -34,9 +32,6 @@ const STYLES = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"
-  },
-  androidContainer: {
-    marginTop: 10
   },
   newsInfo: {
     flex: 1,

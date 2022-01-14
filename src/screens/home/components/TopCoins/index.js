@@ -3,11 +3,7 @@ import { View, FlatList } from "react-native";
 import HeadingWithSeeAll from "../HeadingWithSeeAll";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
-import {
-  selectTopCoins,
-  selectIsLoadingSummary,
-  startTopCoinsFetch
-} from "../../../../redux/summary";
+import { selectTopCoins, selectIsLoadingSummary, startTopCoinsFetch } from "../../../../redux/summary";
 import TopCoin from "./TopCoin";
 import TopCoinSkeleton from "./TopCoinSkeleton";
 import { GLOBAL_STYLES } from "../../../../styles";
@@ -15,9 +11,9 @@ import { GLOBAL_STYLES } from "../../../../styles";
 const NUM_SKELETON = 10;
 const DUMMY_SKELETON_ARRAY = Array(NUM_SKELETON).fill("1");
 
-const TopCoins = ({ topCoins, isLoading, fetchTopCoins }) => {
+const TopCoins = ({ coins, isLoading, fetchTopCoins }) => {
   const navigation = useNavigation();
-  const navigateToMarketScreen = () => navigation.navigate("MarketOverview");
+  const toMarketScreen = () => navigation.navigate("MarketOverview");
 
   useEffect(() => {
     fetchTopCoins();
@@ -25,28 +21,24 @@ const TopCoins = ({ topCoins, isLoading, fetchTopCoins }) => {
 
   return (
     <View style={GLOBAL_STYLES.componentContainer}>
-      <HeadingWithSeeAll
-        headingTitle="Top Coins"
-        onSeeAllBtnPress={navigateToMarketScreen}
-      />
-      <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        data={topCoins}
-        contentContainerStyle={GLOBAL_STYLES.flatListContentContainer}
-        keyExtractor={(tm) => tm.ticker}
-        renderItem={(props) => <TopCoin {...props} navigation={navigation} />}
-        listKey="TopCoinsList"
-      />
-      {isLoading && topCoins.length === 0 && (
+      <HeadingWithSeeAll title="Top Coins" onSeeAllPress={toMarketScreen} />
+      {isLoading && coins.length === 0 ? (
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
           data={DUMMY_SKELETON_ARRAY}
           contentContainerStyle={GLOBAL_STYLES.flatListContentContainer}
-          keyExtractor={(s, index) => s + index}
-          renderItem={() => <TopCoinSkeleton />}
-          listKey="TopCoinsSkeletonList"
+          keyExtractor={(_, i) => i}
+          renderItem={TopCoinSkeleton}
+        />
+      ) : (
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={coins}
+          contentContainerStyle={GLOBAL_STYLES.flatListContentContainer}
+          keyExtractor={(c) => c.ticker}
+          renderItem={({ item }) => <TopCoin item={item} />}
         />
       )}
     </View>
@@ -54,7 +46,7 @@ const TopCoins = ({ topCoins, isLoading, fetchTopCoins }) => {
 };
 
 const mapStateToProps = (state) => ({
-  topCoins: selectTopCoins(state),
+  coins: selectTopCoins(state),
   isLoading: selectIsLoadingSummary(state)
 });
 

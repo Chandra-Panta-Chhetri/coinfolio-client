@@ -1,29 +1,24 @@
 import React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList } from "react-native";
 import { GLOBAL_STYLES } from "../../styles";
 import NewsItem from "./NewsItem";
 import NewsItemSkeleton from "./NewsItemSkeleton";
 
 const NewsList = ({
   isLoading,
-  newsData = [],
+  news = [],
   numSkeletonsToShow = 1,
   scrollEnabled = false,
   contentContainerStyle = {}
 }) => {
   const dummySkeletonArray = Array(numSkeletonsToShow).fill("1");
 
-  if (isLoading && newsData.length === 0) {
+  if (isLoading && news.length === 0) {
     return (
       <FlatList
         data={dummySkeletonArray}
-        keyExtractor={(s, i) => s + i}
-        renderItem={({ index }) => (
-          <NewsItemSkeleton
-            containerStyle={index !== 0 ? STYLES.itemContainer : null}
-          />
-        )}
-        listKey="NewsSkeletonList"
+        keyExtractor={(_, i) => i}
+        renderItem={({ index }) => <NewsItemSkeleton containerStyle={index !== 0 ? GLOBAL_STYLES.cardMargin : null} />}
         showsVerticalScrollIndicator={false}
         scrollEnabled={scrollEnabled}
         style={GLOBAL_STYLES.flatListContentContainer}
@@ -34,10 +29,11 @@ const NewsList = ({
 
   return (
     <FlatList
-      data={newsData}
+      data={news}
       keyExtractor={(n) => n.title}
-      renderItem={(props) => <NewsItem {...props} />}
-      listKey="NewsList"
+      renderItem={({ item, index }) => (
+        <NewsItem news={item} containerStyle={index !== 0 ? GLOBAL_STYLES.cardMargin : null} />
+      )}
       showsVerticalScrollIndicator={false}
       scrollEnabled={scrollEnabled}
       style={GLOBAL_STYLES.flatListContentContainer}
@@ -45,11 +41,5 @@ const NewsList = ({
     />
   );
 };
-
-const STYLES = StyleSheet.create({
-  itemContainer: {
-    marginTop: 10
-  }
-});
 
 export default NewsList;

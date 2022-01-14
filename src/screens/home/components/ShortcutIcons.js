@@ -1,11 +1,6 @@
 import React from "react";
-import { StyleSheet, View, FlatList } from "react-native";
-import {
-  IconButton,
-  Caption,
-  TouchableRipple,
-  useTheme
-} from "react-native-paper";
+import { StyleSheet, View, ScrollView } from "react-native";
+import { IconButton, Text, TouchableRipple, useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 
@@ -32,54 +27,42 @@ const SHORTCUT_ICONS = [
   }
 ];
 
-const ShortcutIcon = ({ item }) => {
+const ShortcutIcon = ({ iconInfo }) => {
   const navigation = useNavigation();
-  const navigateToScreen = () => navigation.navigate(item.navigateTo);
+  const navigateToScreen = () => navigation.navigate(iconInfo.navigateTo);
   const { colors, dark: isDarkMode } = useTheme();
 
   return (
-    <TouchableRipple
-      onPress={navigateToScreen}
-      rippleColor={colors.touchableRipple}
-    >
-      <View style={STYLES.shortcutIconItem}>
-        <View
-          style={[
-            STYLES.iconButton,
-            { borderColor: isDarkMode ? colors.border : colors.card }
-          ]}
-        >
-          <IconButton icon={item.iconName} color={colors.primary} />
+    <TouchableRipple onPress={navigateToScreen} rippleColor={colors.touchableRipple}>
+      <View style={STYLES.iconContainer}>
+        <View style={[STYLES.iconBtnContainer, { borderColor: isDarkMode ? colors.border : colors.card }]}>
+          <IconButton icon={iconInfo.iconName} color={colors.primary} />
         </View>
-        <Caption style={TYPOGRAPHY.body2}>{item.label}</Caption>
+        <Text style={TYPOGRAPHY.body2}>{iconInfo.label}</Text>
       </View>
     </TouchableRipple>
   );
 };
 
-const ShortcutIcons = ({ navigation }) => (
-  <FlatList
-    horizontal
-    showsHorizontalScrollIndicator={false}
-    contentContainerStyle={STYLES.shortcutIconContainer}
-    keyExtractor={(sc) => sc.label}
-    data={SHORTCUT_ICONS}
-    renderItem={(props) => <ShortcutIcon navigation={navigation} {...props} />}
-    listKey="ShortcutIconsList"
-  />
+const ShortcutIcons = () => (
+  <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={STYLES.container}>
+    {SHORTCUT_ICONS.map((si) => (
+      <ShortcutIcon iconInfo={si} key={si.label} />
+    ))}
+  </ScrollView>
 );
 
 const STYLES = StyleSheet.create({
-  shortcutIconContainer: {
+  container: {
     ...GLOBAL_STYLES.componentContainer,
     justifyContent: "space-between",
     flex: 1
   },
-  shortcutIconItem: {
+  iconContainer: {
     alignItems: "center",
     padding: 5
   },
-  iconButton: {
+  iconBtnContainer: {
     ...GLOBAL_STYLES.iconRoundness,
     borderWidth: 5
   }

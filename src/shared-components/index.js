@@ -16,3 +16,5 @@ export { default as FilterBadge } from "./FilterBadge";
 export { default as BottomSheet } from "./BottomSheet";
 export { default as SparkLine } from "./SparkLine";
 export { default as TouchableSelectOption } from "./TouchableSelectOption";
+export { default as NewsItem } from "./NewsList/NewsItem";
+export { default as NewsItemSkeleton } from "./NewsList/NewsItemSkeleton";

@@ -3,39 +3,32 @@ import { StyleSheet, View } from "react-native";
 import { Card, Text, Avatar } from "react-native-paper";
 import { GLOBAL_CONSTANTS } from "../../../../constants";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../styles";
-import {
-  getStylesBasedOnSign,
-  formatNumBasedOnSignWorklet
-} from "../../../../utils";
+import { getStylesBasedOnSign, formatNumBasedOnSignWorklet } from "../../../../utils";
 import { TouchableNativeFeedback } from "../../../../shared-components";
+import { useNavigation } from "@react-navigation/native";
 
-const GainerLoser = ({ item, navigation, index }) => {
+const GainerLoser = ({ coin, containerStyle = null }) => {
+  const navigation = useNavigation();
+
   return (
-    <TouchableNativeFeedback
-      viewContainerStyle={index !== 0 ? STYLES.androidContainer : null}
-    >
+    <TouchableNativeFeedback viewContainerStyle={containerStyle}>
       <Card style={GLOBAL_STYLES.borderRadius}>
         <Card.Content style={STYLES.gainerLoserCardBody}>
           <Avatar.Image
             size={GLOBAL_CONSTANTS.AVATAR_IMAGE_SIZE}
             source={{
-              uri: item.image
+              uri: coin.image
             }}
           />
           <View style={STYLES.gainerLoserInfoContainer}>
             <View>
-              <Text style={TYPOGRAPHY.subheading}>{item.fullName}</Text>
-              <Text style={TYPOGRAPHY.body1}>{item.ticker}</Text>
+              <Text style={TYPOGRAPHY.subheading}>{coin.fullName}</Text>
+              <Text style={TYPOGRAPHY.body1}>{coin.ticker}</Text>
             </View>
             <View style={STYLES.priceAndPercent}>
-              <Text style={TYPOGRAPHY.subheading}>${item.price}</Text>
-              <Text
-                style={[
-                  TYPOGRAPHY.body1,
-                  getStylesBasedOnSign(item.percentChange)
-                ]}
-              >
-                {formatNumBasedOnSignWorklet(item.percentChange)}%
+              <Text style={TYPOGRAPHY.subheading}>${coin.price}</Text>
+              <Text style={[TYPOGRAPHY.body1, getStylesBasedOnSign(coin.percentChange)]}>
+                {formatNumBasedOnSignWorklet(coin.percentChange)}%
               </Text>
             </View>
           </View>
@@ -46,9 +39,6 @@ const GainerLoser = ({ item, navigation, index }) => {
 };
 
 const STYLES = StyleSheet.create({
-  androidContainer: {
-    marginTop: 10
-  },
   gainerLoserCardBody: {
     flexDirection: "row",
     alignItems: "center"

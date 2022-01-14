@@ -44,5 +44,8 @@ export default StyleSheet.create({
   fullContainerDimension: {
     height: "100%",
     width: "100%"
+  },
+  cardMargin: {
+    marginTop: 10
   }
 });
