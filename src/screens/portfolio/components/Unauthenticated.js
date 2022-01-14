@@ -1,21 +1,20 @@
 import React from "react";
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
+import LottieView from "lottie-react-native";
 
 const Unauthenticated = ({ navigation }) => {
   const { colors } = useTheme();
 
   return (
     <View style={STYLES.container}>
-      <Image
-        source={require("../../../assets/images/static-pie-chart.png")}
-        style={STYLES.staticImage}
-      />
+      <View style={STYLES.animationContainer}>
+        <LottieView style={STYLES.animation} source={require("../../../assets/lottie/portfolio.json")} loop autoPlay />
+      </View>
       <Text style={STYLES.heading}>Track Your Crypto Investments</Text>
       <Text style={STYLES.subheading}>
-        Signup or login to track your crypto transactions, current balance and
-        profit/loss.
+        Signup or login to track your crypto transactions, current balance and profit/loss.
       </Text>
       <Button
         onPress={() => navigation.navigate("SignUp")}
@@ -51,12 +50,10 @@ const STYLES = StyleSheet.create({
   signUpBtn: {
     marginVertical: 10
   },
-  staticImage: {
+  animationContainer: { alignItems: "center", marginBottom: 10 },
+  animation: {
     width: "100%",
-    height: 150,
-    backgroundColor: "transparent",
-    resizeMode: "contain",
-    marginBottom: 10
+    height: 270
   },
   heading: {
     ...TYPOGRAPHY.display1,

@@ -27,27 +27,22 @@ const Allocations = ({ assets }) => {
   };
 
   useEffect(() => {
-    const totalPortfolioVal = assets.reduce(
-      (acc, asset) => acc + asset.holdingsVal,
-      0
-    );
+    const totalPortfolioVal = assets.reduce((acc, asset) => acc + asset.holdingsVal, 0);
     const allocations = assets;
     allocations.sort((a1, a2) => a1.holdingsVal - a2.holdingsVal);
-    const formattedAllocations = allocations
-      .slice(0, MAX_TO_SHOW)
-      .map((allocation, i) => ({
-        key: `${allocation.ticker}`,
-        value: roundPercentWorklet(
-          (allocation.holdingsVal / totalPortfolioVal) * 100
-        ),
-        svg: {
-          fill: SLICE_COLORS[i]
-        }
-      }));
+    const formattedAllocations = allocations.slice(0, MAX_TO_SHOW).map((allocation, i) => ({
+      key: `${allocation.ticker}`,
+      value: roundPercentWorklet((allocation.holdingsVal / totalPortfolioVal) * 100),
+      svg: {
+        fill: SLICE_COLORS[i]
+      }
+    }));
     setData(formattedAllocations);
   }, [assets]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log("allocations mounted");
+  }, []);
 
   return (
     <Card style={GLOBAL_STYLES.borderRadius}>
@@ -61,11 +56,7 @@ const Allocations = ({ assets }) => {
           changeSelectedSlice={changeSelectedSlice}
           innerLabelStyle={{ fill: colors.text }}
         />
-        <Labels
-          data={data}
-          selectedSlice={selectedSlice}
-          changeSelectedSlice={changeSelectedSlice}
-        />
+        <Labels data={data} selectedSlice={selectedSlice} changeSelectedSlice={changeSelectedSlice} />
       </Card.Content>
     </Card>
   );

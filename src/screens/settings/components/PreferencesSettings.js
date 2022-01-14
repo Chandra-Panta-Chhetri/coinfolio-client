@@ -35,6 +35,7 @@ const PreferencesSettings = ({
 }) => {
   const navigation = useNavigation();
   const { colors } = useTheme();
+
   const settingOptions = [
     {
       label: "Dark mode",
@@ -83,7 +84,7 @@ const PreferencesSettings = ({
         <AntDesign name="home" size={SETTINGS_CONSTANTS.ICON_SIZE} />
       ),
       iconBackgroundColor: SETTINGS_CONSTANTS.HOME_SCREEN_BACKGROUND_COLOR,
-      endComponent: <MoreOptionsIndicator selectedOption={homeScreen} />,
+      endComponent: <MoreOptionsIndicator selectedOption={homeScreen.label} />,
       subheading:
         "Change the screen that initially shows up once app starts up",
       onPress: () => navigation.navigate("SelectHomeScreen")

@@ -1,29 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import RootNavigator from "../navigators/Root";
 import { Provider as PaperProvider } from "react-native-paper";
 import { THEME } from "../../styles";
-import { SafeAreaView, StatusBar, View } from "react-native";
+import { Platform, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { connect } from "react-redux";
 import { selectIsThemeDark } from "../../redux/preferences/preferences.selectors";
 import NotificationSnackbar from "./NotificationSnackbar";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { StatusBar } from "expo-status-bar";
+import * as NavigationBar from "expo-navigation-bar";
 
 const Main = ({ isThemeDark }) => {
   const theme = isThemeDark ? THEME.DARK : THEME.LIGHT;
   const containerStyles = { flex: 1, backgroundColor: theme.colors.card };
 
+  useEffect(() => {
+    if (Platform.OS === "android") {
+      NavigationBar.setBackgroundColorAsync(theme.colors.card);
+    }
+  }, [isThemeDark]);
+
   return (
     <PaperProvider theme={theme}>
       <SafeAreaView style={containerStyles}>
-        <StatusBar
-          backgroundColor={theme.colors.card}
-          barStyle={isThemeDark ? "light-content" : "dark-content"}
-        />
-        <View style={containerStyles}>
+        <StatusBar backgroundColor={theme.colors.card} style={isThemeDark ? "light" : "dark"} />
+        <GestureHandlerRootView style={[containerStyles, { marginTop: 40 }]}>
           <NavigationContainer theme={theme}>
-            <RootNavigator />
+            <BottomSheetModalProvider>
+              <RootNavigator />
+            </BottomSheetModalProvider>
           </NavigationContainer>
-        </View>
+        </GestureHandlerRootView>
         <NotificationSnackbar />
       </SafeAreaView>
     </PaperProvider>

@@ -1,7 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import BottomTabNavigator from "./BottomTab";
-import { AntDesign } from "@expo/vector-icons";
 import { useTheme } from "react-native-paper";
 import {
   LoginScreen,
@@ -16,8 +15,10 @@ import {
   ChangePasswordScreen,
   ChangeEmailOrNameScreen,
   SelectEventFiltersScreen,
-  EventDetailScreen
+  EventDetailScreen,
+  SearchCryptoScreen
 } from "../../screens";
+import { CloseIconButton } from "../../shared-components";
 
 const Stack = createStackNavigator();
 
@@ -94,11 +95,8 @@ const RootNavigator = () => {
           headerTitleAlign: "center",
           headerLeft: null,
           headerRight: () => (
-            <AntDesign
-              name="close"
-              size={25}
+            <CloseIconButton
               style={{ marginRight: 10 }}
-              color={colors.text}
               onPress={() => navigation.goBack()}
             />
           )
@@ -108,6 +106,11 @@ const RootNavigator = () => {
         name="EventDetails"
         component={EventDetailScreen}
         options={{ headerTitle: "Event Details" }}
+      />
+      <Stack.Screen
+        name="SearchCrypto"
+        component={SearchCryptoScreen}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

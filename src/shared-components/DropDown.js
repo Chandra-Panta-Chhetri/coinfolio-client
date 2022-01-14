@@ -5,6 +5,7 @@ import { GLOBAL_CONSTANTS } from "../constants";
 import TouchableNativeFeedback from "./TouchableNativeFeedback";
 import { AntDesign } from "@expo/vector-icons";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../styles";
+import TouchableSelectOption from "./TouchableSelectOption";
 
 const DropDown = ({
   selectedIndex = 0,
@@ -44,11 +45,7 @@ const DropDown = ({
       >
         <View style={STYLES.container}>
           <Text style={[TYPOGRAPHY.body1]}>{options[selectedIndex].label}</Text>
-          <AntDesign
-            name={showDropDown ? "caretup" : "caretdown"}
-            color={colors.text}
-            style={TYPOGRAPHY.body1}
-          />
+          <AntDesign name={showDropDown ? "caretup" : "caretdown"} color={colors.text} style={TYPOGRAPHY.body1} />
         </View>
       </TouchableNativeFeedback>
       <Menu
@@ -63,26 +60,17 @@ const DropDown = ({
       >
         <ScrollView style={STYLES.optionsContainer}>
           {options.map((op, i) => (
-            <TouchableNativeFeedback
-              onPress={() => {
+            <TouchableSelectOption
+              label={op.label}
+              key={op.value}
+              isSelected={selectedIndex === i}
+              onSelect={() => {
                 if (selectedIndex !== i) {
                   onSelect(op.value, i);
                 }
                 hideDropDown();
               }}
-              key={op.value}
-            >
-              <View style={STYLES.option}>
-                <Text style={TYPOGRAPHY.body1}>{op.label}</Text>
-                {selectedIndex === i && (
-                  <AntDesign
-                    name="check"
-                    style={TYPOGRAPHY.body1}
-                    color={colors.text}
-                  />
-                )}
-              </View>
-            </TouchableNativeFeedback>
+            />
           ))}
         </ScrollView>
       </Menu>
@@ -99,12 +87,6 @@ const STYLES = StyleSheet.create({
   },
   optionsContainer: {
     maxHeight: 200
-  },
-  option: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 10
   },
   menuContent: {
     paddingVertical: 0,

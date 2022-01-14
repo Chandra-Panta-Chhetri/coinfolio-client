@@ -4,7 +4,10 @@ const INITIAL_STATE = {
   isThemeDark: false,
   isNotificationsOn: true,
   currencyCode: "USD",
-  homeScreen: "Settings",
+  homeScreen: {
+    label: "Home",
+    value: "Home"
+  },
   isBiometricAuthOn: false,
   isPrivacyModeOn: false
 };

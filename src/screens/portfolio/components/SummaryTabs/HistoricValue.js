@@ -12,7 +12,9 @@ const percentChangeAccessor = (data) => data.percent_change;
 const dataPointsAccessor = (data) => data.prices;
 
 const HistoricValue = ({ historicValue = [] }) => {
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log("historic value mounted");
+  }, []);
 
   return (
     <Card style={GLOBAL_STYLES.borderRadius}>

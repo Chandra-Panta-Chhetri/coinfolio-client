@@ -13,10 +13,14 @@ import { Text, RadioButton, useTheme } from "react-native-paper";
 import { TouchableNativeFeedback } from "../../shared-components";
 
 const HOME_SCREEN_OPTIONS = [
-  { label: "Home", icon: <HomeTabIcon /> },
-  { label: "Market Overview", icon: <MarketTabIcon /> },
-  { label: "Portfolio", icon: <PortfolioTabIcon /> },
-  { label: "News", icon: <NewsTabIcon /> }
+  { label: "Home", value: "Home", icon: <HomeTabIcon /> },
+  {
+    label: "Market Overview",
+    value: "MarketOverview",
+    icon: <MarketTabIcon />
+  },
+  { label: "Portfolio", value: "Portfolio", icon: <PortfolioTabIcon /> },
+  { label: "News", value: "News", icon: <NewsTabIcon /> }
 ];
 
 const SelectHomeScreen = ({ currentHomeScreen, changeHomeScreen }) => {
@@ -28,7 +32,7 @@ const SelectHomeScreen = ({ currentHomeScreen, changeHomeScreen }) => {
         <TouchableNativeFeedback
           key={op.label}
           viewContainerStyle={STYLES.touchableNativeContainer}
-          onPress={() => changeHomeScreen(op.label)}
+          onPress={() => changeHomeScreen({ label: op.label, value: op.value })}
         >
           <View style={STYLES.radioButtonGroup}>
             <View style={STYLES.iconAndLabel}>
@@ -41,7 +45,7 @@ const SelectHomeScreen = ({ currentHomeScreen, changeHomeScreen }) => {
               <RadioButton
                 value={op.label}
                 status={
-                  currentHomeScreen === op.label ? "checked" : "unchecked"
+                  currentHomeScreen.value === op.value ? "checked" : "unchecked"
                 }
                 color={colors.primary}
               />
@@ -74,7 +78,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeHomeScreen: (screenName) => dispatch(changeHomeScreen(screenName))
+  changeHomeScreen: (screenNameVal) => dispatch(changeHomeScreen(screenNameVal))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectHomeScreen);

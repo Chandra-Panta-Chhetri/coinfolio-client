@@ -1,7 +1,6 @@
 import React from "react";
 import { Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AntDesign, FontAwesome, Feather } from "@expo/vector-icons";
 import {
   HomeScreen,
   MarketOverviewScreen,
@@ -39,46 +38,41 @@ const BottomTabNavigator = ({ homeScreen }) => {
       labeled={false}
       activeColor={colors.primary}
       barStyle={tabBarStyle}
-      initialRouteName={homeScreen}
+      initialRouteName={homeScreen.value}
     >
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarIcon: HomeTabIcon,
-          headerShown: false
+          tabBarIcon: HomeTabIcon
         }}
       />
       <BottomTab.Screen
         name="MarketOverview"
         component={MarketOverviewScreen}
         options={{
-          tabBarIcon: MarketTabIcon,
-          headerShown: false
+          tabBarIcon: MarketTabIcon
         }}
       />
       <BottomTab.Screen
         name="News"
         component={NewsScreen}
         options={{
-          tabBarIcon: NewsTabIcon,
-          headerShown: false
+          tabBarIcon: NewsTabIcon
         }}
       />
       <BottomTab.Screen
         name="Portfolio"
         component={PortfolioScreen}
         options={{
-          tabBarIcon: PortfolioTabIcon,
-          headerShown: false
+          tabBarIcon: PortfolioTabIcon
         }}
       />
       <BottomTab.Screen
         name="Settings"
         component={SettingsScreen}
         options={{
-          tabBarIcon: SettingsTabIcon,
-          headerShown: false
+          tabBarIcon: SettingsTabIcon
         }}
       />
     </BottomTab.Navigator>

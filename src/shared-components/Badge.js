@@ -2,6 +2,7 @@ import React from "react";
 import { useTheme, Text } from "react-native-paper";
 import PressableView from "./PressableView";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../styles";
+import { COLORS } from "../constants";
 
 const Badge = ({
   isHighlighted = false,
@@ -24,7 +25,7 @@ const Badge = ({
     ? defaultStyle
     : {
         color: colors.text,
-        backgroundColor: isDarkMode ? colors.border : "lightgrey"
+        backgroundColor: isDarkMode ? colors.border : COLORS.LIGHT_GREY
       };
 
   const textColor = isHighlighted

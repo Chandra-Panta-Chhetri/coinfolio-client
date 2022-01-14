@@ -1,11 +1,5 @@
-import {
-  DarkTheme as PaperDarkTheme,
-  DefaultTheme as PaperDefaultTheme
-} from "react-native-paper";
-import {
-  DarkTheme as NavigationDarkTheme,
-  DefaultTheme as NavigationDefaultTheme
-} from "@react-navigation/native";
+import { DarkTheme as PaperDarkTheme, DefaultTheme as PaperDefaultTheme } from "react-native-paper";
+import { DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme } from "@react-navigation/native";
 
 export const LIGHT = {
   ...PaperDefaultTheme,
@@ -15,9 +9,10 @@ export const LIGHT = {
     ...NavigationDefaultTheme.colors,
     primaryShimmer: "gainsboro",
     secondaryShimmer: "#f8f8f8",
-    touchableRipple: "lightgrey",
+    touchableRipple: "#a9a9a9",
     backgroundSelection: "#f3f3f3",
-    primary: "#1a87ff"
+    primary: "#1a87ff",
+    bottomSheet: "#f2f2f2"
   }
 };
 
@@ -32,6 +27,7 @@ export const DARK = {
     secondaryShimmer: "gainsboro",
     touchableRipple: "grey",
     backgroundSelection: "#a3cfff",
-    primary: "#1a87ff"
+    primary: "#1a87ff",
+    bottomSheet: "#272729"
   }
 };

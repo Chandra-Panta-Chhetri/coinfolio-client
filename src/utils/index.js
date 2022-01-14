@@ -8,3 +8,4 @@ export function delayJS(delayInms) {
 
 export * from "./Format";
 export * from "./Worklets";
+export * from "./ChartUtils";
