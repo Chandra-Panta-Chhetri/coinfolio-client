@@ -21,13 +21,15 @@ const NewsSummaries = ({ news, isLoading, fetchNewsSummary }) => {
   return (
     <View>
       <HeadingWithSeeAll title="News" onSeeAllPress={toNewsScreen} />
-      {isLoading && news.length === 0
-        ? DUMMY_SKELETON_ARRAY.map((_, i) => (
-            <NewsItemSkeleton key={i} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
-          ))
-        : news.map((n, i) => (
-            <NewsItem news={n} key={n.title} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
-          ))}
+      <View>
+        {isLoading && news.length === 0
+          ? DUMMY_SKELETON_ARRAY.map((_, i) => (
+              <NewsItemSkeleton key={i} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
+            ))
+          : news.map((n, i) => (
+              <NewsItem news={n} key={n.title} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
+            ))}
+      </View>
     </View>
   );
 };
