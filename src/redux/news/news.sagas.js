@@ -3,257 +3,46 @@ import {
   eventsFetchFail,
   eventsFetchSuccess,
   newsFetchFail,
-  newsFetchSuccess
+  newsFetchSuccess,
+  nextNewsFetchFail,
+  nextNewsFetchSuccess
 } from "./news.actions";
 import NEWS_ACTION_TYPES from "./news.action.types";
-import { selectEventFilters } from "./news.selectors";
+import { selectEventFilters, selectNewsPage, selectNews } from "./news.selectors";
 import { LATEST_EVENTS_CONSTANTS } from "../../constants";
 import { delayJS } from "../../utils";
+import { newsAPI } from "../../api";
 
-function* getNews({ payload: { limit, filter } }) {
+function* getNews({ payload: { filter } }) {
   try {
-    const news = yield [];
-    switch (filter) {
-      case "rising":
-        yield news.push(
-          ...[
-            {
-              title:
-                "Dogecoin falls 15% to below 40 cents on Elon Musk’s crypto about-face - rising",
-              publishedTime: "3h ago",
-              source: "CBC News",
-              imagePreview:
-                "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-            },
-            {
-              title: "Ethereum’s Ratio Overtakes Resistance - rising",
-              publishedTime: "10h ago",
-              source: "Trustnodes",
-              imagePreview:
-                "https://www.trustnodes.com/wp-content/uploads/2021/05/xethereum-ratio-bitcoin-price-may-14-2021.png.pagespeed.ic.e_g1OTbZRR.webp"
-            },
-            {
-              title: "Will Musk Buy ETH? - rising",
-              publishedTime: "1h ago",
-              source: "Trustnodes",
-              imagePreview:
-                "https://www.trustnodes.com/wp-content/uploads/2021/05/xelon-musk.jpg.pagespeed.ic.jLiFCP5v7B.webp"
-            },
-            {
-              title:
-                "Dogecoin falls 15% to below 40 cents on Elon Musk’s crypto about-face - 2 rising",
-              publishedTime: "3h ago",
-              source: "CBC News",
-              imagePreview:
-                "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-            },
-            {
-              title: "Ethereum’s Ratio Overtakes Resistance - 2 rising",
-              publishedTime: "10h ago",
-              source: "Trustnodes",
-              imagePreview:
-                "https://www.trustnodes.com/wp-content/uploads/2021/05/xethereum-ratio-bitcoin-price-may-14-2021.png.pagespeed.ic.e_g1OTbZRR.webp"
-            },
-            {
-              title: "Will Musk Buy ETH? - 2 rising",
-              publishedTime: "1h ago",
-              source: "Trustnodes",
-              imagePreview:
-                "https://www.trustnodes.com/wp-content/uploads/2021/05/xelon-musk.jpg.pagespeed.ic.jLiFCP5v7B.webp"
-            },
-            {
-              title:
-                "Dogecoin falls 15% to below 40 cents on Elon Musk’s crypto about-face - 3 rising",
-              publishedTime: "3h ago",
-              source: "CBC News",
-              imagePreview:
-                "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-            },
-            {
-              title: "Ethereum’s Ratio Overtakes Resistance - 3 rising",
-              publishedTime: "10h ago",
-              source: "Trustnodes",
-              imagePreview:
-                "https://www.trustnodes.com/wp-content/uploads/2021/05/xethereum-ratio-bitcoin-price-may-14-2021.png.pagespeed.ic.e_g1OTbZRR.webp"
-            },
-            {
-              title: "Will Musk Buy ETH? - 3 rising",
-              publishedTime: "1h ago",
-              source: "Trustnodes",
-              imagePreview:
-                "https://www.trustnodes.com/wp-content/uploads/2021/05/xelon-musk.jpg.pagespeed.ic.jLiFCP5v7B.webp"
-            },
-            {
-              title:
-                "Dogecoin falls 15% to below 40 cents on Elon Musk’s crypto about-face - 4 rising",
-              publishedTime: "3h ago",
-              source: "CBC News",
-              imagePreview:
-                "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-            },
-            {
-              title: "Ethereum’s Ratio Overtakes Resistance - 4 rising",
-              publishedTime: "10h ago",
-              source: "Trustnodes",
-              imagePreview:
-                "https://www.trustnodes.com/wp-content/uploads/2021/05/xethereum-ratio-bitcoin-price-may-14-2021.png.pagespeed.ic.e_g1OTbZRR.webp"
-            },
-            {
-              title: "Will Musk Buy ETH? - 4 rising",
-              publishedTime: "1h ago",
-              source: "Trustnodes",
-              imagePreview:
-                "https://www.trustnodes.com/wp-content/uploads/2021/05/xelon-musk.jpg.pagespeed.ic.jLiFCP5v7B.webp"
-            }
-          ]
-        );
-        break;
-      case "important":
-        yield news.push(
-          ...[
-            {
-              title:
-                "Dogecoin falls 15% to below 40 cents on Elon Musk’s crypto about-face - important",
-              publishedTime: "3h ago",
-              source: "CBC News",
-              imagePreview:
-                "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-            },
-            {
-              title: "Ethereum’s Ratio Overtakes Resistance - important",
-              publishedTime: "10h ago",
-              source: "Trustnodes",
-              imagePreview:
-                "https://www.trustnodes.com/wp-content/uploads/2021/05/xethereum-ratio-bitcoin-price-may-14-2021.png.pagespeed.ic.e_g1OTbZRR.webp"
-            },
-            {
-              title: "Will Musk Buy ETH? - important",
-              publishedTime: "1h ago",
-              source: "Trustnodes",
-              imagePreview:
-                "https://www.trustnodes.com/wp-content/uploads/2021/05/xelon-musk.jpg.pagespeed.ic.jLiFCP5v7B.webp"
-            },
-            {
-              title:
-                "Dogecoin falls 15% to below 40 cents on Elon Musk’s crypto about-face - 2 important",
-              publishedTime: "3h ago",
-              source: "CBC News",
-              imagePreview:
-                "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-            },
-            {
-              title: "Ethereum’s Ratio Overtakes Resistance - 2 important",
-              publishedTime: "10h ago",
-              source: "Trustnodes",
-              imagePreview:
-                "https://www.trustnodes.com/wp-content/uploads/2021/05/xethereum-ratio-bitcoin-price-may-14-2021.png.pagespeed.ic.e_g1OTbZRR.webp"
-            },
-            {
-              title: "Will Musk Buy ETH? - 2 important",
-              publishedTime: "1h ago",
-              source: "Trustnodes",
-              imagePreview:
-                "https://www.trustnodes.com/wp-content/uploads/2021/05/xelon-musk.jpg.pagespeed.ic.jLiFCP5v7B.webp"
-            },
-            {
-              title:
-                "Dogecoin falls 15% to below 40 cents on Elon Musk’s crypto about-face - 3 important",
-              publishedTime: "3h ago",
-              source: "CBC News",
-              imagePreview:
-                "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-            },
-            {
-              title: "Ethereum’s Ratio Overtakes Resistance - 3 important",
-              publishedTime: "10h ago",
-              source: "Trustnodes",
-              imagePreview:
-                "https://www.trustnodes.com/wp-content/uploads/2021/05/xethereum-ratio-bitcoin-price-may-14-2021.png.pagespeed.ic.e_g1OTbZRR.webp"
-            },
-            {
-              title: "Will Musk Buy ETH? - 3 important",
-              publishedTime: "1h ago",
-              source: "Trustnodes",
-              imagePreview:
-                "https://www.trustnodes.com/wp-content/uploads/2021/05/xelon-musk.jpg.pagespeed.ic.jLiFCP5v7B.webp"
-            }
-          ]
-        );
-        break;
-      case "hot":
-        yield news.push(
-          ...[
-            {
-              title:
-                "Dogecoin falls 15% to below 40 cents on Elon Musk’s crypto about-face - hot",
-              publishedTime: "3h ago",
-              source: "CBC News",
-              imagePreview:
-                "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-            },
-            {
-              title: "Ethereum’s Ratio Overtakes Resistance - hot",
-              publishedTime: "10h ago",
-              source: "Trustnodes",
-              imagePreview:
-                "https://www.trustnodes.com/wp-content/uploads/2021/05/xethereum-ratio-bitcoin-price-may-14-2021.png.pagespeed.ic.e_g1OTbZRR.webp"
-            },
-            {
-              title: "Will Musk Buy ETH? - hot",
-              publishedTime: "1h ago",
-              source: "Trustnodes",
-              imagePreview:
-                "https://www.trustnodes.com/wp-content/uploads/2021/05/xelon-musk.jpg.pagespeed.ic.jLiFCP5v7B.webp"
-            },
-            {
-              title:
-                "Dogecoin falls 15% to below 40 cents on Elon Musk’s crypto about-face - 2 hot",
-              publishedTime: "3h ago",
-              source: "CBC News",
-              imagePreview:
-                "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-            },
-            {
-              title: "Ethereum’s Ratio Overtakes Resistance - 2 hot",
-              publishedTime: "10h ago",
-              source: "Trustnodes",
-              imagePreview:
-                "https://www.trustnodes.com/wp-content/uploads/2021/05/xethereum-ratio-bitcoin-price-may-14-2021.png.pagespeed.ic.e_g1OTbZRR.webp"
-            },
-            {
-              title: "Will Musk Buy ETH? - 2 hot",
-              publishedTime: "1h ago",
-              source: "Trustnodes",
-              imagePreview:
-                "https://www.trustnodes.com/wp-content/uploads/2021/05/xelon-musk.jpg.pagespeed.ic.jLiFCP5v7B.webp"
-            },
-            {
-              title:
-                "Dogecoin falls 15% to below 40 cents on Elon Musk’s crypto about-face - 3 hot",
-              publishedTime: "3h ago",
-              source: "CBC News",
-              imagePreview:
-                "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-            }
-          ]
-        );
-        break;
-    }
-    yield delayJS(5000);
+    const res = yield newsAPI.getNews({ filter });
+    const news = yield res.results;
     yield put(newsFetchSuccess(news));
   } catch (err) {
-    yield put(
-      newsFetchFail("There was a server error while fetching the latest news")
-    );
+    yield put(newsFetchFail("There was a server error while fetching the news"));
+  }
+}
+
+function* getMoreNews({ payload: { filter } }) {
+  try {
+    const page = yield select(selectNewsPage);
+    const res = yield newsAPI.getNews({ filter, page });
+    const news = yield res.results;
+    const currentNews = yield select(selectNews);
+    const combinedNews = yield [...currentNews, ...news];
+    if (news.length === 0 || combinedNews.length > res.totalResults) {
+      throw Error();
+    }
+    yield put(nextNewsFetchSuccess(combinedNews));
+  } catch (err) {
+    yield put(nextNewsFetchFail("There was a server error while fetching more news"));
   }
 }
 
 function* getEvents() {
   try {
     const filters = yield select(selectEventFilters);
-    const showOnly = yield LATEST_EVENTS_CONSTANTS.SHOW_ONLY_FILTERS[
-      filters.showOnly
-    ].value;
+    const showOnly = yield LATEST_EVENTS_CONSTANTS.SHOW_ONLY_FILTERS[filters.showOnly].value;
     const events = yield [];
     if (showOnly === "trending") {
       yield events.push(
@@ -261,16 +50,14 @@ function* getEvents() {
           {
             id: 1,
             title: "Listing on Coinbase - Trending",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -281,21 +68,18 @@ function* getEvents() {
           {
             id: 2,
             title: "Listing on Coinbase 2 - Trending",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               },
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -306,16 +90,14 @@ function* getEvents() {
           {
             id: 3,
             title: "Listing on Coinbase 3 - Trending",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -326,16 +108,14 @@ function* getEvents() {
           {
             id: 4,
             title: "Listing on Coinbase 4 - Trending",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -346,16 +126,14 @@ function* getEvents() {
           {
             id: 5,
             title: "Listing on Coinbase 5 - Trending",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -366,16 +144,14 @@ function* getEvents() {
           {
             id: 6,
             title: "Listing on Coinbase 6 - Trending",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -386,16 +162,14 @@ function* getEvents() {
           {
             id: 7,
             title: "Listing on Coinbase 7 - Trending",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -406,16 +180,14 @@ function* getEvents() {
           {
             id: 8,
             title: "Listing on Coinbase 8 - Trending",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -426,16 +198,14 @@ function* getEvents() {
           {
             id: 9,
             title: "Listing on Coinbase 9 - Trending",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -446,16 +216,14 @@ function* getEvents() {
           {
             id: 10,
             title: "Listing on Coinbase 10 - Trending",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -471,16 +239,14 @@ function* getEvents() {
           {
             id: 1,
             title: "Listing on Coinbase - Significant",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -491,21 +257,18 @@ function* getEvents() {
           {
             id: 2,
             title: "Listing on Coinbase 2 - Significant",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               },
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -516,16 +279,14 @@ function* getEvents() {
           {
             id: 3,
             title: "Listing on Coinbase 3 - Significant",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -536,16 +297,14 @@ function* getEvents() {
           {
             id: 4,
             title: "Listing on Coinbase 4 - Significant",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -556,16 +315,14 @@ function* getEvents() {
           {
             id: 5,
             title: "Listing on Coinbase 5 - Significant",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -576,16 +333,14 @@ function* getEvents() {
           {
             id: 6,
             title: "Listing on Coinbase 6 - Significant",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -596,16 +351,14 @@ function* getEvents() {
           {
             id: 7,
             title: "Listing on Coinbase 7 - Significant",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -616,16 +369,14 @@ function* getEvents() {
           {
             id: 8,
             title: "Listing on Coinbase 8 - Significant",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -641,16 +392,14 @@ function* getEvents() {
           {
             id: 1,
             title: "Listing on Coinbase - Hot",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -661,21 +410,18 @@ function* getEvents() {
           {
             id: 2,
             title: "Listing on Coinbase 2 - Hot",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               },
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -686,16 +432,14 @@ function* getEvents() {
           {
             id: 3,
             title: "Listing on Coinbase 3 - Hot",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -706,16 +450,14 @@ function* getEvents() {
           {
             id: 4,
             title: "Listing on Coinbase 4 - Hot",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -726,16 +468,14 @@ function* getEvents() {
           {
             id: 5,
             title: "Listing on Coinbase 5 - Hot",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -746,16 +486,14 @@ function* getEvents() {
           {
             id: 6,
             title: "Listing on Coinbase 6 - Hot",
-            description:
-              "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
+            description: "The biggest coin burn of the year...We're burning smt smt smt smt smt smt smt smt",
             verified: true,
             canOccurBefore: true,
             date: "2018-11-30T00:00:00+01:00",
             coins: [
               {
                 fullName: "Bitcoin (BTC)",
-                imageUrl:
-                  "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+                imageUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
               }
             ],
             type: {
@@ -769,16 +507,16 @@ function* getEvents() {
     yield delayJS(5000);
     yield put(eventsFetchSuccess(events));
   } catch (err) {
-    yield put(
-      eventsFetchFail(
-        "There was a server error while fetching the latest events"
-      )
-    );
+    yield put(eventsFetchFail("There was a server error while fetching the latest events"));
   }
 }
 
 function* watchNewsFetchStart() {
-  yield takeLatest(NEWS_ACTION_TYPES.START_NEWS_FETCH, getNews);
+  yield takeLatest(NEWS_ACTION_TYPES.START_INITIAL_NEWS_FETCH, getNews);
+}
+
+function* watchMoreNewsFetch() {
+  yield takeLatest(NEWS_ACTION_TYPES.FETCH_MORE_NEWS, getMoreNews);
 }
 
 function* watchEventsFetchStart() {
@@ -786,5 +524,5 @@ function* watchEventsFetchStart() {
 }
 
 export default function* newsSagas() {
-  yield all([call(watchEventsFetchStart), call(watchNewsFetchStart)]);
+  yield all([call(watchEventsFetchStart), call(watchNewsFetchStart), call(watchMoreNewsFetch)]);
 }

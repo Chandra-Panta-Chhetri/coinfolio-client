@@ -1,22 +1,25 @@
 import { createSelector } from "reselect";
 
-const selectNews = (state) => state.news;
+const selectNewsStore = (state) => state.news;
 
-export const selectNewsData = createSelector([selectNews], (news) => news.news);
+export const selectNews = createSelector([selectNewsStore], (news) => news.news);
 
-export const selectEvents = createSelector([selectNews], (news) => news.events);
+export const selectEvents = createSelector([selectNewsStore], (news) => news.events);
 
-export const selectNumLoadingReq = createSelector(
-  [selectNews],
-  (news) => news.numLoadingReq
-);
+export const selectEventFilters = createSelector([selectNewsStore], (news) => news.eventFilters);
 
-export const selectIsLoadingNewsData = createSelector(
-  [selectNumLoadingReq],
-  (numLoadingReq) => numLoadingReq > 0
-);
+export const selectIsLoadingNews = createSelector([selectNewsStore], (news) => news.isLoadingNews);
 
-export const selectEventFilters = createSelector(
-  [selectNews],
-  (news) => news.eventFilters
-);
+export const selectIsLoadingMoreNews = createSelector([selectNewsStore], (news) => news.isLoadingMoreNews);
+
+export const selectIsLoadingEvents = createSelector([selectNewsStore], (news) => news.isLoadingEvents);
+
+export const selectIsLoadingMoreEvents = createSelector([selectNewsStore], (news) => news.isLoadingMoreEvents);
+
+export const selectNewsPage = createSelector([selectNewsStore], (news) => news.newsPage);
+
+export const selectEventsPage = createSelector([selectNewsStore], (news) => news.eventsPage);
+
+export const selectHasMoreNews = createSelector([selectNewsStore], (news) => news.hasMoreNews);
+
+export const selectHasMoreEvents = createSelector([selectNewsStore], (news) => news.hasMoreEvents);

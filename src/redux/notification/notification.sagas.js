@@ -3,10 +3,7 @@ import SUMMARY_ACTION_TYPES from "../summary/summary.action.types";
 import PORTFOLIO_ACTION_TYPES from "../portfolio/portfolio.action.types";
 import MARKET_ACTION_TYPES from "../market/market.action.types";
 import { all, call, put, takeEvery } from "redux-saga/effects";
-import {
-  addErrorNotification,
-  addSuccessNotification
-} from "./notification.actions";
+import { addErrorNotification, addSuccessNotification } from "./notification.actions";
 import NEWS_ACTION_TYPES from "../news/news.action.types";
 
 function* showErrorNotification({ payload: { errorMsg } }) {
@@ -34,7 +31,7 @@ function* watchErrorNotifications() {
       PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTIONS_FOR_ASSET_FAIL,
       PORTFOLIO_ACTION_TYPES.REMOVE_ALL_TRANSACTIONS_FOR_ASSET_FAIL,
       NEWS_ACTION_TYPES.EVENTS_FETCH_FAIL,
-      NEWS_ACTION_TYPES.NEWS_FETCH_FAIL,
+      NEWS_ACTION_TYPES.INITIAL_NEWS_FETCH_FAIL,
       MARKET_ACTION_TYPES.MARKETS_FETCH_FAIL
     ],
     showErrorNotification

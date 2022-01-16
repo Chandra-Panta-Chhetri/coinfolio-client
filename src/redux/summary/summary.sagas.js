@@ -111,7 +111,7 @@ function* fetchGainersLosers() {
 
 function* fetchNewsSummary() {
   try {
-    const res = yield newsAPI.getNews({ kind: "news" });
+    const res = yield newsAPI.getNews();
     const newsSummary = res.results.slice(0, MAX_NEWS_SUMMARIES);
     yield put(newsSummaryFetchSuccess(newsSummary));
   } catch (err) {

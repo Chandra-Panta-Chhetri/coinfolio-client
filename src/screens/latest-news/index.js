@@ -3,19 +3,31 @@ import { StyleSheet } from "react-native";
 import { GLOBAL_STYLES } from "../../styles";
 import { LATEST_NEWS_CONSTANTS } from "../../constants";
 import { connect } from "react-redux";
-import { selectNewsData, selectIsLoadingNewsData, startNewsFetch } from "../../redux/news";
+import {
+  selectNews,
+  selectIsLoadingNews,
+  startNewsFetch,
+  selectIsLoadingMoreNews,
+  startNextNewsFetch,
+  selectHasMoreNews
+} from "../../redux/news";
 import { NewsList, DropDown } from "../../shared-components";
 
-const LatestNewsScreen = ({ isLoading, news, fetchNews }) => {
+const LatestNewsScreen = ({ isLoading, news, fetchInitialNews, fetchMoreNews, isLoadingMore, hasMoreToFetch }) => {
   const [newsFilterIndex, setNewsFilterIndex] = useState(LATEST_NEWS_CONSTANTS.DEFAULT_FILTER_INDEX);
 
   useEffect(() => {
-    fetchNews();
+    fetchInitialNews();
   }, []);
 
   const onFilterSelect = (selectedVal, selectedIndex) => {
     setNewsFilterIndex(selectedIndex);
-    fetchNews(selectedVal);
+    fetchInitialNews(selectedVal);
+  };
+
+  const onEndReached = () => {
+    const filter = LATEST_NEWS_CONSTANTS.FILTERS[newsFilterIndex].value;
+    fetchMoreNews(filter);
   };
 
   return (
@@ -29,9 +41,11 @@ const LatestNewsScreen = ({ isLoading, news, fetchNews }) => {
       <NewsList
         isLoading={isLoading}
         news={news}
-        numSkeletonsToShow={12}
-        scrollEnabled
+        numSkeletonsToShow={LATEST_NEWS_CONSTANTS.NUM_TO_SHOW}
         contentContainerStyle={STYLES.newsListContentContainer}
+        onEndReached={onEndReached}
+        isLoadingMore={isLoadingMore}
+        hasMoreToFetch={hasMoreToFetch}
       />
     </>
   );
@@ -49,12 +63,15 @@ const STYLES = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
-  isLoading: selectIsLoadingNewsData(state),
-  news: selectNewsData(state)
+  isLoading: selectIsLoadingNews(state),
+  news: selectNews(state),
+  isLoadingMore: selectIsLoadingMoreNews(state),
+  hasMoreToFetch: selectHasMoreNews(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchNews: (filter) => dispatch(startNewsFetch(filter))
+  fetchInitialNews: (filter) => dispatch(startNewsFetch(filter)),
+  fetchMoreNews: (filter) => dispatch(startNextNewsFetch({ filter }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LatestNewsScreen);
