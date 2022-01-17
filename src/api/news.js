@@ -1,6 +1,6 @@
 import axios from "./axios-config";
 
-export const getNews = async (queryParams = {}) => {
+export const fetchNews = async (queryParams = {}) => {
   try {
     const params = { ...queryParams, kind: "news" };
     const news = await axios.get("/news", { params });

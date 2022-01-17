@@ -1,12 +1,11 @@
 import React from "react";
 import { FilterBadge, TouchableSelectOption } from "../../../../shared-components";
 import { useBottomSheet } from "../../../../hooks";
-import { GLOBAL_CONSTANTS } from "../../../../constants";
 
 const BottomSheetFilter = ({
   filters = [],
   filterStyles = {},
-  onFilterSelect = GLOBAL_CONSTANTS.EMPTY_FUNCTION,
+  onFilterSelect,
   activeFilter = {},
   filterLabel = "",
   bottomSheetKey = ""
@@ -21,7 +20,7 @@ const BottomSheetFilter = ({
           <TouchableSelectOption
             label={f.label}
             onSelect={() => {
-              onFilterSelect(f);
+              onFilterSelect && onFilterSelect(f);
               closeBottomSheet();
             }}
             isSelected={activeFilter.value === f.value}

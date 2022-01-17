@@ -3,7 +3,6 @@ import { View, Platform } from "react-native";
 import * as shape from "d3-shape";
 import Svg, { G, Path, Text } from "react-native-svg";
 import Skeleton from "../Skeleton";
-import { GLOBAL_CONSTANTS } from "../../constants";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import PIE_CHART_CONSTANTS from "./constants";
 
@@ -28,7 +27,7 @@ const PieChart = ({
   endAngle = PIE_CHART_CONSTANTS.DEFAULT_END_ANGLE,
   selectedSlice = null,
   getInnerLabelText = PIE_CHART_CONSTANTS.DEFAULT_INNER_LABEL_VALUE_ACCESSOR_FUNCTION,
-  changeSelectedSlice = GLOBAL_CONSTANTS.EMPTY_FUNCTION,
+  changeSelectedSlice,
   innerLabelStyle = {}
 }) => {
   const [containerDimensions, setContainerDimensions] = useState({
@@ -46,9 +45,7 @@ const PieChart = ({
   };
 
   const maxRadius =
-    Math.min(width, height) / 2 -
-    (PIE_CHART_CONSTANTS.SELECTED_ELEVATION +
-      PIE_CHART_CONSTANTS.MAX_RADIUS_OFFSET);
+    Math.min(width, height) / 2 - (PIE_CHART_CONSTANTS.SELECTED_ELEVATION + PIE_CHART_CONSTANTS.MAX_RADIUS_OFFSET);
 
   const _outerRadius = calculateRadius(outerRadius, maxRadius, maxRadius);
   const _innerRadius = calculateRadius(innerRadius, maxRadius, 0);
@@ -57,11 +54,7 @@ const PieChart = ({
     return null;
   }
 
-  const arcGenerator = shape
-    .arc()
-    .outerRadius(_outerRadius)
-    .innerRadius(_innerRadius)
-    .padAngle(padAngle);
+  const arcGenerator = shape.arc().outerRadius(_outerRadius).innerRadius(_innerRadius).padAngle(padAngle);
 
   const selectedArcGenerator = shape
     .arc()
@@ -88,10 +81,7 @@ const PieChart = ({
     <View pointerEvents={"box-none"} style={pieChartStyle}>
       {height > 0 && width > 0 && (
         <>
-          <Svg
-            pointerEvents={Platform.OS === "android" && "box-none"}
-            style={{ width, height }}
-          >
+          <Svg pointerEvents={Platform.OS === "android" && "box-none"} style={{ width, height }}>
             <G x={width / 2} y={height / 2}>
               {pieSlices.map((slice, i) => {
                 const { key, svg } = data[i];
@@ -99,12 +89,8 @@ const PieChart = ({
                   <Path
                     key={key}
                     {...svg}
-                    onPress={() => changeSelectedSlice(i)}
-                    d={
-                      i === selectedSlice
-                        ? selectedArcGenerator(slice)
-                        : arcGenerator(slice)
-                    }
+                    onPress={() => changeSelectedSlice && changeSelectedSlice(i)}
+                    d={i === selectedSlice ? selectedArcGenerator(slice) : arcGenerator(slice)}
                   />
                 );
               })}
@@ -115,8 +101,7 @@ const PieChart = ({
                 }}
                 {...TYPOGRAPHY.subheading}
               >
-                {selectedSlice !== null &&
-                  getInnerLabelText(data[selectedSlice])}
+                {selectedSlice !== null && getInnerLabelText(data[selectedSlice])}
               </Text>
             </G>
           </Svg>

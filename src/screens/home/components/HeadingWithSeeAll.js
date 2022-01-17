@@ -1,15 +1,9 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-paper";
-import { GLOBAL_CONSTANTS } from "../../../constants";
 import { TYPOGRAPHY } from "../../../styles";
 
-const HeadingWithSeeAll = ({
-  title = "",
-  seeAllBtnLabel = "See All",
-  subheading,
-  onSeeAllPress = GLOBAL_CONSTANTS.EMPTY_FUNCTION
-}) => (
+const HeadingWithSeeAll = ({ title = "", seeAllBtnLabel = "See All", subheading, onSeeAllPress }) => (
   <View style={STYLES.container}>
     <View style={STYLES.headingAndSellAll}>
       <Text style={TYPOGRAPHY.headline}>{title}</Text>

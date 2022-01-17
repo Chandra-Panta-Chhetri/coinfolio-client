@@ -1,10 +1,10 @@
 import {
   topCoinsFetchSuccess,
-  newsSummaryFetchSuccess,
+  newsSummarySuccess,
   globalSummaryFetchSuccess,
   gainersLosersFetchSuccess,
   topCoinsFetchFail,
-  newsSummaryFetchFail,
+  newsSummaryFail,
   gainersLosersFetchFail,
   globalSummaryFetchFail
 } from "./summary.actions";
@@ -12,7 +12,7 @@ import SUMMARY_ACTION_TYPES from "./summary.action.types";
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import { newsAPI } from "../../api";
 
-const MAX_NEWS_SUMMARIES = 4;
+export const MAX_NEWS_SUMMARIES = 4;
 
 function* fetchTopCoins() {
   try {
@@ -111,11 +111,11 @@ function* fetchGainersLosers() {
 
 function* fetchNewsSummary() {
   try {
-    const res = yield newsAPI.getNews();
-    const newsSummary = res.results.slice(0, MAX_NEWS_SUMMARIES);
-    yield put(newsSummaryFetchSuccess(newsSummary));
+    const res = yield newsAPI.fetchNews();
+    const newsSummary = yield res.results.slice(0, MAX_NEWS_SUMMARIES);
+    yield put(newsSummarySuccess(newsSummary));
   } catch (err) {
-    yield put(newsSummaryFetchFail("There was a server error while fetching the latest crypto news"));
+    yield put(newsSummaryFail("There was an error while fetching the news"));
   }
 }
 
@@ -131,8 +131,8 @@ function* watchGainersLosersFetchStart() {
   yield takeLatest(SUMMARY_ACTION_TYPES.START_GAINERS_LOSERS_FETCH, fetchGainersLosers);
 }
 
-function* watchNewsSummaryFetchStart() {
-  yield takeLatest(SUMMARY_ACTION_TYPES.START_NEWS_SUMMARY_FETCH, fetchNewsSummary);
+function* watchNewsSummaryFetch() {
+  yield takeLatest(SUMMARY_ACTION_TYPES.NEWS_SUMMARY_FETCH, fetchNewsSummary);
 }
 
 export default function* summarySagas() {
@@ -140,6 +140,6 @@ export default function* summarySagas() {
     call(watchTopCoinsFetchStart),
     call(watchGlobalSummaryFetchStart),
     call(watchGainersLosersFetchStart),
-    call(watchNewsSummaryFetchStart)
+    call(watchNewsSummaryFetch)
   ]);
 }

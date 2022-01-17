@@ -2,14 +2,9 @@ import React from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 import { TouchableNativeFeedback } from "../../../../../shared-components";
-import { GLOBAL_CONSTANTS } from "../../../../../constants";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../../styles";
 
-const AllocationLabels = ({
-  data = [],
-  selectedSlice = null,
-  changeSelectedSlice = GLOBAL_CONSTANTS.EMPTY_FUNCTION
-}) => {
+const AllocationLabels = ({ data = [], selectedSlice = null, changeSelectedSlice }) => {
   const { colors } = useTheme();
 
   return (
@@ -22,7 +17,7 @@ const AllocationLabels = ({
       {data.map((d, i) => (
         <TouchableNativeFeedback
           key={d.key}
-          onPress={() => changeSelectedSlice(i, false)}
+          onPress={() => changeSelectedSlice && changeSelectedSlice(i, false)}
           viewContainerStyle={STYLES.touchableOpacityContainer}
         >
           <View
@@ -36,9 +31,7 @@ const AllocationLabels = ({
                 : null
             ]}
           >
-            <View
-              style={[STYLES.pieSliceDot, { backgroundColor: d.svg.fill }]}
-            />
+            <View style={[STYLES.pieSliceDot, { backgroundColor: d.svg.fill }]} />
             <Text style={TYPOGRAPHY.subheading}>{d.key}</Text>
           </View>
         </TouchableNativeFeedback>

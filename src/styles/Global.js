@@ -21,10 +21,6 @@ export default StyleSheet.create({
   iconRoundness: {
     borderRadius: 30
   },
-  imagePreview: {
-    width: 90,
-    height: 90
-  },
   screenContainer: {
     paddingHorizontal: 10,
     paddingVertical: 25

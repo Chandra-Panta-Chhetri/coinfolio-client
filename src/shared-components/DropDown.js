@@ -1,18 +1,12 @@
 import React, { useState } from "react";
 import { Menu, useTheme, Text } from "react-native-paper";
 import { StyleSheet, View, ScrollView } from "react-native";
-import { GLOBAL_CONSTANTS } from "../constants";
 import TouchableNativeFeedback from "./TouchableNativeFeedback";
 import { AntDesign } from "@expo/vector-icons";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../styles";
 import TouchableSelectOption from "./TouchableSelectOption";
 
-const DropDown = ({
-  selectedIndex = 0,
-  onSelect = GLOBAL_CONSTANTS.EMPTY_FUNCTION,
-  options = [],
-  containerStyle = {}
-}) => {
+const DropDown = ({ selectedIndex = 0, onSelect, options = [], containerStyle = {} }) => {
   const { colors } = useTheme();
 
   const [dropDownWidth, setDropDownWidth] = useState({
@@ -66,7 +60,7 @@ const DropDown = ({
               isSelected={selectedIndex === i}
               onSelect={() => {
                 if (selectedIndex !== i) {
-                  onSelect(op.value, i);
+                  onSelect && onSelect(op.value, i);
                 }
                 hideDropDown();
               }}

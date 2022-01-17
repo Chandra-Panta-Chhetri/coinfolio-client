@@ -2,17 +2,17 @@ import NEWS_ACTION_TYPES from "./news.action.types";
 import { LATEST_NEWS_CONSTANTS, LATEST_EVENTS_CONSTANTS } from "../../constants";
 
 export const startNewsFetch = (filter = LATEST_NEWS_CONSTANTS.DEFAULT_FILTER) => ({
-  type: NEWS_ACTION_TYPES.START_INITIAL_NEWS_FETCH,
+  type: NEWS_ACTION_TYPES.INITIAL_NEWS_FETCH,
   payload: { filter }
 });
 
-export const newsFetchSuccess = (news) => ({
-  type: NEWS_ACTION_TYPES.INITIAL_NEWS_FETCH_SUCCESS,
+export const initialNewsSuccess = (news) => ({
+  type: NEWS_ACTION_TYPES.INITIAL_NEWS_SUCCESS,
   payload: news
 });
 
-export const newsFetchFail = (errorMsg) => ({
-  type: NEWS_ACTION_TYPES.INITIAL_NEWS_FETCH_FAIL,
+export const initialNewsFail = (errorMsg) => ({
+  type: NEWS_ACTION_TYPES.INITIAL_NEWS_FAIL,
   payload: { errorMsg }
 });
 
@@ -21,12 +21,12 @@ export const startNextNewsFetch = (query) => ({
   payload: query
 });
 
-export const nextNewsFetchSuccess = (news) => ({
+export const moreNewsSuccess = (news) => ({
   type: NEWS_ACTION_TYPES.FETCH_MORE_NEWS_SUCCESS,
   payload: news
 });
 
-export const nextNewsFetchFail = (errorMsg) => ({
+export const moreNewsFail = (errorMsg) => ({
   type: NEWS_ACTION_TYPES.FETCH_MORE_NEWS_FAIL,
   payload: { errorMsg }
 });
@@ -59,3 +59,7 @@ export const resetEventFilters = () =>
     showOnly: LATEST_EVENTS_CONSTANTS.DEFAULT_SHOW_ONLY_FILTER_INDEX,
     limit: LATEST_EVENTS_CONSTANTS.NUM_TO_SHOW
   });
+
+export const noMoreNews = () => ({
+  type: NEWS_ACTION_TYPES.NO_MORE_NEWS
+});

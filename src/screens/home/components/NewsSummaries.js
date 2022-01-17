@@ -3,12 +3,16 @@ import { View } from "react-native";
 import HeadingWithSeeAll from "./HeadingWithSeeAll";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
-import { selectNewsSummary, selectIsLoadingSummary, startNewsSummaryFetch } from "../../../redux/summary";
+import {
+  selectNewsSummary,
+  selectIsLoadingSummary,
+  startNewsSummaryFetch,
+  MAX_NEWS_SUMMARIES
+} from "../../../redux/summary";
 import { NewsItemSkeleton, NewsItem } from "../../../shared-components";
 import { GLOBAL_STYLES } from "../../../styles";
 
-const NUM_SKELETON = 4;
-const DUMMY_SKELETON_ARRAY = Array(NUM_SKELETON).fill("1");
+const DUMMY_SKELETON_ARRAY = Array(MAX_NEWS_SUMMARIES).fill("1");
 
 const NewsSummaries = ({ news, isLoading, fetchNewsSummary }) => {
   const navigation = useNavigation();

@@ -24,7 +24,7 @@ const INITIAL_STATE = {
 
 const newsReducer = (prevState = INITIAL_STATE, action) => {
   switch (action.type) {
-    case NEWS_ACTION_TYPES.START_INITIAL_NEWS_FETCH:
+    case NEWS_ACTION_TYPES.INITIAL_NEWS_FETCH:
       return {
         ...prevState,
         news: [],
@@ -38,7 +38,7 @@ const newsReducer = (prevState = INITIAL_STATE, action) => {
         events: [],
         isLoadingEvents: true
       };
-    case NEWS_ACTION_TYPES.INITIAL_NEWS_FETCH_SUCCESS:
+    case NEWS_ACTION_TYPES.INITIAL_NEWS_SUCCESS:
       return {
         ...prevState,
         news: action.payload,
@@ -51,7 +51,7 @@ const newsReducer = (prevState = INITIAL_STATE, action) => {
         events: action.payload,
         isLoadingEvents: false
       };
-    case NEWS_ACTION_TYPES.INITIAL_NEWS_FETCH_FAIL:
+    case NEWS_ACTION_TYPES.INITIAL_NEWS_FAIL:
       return {
         ...prevState,
         isLoadingNews: false,
@@ -87,6 +87,12 @@ const newsReducer = (prevState = INITIAL_STATE, action) => {
         isLoadingMoreNews: false,
         news: action.payload,
         newsPage: prevState.newsPage + 1
+      };
+    case NEWS_ACTION_TYPES.NO_MORE_NEWS:
+      return {
+        ...prevState,
+        isLoadingMoreNews: false,
+        hasMoreNews: false
       };
     default:
       return prevState;

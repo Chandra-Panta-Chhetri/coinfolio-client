@@ -2,10 +2,11 @@ import { takeLatest, put, call, all, select } from "redux-saga/effects";
 import {
   eventsFetchFail,
   eventsFetchSuccess,
-  newsFetchFail,
-  newsFetchSuccess,
-  nextNewsFetchFail,
-  nextNewsFetchSuccess
+  initialNewsFail,
+  initialNewsSuccess,
+  moreNewsFail,
+  moreNewsSuccess,
+  noMoreNews
 } from "./news.actions";
 import NEWS_ACTION_TYPES from "./news.action.types";
 import { selectEventFilters, selectNewsPage, selectNews } from "./news.selectors";
@@ -13,29 +14,29 @@ import { LATEST_EVENTS_CONSTANTS } from "../../constants";
 import { delayJS } from "../../utils";
 import { newsAPI } from "../../api";
 
-function* getNews({ payload: { filter } }) {
+function* fetchNews({ payload: { filter } }) {
   try {
-    const res = yield newsAPI.getNews({ filter });
-    const news = yield res.results;
-    yield put(newsFetchSuccess(news));
+    const response = yield newsAPI.fetchNews({ filter });
+    const news = yield response.results;
+    yield put(initialNewsSuccess(news));
   } catch (err) {
-    yield put(newsFetchFail("There was a server error while fetching the news"));
+    yield put(initialNewsFail("There was an error while fetching the news"));
   }
 }
 
-function* getMoreNews({ payload: { filter } }) {
+function* fetchMoreNews({ payload: { filter } }) {
   try {
     const page = yield select(selectNewsPage);
-    const res = yield newsAPI.getNews({ filter, page });
+    const res = yield newsAPI.fetchNews({ filter, page });
     const news = yield res.results;
     const currentNews = yield select(selectNews);
     const combinedNews = yield [...currentNews, ...news];
     if (news.length === 0 || combinedNews.length > res.totalResults) {
-      throw Error();
+      return yield put(noMoreNews());
     }
-    yield put(nextNewsFetchSuccess(combinedNews));
+    yield put(moreNewsSuccess(combinedNews));
   } catch (err) {
-    yield put(nextNewsFetchFail("There was a server error while fetching more news"));
+    yield put(moreNewsFail("There was an error while fetching more news"));
   }
 }
 
@@ -511,12 +512,12 @@ function* getEvents() {
   }
 }
 
-function* watchNewsFetchStart() {
-  yield takeLatest(NEWS_ACTION_TYPES.START_INITIAL_NEWS_FETCH, getNews);
+function* watchInitialNewsFetch() {
+  yield takeLatest(NEWS_ACTION_TYPES.INITIAL_NEWS_FETCH, fetchNews);
 }
 
 function* watchMoreNewsFetch() {
-  yield takeLatest(NEWS_ACTION_TYPES.FETCH_MORE_NEWS, getMoreNews);
+  yield takeLatest(NEWS_ACTION_TYPES.FETCH_MORE_NEWS, fetchMoreNews);
 }
 
 function* watchEventsFetchStart() {
@@ -524,5 +525,5 @@ function* watchEventsFetchStart() {
 }
 
 export default function* newsSagas() {
-  yield all([call(watchEventsFetchStart), call(watchNewsFetchStart), call(watchMoreNewsFetch)]);
+  yield all([call(watchEventsFetchStart), call(watchInitialNewsFetch), call(watchMoreNewsFetch)]);
 }
