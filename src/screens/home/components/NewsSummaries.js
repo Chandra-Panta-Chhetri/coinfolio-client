@@ -16,7 +16,7 @@ const DUMMY_SKELETON_ARRAY = Array(MAX_NEWS_SUMMARIES).fill("1");
 
 const NewsSummaries = ({ news, isLoading, fetchNewsSummary }) => {
   const navigation = useNavigation();
-  const toNewsScreen = () => navigation.navigate("News");
+  const toNewsScreen = () => navigation.navigate("Discover", { screen: "News" });
 
   useEffect(() => {
     fetchNewsSummary();

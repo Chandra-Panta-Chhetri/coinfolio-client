@@ -1,7 +1,7 @@
 import NEWS_ACTION_TYPES from "./news.action.types";
-import { LATEST_NEWS_CONSTANTS, LATEST_EVENTS_CONSTANTS } from "../../constants";
+import { NEWS_CONSTANTS, EVENTS_CONSTANTS } from "../../constants";
 
-export const startNewsFetch = (filter = LATEST_NEWS_CONSTANTS.DEFAULT_FILTER) => ({
+export const startNewsFetch = (filter = NEWS_CONSTANTS.DEFAULT_FILTER) => ({
   type: NEWS_ACTION_TYPES.INITIAL_NEWS_FETCH,
   payload: { filter }
 });
@@ -56,8 +56,8 @@ export const resetEventFilters = () =>
       start: null,
       end: null
     },
-    showOnly: LATEST_EVENTS_CONSTANTS.DEFAULT_SHOW_ONLY_FILTER_INDEX,
-    limit: LATEST_EVENTS_CONSTANTS.NUM_TO_SHOW
+    showOnly: EVENTS_CONSTANTS.DEFAULT_SHOW_ONLY_FILTER_INDEX,
+    limit: EVENTS_CONSTANTS.NUM_TO_SHOW
   });
 
 export const noMoreNews = () => ({

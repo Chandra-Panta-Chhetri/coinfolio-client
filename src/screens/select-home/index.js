@@ -6,7 +6,7 @@ import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import {
   HomeTabIcon,
   PortfolioTabIcon,
-  NewsTabIcon,
+  DiscoverTabIcon,
   MarketTabIcon
 } from "../../core/navigators/BottomTab/TabIcons";
 import { Text, RadioButton, useTheme } from "react-native-paper";
@@ -20,7 +20,7 @@ const HOME_SCREEN_OPTIONS = [
     icon: <MarketTabIcon />
   },
   { label: "Portfolio", value: "Portfolio", icon: <PortfolioTabIcon /> },
-  { label: "News", value: "News", icon: <NewsTabIcon /> }
+  { label: "Discover", value: "Discover", icon: <DiscoverTabIcon /> }
 ];
 
 const SelectHomeScreen = ({ currentHomeScreen, changeHomeScreen }) => {
@@ -44,9 +44,7 @@ const SelectHomeScreen = ({ currentHomeScreen, changeHomeScreen }) => {
             <View pointerEvents={"none"}>
               <RadioButton
                 value={op.label}
-                status={
-                  currentHomeScreen.value === op.value ? "checked" : "unchecked"
-                }
+                status={currentHomeScreen.value === op.value ? "checked" : "unchecked"}
                 color={colors.primary}
               />
             </View>

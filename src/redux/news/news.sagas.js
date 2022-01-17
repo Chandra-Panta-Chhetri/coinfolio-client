@@ -10,7 +10,7 @@ import {
 } from "./news.actions";
 import NEWS_ACTION_TYPES from "./news.action.types";
 import { selectEventFilters, selectNewsPage, selectNews } from "./news.selectors";
-import { LATEST_EVENTS_CONSTANTS } from "../../constants";
+import { EVENTS_CONSTANTS } from "../../constants";
 import { delayJS } from "../../utils";
 import { newsAPI } from "../../api";
 
@@ -43,7 +43,7 @@ function* fetchMoreNews({ payload: { filter } }) {
 function* getEvents() {
   try {
     const filters = yield select(selectEventFilters);
-    const showOnly = yield LATEST_EVENTS_CONSTANTS.SHOW_ONLY_FILTERS[filters.showOnly].value;
+    const showOnly = yield EVENTS_CONSTANTS.SHOW_ONLY_FILTERS[filters.showOnly].value;
     const events = yield [];
     if (showOnly === "trending") {
       yield events.push(
@@ -508,7 +508,7 @@ function* getEvents() {
     yield delayJS(5000);
     yield put(eventsFetchSuccess(events));
   } catch (err) {
-    yield put(eventsFetchFail("There was a server error while fetching the latest events"));
+    yield put(eventsFetchFail("There was an error while fetching the events"));
   }
 }
 

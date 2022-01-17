@@ -1,5 +1,5 @@
 import NEWS_ACTION_TYPES from "./news.action.types";
-import { LATEST_EVENTS_CONSTANTS } from "../../constants";
+import { EVENTS_CONSTANTS } from "../../constants";
 
 const INITIAL_STATE = {
   news: [],
@@ -9,8 +9,8 @@ const INITIAL_STATE = {
       start: null,
       end: null
     },
-    showOnly: LATEST_EVENTS_CONSTANTS.DEFAULT_SHOW_ONLY_FILTER_INDEX,
-    limit: LATEST_EVENTS_CONSTANTS.NUM_TO_SHOW
+    showOnly: EVENTS_CONSTANTS.DEFAULT_SHOW_ONLY_FILTER_INDEX,
+    limit: EVENTS_CONSTANTS.NUM_TO_SHOW
   },
   isLoadingNews: true,
   isLoadingEvents: true,
