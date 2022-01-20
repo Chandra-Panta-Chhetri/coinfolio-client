@@ -11,7 +11,15 @@ import {
   startNextNewsFetch,
   selectHasMoreNews
 } from "../../redux/news";
-import { NewsList, DropDown } from "../../shared-components";
+import { DropDown, InfiniteScroll, NewsItemSkeleton, NewsItem } from "../../shared-components";
+
+const renderNewsSkeleton = ({ index }) => (
+  <NewsItemSkeleton containerStyle={index !== 0 ? GLOBAL_STYLES.cardMargin : null} />
+);
+
+const renderNewsItem = ({ item, index }) => (
+  <NewsItem key={item.id.toString()} news={item} containerStyle={index !== 0 ? GLOBAL_STYLES.cardMargin : null} />
+);
 
 const NewsScreen = ({ isLoading, news, fetchInitialNews, fetchMoreNews, isLoadingMore, hasMoreToFetch }) => {
   const [newsFilterIndex, setNewsFilterIndex] = useState(NEWS_CONSTANTS.DEFAULT_FILTER_INDEX);
@@ -38,14 +46,16 @@ const NewsScreen = ({ isLoading, news, fetchInitialNews, fetchMoreNews, isLoadin
         options={NEWS_CONSTANTS.FILTERS}
         containerStyle={STYLES.dropDownContainer}
       />
-      <NewsList
+      <InfiniteScroll
         isLoading={isLoading}
-        news={news}
-        numSkeletonsToShow={NEWS_CONSTANTS.NUM_TO_SHOW}
-        contentContainerStyle={STYLES.newsListContentContainer}
+        data={news}
+        numSkeletons={NEWS_CONSTANTS.NUM_TO_SHOW}
+        contentContainerStyle={STYLES.newsList}
         onEndReached={onEndReached}
         isLoadingMore={isLoadingMore}
         hasMoreToFetch={hasMoreToFetch}
+        renderDataItem={renderNewsItem}
+        renderSkeleton={renderNewsSkeleton}
       />
     </>
   );
@@ -56,7 +66,7 @@ const STYLES = StyleSheet.create({
     marginBottom: GLOBAL_STYLES.componentContainer.marginBottom - 1,
     marginHorizontal: GLOBAL_STYLES.screenContainer.paddingHorizontal
   },
-  newsListContentContainer: {
+  newsList: {
     paddingTop: 0,
     ...GLOBAL_STYLES.screenContainer
   }
