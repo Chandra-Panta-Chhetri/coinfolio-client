@@ -22,6 +22,9 @@ const InfiniteScroll = ({
     }
   };
 
+  const renderFooter = () =>
+    hasMoreToFetch ? <ActivityIndicator style={STYLES.footer} animating={hasMoreToFetch} hidesWhenStopped /> : null;
+
   if (isLoading) {
     return (
       <FlatList
@@ -44,7 +47,7 @@ const InfiniteScroll = ({
       contentContainerStyle={contentContainerStyle}
       onEndReached={onScrollToEnd}
       onEndReachedThreshold={0.5}
-      ListFooterComponent={hasMoreToFetch && <ActivityIndicator style={STYLES.footer} />}
+      ListFooterComponent={renderFooter}
     />
   );
 };

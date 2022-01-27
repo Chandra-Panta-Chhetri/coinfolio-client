@@ -67,8 +67,8 @@ const STYLES = StyleSheet.create({
     marginHorizontal: GLOBAL_STYLES.screenContainer.paddingHorizontal
   },
   newsList: {
-    paddingTop: 0,
-    ...GLOBAL_STYLES.screenContainer
+    ...GLOBAL_STYLES.screenContainer,
+    paddingTop: 0
   }
 });
 

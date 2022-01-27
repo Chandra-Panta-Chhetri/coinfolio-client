@@ -119,8 +119,8 @@ const STYLES = StyleSheet.create({
   heading: {
     ...GLOBAL_STYLES.screenContainer,
     ...TYPOGRAPHY.display1,
-    ...GLOBAL_STYLES.componentContainer,
-    paddingBottom: 0
+    paddingBottom: 0,
+    marginBottom: 5
   }
 });
 

@@ -17,13 +17,13 @@ const NewsItemSkeleton = ({ containerStyle }) => (
 
 const STYLES = StyleSheet.create({
   titleSkeleton: {
-    height: 25,
+    height: 35,
     ...GLOBAL_STYLES.borderRadius
   },
   subheadingSkeleton: {
-    height: 20,
+    height: 25,
     marginTop: 10,
-    width: 100,
+    width: "30%",
     ...GLOBAL_STYLES.borderRadius
   },
   dateSourceContainer: {
