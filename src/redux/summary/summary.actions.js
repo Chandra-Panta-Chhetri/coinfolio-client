@@ -37,18 +37,16 @@ export const gainersLosersFetchFail = (errorMsg) => ({
 });
 
 export const startNewsSummaryFetch = () => ({
-  type: SUMMARY_ACTION_TYPES.START_NEWS_SUMMARY_FETCH
+  type: SUMMARY_ACTION_TYPES.NEWS_SUMMARY_FETCH
 });
 
-export const newsSummaryFetchSuccess = (news) => ({
-  type: SUMMARY_ACTION_TYPES.NEWS_SUMMARY_FETCH_SUCCESS,
-  payload: {
-    news
-  }
+export const newsSummarySuccess = (news) => ({
+  type: SUMMARY_ACTION_TYPES.NEWS_SUMMARY_SUCCESS,
+  payload: news
 });
 
-export const newsSummaryFetchFail = (errorMsg) => ({
-  type: SUMMARY_ACTION_TYPES.NEWS_SUMMARY_FETCH_FAIL,
+export const newsSummaryFail = (errorMsg) => ({
+  type: SUMMARY_ACTION_TYPES.NEWS_SUMMARY_FAIL,
   payload: {
     errorMsg
   }

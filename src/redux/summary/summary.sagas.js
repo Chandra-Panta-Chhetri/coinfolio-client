@@ -1,16 +1,18 @@
 import {
   topCoinsFetchSuccess,
-  newsSummaryFetchSuccess,
+  newsSummarySuccess,
   globalSummaryFetchSuccess,
   gainersLosersFetchSuccess,
   topCoinsFetchFail,
-  newsSummaryFetchFail,
+  newsSummaryFail,
   gainersLosersFetchFail,
   globalSummaryFetchFail
 } from "./summary.actions";
 import SUMMARY_ACTION_TYPES from "./summary.action.types";
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { delayJS } from "../../utils";
+import { newsAPI } from "../../api";
+
+export const MAX_NEWS_SUMMARIES = 4;
 
 function* fetchTopCoins() {
   try {
@@ -49,9 +51,7 @@ function* fetchTopCoins() {
     // yield delayJS(7000);
     yield put(topCoinsFetchSuccess(topCoins));
   } catch (err) {
-    yield put(
-      topCoinsFetchFail("There was a server error while fetching the top coins")
-    );
+    yield put(topCoinsFetchFail("There was a server error while fetching the top coins"));
   }
 }
 
@@ -66,11 +66,7 @@ function* fetchGlobalSummary() {
     // yield delayJS(5000);
     yield put(globalSummaryFetchSuccess(globalSummary));
   } catch (err) {
-    yield put(
-      globalSummaryFetchFail(
-        "There was a server error while fetching the global market summary"
-      )
-    );
+    yield put(globalSummaryFetchFail("There was a server error while fetching the global market summary"));
   }
 }
 
@@ -109,48 +105,17 @@ function* fetchGainersLosers() {
     // yield delayJS(9000);
     yield put(gainersLosersFetchSuccess(gainersLosers));
   } catch (err) {
-    yield put(
-      gainersLosersFetchFail(
-        "There was a server error while fetching the top gainers and losers"
-      )
-    );
+    yield put(gainersLosersFetchFail("There was a server error while fetching the top gainers and losers"));
   }
 }
 
 function* fetchNewsSummary() {
   try {
-    const newsSummary = yield [
-      {
-        title:
-          "Dogecoin falls 15% to below 40 cents on Elon Musk’s crypto about-face",
-        publishedTime: "3h ago",
-        source: "CBC News",
-        imagePreview:
-          "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-      },
-      {
-        title: "Ethereum’s Ratio Overtakes Resistance",
-        publishedTime: "10h ago",
-        source: "Trustnodes",
-        imagePreview:
-          "https://www.trustnodes.com/wp-content/uploads/2021/05/xethereum-ratio-bitcoin-price-may-14-2021.png.pagespeed.ic.e_g1OTbZRR.webp"
-      },
-      {
-        title: "Will Musk Buy ETH?",
-        publishedTime: "1h ago",
-        source: "Trustnodes",
-        imagePreview:
-          "https://www.trustnodes.com/wp-content/uploads/2021/05/xelon-musk.jpg.pagespeed.ic.jLiFCP5v7B.webp"
-      }
-    ];
-    // yield delayJS(11000);
-    yield put(newsSummaryFetchSuccess(newsSummary));
+    const res = yield newsAPI.fetchNews();
+    const newsSummary = yield res.results.slice(0, MAX_NEWS_SUMMARIES);
+    yield put(newsSummarySuccess(newsSummary));
   } catch (err) {
-    yield put(
-      newsSummaryFetchFail(
-        "There was a server error while fetching the latest crypto news"
-      )
-    );
+    yield put(newsSummaryFail("There was an error while fetching the news"));
   }
 }
 
@@ -159,24 +124,15 @@ function* watchTopCoinsFetchStart() {
 }
 
 function* watchGlobalSummaryFetchStart() {
-  yield takeLatest(
-    SUMMARY_ACTION_TYPES.START_GLOBAL_SUMMARY_FETCH,
-    fetchGlobalSummary
-  );
+  yield takeLatest(SUMMARY_ACTION_TYPES.START_GLOBAL_SUMMARY_FETCH, fetchGlobalSummary);
 }
 
 function* watchGainersLosersFetchStart() {
-  yield takeLatest(
-    SUMMARY_ACTION_TYPES.START_GAINERS_LOSERS_FETCH,
-    fetchGainersLosers
-  );
+  yield takeLatest(SUMMARY_ACTION_TYPES.START_GAINERS_LOSERS_FETCH, fetchGainersLosers);
 }
 
-function* watchNewsSummaryFetchStart() {
-  yield takeLatest(
-    SUMMARY_ACTION_TYPES.START_NEWS_SUMMARY_FETCH,
-    fetchNewsSummary
-  );
+function* watchNewsSummaryFetch() {
+  yield takeLatest(SUMMARY_ACTION_TYPES.NEWS_SUMMARY_FETCH, fetchNewsSummary);
 }
 
 export default function* summarySagas() {
@@ -184,6 +140,6 @@ export default function* summarySagas() {
     call(watchTopCoinsFetchStart),
     call(watchGlobalSummaryFetchStart),
     call(watchGainersLosersFetchStart),
-    call(watchNewsSummaryFetchStart)
+    call(watchNewsSummaryFetch)
   ]);
 }

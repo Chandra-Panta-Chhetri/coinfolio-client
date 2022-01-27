@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
 import CalendarPicker from "react-native-calendar-picker";
-import { GLOBAL_CONSTANTS } from "../constants";
 import { useTheme, Portal, Modal, Button, Text } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import TouchableNativeFeedback from "./TouchableNativeFeedback";
 
-const DatePicker = ({
-  isRangePicker = true,
-  onConfirm = GLOBAL_CONSTANTS.EMPTY_FUNCTION,
-  initialStartDate = null,
-  initialEndDate = null
-}) => {
+const DatePicker = ({ isRangePicker = true, onConfirm, initialStartDate = null, initialEndDate = null }) => {
   const { colors } = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [startDate, setStartDate] = useState(initialStartDate);
@@ -49,7 +43,7 @@ const DatePicker = ({
       start: startDate,
       end: endDate
     };
-    onConfirm(selectedDates);
+    onConfirm && onConfirm(selectedDates);
     hideModal();
   };
 
@@ -57,31 +51,18 @@ const DatePicker = ({
     <>
       <TouchableNativeFeedback
         onPress={showModal}
-        viewContainerStyle={[
-          GLOBAL_STYLES.borderWidth,
-          { borderColor: colors.text }
-        ]}
+        viewContainerStyle={[GLOBAL_STYLES.borderWidth, { borderColor: colors.text }]}
       >
         <View style={STYLES.dateOutputContainer}>
-          <Text style={TYPOGRAPHY.body1}>
-            {startDate ? new Date(startDate).toDateString() : "..."}
-          </Text>
-          {isRangePicker && endDate && (
-            <Text style={TYPOGRAPHY.body1}>
-              {" "}
-              - {new Date(endDate).toDateString()}
-            </Text>
-          )}
+          <Text style={TYPOGRAPHY.body1}>{startDate ? new Date(startDate).toDateString() : "..."}</Text>
+          {isRangePicker && endDate && <Text style={TYPOGRAPHY.body1}> - {new Date(endDate).toDateString()}</Text>}
         </View>
       </TouchableNativeFeedback>
       <Portal>
         <Modal
           visible={isModalVisible}
           onDismiss={hideModal}
-          contentContainerStyle={[
-            STYLES.modalContainer,
-            { backgroundColor: colors.card }
-          ]}
+          contentContainerStyle={[STYLES.modalContainer, { backgroundColor: colors.card }]}
           style={STYLES.modalWrapper}
           dismissable={false}
         >
@@ -103,34 +84,14 @@ const DatePicker = ({
             dayLabelsWrapper={{
               borderColor: colors.text
             }}
-            nextComponent={
-              <MaterialIcons
-                name="navigate-next"
-                size={28}
-                color={colors.text}
-              />
-            }
-            previousComponent={
-              <MaterialIcons
-                name="navigate-before"
-                size={28}
-                color={colors.text}
-              />
-            }
+            nextComponent={<MaterialIcons name="navigate-next" size={28} color={colors.text} />}
+            previousComponent={<MaterialIcons name="navigate-before" size={28} color={colors.text} />}
           />
           <View style={STYLES.modalActionButtons}>
-            <Button
-              labelStyle={TYPOGRAPHY.button}
-              onPress={closePicker}
-              color={colors.notification}
-            >
+            <Button labelStyle={TYPOGRAPHY.button} onPress={closePicker} color={colors.notification}>
               Cancel
             </Button>
-            <Button
-              labelStyle={TYPOGRAPHY.button}
-              onPress={confirmSelectedDates}
-              disabled={!endDate}
-            >
+            <Button labelStyle={TYPOGRAPHY.button} onPress={confirmSelectedDates} disabled={!endDate}>
               Ok
             </Button>
           </View>

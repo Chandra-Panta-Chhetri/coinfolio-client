@@ -4,12 +4,12 @@ import { Card, Text, Avatar } from "react-native-paper";
 import { GLOBAL_CONSTANTS } from "../../../../constants";
 import { TouchableNativeFeedback } from "../../../../shared-components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../styles";
-import {
-  getStylesBasedOnSign,
-  formatNumBasedOnSignWorklet
-} from "../../../../utils";
+import { getStylesBasedOnSign, formatNumBasedOnSignWorklet } from "../../../../utils";
+import { useNavigation } from "@react-navigation/native";
 
-const TopCoin = ({ item, navigation }) => {
+const TopCoin = ({ item }) => {
+  const navigation = useNavigation();
+
   return (
     <TouchableNativeFeedback viewContainerStyle={STYLES.androidContainer}>
       <Card style={STYLES.topCoinCard}>
@@ -22,9 +22,7 @@ const TopCoin = ({ item, navigation }) => {
           />
           <Text style={TYPOGRAPHY.body2}>{item.ticker}</Text>
           <Text style={TYPOGRAPHY.body1}>${item.price}</Text>
-          <Text
-            style={[TYPOGRAPHY.body1, getStylesBasedOnSign(item.percentChange)]}
-          >
+          <Text style={[TYPOGRAPHY.body1, getStylesBasedOnSign(item.percentChange)]}>
             {formatNumBasedOnSignWorklet(item.percentChange)}%
           </Text>
         </Card.Content>

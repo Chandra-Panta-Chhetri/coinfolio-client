@@ -2,30 +2,26 @@ import React, { useEffect } from "react";
 import { StyleSheet, ScrollView, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { connect } from "react-redux";
-import {
-  selectGlobalSummary,
-  selectIsLoadingSummary,
-  startGlobalSummaryFetch
-} from "../../../redux/summary";
+import { selectGlobalSummary, selectIsLoadingSummary, startGlobalSummaryFetch } from "../../../redux/summary";
 import { Skeleton } from "../../../shared-components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 
 const METRICS = [
   {
     label: "Market Cap",
-    valueAccessorFunc: (summary) => `$${summary["marketCap"]}`
+    key: "marketCap"
   },
   {
     label: "24h Vol",
-    valueAccessorFunc: (summary) => `$${summary["24hVolume"]}`
+    key: "24hVolume"
   },
   {
     label: "BTC Dominance",
-    valueAccessorFunc: (summary) => `${summary["btcDominance"]}%`
+    key: "btcDominance"
   },
   {
     label: "ETH Dominance",
-    valueAccessorFunc: (summary) => `${summary["ethDominance"]}%`
+    key: "ethDominance"
   }
 ];
 
@@ -37,11 +33,7 @@ const GlobalMarketSummarySkeleton = () => (
   </Card>
 );
 
-const GlobalMarketSummary = ({
-  globalSummary,
-  fetchGlobalSummary,
-  isLoading
-}) => {
+const GlobalMarketSummary = ({ globalSummary, fetchGlobalSummary, isLoading }) => {
   useEffect(() => {
     fetchGlobalSummary();
   }, []);
@@ -54,12 +46,10 @@ const GlobalMarketSummary = ({
     <Card style={STYLES.container}>
       <Card.Content>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {METRICS.map((metric) => (
-            <View style={STYLES.summaryItem} key={metric.label}>
-              <Text style={TYPOGRAPHY.body2}>{metric.label}: </Text>
-              <Text style={TYPOGRAPHY.body2}>
-                {metric.valueAccessorFunc(globalSummary)}
-              </Text>
+          {METRICS.map((m) => (
+            <View style={STYLES.summaryItem} key={m.label}>
+              <Text style={TYPOGRAPHY.body2}>{m.label}: </Text>
+              <Text style={TYPOGRAPHY.body2}>{globalSummary[m.key]}</Text>
             </View>
           ))}
         </ScrollView>
@@ -96,7 +86,4 @@ const mapDispatchToProps = (dispatch) => ({
   fetchGlobalSummary: () => dispatch(startGlobalSummaryFetch())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(GlobalMarketSummary);
+export default connect(mapStateToProps, mapDispatchToProps)(GlobalMarketSummary);

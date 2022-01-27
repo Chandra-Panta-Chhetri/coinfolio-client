@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { Snackbar, Text } from "react-native-paper";
-import {
-  selectRecentNotification,
-  clearNotifications
-} from "../../redux/notification";
+import { selectRecentNotification, clearNotifications } from "../../redux/notification";
 import { connect } from "react-redux";
 import { TYPOGRAPHY } from "../../styles";
 
@@ -29,9 +26,7 @@ const NotificationSnackbar = ({ notification, clearNotifications }) => {
       }}
       style={[STYLES.snackbar, { backgroundColor: prevBackgroundColor }]}
     >
-      <Text style={STYLES.notificationMsg}>
-        {notification && notification.message}
-      </Text>
+      <Text style={STYLES.notificationMsg}>{notification && notification.message}</Text>
     </Snackbar>
   );
 };
@@ -54,7 +49,4 @@ const mapDispatchToProps = (dispatch) => ({
   clearNotifications: () => dispatch(clearNotifications())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NotificationSnackbar);
+export default connect(mapStateToProps, mapDispatchToProps)(NotificationSnackbar);

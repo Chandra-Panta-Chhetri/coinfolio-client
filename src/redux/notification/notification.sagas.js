@@ -3,10 +3,7 @@ import SUMMARY_ACTION_TYPES from "../summary/summary.action.types";
 import PORTFOLIO_ACTION_TYPES from "../portfolio/portfolio.action.types";
 import MARKET_ACTION_TYPES from "../market/market.action.types";
 import { all, call, put, takeEvery } from "redux-saga/effects";
-import {
-  addErrorNotification,
-  addSuccessNotification
-} from "./notification.actions";
+import { addErrorNotification, addSuccessNotification } from "./notification.actions";
 import NEWS_ACTION_TYPES from "../news/news.action.types";
 
 function* showErrorNotification({ payload: { errorMsg } }) {
@@ -24,7 +21,7 @@ function* watchErrorNotifications() {
       USER_ACTION_TYPES.LOG_OUT_FAIL,
       USER_ACTION_TYPES.SIGN_IN_FAIL,
       SUMMARY_ACTION_TYPES.TOP_COINS_FETCH_FAIL,
-      SUMMARY_ACTION_TYPES.NEWS_SUMMARY_FETCH_FAIL,
+      SUMMARY_ACTION_TYPES.NEWS_SUMMARY_FAIL,
       SUMMARY_ACTION_TYPES.GAINERS_LOSERS_FETCH_FAIL,
       SUMMARY_ACTION_TYPES.GLOBAL_SUMMARY_FETCH_FAIL,
       PORTFOLIO_ACTION_TYPES.PORTFOLIO_FETCH_FAIL,
@@ -33,9 +30,10 @@ function* watchErrorNotifications() {
       PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_BY_ID_FAIL,
       PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTIONS_FOR_ASSET_FAIL,
       PORTFOLIO_ACTION_TYPES.REMOVE_ALL_TRANSACTIONS_FOR_ASSET_FAIL,
+      MARKET_ACTION_TYPES.MARKETS_FETCH_FAIL,
       NEWS_ACTION_TYPES.EVENTS_FETCH_FAIL,
-      NEWS_ACTION_TYPES.NEWS_FETCH_FAIL,
-      MARKET_ACTION_TYPES.MARKETS_FETCH_FAIL
+      NEWS_ACTION_TYPES.INITIAL_NEWS_FAIL,
+      NEWS_ACTION_TYPES.FETCH_MORE_NEWS_FAIL
     ],
     showErrorNotification
   );

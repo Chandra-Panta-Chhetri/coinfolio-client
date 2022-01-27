@@ -2,21 +2,12 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { DropDown, DatePicker } from "../../shared-components";
 import { connect } from "react-redux";
-import {
-  selectEventFilters,
-  startEventsFetch,
-  updateEventFilters
-} from "../../redux/news";
+import { selectEventFilters, startEventsFetch, updateEventFilters } from "../../redux/news";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { Button, Text, useTheme } from "react-native-paper";
-import { LATEST_EVENTS_CONSTANTS } from "../../constants";
+import { EVENTS_CONSTANTS } from "../../constants";
 
-const SelectEventFiltersScreen = ({
-  fetchEvents,
-  updateEventFilters,
-  navigation,
-  appliedFilters
-}) => {
+const SelectEventFiltersScreen = ({ fetchEvents, updateEventFilters, navigation, appliedFilters }) => {
   const { colors } = useTheme();
   const [filters, setFilters] = useState(appliedFilters);
 
@@ -29,11 +20,10 @@ const SelectEventFiltersScreen = ({
   const applyFilter = () => {
     updateEventFilters(filters);
     fetchEvents();
-    navigation.navigate("News", { screen: "LatestEvents" });
+    navigation.navigate("Discover", { screen: "Events" });
   };
 
-  const onShowOnlyDropDownSelect = (_, selectedIndex) =>
-    setFilters({ ...filters, showOnly: selectedIndex });
+  const onShowOnlyDropDownSelect = (_, selectedIndex) => setFilters({ ...filters, showOnly: selectedIndex });
 
   const resetFilters = () => {
     setFilters({
@@ -41,8 +31,8 @@ const SelectEventFiltersScreen = ({
         start: null,
         end: null
       },
-      showOnly: LATEST_EVENTS_CONSTANTS.DEFAULT_SHOW_ONLY_FILTER_INDEX,
-      limit: LATEST_EVENTS_CONSTANTS.NUM_TO_SHOW
+      showOnly: EVENTS_CONSTANTS.DEFAULT_SHOW_ONLY_FILTER_INDEX,
+      limit: EVENTS_CONSTANTS.NUM_TO_SHOW
     });
   };
 
@@ -61,7 +51,7 @@ const SelectEventFiltersScreen = ({
           <Text style={STYLES.filterLabel}>Show only</Text>
           <DropDown
             onSelect={onShowOnlyDropDownSelect}
-            options={LATEST_EVENTS_CONSTANTS.SHOW_ONLY_FILTERS}
+            options={EVENTS_CONSTANTS.SHOW_ONLY_FILTERS}
             selectedIndex={filters.showOnly}
           />
         </View>
@@ -115,7 +105,4 @@ const mapDispatchToProps = (dispatch) => ({
   updateEventFilters: (filters) => dispatch(updateEventFilters(filters))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SelectEventFiltersScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(SelectEventFiltersScreen);

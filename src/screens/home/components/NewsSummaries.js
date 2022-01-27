@@ -6,13 +6,17 @@ import { connect } from "react-redux";
 import {
   selectNewsSummary,
   selectIsLoadingSummary,
-  startNewsSummaryFetch
+  startNewsSummaryFetch,
+  MAX_NEWS_SUMMARIES
 } from "../../../redux/summary";
-import { NewsList } from "../../../shared-components";
+import { NewsItemSkeleton, NewsItem } from "../../../shared-components";
+import { GLOBAL_STYLES } from "../../../styles";
+
+const DUMMY_SKELETON_ARRAY = Array(MAX_NEWS_SUMMARIES).fill("1");
 
 const NewsSummaries = ({ news, isLoading, fetchNewsSummary }) => {
   const navigation = useNavigation();
-  const navigateToNewsScreen = () => navigation.navigate("News");
+  const toNewsScreen = () => navigation.navigate("Discover", { screen: "News" });
 
   useEffect(() => {
     fetchNewsSummary();
@@ -20,11 +24,16 @@ const NewsSummaries = ({ news, isLoading, fetchNewsSummary }) => {
 
   return (
     <View>
-      <HeadingWithSeeAll
-        headingTitle="News"
-        onSeeAllBtnPress={navigateToNewsScreen}
-      />
-      <NewsList isLoading={isLoading} newsData={news} numSkeletonsToShow={3} />
+      <HeadingWithSeeAll title="News" onSeeAllPress={toNewsScreen} />
+      <View>
+        {isLoading && news.length === 0
+          ? DUMMY_SKELETON_ARRAY.map((_, i) => (
+              <NewsItemSkeleton key={i} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
+            ))
+          : news.map((n, i) => (
+              <NewsItem news={n} key={n.title} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
+            ))}
+      </View>
     </View>
   );
 };

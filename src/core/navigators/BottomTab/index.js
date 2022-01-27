@@ -1,29 +1,14 @@
 import React from "react";
 import { Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-  HomeScreen,
-  MarketOverviewScreen,
-  SettingsScreen,
-  NewsScreen,
-  PortfolioScreen
-} from "../../../screens";
+import { HomeScreen, MarketOverviewScreen, SettingsScreen, DiscoverScreen, PortfolioScreen } from "../../../screens";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { useTheme } from "react-native-paper";
 import { connect } from "react-redux";
 import { selectHomeScreen } from "../../../redux/preferences";
-import {
-  HomeTabIcon,
-  SettingsTabIcon,
-  NewsTabIcon,
-  MarketTabIcon,
-  PortfolioTabIcon
-} from "./TabIcons";
+import { HomeTabIcon, SettingsTabIcon, DiscoverTabIcon, MarketTabIcon, PortfolioTabIcon } from "./TabIcons";
 
-const BottomTab =
-  Platform.OS === "android"
-    ? createMaterialBottomTabNavigator()
-    : createBottomTabNavigator();
+const BottomTab = Platform.OS === "android" ? createMaterialBottomTabNavigator() : createBottomTabNavigator();
 
 const BottomTabNavigator = ({ homeScreen }) => {
   const { colors } = useTheme();
@@ -55,10 +40,10 @@ const BottomTabNavigator = ({ homeScreen }) => {
         }}
       />
       <BottomTab.Screen
-        name="News"
-        component={NewsScreen}
+        name="Discover"
+        component={DiscoverScreen}
         options={{
-          tabBarIcon: NewsTabIcon
+          tabBarIcon: DiscoverTabIcon
         }}
       />
       <BottomTab.Screen

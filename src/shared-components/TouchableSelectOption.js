@@ -3,10 +3,9 @@ import TouchableNativeFeedback from "./TouchableNativeFeedback";
 import { AntDesign } from "@expo/vector-icons";
 import { useTheme, Text } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
-import { GLOBAL_CONSTANTS } from "../constants";
 import { TYPOGRAPHY } from "../styles";
 
-const TouchableSelectOption = ({ isSelected = false, onSelect = GLOBAL_CONSTANTS.EMPTY_FUNCTION, label = "" }) => {
+const TouchableSelectOption = ({ isSelected = false, onSelect, label = "" }) => {
   const { colors } = useTheme();
 
   return (

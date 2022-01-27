@@ -1,126 +1,87 @@
-import React from "react";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import LatestEventsScreen from "../latest-events";
-import LatestNewsScreen from "../latest-news";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
-import { View, StyleSheet } from "react-native";
-import { Badge } from "../../shared-components";
-import { Ionicons } from "@expo/vector-icons";
-import { GLOBAL_CONSTANTS } from "../../constants";
+import React, { useEffect, useState } from "react";
+import { StyleSheet } from "react-native";
+import { GLOBAL_STYLES } from "../../styles";
+import { NEWS_CONSTANTS } from "../../constants";
+import { connect } from "react-redux";
+import {
+  selectNews,
+  selectIsLoadingNews,
+  startNewsFetch,
+  selectIsLoadingMoreNews,
+  startNextNewsFetch,
+  selectHasMoreNews
+} from "../../redux/news";
+import { DropDown, InfiniteScroll, NewsItemSkeleton, NewsItem } from "../../shared-components";
 
-const LatestNewsTabIcon = ({
-  color,
-  size = GLOBAL_CONSTANTS.TAB_ICON_SIZE
-}) => <Ionicons name="newspaper-outline" size={size} color={color} />;
+const renderNewsSkeleton = ({ index }) => (
+  <NewsItemSkeleton containerStyle={index !== 0 ? GLOBAL_STYLES.cardMargin : null} />
+);
 
-const LatestEventsTabIcon = ({
-  color,
-  size = GLOBAL_CONSTANTS.TAB_ICON_SIZE
-}) => <Ionicons name="calendar-sharp" size={size} color={color} />;
+const renderNewsItem = ({ item, index }) => (
+  <NewsItem key={item.id.toString()} news={item} containerStyle={index !== 0 ? GLOBAL_STYLES.cardMargin : null} />
+);
 
-const Tab = createMaterialTopTabNavigator();
+const NewsScreen = ({ isLoading, news, fetchInitialNews, fetchMoreNews, isLoadingMore, hasMoreToFetch }) => {
+  const [newsFilterIndex, setNewsFilterIndex] = useState(NEWS_CONSTANTS.DEFAULT_FILTER_INDEX);
 
-const BadgeTabBar = ({ state, descriptors, navigation }) => {
-  const numTabs = state.routes.length;
+  useEffect(() => {
+    fetchInitialNews();
+  }, []);
+
+  const onFilterSelect = (selectedVal, selectedIndex) => {
+    setNewsFilterIndex(selectedIndex);
+    fetchInitialNews(selectedVal);
+  };
+
+  const onEndReached = () => {
+    const filter = NEWS_CONSTANTS.FILTERS[newsFilterIndex].value;
+    fetchMoreNews(filter);
+  };
 
   return (
-    <View style={STYLES.tabs}>
-      {state.routes.map((route, i) => {
-        const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
-
-        const isFocused = state.index === i;
-
-        const onLongPress = () => {
-          navigation.emit({
-            type: "tabLongPress",
-            target: route.key
-          });
-        };
-
-        const onPress = () => {
-          const event = navigation.emit({
-            type: "tabPress",
-            target: route.key
-          });
-
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name);
-          }
-        };
-
-        const tabContainerStyle = STYLES.tabContainer;
-        if (numTabs === i + 1) {
-          tabContainerStyle.marginRight = 0;
-        }
-
-        return (
-          <Badge
-            containerStyle={tabContainerStyle}
-            key={i}
-            accessibilityRole="button"
-            onLongPress={onLongPress}
-            onPress={onPress}
-            accessibilityState={isFocused ? { selected: true } : {}}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            label={label}
-            isHighlighted={isFocused}
-            icon={options.tabBarIcon}
-          />
-        );
-      })}
-    </View>
+    <>
+      <DropDown
+        onSelect={onFilterSelect}
+        selectedIndex={newsFilterIndex}
+        options={NEWS_CONSTANTS.FILTERS}
+        containerStyle={STYLES.dropDownContainer}
+      />
+      <InfiniteScroll
+        isLoading={isLoading}
+        data={news}
+        numSkeletons={NEWS_CONSTANTS.NUM_TO_SHOW}
+        contentContainerStyle={STYLES.newsList}
+        onEndReached={onEndReached}
+        isLoadingMore={isLoadingMore}
+        hasMoreToFetch={hasMoreToFetch}
+        renderDataItem={renderNewsItem}
+        renderSkeleton={renderNewsSkeleton}
+      />
+    </>
   );
 };
 
-const NewsScreen = () => (
-  <Tab.Navigator
-    screenOptions={{
-      swipeEnabled: false,
-      lazy: true,
-      tabBarScrollEnabled: true
-    }}
-    tabBar={(props) => <BadgeTabBar {...props} />}
-  >
-    <Tab.Screen
-      name="LatestNews"
-      component={LatestNewsScreen}
-      options={{
-        title: "News",
-        tabBarLabelStyle: TYPOGRAPHY.body1,
-        tabBarIcon: LatestNewsTabIcon
-      }}
-    />
-    <Tab.Screen
-      name="LatestEvents"
-      component={LatestEventsScreen}
-      options={{
-        title: "Events",
-        tabBarLabelStyle: TYPOGRAPHY.body1,
-        tabBarIcon: LatestEventsTabIcon
-      }}
-    />
-  </Tab.Navigator>
-);
-
 const STYLES = StyleSheet.create({
-  tabs: {
-    flexDirection: "row",
-    ...GLOBAL_STYLES.screenContainer
+  dropDownContainer: {
+    marginBottom: GLOBAL_STYLES.componentContainer.marginBottom - 1,
+    marginHorizontal: GLOBAL_STYLES.screenContainer.paddingHorizontal
   },
-  tabContainer: {
-    flexGrow: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 3,
-    justifyContent: "center",
-    marginRight: 10
+  newsList: {
+    ...GLOBAL_STYLES.screenContainer,
+    paddingTop: 0
   }
 });
 
-export default NewsScreen;
+const mapStateToProps = (state) => ({
+  isLoading: selectIsLoadingNews(state),
+  news: selectNews(state),
+  isLoadingMore: selectIsLoadingMoreNews(state),
+  hasMoreToFetch: selectHasMoreNews(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchInitialNews: (filter) => dispatch(startNewsFetch(filter)),
+  fetchMoreNews: (filter) => dispatch(startNextNewsFetch({ filter }))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewsScreen);
