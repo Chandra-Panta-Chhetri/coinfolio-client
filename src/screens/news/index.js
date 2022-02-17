@@ -10,7 +10,7 @@ import {
   selectIsLoadingMoreNews,
   startNextNewsFetch,
   selectHasMoreNews
-} from "../../redux/news";
+} from "../../redux/discover";
 import { DropDown, InfiniteScroll, NewsItemSkeleton, NewsItem } from "../../shared-components";
 
 const renderNewsSkeleton = ({ index }) => (

@@ -3,7 +3,7 @@ import { StyleSheet, FlatList } from "react-native";
 import { GLOBAL_STYLES } from "../../styles";
 import { useHiddenFABOnScroll } from "../../hooks";
 import { connect } from "react-redux";
-import { startEventsFetch, selectEvents, selectIsLoadingEvents } from "../../redux/news";
+import { startEventsFetch, selectEvents, selectIsLoadingEvents } from "../../redux/discover";
 import Reanimated from "react-native-reanimated";
 import { EVENTS_CONSTANTS } from "../../constants";
 import { EventItem, EventItemSkeleton } from "./components";

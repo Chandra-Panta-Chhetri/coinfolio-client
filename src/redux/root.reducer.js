@@ -3,7 +3,7 @@ import { notificationReducer } from "./notification";
 import { preferencesReducer } from "./preferences";
 import { summaryReducer } from "./summary";
 import { portfolioReducer } from "./portfolio";
-import { newsReducer } from "./news";
+import { discoverReducer } from "./discover";
 import { combineReducers } from "redux";
 import { marketReducer } from "./market";
 
@@ -13,6 +13,6 @@ export default combineReducers({
   preferences: preferencesReducer,
   summary: summaryReducer,
   portfolio: portfolioReducer,
-  news: newsReducer,
+  discover: discoverReducer,
   market: marketReducer
 });

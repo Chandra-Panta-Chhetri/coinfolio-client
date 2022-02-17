@@ -3,7 +3,7 @@ import { userSagas } from "./user";
 import { notificationSagas } from "./notification";
 import { summarySagas } from "./summary";
 import { portfolioSagas } from "./portfolio";
-import { newsSagas } from "./news";
+import { discoverSagas } from "./discover";
 import { marketSagas } from "./market";
 
 function* rootSaga() {
@@ -12,7 +12,7 @@ function* rootSaga() {
     call(notificationSagas),
     call(summarySagas),
     call(portfolioSagas),
-    call(newsSagas),
+    call(discoverSagas),
     call(marketSagas)
   ]);
 }

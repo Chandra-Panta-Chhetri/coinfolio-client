@@ -7,9 +7,9 @@ import {
   moreNewsFail,
   moreNewsSuccess,
   noMoreNews
-} from "./news.actions";
-import NEWS_ACTION_TYPES from "./news.action.types";
-import { selectEventFilters, selectNewsPage, selectNews } from "./news.selectors";
+} from "./discover.actions";
+import DISCOVER_ACTION_TYPES from "./discover.action.types";
+import { selectEventFilters, selectNewsPage, selectNews } from "./discover.selectors";
 import { EVENTS_CONSTANTS } from "../../constants";
 import { delayJS } from "../../utils";
 import { newsAPI } from "../../api";
@@ -513,17 +513,17 @@ function* getEvents() {
 }
 
 function* watchInitialNewsFetch() {
-  yield takeLatest(NEWS_ACTION_TYPES.INITIAL_NEWS_FETCH, fetchNews);
+  yield takeLatest(DISCOVER_ACTION_TYPES.INITIAL_NEWS_FETCH, fetchNews);
 }
 
 function* watchMoreNewsFetch() {
-  yield takeLatest(NEWS_ACTION_TYPES.FETCH_MORE_NEWS, fetchMoreNews);
+  yield takeLatest(DISCOVER_ACTION_TYPES.FETCH_MORE_NEWS, fetchMoreNews);
 }
 
 function* watchEventsFetchStart() {
-  yield takeLatest(NEWS_ACTION_TYPES.START_EVENTS_FETCH, getEvents);
+  yield takeLatest(DISCOVER_ACTION_TYPES.START_EVENTS_FETCH, getEvents);
 }
 
-export default function* newsSagas() {
+export default function* discoverSagas() {
   yield all([call(watchEventsFetchStart), call(watchInitialNewsFetch), call(watchMoreNewsFetch)]);
 }
