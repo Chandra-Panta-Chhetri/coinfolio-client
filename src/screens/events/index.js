@@ -25,7 +25,7 @@ const EventsScreen = ({ navigation, fetchEvents, events, isLoading }) => {
 
   return (
     <>
-      {isLoading && events.length === 0 ? (
+      {isLoading && events?.length === 0 ? (
         <AnimatedFlatList
           onScroll={scrollHandler}
           data={DUMMY_SKELETON_ARRAY}
@@ -33,7 +33,6 @@ const EventsScreen = ({ navigation, fetchEvents, events, isLoading }) => {
           renderItem={({ index }) => <EventItemSkeleton containerStyle={index !== 0 ? STYLES.itemContainer : null} />}
           style={GLOBAL_STYLES.flatListContentContainer}
           contentContainerStyle={STYLES.eventListContentContainer}
-          listKey="EventsSkeletonList"
           showsVerticalScrollIndicator={false}
         />
       ) : (
@@ -42,7 +41,6 @@ const EventsScreen = ({ navigation, fetchEvents, events, isLoading }) => {
           onScroll={scrollHandler}
           keyExtractor={(e) => e.title}
           renderItem={(props) => <EventItem {...props} navigation={navigation} />}
-          listKey="EventsList"
           style={GLOBAL_STYLES.flatListContentContainer}
           contentContainerStyle={STYLES.eventListContentContainer}
           showsVerticalScrollIndicator={false}
