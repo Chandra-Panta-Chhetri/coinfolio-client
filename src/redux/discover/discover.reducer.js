@@ -54,16 +54,6 @@ const discoverReducer = (prevState = INITIAL_STATE, action) => {
         isLoadingEvents: false,
         eventsPage: prevState.eventsPage + 1
       };
-    case DISCOVER_ACTION_TYPES.INITIAL_NEWS_FAIL:
-      return {
-        ...prevState,
-        isLoadingNews: false
-      };
-    case DISCOVER_ACTION_TYPES.INITIAL_EVENTS_FAIL:
-      return {
-        ...prevState,
-        isLoadingEvents: false
-      };
     case DISCOVER_ACTION_TYPES.UPDATE_EVENT_FILTERS:
       return {
         ...prevState,
@@ -110,13 +100,15 @@ const discoverReducer = (prevState = INITIAL_STATE, action) => {
       return {
         ...prevState,
         isLoadingMoreNews: false,
-        hasMoreNews: false
+        hasMoreNews: false,
+        isLoadingNews: false
       };
     case DISCOVER_ACTION_TYPES.NO_MORE_EVENTS:
       return {
         ...prevState,
         isLoadingMoreEvents: false,
-        hasMoreEvents: false
+        hasMoreEvents: false,
+        isLoadingEvents: false
       };
     default:
       return prevState;

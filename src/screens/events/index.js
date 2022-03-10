@@ -43,27 +43,6 @@ const EventsScreen = ({
 
   return (
     <>
-      {/* {isLoading && events?.length === 0 ? (
-        <AnimatedFlatList
-          onScroll={scrollHandler}
-          data={DUMMY_SKELETON_ARRAY}
-          keyExtractor={(s, i) => s + i}
-          renderItem={({ index }) => <EventItemSkeleton containerStyle={index !== 0 ? STYLES.itemContainer : null} />}
-          style={GLOBAL_STYLES.flatListContentContainer}
-          contentContainerStyle={STYLES.eventListContentContainer}
-          showsVerticalScrollIndicator={false}
-        />
-      ) : (
-        <AnimatedFlatList
-          data={events}
-          onScroll={scrollHandler}
-          keyExtractor={(e) => e.title}
-          renderItem={(props) => <EventItem {...props} navigation={navigation} />}
-          style={GLOBAL_STYLES.flatListContentContainer}
-          contentContainerStyle={STYLES.eventListContentContainer}
-          showsVerticalScrollIndicator={false}
-        />
-      )} */}
       <InfiniteScroll
         isLoading={isLoading}
         data={events}

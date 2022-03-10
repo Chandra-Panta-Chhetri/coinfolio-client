@@ -15,11 +15,15 @@ import DISCOVER_ACTION_TYPES from "./discover.action.types";
 import { selectEventFilters, selectNewsPage, selectNews, selectEvents } from "./discover.selectors";
 import { newsAPI, eventsAPI } from "../../api";
 import { EVENTS_CONSTANTS } from "../../constants";
+import { toISOSubstring } from "../../utils";
 
 function* getNews({ payload: { filter } }) {
   try {
     const response = yield newsAPI.fetchNews({ filter });
     const news = yield response.results;
+    if (news.length === 0) {
+      return yield put(noMoreNews());
+    }
     yield put(initialNewsSuccess(news));
   } catch (err) {
     yield put(initialNewsFail("There was an error while fetching the news"));
@@ -48,11 +52,14 @@ function* getEvents() {
     const filtersDTO = {
       max: filters.limit,
       showOnly: EVENTS_CONSTANTS.SHOW_ONLY_FILTERS[filters.showOnly].value,
-      ...(filters.dateRange.start && { dateRangeStart: filters.dateRange.start }),
-      ...(filters.dateRange.end && { dateRangeEnd: filters.dateRange.end })
+      ...(filters.dateRange.start && { dateRangeStart: toISOSubstring(filters.dateRange.start) }),
+      ...(filters.dateRange.end && { dateRangeEnd: toISOSubstring(filters.dateRange.end) })
     };
     const res = yield eventsAPI.fetchEvents(filtersDTO);
     const events = yield res.results;
+    if (events.length === 0) {
+      return yield put(noMoreEvents());
+    }
     yield put(initialEventsSuccess(events));
   } catch (err) {
     yield put(initialEventsFail("There was an error while fetching the events"));
@@ -65,10 +72,10 @@ function* getMoreEvents() {
     const filters = yield select(selectEventFilters);
     const filtersDTO = {
       max: filters.limit,
-      ...(filters.dateRange.start && { dateRangeStart: filters.dateRange.start }),
-      ...(filters.dateRange.end && { dateRangeEnd: filters.dateRange.end }),
       showOnly: EVENTS_CONSTANTS.SHOW_ONLY_FILTERS[filters.showOnly].value,
-      page
+      page,
+      ...(filters.dateRange.start && { dateRangeStart: toISOSubstring(filters.dateRange.start) }),
+      ...(filters.dateRange.end && { dateRangeEnd: toISOSubstring(filters.dateRange.end) })
     };
     const res = yield eventsAPI.fetchEvents(filtersDTO);
     const events = yield res.results;
