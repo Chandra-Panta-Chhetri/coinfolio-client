@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { Snackbar, Text } from "react-native-paper";
-import { selectRecentNotification, clearNotifications } from "../../redux/notification";
+import { selectRecentNotification, clearRecentNotification } from "../../redux/notification";
 import { connect } from "react-redux";
 import { TYPOGRAPHY } from "../../styles";
 
-const NotificationSnackbar = ({ notification, clearNotifications }) => {
+const NotificationSnackbar = ({ notification, clearRecentNotification }) => {
   const [prevBackgroundColor, setPrevBackgroundColor] = useState(null);
 
   useEffect(() => {
@@ -17,22 +17,22 @@ const NotificationSnackbar = ({ notification, clearNotifications }) => {
   return (
     <Snackbar
       visible={notification}
-      onDismiss={clearNotifications}
+      onDismiss={clearRecentNotification}
       duration={2300}
       action={{
         label: "X",
-        onPress: clearNotifications,
+        onPress: clearRecentNotification,
         labelStyle: STYLES.notificationMsg
       }}
-      style={[STYLES.snackbar, { backgroundColor: prevBackgroundColor }]}
+      style={[STYLES.container, { backgroundColor: prevBackgroundColor }]}
     >
-      <Text style={STYLES.notificationMsg}>{notification && notification.message}</Text>
+      <Text style={STYLES.notificationMsg}>{notification?.message}</Text>
     </Snackbar>
   );
 };
 
 const STYLES = StyleSheet.create({
-  snackbar: {
+  container: {
     bottom: 52
   },
   notificationMsg: {
@@ -46,7 +46,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  clearNotifications: () => dispatch(clearNotifications())
+  clearRecentNotification: () => dispatch(clearRecentNotification())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotificationSnackbar);

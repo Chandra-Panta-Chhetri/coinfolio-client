@@ -4,16 +4,16 @@ import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 import { Card, Avatar, Text, useTheme } from "react-native-paper";
 import { TouchableNativeFeedback, Badge } from "../../../shared-components";
 import { GLOBAL_CONSTANTS } from "../../../constants";
-import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
-const EventDetail = ({ item, navigation, index }) => {
+const EventDetail = ({ event, index }) => {
   const { colors } = useTheme();
+  const navigation = useNavigation();
+
   return (
     <TouchableNativeFeedback
       viewContainerStyle={index !== 0 ? STYLES.androidContainer : null}
-      onPress={() =>
-        navigation.navigate("EventDetails", { eventName: item.title })
-      }
+      onPress={() => navigation.navigate("EventDetails", { eventName: event.title })}
     >
       <Card style={GLOBAL_STYLES.borderRadius}>
         <Card.Content>
@@ -21,45 +21,27 @@ const EventDetail = ({ item, navigation, index }) => {
             <Avatar.Image
               size={GLOBAL_CONSTANTS.AVATAR_IMAGE_SIZE}
               source={{
-                uri: item.coins[0].imageUrl
+                uri: event.coins[0].iconURL
               }}
+              style={STYLES.icon}
             />
             <View style={STYLES.coinLabel}>
               <View style={STYLES.coinsInvolvedContainer}>
                 <Text style={[TYPOGRAPHY.body1]} numberOfLines={1}>
-                  {item.coins[0].fullName}
-                  {item.coins.length > 1 ? ` + ${item.coins.length - 1}` : ""}
+                  {event.coins[0].fullname}
+                  {event.coins.length > 1 ? ` + ${event.coins.length - 1}` : ""}
                 </Text>
-                {item.verified && (
-                  <MaterialIcons
-                    name="verified"
-                    size={15}
-                    color={colors.text}
-                    style={{ marginLeft: 5 }}
-                  />
-                )}
               </View>
-              <Badge
-                label={item.type.label}
-                containerStyle={STYLES.eventType}
-                isHighlighted
-                highlightedStyle={{
-                  color: "white",
-                  backgroundColor: item.type.backgroundColor
-                }}
-              />
+              <Badge label={event.category} containerStyle={STYLES.category} />
             </View>
           </View>
           <View style={STYLES.infoContainer}>
             <Text style={TYPOGRAPHY.caption} numberOfLines={1}>
-              {new Date(item.date).toDateString()}
-              {item.canOccurBefore && " (or earlier)"}
+              {new Date(event.date).toDateString()}
+              {event.can_occur_before && " (or earlier)"}
             </Text>
-            <Text numberOfLines={1} style={STYLES.eventTitle}>
-              {item.title}
-            </Text>
-            <Text numberOfLines={2} style={TYPOGRAPHY.body1}>
-              {item.description}
+            <Text numberOfLines={1} style={STYLES.title}>
+              {event.title}
             </Text>
           </View>
         </Card.Content>
@@ -75,6 +57,9 @@ const STYLES = StyleSheet.create({
   infoContainer: {
     marginTop: 10
   },
+  icon: {
+    backgroundColor: "transparent"
+  },
   iconCoinLabel: { flexDirection: "row", alignItems: "center" },
   coinLabel: {
     flexDirection: "row",
@@ -88,12 +73,11 @@ const STYLES = StyleSheet.create({
     flex: 1,
     alignItems: "center"
   },
-  eventType: {
+  category: {
     paddingHorizontal: 10,
     paddingVertical: 2
   },
-  eventTitle: {
-    marginBottom: 8,
+  title: {
     ...TYPOGRAPHY.subheading
   }
 });

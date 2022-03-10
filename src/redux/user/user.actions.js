@@ -20,7 +20,7 @@ export const signInSuccess = (user) => ({
 
 export const signInFail = (errorMsg) => ({
   type: USER_ACTION_TYPES.SIGN_IN_FAIL,
-  payload: { errorMsg }
+  payload: errorMsg
 });
 
 export const startSignUp = (newUserInfo) => ({
@@ -33,7 +33,7 @@ export const startSignUp = (newUserInfo) => ({
 
 export const signUpFail = (errorMsg) => ({
   type: USER_ACTION_TYPES.SIGN_UP_FAIL,
-  payload: { errorMsg }
+  payload: errorMsg
 });
 
 export const startLogOut = () => ({
@@ -47,5 +47,5 @@ export const logOutSuccess = () => ({
 
 export const logOutFail = (errorMsg) => ({
   type: USER_ACTION_TYPES.LOG_OUT_FAIL,
-  payload: { errorMsg }
+  payload: errorMsg
 });

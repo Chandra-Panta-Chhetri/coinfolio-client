@@ -17,7 +17,6 @@ const EventDetailSkeleton = ({ containerStyle }) => (
       <View style={STYLES.infoContainer}>
         <Skeleton style={STYLES.date} />
         <Skeleton style={STYLES.title} />
-        <Skeleton style={STYLES.description} />
       </View>
     </Card.Content>
   </Card>
@@ -40,12 +39,6 @@ const STYLES = StyleSheet.create({
     height: 15,
     width: "30%",
     marginBottom: 5,
-    ...GLOBAL_STYLES.borderRadius
-  },
-  description: {
-    height: 15,
-    marginTop: 8,
-    width: "100%",
     ...GLOBAL_STYLES.borderRadius
   },
   iconCoinLabel: {

@@ -1,2 +1,3 @@
 import * as newsAPI from "./news";
-export { newsAPI };
+import * as eventsAPI from "./events";
+export { newsAPI, eventsAPI };

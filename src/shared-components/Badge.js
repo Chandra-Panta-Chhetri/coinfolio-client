@@ -14,31 +14,21 @@ const Badge = ({
   ...otherProps
 }) => {
   const { colors, dark: isDarkMode } = useTheme();
-  const highlightedStyles = highlightedStyle
-    ? highlightedStyle
-    : {
-        backgroundColor: isDarkMode ? colors.text : colors.primary,
-        color: isDarkMode ? colors.border : "white"
-      };
+  const highlightedStyles = highlightedStyle || {
+    backgroundColor: isDarkMode ? colors.text : colors.primary,
+    color: isDarkMode ? colors.border : "white"
+  };
 
-  const defaultStyles = defaultStyle
-    ? defaultStyle
-    : {
-        color: colors.text,
-        backgroundColor: isDarkMode ? colors.border : COLORS.LIGHT_GREY
-      };
+  const defaultStyles = defaultStyle || {
+    color: colors.text,
+    backgroundColor: isDarkMode ? colors.border : COLORS.LIGHT_GREY
+  };
 
-  const textColor = isHighlighted
-    ? highlightedStyles.color
-    : defaultStyles.color;
+  const textColor = isHighlighted ? highlightedStyles.color : defaultStyles.color;
 
   return (
     <PressableView
-      viewStyle={[
-        GLOBAL_STYLES.iconRoundness,
-        isHighlighted ? highlightedStyles : defaultStyles,
-        containerStyle
-      ]}
+      viewStyle={[GLOBAL_STYLES.iconRoundness, isHighlighted ? highlightedStyles : defaultStyles, containerStyle]}
       {...otherProps}
     >
       {Icon && <Icon color={textColor} />}

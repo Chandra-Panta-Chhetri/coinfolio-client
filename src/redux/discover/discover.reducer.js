@@ -32,11 +32,13 @@ const discoverReducer = (prevState = INITIAL_STATE, action) => {
         hasMoreNews: true,
         newsPage: 1
       };
-    case DISCOVER_ACTION_TYPES.START_EVENTS_FETCH:
+    case DISCOVER_ACTION_TYPES.INITIAL_EVENTS_FETCH:
       return {
         ...prevState,
         events: [],
-        isLoadingEvents: true
+        isLoadingEvents: true,
+        hasMoreEvents: true,
+        eventsPage: 1
       };
     case DISCOVER_ACTION_TYPES.INITIAL_NEWS_SUCCESS:
       return {
@@ -45,19 +47,19 @@ const discoverReducer = (prevState = INITIAL_STATE, action) => {
         isLoadingNews: false,
         newsPage: prevState.newsPage + 1
       };
-    case DISCOVER_ACTION_TYPES.EVENTS_FETCH_SUCCESS:
+    case DISCOVER_ACTION_TYPES.INITIAL_EVENTS_SUCCESS:
       return {
         ...prevState,
         events: action.payload,
-        isLoadingEvents: false
+        isLoadingEvents: false,
+        eventsPage: prevState.eventsPage + 1
       };
     case DISCOVER_ACTION_TYPES.INITIAL_NEWS_FAIL:
       return {
         ...prevState,
-        isLoadingNews: false,
-        hasMoreNews: false
+        isLoadingNews: false
       };
-    case DISCOVER_ACTION_TYPES.EVENTS_FETCH_FAIL:
+    case DISCOVER_ACTION_TYPES.INITIAL_EVENTS_FAIL:
       return {
         ...prevState,
         isLoadingEvents: false
@@ -78,8 +80,7 @@ const discoverReducer = (prevState = INITIAL_STATE, action) => {
     case DISCOVER_ACTION_TYPES.FETCH_MORE_NEWS_FAIL:
       return {
         ...prevState,
-        isLoadingMoreNews: false,
-        hasMoreNews: false
+        isLoadingMoreNews: false
       };
     case DISCOVER_ACTION_TYPES.FETCH_MORE_NEWS_SUCCESS:
       return {
@@ -88,11 +89,34 @@ const discoverReducer = (prevState = INITIAL_STATE, action) => {
         news: action.payload,
         newsPage: prevState.newsPage + 1
       };
+    case DISCOVER_ACTION_TYPES.FETCH_MORE_EVENTS:
+      return {
+        ...prevState,
+        isLoadingMoreEvents: true
+      };
+    case DISCOVER_ACTION_TYPES.FETCH_MORE_EVENTS_FAIL:
+      return {
+        ...prevState,
+        isLoadingMoreEvents: false
+      };
+    case DISCOVER_ACTION_TYPES.FETCH_MORE_EVENTS_SUCCESS:
+      return {
+        ...prevState,
+        isLoadingMoreEvents: false,
+        events: action.payload,
+        eventsPage: prevState.eventsPage + 1
+      };
     case DISCOVER_ACTION_TYPES.NO_MORE_NEWS:
       return {
         ...prevState,
         isLoadingMoreNews: false,
         hasMoreNews: false
+      };
+    case DISCOVER_ACTION_TYPES.NO_MORE_EVENTS:
+      return {
+        ...prevState,
+        isLoadingMoreEvents: false,
+        hasMoreEvents: false
       };
     default:
       return prevState;

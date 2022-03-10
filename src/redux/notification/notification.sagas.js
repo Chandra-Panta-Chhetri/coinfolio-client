@@ -6,11 +6,11 @@ import { all, call, put, takeEvery } from "redux-saga/effects";
 import { addErrorNotification, addSuccessNotification } from "./notification.actions";
 import DISCOVER_ACTION_TYPES from "../discover/discover.action.types";
 
-function* showErrorNotification({ payload: { errorMsg } }) {
+function* showErrorNotification({ payload: errorMsg }) {
   yield put(addErrorNotification(errorMsg));
 }
 
-function* showSuccessNotification({ payload: { successMsg } }) {
+function* showSuccessNotification({ payload: successMsg }) {
   yield put(addSuccessNotification(successMsg));
 }
 
@@ -31,9 +31,10 @@ function* watchErrorNotifications() {
       PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTIONS_FOR_ASSET_FAIL,
       PORTFOLIO_ACTION_TYPES.REMOVE_ALL_TRANSACTIONS_FOR_ASSET_FAIL,
       MARKET_ACTION_TYPES.MARKETS_FETCH_FAIL,
-      DISCOVER_ACTION_TYPES.EVENTS_FETCH_FAIL,
+      DISCOVER_ACTION_TYPES.INITIAL_EVENTS_FAIL,
       DISCOVER_ACTION_TYPES.INITIAL_NEWS_FAIL,
-      DISCOVER_ACTION_TYPES.FETCH_MORE_NEWS_FAIL
+      DISCOVER_ACTION_TYPES.FETCH_MORE_NEWS_FAIL,
+      DISCOVER_ACTION_TYPES.FETCH_MORE_EVENTS_FAIL
     ],
     showErrorNotification
   );
