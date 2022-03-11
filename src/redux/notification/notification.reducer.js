@@ -1,23 +1,23 @@
 import NOTIFICATION_ACTION_TYPES from "./notification.action.types";
 
 const INITIAL_STATE = {
-  notifications: []
+  notification: null
 };
 
 const notificationReducer = (prevState = INITIAL_STATE, action) => {
   switch (action.type) {
-    case NOTIFICATION_ACTION_TYPES.ADD_SUCCESS_NOTIFICATION:
-    case NOTIFICATION_ACTION_TYPES.ADD_ERROR_NOTIFICATION:
-    case NOTIFICATION_ACTION_TYPES.ADD_INFO_NOTIFICATION:
-    case NOTIFICATION_ACTION_TYPES.ADD_WARNING_NOTIFICATION:
+    case NOTIFICATION_ACTION_TYPES.SUCCESS_NOTIFICATION:
+    case NOTIFICATION_ACTION_TYPES.ERROR_NOTIFICATION:
+    case NOTIFICATION_ACTION_TYPES.INFO_NOTIFICATION:
+    case NOTIFICATION_ACTION_TYPES.WARNING_NOTIFICATION:
       return {
         ...prevState,
-        notifications: [action.payload]
+        notification: action.payload
       };
-    case NOTIFICATION_ACTION_TYPES.CLEAR_NOTIFICATIONS:
+    case NOTIFICATION_ACTION_TYPES.CLEAR_RECENT_NOTIFICATION:
       return {
         ...prevState,
-        notifications: []
+        notification: null
       };
     default:
       return prevState;

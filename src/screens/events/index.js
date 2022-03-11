@@ -1,17 +1,35 @@
 import React, { useEffect } from "react";
-import { StyleSheet, FlatList } from "react-native";
+import { StyleSheet } from "react-native";
 import { GLOBAL_STYLES } from "../../styles";
 import { useHiddenFABOnScroll } from "../../hooks";
 import { connect } from "react-redux";
-import { startEventsFetch, selectEvents, selectIsLoadingEvents } from "../../redux/news";
-import Reanimated from "react-native-reanimated";
+import {
+  startEventsFetch,
+  selectEvents,
+  selectIsLoadingEvents,
+  selectIsLoadingMoreEvents,
+  selectHasMoreEvents,
+  startNextEventsFetch
+} from "../../redux/discover";
 import { EVENTS_CONSTANTS } from "../../constants";
 import { EventItem, EventItemSkeleton } from "./components";
+import { InfiniteScroll } from "../../shared-components";
 
-const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
-const DUMMY_SKELETON_ARRAY = Array(EVENTS_CONSTANTS.NUM_TO_SHOW).fill("1");
+const renderEventSkeleton = ({ index }) => (
+  <EventItemSkeleton containerStyle={index !== 0 ? GLOBAL_STYLES.cardMargin : null} />
+);
 
-const EventsScreen = ({ navigation, fetchEvents, events, isLoading }) => {
+const renderEventItem = ({ item, index }) => <EventItem key={item.id.toString()} event={item} index={index} />;
+
+const EventsScreen = ({
+  navigation,
+  fetchInitialEvents,
+  events,
+  isLoading,
+  fetchMoreEvents,
+  isLoadingMore,
+  hasMoreToFetch
+}) => {
   const navigateToFiltersScreen = () => navigation.navigate("SelectEventFilters");
 
   const { Fab, scrollHandler } = useHiddenFABOnScroll({
@@ -20,44 +38,31 @@ const EventsScreen = ({ navigation, fetchEvents, events, isLoading }) => {
   });
 
   useEffect(() => {
-    fetchEvents();
+    fetchInitialEvents();
   }, []);
 
   return (
     <>
-      {isLoading && events.length === 0 ? (
-        <AnimatedFlatList
-          onScroll={scrollHandler}
-          data={DUMMY_SKELETON_ARRAY}
-          keyExtractor={(s, i) => s + i}
-          renderItem={({ index }) => <EventItemSkeleton containerStyle={index !== 0 ? STYLES.itemContainer : null} />}
-          style={GLOBAL_STYLES.flatListContentContainer}
-          contentContainerStyle={STYLES.eventListContentContainer}
-          listKey="EventsSkeletonList"
-          showsVerticalScrollIndicator={false}
-        />
-      ) : (
-        <AnimatedFlatList
-          data={events}
-          onScroll={scrollHandler}
-          keyExtractor={(e) => e.title}
-          renderItem={(props) => <EventItem {...props} navigation={navigation} />}
-          listKey="EventsList"
-          style={GLOBAL_STYLES.flatListContentContainer}
-          contentContainerStyle={STYLES.eventListContentContainer}
-          showsVerticalScrollIndicator={false}
-        />
-      )}
+      <InfiniteScroll
+        isLoading={isLoading}
+        data={events}
+        numSkeletons={EVENTS_CONSTANTS.NUM_TO_SHOW}
+        isLoadingMore={isLoadingMore}
+        hasMoreToFetch={hasMoreToFetch}
+        renderDataItem={renderEventItem}
+        renderSkeleton={renderEventSkeleton}
+        contentContainerStyle={STYLES.eventsList}
+        onEndReached={fetchMoreEvents}
+        style={GLOBAL_STYLES.flatListContentContainer}
+        onScroll={scrollHandler}
+      />
       <Fab />
     </>
   );
 };
 
 const STYLES = StyleSheet.create({
-  itemContainer: {
-    marginTop: 10
-  },
-  eventListContentContainer: {
+  eventsList: {
     ...GLOBAL_STYLES.screenContainer,
     paddingTop: 0
   }
@@ -65,11 +70,14 @@ const STYLES = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   events: selectEvents(state),
-  isLoading: selectIsLoadingEvents(state)
+  isLoading: selectIsLoadingEvents(state),
+  isLoadingMore: selectIsLoadingMoreEvents(state),
+  hasMoreToFetch: selectHasMoreEvents(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchEvents: () => dispatch(startEventsFetch())
+  fetchInitialEvents: () => dispatch(startEventsFetch()),
+  fetchMoreEvents: () => dispatch(startNextEventsFetch())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventsScreen);

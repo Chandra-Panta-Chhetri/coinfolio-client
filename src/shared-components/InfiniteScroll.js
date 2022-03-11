@@ -2,6 +2,9 @@ import { FlatList, StyleSheet } from "react-native";
 import React from "react";
 import { ActivityIndicator } from "react-native-paper";
 import { GLOBAL_STYLES } from "../styles";
+import Reanimated from "react-native-reanimated";
+
+const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
 const InfiniteScroll = ({
   isLoading,
@@ -12,7 +15,8 @@ const InfiniteScroll = ({
   hasMoreToFetch,
   renderSkeleton,
   renderDataItem,
-  contentContainerStyle
+  contentContainerStyle,
+  ...otherProps
 }) => {
   const dummySkeletonArray = Array(numSkeletons).fill("1");
 
@@ -27,19 +31,20 @@ const InfiniteScroll = ({
 
   if (isLoading) {
     return (
-      <FlatList
+      <AnimatedFlatList
         data={dummySkeletonArray}
         keyExtractor={(_, i) => i}
         renderItem={renderSkeleton}
         showsVerticalScrollIndicator={false}
         style={GLOBAL_STYLES.flatListContentContainer}
         contentContainerStyle={contentContainerStyle}
+        {...otherProps}
       />
     );
   }
 
   return (
-    <FlatList
+    <AnimatedFlatList
       data={data}
       renderItem={renderDataItem}
       showsVerticalScrollIndicator={false}
@@ -48,6 +53,7 @@ const InfiniteScroll = ({
       onEndReached={onScrollToEnd}
       onEndReachedThreshold={0.5}
       ListFooterComponent={renderFooter}
+      {...otherProps}
     />
   );
 };

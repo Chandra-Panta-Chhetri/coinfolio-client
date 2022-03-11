@@ -2,15 +2,15 @@ export default {
   SHOW_ONLY_FILTERS: [
     {
       label: "Trending",
-      value: "trending"
+      value: "trending_events"
     },
     {
       label: "Significant",
-      value: "significant"
+      value: "significant_events"
     },
     {
       label: "Hot",
-      value: "hot"
+      value: "hot_events"
     }
   ],
   NUM_TO_SHOW: 12,

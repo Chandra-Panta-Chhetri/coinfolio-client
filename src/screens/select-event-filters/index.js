@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { DropDown, DatePicker } from "../../shared-components";
 import { connect } from "react-redux";
-import { selectEventFilters, startEventsFetch, updateEventFilters } from "../../redux/news";
+import { selectEventFilters, startEventsFetch, updateEventFilters } from "../../redux/discover";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { Button, Text, useTheme } from "react-native-paper";
 import { EVENTS_CONSTANTS } from "../../constants";
