@@ -34,5 +34,5 @@ export const addWarningNotification = (message) => ({
 });
 
 export const clearRecentNotification = () => ({
-  type: NOTIFICATION_ACTION_TYPES.CLEAR_NOTIFICATION
+  type: NOTIFICATION_ACTION_TYPES.CLEAR_RECENT_NOTIFICATION
 });

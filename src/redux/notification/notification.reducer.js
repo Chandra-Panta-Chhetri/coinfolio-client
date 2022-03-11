@@ -14,7 +14,7 @@ const notificationReducer = (prevState = INITIAL_STATE, action) => {
         ...prevState,
         notification: action.payload
       };
-    case NOTIFICATION_ACTION_TYPES.CLEAR_NOTIFICATION:
+    case NOTIFICATION_ACTION_TYPES.CLEAR_RECENT_NOTIFICATION:
       return {
         ...prevState,
         notification: null
