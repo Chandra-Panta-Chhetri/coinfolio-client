@@ -20,11 +20,9 @@ export const startGainersLosersFetch = () => ({
   type: SUMMARY_ACTION_TYPES.START_GAINERS_LOSERS_FETCH
 });
 
-export const gainersLosersFetchSuccess = (gainersLosers) => ({
+export const gainersLosersFetchSuccess = (coins) => ({
   type: SUMMARY_ACTION_TYPES.GAINERS_LOSERS_FETCH_SUCCESS,
-  payload: {
-    gainersLosers
-  }
+  payload: coins
 });
 
 export const gainersLosersFetchFail = (errorMsg) => ({

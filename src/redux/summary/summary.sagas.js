@@ -34,40 +34,12 @@ function* fetchGlobalSummary() {
 
 function* fetchGainersLosers() {
   try {
-    const gainersLosers = yield [
-      {
-        fullName: "Bitcoin",
-        ticker: "BTC",
-        price: 69230.24,
-        percentChange: 4.25,
-        image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
-      },
-      {
-        fullName: "Ethereum",
-        ticker: "ETH",
-        price: 4800.24,
-        percentChange: -2.25,
-        image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png"
-      },
-      {
-        fullName: "Litecoin",
-        ticker: "LTC",
-        price: 400,
-        percentChange: 7,
-        image: "https://s2.coinmarketcap.com/static/img/coins/64x64/2.png"
-      },
-      {
-        fullName: "Binance Coin",
-        ticker: "BNB",
-        price: 800.24,
-        percentChange: -10.25,
-        image: "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png"
-      }
-    ];
-    // yield delayJS(9000);
-    yield put(gainersLosersFetchSuccess(gainersLosers));
+    const res = yield marketsAPI.fetchGainersLosers({ limit: 2 });
+    const { gainers, losers } = yield res;
+    const coins = [...gainers, ...losers];
+    yield put(gainersLosersFetchSuccess(coins));
   } catch (err) {
-    yield put(gainersLosersFetchFail("There was a server error while fetching the top gainers and losers"));
+    yield put(gainersLosersFetchFail("Error while fetching the top gainers and losers"));
   }
 }
 

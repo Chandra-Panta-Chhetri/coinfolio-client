@@ -12,5 +12,5 @@ export const fetchTopCoins = async (query = {}) => {
 
 export const fetchGainersLosers = async (query = {}) => {
   const res = await axios.get("/markets/gainers-losers", { params: query });
-  return res.data.data;
+  return res.data;
 };

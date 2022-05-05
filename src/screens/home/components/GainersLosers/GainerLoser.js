@@ -22,13 +22,13 @@ const GainerLoser = ({ coin, containerStyle = null }) => {
           />
           <View style={STYLES.gainerLoserInfoContainer}>
             <View>
-              <Text style={TYPOGRAPHY.subheading}>{coin.fullName}</Text>
-              <Text style={TYPOGRAPHY.body1}>{coin.ticker}</Text>
+              <Text style={TYPOGRAPHY.subheading}>{coin.name}</Text>
+              <Text style={TYPOGRAPHY.body1}>{coin.symbol}</Text>
             </View>
             <View style={STYLES.priceAndPercent}>
-              <Text style={TYPOGRAPHY.subheading}>${coin.price}</Text>
-              <Text style={[TYPOGRAPHY.body1, getStylesBasedOnSign(coin.percentChange)]}>
-                {formatNumBasedOnSignWorklet(coin.percentChange)}%
+              <Text style={TYPOGRAPHY.subheading}>${coin.priceUsd}</Text>
+              <Text style={[TYPOGRAPHY.body1, getStylesBasedOnSign(coin.changePercent24Hr)]}>
+                {formatNumBasedOnSignWorklet(coin.changePercent24Hr)}%
               </Text>
             </View>
           </View>

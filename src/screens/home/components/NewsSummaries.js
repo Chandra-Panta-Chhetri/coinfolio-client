@@ -5,9 +5,9 @@ import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
 import {
   selectNewsSummary,
-  selectIsLoadingSummary,
   startNewsSummaryFetch,
-  MAX_NEWS_SUMMARIES
+  MAX_NEWS_SUMMARIES,
+  selectIsLoadingNewsSummary
 } from "../../../redux/summary";
 import { NewsItemSkeleton, NewsItem } from "../../../shared-components";
 import { GLOBAL_STYLES } from "../../../styles";
@@ -40,7 +40,7 @@ const NewsSummaries = ({ news, isLoading, fetchNewsSummary }) => {
 
 const mapStateToProps = (state) => ({
   news: selectNewsSummary(state),
-  isLoading: selectIsLoadingSummary(state)
+  isLoading: selectIsLoadingNewsSummary(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

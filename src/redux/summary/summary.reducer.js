@@ -5,9 +5,10 @@ const INITIAL_STATE = {
   gainersLosers: [],
   news: [],
   global: null,
-  numLoadingReq: 4,
   isLoadingGlobal: true,
-  isLoadingTopCoins: true
+  isLoadingTopCoins: true,
+  isLoadingGainersLosers: true,
+  isLoadingNewsSummary: true
 };
 
 const notificationReducer = (prevState = INITIAL_STATE, action) => {
@@ -23,10 +24,14 @@ const notificationReducer = (prevState = INITIAL_STATE, action) => {
         isLoadingTopCoins: true
       };
     case SUMMARY_ACTION_TYPES.START_GAINERS_LOSERS_FETCH:
+      return {
+        ...prevState,
+        isLoadingGainersLosers: true
+      };
     case SUMMARY_ACTION_TYPES.NEWS_SUMMARY_FETCH:
       return {
         ...prevState,
-        numLoadingReq: prevState.numLoadingReq + 1
+        isLoadingNewsSummary: true
       };
     case SUMMARY_ACTION_TYPES.GLOBAL_SUMMARY_FETCH_FAIL:
       return {
@@ -39,10 +44,14 @@ const notificationReducer = (prevState = INITIAL_STATE, action) => {
         isLoadingTopCoins: false
       };
     case SUMMARY_ACTION_TYPES.NEWS_SUMMARY_FAIL:
+      return {
+        ...prevState,
+        isLoadingNewsSummary: false
+      };
     case SUMMARY_ACTION_TYPES.GAINERS_LOSERS_FETCH_FAIL:
       return {
         ...prevState,
-        numLoadingReq: prevState.numLoadingReq - 1
+        isLoadingGainersLosers: false
       };
     case SUMMARY_ACTION_TYPES.TOP_COINS_FETCH_SUCCESS:
       return {
@@ -60,13 +69,13 @@ const notificationReducer = (prevState = INITIAL_STATE, action) => {
       return {
         ...prevState,
         news: action.payload,
-        numLoadingReq: prevState.numLoadingReq - 1
+        isLoadingNewsSummary: false
       };
     case SUMMARY_ACTION_TYPES.GAINERS_LOSERS_FETCH_SUCCESS:
       return {
         ...prevState,
-        gainersLosers: action.payload.gainersLosers,
-        numLoadingReq: prevState.numLoadingReq - 1
+        gainersLosers: action.payload,
+        isLoadingGainersLosers: false
       };
     default:
       return prevState;

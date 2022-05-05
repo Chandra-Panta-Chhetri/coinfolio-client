@@ -3,12 +3,7 @@ import { View, FlatList } from "react-native";
 import HeadingWithSeeAll from "../HeadingWithSeeAll";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
-import {
-  selectTopCoins,
-  selectIsLoadingSummary,
-  startTopCoinsFetch,
-  selectIsLoadingTopCoins
-} from "../../../../redux/summary";
+import { selectTopCoins, startTopCoinsFetch, selectIsLoadingTopCoins } from "../../../../redux/summary";
 import TopCoin from "./TopCoin";
 import TopCoinSkeleton from "./TopCoinSkeleton";
 import { GLOBAL_STYLES } from "../../../../styles";

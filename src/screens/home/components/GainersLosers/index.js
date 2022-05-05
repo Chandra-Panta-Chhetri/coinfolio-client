@@ -3,7 +3,7 @@ import { View } from "react-native";
 import HeadingWithSeeAll from "../HeadingWithSeeAll";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
-import { selectGainersLosers, selectIsLoadingSummary, startGainersLosersFetch } from "../../../../redux/summary";
+import { selectGainersLosers, selectIsLoadingGainersLosers, startGainersLosersFetch } from "../../../../redux/summary";
 import GainerLoser from "./GainerLoser";
 import GainerLoserSkeleton from "./GainerLoserSkeleton";
 import { GLOBAL_STYLES } from "../../../../styles";
@@ -28,7 +28,7 @@ const GainersLosers = ({ coins, isLoading, fetchGainersLosers }) => {
               <GainerLoserSkeleton key={i} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
             ))
           : coins.map((c, i) => (
-              <GainerLoser key={c.ticker} coin={c} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
+              <GainerLoser key={c.id} coin={c} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
             ))}
       </View>
     </View>
@@ -37,7 +37,7 @@ const GainersLosers = ({ coins, isLoading, fetchGainersLosers }) => {
 
 const mapStateToProps = (state) => ({
   coins: selectGainersLosers(state),
-  isLoading: selectIsLoadingSummary(state)
+  isLoading: selectIsLoadingGainersLosers(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
