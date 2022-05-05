@@ -6,10 +6,10 @@ import { GlobalMarketSummary, ShortcutIcons, TopCoins, GainersLosers, NewsSummar
 const HomeScreen = () => (
   <ScrollView contentContainerStyle={GLOBAL_STYLES.screenContainer} showsVerticalScrollIndicator={false}>
     <GlobalMarketSummary />
-    <ShortcutIcons />
+    {/* <ShortcutIcons />
     <TopCoins />
     <GainersLosers />
-    <NewsSummaries />
+    <NewsSummaries /> */}
   </ScrollView>
 );
 

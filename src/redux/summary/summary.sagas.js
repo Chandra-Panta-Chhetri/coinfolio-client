@@ -10,7 +10,7 @@ import {
 } from "./summary.actions";
 import SUMMARY_ACTION_TYPES from "./summary.action.types";
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { newsAPI } from "../../api";
+import { newsAPI, marketsAPI } from "../../api";
 
 export const MAX_NEWS_SUMMARIES = 4;
 
@@ -57,16 +57,10 @@ function* fetchTopCoins() {
 
 function* fetchGlobalSummary() {
   try {
-    const globalSummary = yield {
-      marketCap: 3026234553628,
-      "24hVolume": 286423453955,
-      btcDominance: 42.4,
-      ethDominance: 19.4
-    };
-    // yield delayJS(5000);
+    const globalSummary = yield marketsAPI.fetchMarketSummary();
     yield put(globalSummaryFetchSuccess(globalSummary));
   } catch (err) {
-    yield put(globalSummaryFetchFail("There was a server error while fetching the global market summary"));
+    yield put(globalSummaryFetchFail("Error while fetching the global market summary"));
   }
 }
 

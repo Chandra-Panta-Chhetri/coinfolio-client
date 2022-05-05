@@ -56,11 +56,9 @@ export const startGlobalSummaryFetch = () => ({
   type: SUMMARY_ACTION_TYPES.START_GLOBAL_SUMMARY_FETCH
 });
 
-export const globalSummaryFetchSuccess = (globalSummary) => ({
+export const globalSummaryFetchSuccess = (summary) => ({
   type: SUMMARY_ACTION_TYPES.GLOBAL_SUMMARY_FETCH_SUCCESS,
-  payload: {
-    globalSummary
-  }
+  payload: summary
 });
 
 export const globalSummaryFetchFail = (errorMsg) => ({
