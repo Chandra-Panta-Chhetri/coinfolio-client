@@ -4,11 +4,9 @@ export const startTopCoinsFetch = () => ({
   type: SUMMARY_ACTION_TYPES.START_TOP_COINS_FETCH
 });
 
-export const topCoinsFetchSuccess = (topCoins) => ({
+export const topCoinsFetchSuccess = (coins) => ({
   type: SUMMARY_ACTION_TYPES.TOP_COINS_FETCH_SUCCESS,
-  payload: {
-    topCoins
-  }
+  payload: coins
 });
 
 export const topCoinsFetchFail = (errorMsg) => ({

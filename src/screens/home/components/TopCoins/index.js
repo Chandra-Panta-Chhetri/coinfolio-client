@@ -3,7 +3,12 @@ import { View, FlatList } from "react-native";
 import HeadingWithSeeAll from "../HeadingWithSeeAll";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
-import { selectTopCoins, selectIsLoadingSummary, startTopCoinsFetch } from "../../../../redux/summary";
+import {
+  selectTopCoins,
+  selectIsLoadingSummary,
+  startTopCoinsFetch,
+  selectIsLoadingTopCoins
+} from "../../../../redux/summary";
 import TopCoin from "./TopCoin";
 import TopCoinSkeleton from "./TopCoinSkeleton";
 import { GLOBAL_STYLES } from "../../../../styles";
@@ -37,7 +42,7 @@ const TopCoins = ({ coins, isLoading, fetchTopCoins }) => {
           showsHorizontalScrollIndicator={false}
           data={coins}
           contentContainerStyle={GLOBAL_STYLES.flatListContentContainer}
-          keyExtractor={(c) => c.ticker}
+          keyExtractor={(c) => c.id}
           renderItem={({ item }) => <TopCoin item={item} />}
         />
       )}
@@ -47,7 +52,7 @@ const TopCoins = ({ coins, isLoading, fetchTopCoins }) => {
 
 const mapStateToProps = (state) => ({
   coins: selectTopCoins(state),
-  isLoading: selectIsLoadingSummary(state)
+  isLoading: selectIsLoadingTopCoins(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

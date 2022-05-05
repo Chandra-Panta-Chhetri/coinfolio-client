@@ -20,10 +20,10 @@ const TopCoin = ({ item }) => {
               uri: item.image
             }}
           />
-          <Text style={TYPOGRAPHY.body2}>{item.ticker}</Text>
-          <Text style={TYPOGRAPHY.body1}>${item.price}</Text>
-          <Text style={[TYPOGRAPHY.body1, getStylesBasedOnSign(item.percentChange)]}>
-            {formatNumBasedOnSignWorklet(item.percentChange)}%
+          <Text style={TYPOGRAPHY.body2}>{item.symbol}</Text>
+          <Text style={TYPOGRAPHY.body1}>${item.priceUsd}</Text>
+          <Text style={[TYPOGRAPHY.body1, getStylesBasedOnSign(item.changePercent24Hr)]}>
+            {formatNumBasedOnSignWorklet(item.changePercent24Hr)}%
           </Text>
         </Card.Content>
       </Card>
