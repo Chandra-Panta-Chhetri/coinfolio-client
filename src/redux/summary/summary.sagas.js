@@ -39,7 +39,7 @@ function* fetchGainersLosers() {
     const coins = [...gainers, ...losers];
     yield put(gainersLosersFetchSuccess(coins));
   } catch (err) {
-    yield put(gainersLosersFetchFail("Error while fetching the top gainers and losers"));
+    yield put(gainersLosersFetchFail("Error while fetching the gainers and losers"));
   }
 }
 

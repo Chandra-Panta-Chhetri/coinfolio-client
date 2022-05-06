@@ -1,9 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
-import { Card, Avatar, Text, useTheme } from "react-native-paper";
-import { TouchableNativeFeedback, Badge } from "../../../shared-components";
-import { GLOBAL_CONSTANTS } from "../../../constants";
+import { Card, Text, useTheme } from "react-native-paper";
+import { TouchableNativeFeedback, Badge, IconImage } from "../../../shared-components";
 import { useNavigation } from "@react-navigation/native";
 
 const EventDetail = ({ event, index }) => {
@@ -18,12 +17,10 @@ const EventDetail = ({ event, index }) => {
       <Card style={GLOBAL_STYLES.borderRadius}>
         <Card.Content>
           <View style={STYLES.iconCoinLabel}>
-            <Avatar.Image
-              size={GLOBAL_CONSTANTS.AVATAR_IMAGE_SIZE}
+            <IconImage
               source={{
                 uri: event.coins[0].iconURL
               }}
-              style={STYLES.icon}
             />
             <View style={STYLES.coinLabel}>
               <View style={STYLES.coinsInvolvedContainer}>
@@ -56,9 +53,6 @@ const STYLES = StyleSheet.create({
   },
   infoContainer: {
     marginTop: 10
-  },
-  icon: {
-    backgroundColor: "transparent"
   },
   iconCoinLabel: { flexDirection: "row", alignItems: "center" },
   coinLabel: {

@@ -1,8 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { Card, Text, Avatar } from "react-native-paper";
-import { GLOBAL_CONSTANTS } from "../../../../constants";
-import { TouchableNativeFeedback } from "../../../../shared-components";
+import { Card, Text } from "react-native-paper";
+import { TouchableNativeFeedback, IconImage } from "../../../../shared-components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../styles";
 import { getStylesBasedOnSign, formatNumBasedOnSignWorklet } from "../../../../utils";
 import { useNavigation } from "@react-navigation/native";
@@ -14,8 +13,7 @@ const TopCoin = ({ item }) => {
     <TouchableNativeFeedback viewContainerStyle={STYLES.androidContainer}>
       <Card style={STYLES.topCoinCard}>
         <Card.Content>
-          <Avatar.Image
-            size={GLOBAL_CONSTANTS.AVATAR_IMAGE_SIZE}
+          <IconImage
             source={{
               uri: item.image
             }}

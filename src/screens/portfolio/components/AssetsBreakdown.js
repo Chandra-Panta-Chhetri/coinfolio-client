@@ -1,19 +1,12 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { DataTable, Text, Avatar, useTheme } from "react-native-paper";
+import { DataTable, Text, useTheme } from "react-native-paper";
 import { connect } from "react-redux";
-import {
-  selectIsLoadingPortfolio,
-  selectPortfolioAssets
-} from "../../../redux/portfolio";
+import { selectIsLoadingPortfolio, selectPortfolioAssets } from "../../../redux/portfolio";
 import { AntDesign } from "@expo/vector-icons";
-import { PressableView } from "../../../shared-components";
-import { GLOBAL_CONSTANTS } from "../../../constants";
+import { PressableView, IconImage } from "../../../shared-components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
-import {
-  formatNumBasedOnSignWorklet,
-  getStylesBasedOnSign
-} from "../../../utils";
+import { formatNumBasedOnSignWorklet, getStylesBasedOnSign } from "../../../utils";
 
 const STYLES = StyleSheet.create({
   dataHeader: { borderBottomWidth: 0 },
@@ -79,8 +72,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
   const { columnToSortBy, sortAscending } = sortCriteria;
 
   const sortTable = (sortByField) => {
-    const sortInAscending =
-      columnToSortBy === sortByField ? !sortAscending : true;
+    const sortInAscending = columnToSortBy === sortByField ? !sortAscending : true;
     const newSortedAssets = sortedAssets;
     if (sortInAscending) {
       newSortedAssets.sort((a1, a2) =>
@@ -108,11 +100,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
       <DataTable>
         <DataTable.Header style={STYLES.dataHeader}>
           {tableHeadings.map((th) => (
-            <PressableView
-              key={th.label}
-              onPress={() => sortTable(th.sortByField)}
-              viewStyle={th.style}
-            >
+            <PressableView key={th.label} onPress={() => sortTable(th.sortByField)} viewStyle={th.style}>
               <Text style={TYPOGRAPHY.body1}>{th.label}</Text>
               {columnToSortBy === th.sortByField && (
                 <AntDesign
@@ -130,14 +118,11 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
             key={asset.ticker}
             style={[
               STYLES.dataRow,
-              i + 1 === assets.length
-                ? GLOBAL_STYLES.tableBottomBorderWidth
-                : { borderBottomWidth: 0 }
+              i + 1 === assets.length ? GLOBAL_STYLES.tableBottomBorderWidth : { borderBottomWidth: 0 }
             ]}
           >
             <View style={[STYLES.assetTableCell, STYLES.marginRight]}>
-              <Avatar.Image
-                size={GLOBAL_CONSTANTS.AVATAR_IMAGE_SIZE}
+              <IconImage
                 source={{
                   uri: asset.iconSrc
                 }}
@@ -152,34 +137,21 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
               </View>
             </View>
             <View style={[STYLES.flex, STYLES.marginRight]}>
-              <Text
-                numberOfLines={1}
-                style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}
-              >
+              <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}>
                 ${asset.currentPrice}
               </Text>
               <Text
                 numberOfLines={1}
-                style={[
-                  TYPOGRAPHY.textAlignRight,
-                  getStylesBasedOnSign(asset.pricePercentChange),
-                  TYPOGRAPHY.caption
-                ]}
+                style={[TYPOGRAPHY.textAlignRight, getStylesBasedOnSign(asset.pricePercentChange), TYPOGRAPHY.caption]}
               >
                 {formatNumBasedOnSignWorklet(asset.pricePercentChange)}%
               </Text>
             </View>
             <View style={STYLES.flex}>
-              <Text
-                numberOfLines={1}
-                style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}
-              >
+              <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}>
                 ${asset.holdingsVal}
               </Text>
-              <Text
-                numberOfLines={1}
-                style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.caption]}
-              >
+              <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.caption]}>
                 {asset.totalHoldings}
               </Text>
             </View>

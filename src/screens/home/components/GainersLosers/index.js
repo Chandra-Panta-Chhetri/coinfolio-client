@@ -23,7 +23,7 @@ const GainersLosers = ({ coins, isLoading, fetchGainersLosers }) => {
     <View style={GLOBAL_STYLES.componentContainer}>
       <HeadingWithSeeAll title="Gainers & Losers" subheading="Based on Top 100 Coins" onSeeAllPress={toMarketScreen} />
       <View>
-        {isLoading && coins.length === 0
+        {isLoading || coins.length === 0
           ? DUMMY_SKELETON_ARRAY.map((_, i) => (
               <GainerLoserSkeleton key={i} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
             ))

@@ -18,7 +18,7 @@ const NotificationSnackbar = ({ notification, clearRecentNotification }) => {
     <Snackbar
       visible={notification}
       onDismiss={clearRecentNotification}
-      duration={2300}
+      duration={2500}
       action={{
         label: "X",
         onPress: clearRecentNotification,

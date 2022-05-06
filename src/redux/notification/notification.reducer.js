@@ -1,3 +1,4 @@
+import { COLORS } from "../../constants";
 import NOTIFICATION_ACTION_TYPES from "./notification.action.types";
 
 const INITIAL_STATE = {

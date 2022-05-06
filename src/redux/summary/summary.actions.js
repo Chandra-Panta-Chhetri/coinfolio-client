@@ -11,9 +11,7 @@ export const topCoinsFetchSuccess = (coins) => ({
 
 export const topCoinsFetchFail = (errorMsg) => ({
   type: SUMMARY_ACTION_TYPES.TOP_COINS_FETCH_FAIL,
-  payload: {
-    errorMsg
-  }
+  payload: errorMsg
 });
 
 export const startGainersLosersFetch = () => ({
@@ -27,9 +25,7 @@ export const gainersLosersFetchSuccess = (coins) => ({
 
 export const gainersLosersFetchFail = (errorMsg) => ({
   type: SUMMARY_ACTION_TYPES.GAINERS_LOSERS_FETCH_FAIL,
-  payload: {
-    errorMsg
-  }
+  payload: errorMsg
 });
 
 export const startNewsSummaryFetch = () => ({
@@ -43,9 +39,7 @@ export const newsSummarySuccess = (news) => ({
 
 export const newsSummaryFail = (errorMsg) => ({
   type: SUMMARY_ACTION_TYPES.NEWS_SUMMARY_FAIL,
-  payload: {
-    errorMsg
-  }
+  payload: errorMsg
 });
 
 export const startGlobalSummaryFetch = () => ({
@@ -59,7 +53,5 @@ export const globalSummaryFetchSuccess = (summary) => ({
 
 export const globalSummaryFetchFail = (errorMsg) => ({
   type: SUMMARY_ACTION_TYPES.GLOBAL_SUMMARY_FETCH_FAIL,
-  payload: {
-    errorMsg
-  }
+  payload: errorMsg
 });

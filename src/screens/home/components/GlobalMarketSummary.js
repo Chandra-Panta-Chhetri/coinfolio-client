@@ -19,7 +19,7 @@ const GlobalMarketSummary = ({ globalSummary, fetchGlobalSummary, isLoading }) =
     fetchGlobalSummary();
   }, []);
 
-  if (isLoading && globalSummary === null) {
+  if (isLoading || globalSummary === null) {
     return <GlobalMarketSummarySkeleton />;
   }
 

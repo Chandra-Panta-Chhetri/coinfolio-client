@@ -26,7 +26,7 @@ const NewsSummaries = ({ news, isLoading, fetchNewsSummary }) => {
     <View>
       <HeadingWithSeeAll title="News" onSeeAllPress={toNewsScreen} />
       <View>
-        {isLoading && news.length === 0
+        {isLoading || news.length === 0
           ? DUMMY_SKELETON_ARRAY.map((_, i) => (
               <NewsItemSkeleton key={i} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
             ))

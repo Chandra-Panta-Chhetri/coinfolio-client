@@ -22,7 +22,7 @@ const TopCoins = ({ coins, isLoading, fetchTopCoins }) => {
   return (
     <View style={GLOBAL_STYLES.componentContainer}>
       <HeadingWithSeeAll title="Top Coins" onSeeAllPress={toMarketScreen} />
-      {isLoading && coins.length === 0 ? (
+      {isLoading || coins.length === 0 ? (
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}

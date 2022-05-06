@@ -1,10 +1,9 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Card, Text, Avatar } from "react-native-paper";
-import { GLOBAL_CONSTANTS } from "../../../../constants";
+import { Card, Text } from "react-native-paper";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../styles";
 import { getStylesBasedOnSign, formatNumBasedOnSignWorklet } from "../../../../utils";
-import { TouchableNativeFeedback } from "../../../../shared-components";
+import { TouchableNativeFeedback, IconImage } from "../../../../shared-components";
 import { useNavigation } from "@react-navigation/native";
 
 const GainerLoser = ({ coin, containerStyle = null }) => {
@@ -14,8 +13,7 @@ const GainerLoser = ({ coin, containerStyle = null }) => {
     <TouchableNativeFeedback viewContainerStyle={containerStyle}>
       <Card style={GLOBAL_STYLES.borderRadius}>
         <Card.Content style={STYLES.gainerLoserCardBody}>
-          <Avatar.Image
-            size={GLOBAL_CONSTANTS.AVATAR_IMAGE_SIZE}
+          <IconImage
             source={{
               uri: coin.image
             }}

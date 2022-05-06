@@ -1,9 +1,8 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { SparkLine } from "../../../shared-components";
+import { SparkLine, IconImage } from "../../../shared-components";
 import { formatNumBasedOnSignWorklet, getStylesBasedOnSign } from "../../../utils";
-import { GLOBAL_CONSTANTS } from "../../../constants";
-import { Avatar, Text } from "react-native-paper";
+import { Text } from "react-native-paper";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 
 const xValueAccessor = (dataInstance) => dataInstance[1];
@@ -13,8 +12,7 @@ const dataPointsAccessor = (data) => data.prices;
 const MarketOverviewItem = ({ item, containerStyle = {} }) => {
   return (
     <View style={[STYLES.container, containerStyle]}>
-      <Avatar.Image
-        size={GLOBAL_CONSTANTS.AVATAR_IMAGE_SIZE}
+      <IconImage
         source={{
           uri: item.iconUrl
         }}
