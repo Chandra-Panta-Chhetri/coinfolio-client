@@ -1,29 +1,30 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { Card, Text, Avatar } from "react-native-paper";
-import { GLOBAL_CONSTANTS } from "../../../../constants";
-import { TouchableNativeFeedback } from "../../../../shared-components";
+import { Card, Text } from "react-native-paper";
+import { TouchableNativeFeedback, IconImage } from "../../../../shared-components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../styles";
 import { getStylesBasedOnSign, formatNumBasedOnSignWorklet } from "../../../../utils";
 import { useNavigation } from "@react-navigation/native";
 
-const TopCoin = ({ item }) => {
+const TopCoin = ({ item: coin }) => {
   const navigation = useNavigation();
+  const { symbol, priceUsd, changePercent24Hr, image } = coin;
+
+  const onPress = () => {};
 
   return (
-    <TouchableNativeFeedback viewContainerStyle={STYLES.androidContainer}>
+    <TouchableNativeFeedback viewContainerStyle={STYLES.androidContainer} onPress={onPress}>
       <Card style={STYLES.topCoinCard}>
         <Card.Content>
-          <Avatar.Image
-            size={GLOBAL_CONSTANTS.AVATAR_IMAGE_SIZE}
+          <IconImage
             source={{
-              uri: item.image
+              uri: image
             }}
           />
-          <Text style={TYPOGRAPHY.body2}>{item.ticker}</Text>
-          <Text style={TYPOGRAPHY.body1}>${item.price}</Text>
-          <Text style={[TYPOGRAPHY.body1, getStylesBasedOnSign(item.percentChange)]}>
-            {formatNumBasedOnSignWorklet(item.percentChange)}%
+          <Text style={TYPOGRAPHY.body2}>{symbol}</Text>
+          <Text style={TYPOGRAPHY.body1}>${priceUsd}</Text>
+          <Text style={[TYPOGRAPHY.body1, getStylesBasedOnSign(changePercent24Hr)]}>
+            {formatNumBasedOnSignWorklet(changePercent24Hr)}%
           </Text>
         </Card.Content>
       </Card>

@@ -3,12 +3,12 @@ import { View, FlatList } from "react-native";
 import HeadingWithSeeAll from "../HeadingWithSeeAll";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
-import { selectTopCoins, selectIsLoadingSummary, startTopCoinsFetch } from "../../../../redux/summary";
+import { selectTopCoins, startTopCoinsFetch, selectIsLoadingTopCoins } from "../../../../redux/summary";
 import TopCoin from "./TopCoin";
 import TopCoinSkeleton from "./TopCoinSkeleton";
 import { GLOBAL_STYLES } from "../../../../styles";
 
-const NUM_SKELETON = 10;
+const NUM_SKELETON = 5;
 const DUMMY_SKELETON_ARRAY = Array(NUM_SKELETON).fill("1");
 
 const TopCoins = ({ coins, isLoading, fetchTopCoins }) => {
@@ -16,13 +16,13 @@ const TopCoins = ({ coins, isLoading, fetchTopCoins }) => {
   const toMarketScreen = () => navigation.navigate("MarketOverview");
 
   useEffect(() => {
-    fetchTopCoins();
+    fetchTopCoins(NUM_SKELETON);
   }, []);
 
   return (
     <View style={GLOBAL_STYLES.componentContainer}>
       <HeadingWithSeeAll title="Top Coins" onSeeAllPress={toMarketScreen} />
-      {isLoading && coins.length === 0 ? (
+      {isLoading || coins.length === 0 ? (
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -37,7 +37,7 @@ const TopCoins = ({ coins, isLoading, fetchTopCoins }) => {
           showsHorizontalScrollIndicator={false}
           data={coins}
           contentContainerStyle={GLOBAL_STYLES.flatListContentContainer}
-          keyExtractor={(c) => c.ticker}
+          keyExtractor={(c) => c.id}
           renderItem={({ item }) => <TopCoin item={item} />}
         />
       )}
@@ -47,11 +47,11 @@ const TopCoins = ({ coins, isLoading, fetchTopCoins }) => {
 
 const mapStateToProps = (state) => ({
   coins: selectTopCoins(state),
-  isLoading: selectIsLoadingSummary(state)
+  isLoading: selectIsLoadingTopCoins(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchTopCoins: () => dispatch(startTopCoinsFetch())
+  fetchTopCoins: (limit) => dispatch(startTopCoinsFetch(limit))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopCoins);

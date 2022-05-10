@@ -3,7 +3,7 @@ import { View } from "react-native";
 import HeadingWithSeeAll from "../HeadingWithSeeAll";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
-import { selectGainersLosers, selectIsLoadingSummary, startGainersLosersFetch } from "../../../../redux/summary";
+import { selectGainersLosers, selectIsLoadingGainersLosers, startGainersLosersFetch } from "../../../../redux/summary";
 import GainerLoser from "./GainerLoser";
 import GainerLoserSkeleton from "./GainerLoserSkeleton";
 import { GLOBAL_STYLES } from "../../../../styles";
@@ -16,19 +16,19 @@ const GainersLosers = ({ coins, isLoading, fetchGainersLosers }) => {
   const toMarketScreen = () => navigation.navigate("MarketOverview");
 
   useEffect(() => {
-    fetchGainersLosers();
+    fetchGainersLosers(Math.floor(NUM_SKELETON / 2));
   }, []);
 
   return (
     <View style={GLOBAL_STYLES.componentContainer}>
-      <HeadingWithSeeAll title="Gainers & Losers" subheading="Based on Top 100 Coins" onSeeAllPress={toMarketScreen} />
+      <HeadingWithSeeAll title="Gainers & Losers" onSeeAllPress={toMarketScreen} />
       <View>
-        {isLoading && coins.length === 0
+        {isLoading || coins.length === 0
           ? DUMMY_SKELETON_ARRAY.map((_, i) => (
               <GainerLoserSkeleton key={i} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
             ))
           : coins.map((c, i) => (
-              <GainerLoser key={c.ticker} coin={c} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
+              <GainerLoser key={c.id} coin={c} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
             ))}
       </View>
     </View>
@@ -37,11 +37,11 @@ const GainersLosers = ({ coins, isLoading, fetchGainersLosers }) => {
 
 const mapStateToProps = (state) => ({
   coins: selectGainersLosers(state),
-  isLoading: selectIsLoadingSummary(state)
+  isLoading: selectIsLoadingGainersLosers(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchGainersLosers: () => dispatch(startGainersLosersFetch())
+  fetchGainersLosers: (limit) => dispatch(startGainersLosersFetch(limit))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GainersLosers);

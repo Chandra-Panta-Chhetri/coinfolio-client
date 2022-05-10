@@ -1,33 +1,19 @@
 import { createSelector } from "reselect";
 
-const selectSummary = (state) => state.summary;
+const selectSummaryStore = (state) => state.summary;
 
-export const selectTopCoins = createSelector(
-  [selectSummary],
-  (summary) => summary.topCoins
-);
+export const selectTopCoins = createSelector([selectSummaryStore], (s) => s.topCoins);
 
-export const selectGainersLosers = createSelector(
-  [selectSummary],
-  (summary) => summary.gainersLosers
-);
+export const selectGainersLosers = createSelector([selectSummaryStore], (s) => s.gainersLosers);
 
-export const selectNewsSummary = createSelector(
-  [selectSummary],
-  (summary) => summary.news
-);
+export const selectNewsSummary = createSelector([selectSummaryStore], (s) => s.news);
 
-export const selectGlobalSummary = createSelector(
-  [selectSummary],
-  (summary) => summary.global
-);
+export const selectGlobalSummary = createSelector([selectSummaryStore], (s) => s.global);
 
-export const selectNumLoadingReq = createSelector(
-  [selectSummary],
-  (summary) => summary.numLoadingReq
-);
+export const selectIsLoadingGlobal = createSelector([selectSummaryStore], (s) => s.isLoadingGlobal);
 
-export const selectIsLoadingSummary = createSelector(
-  [selectNumLoadingReq],
-  (numLoadingReq) => numLoadingReq > 0
-);
+export const selectIsLoadingTopCoins = createSelector([selectSummaryStore], (s) => s.isLoadingTopCoins);
+
+export const selectIsLoadingGainersLosers = createSelector([selectSummaryStore], (s) => s.isLoadingGainersLosers);
+
+export const selectIsLoadingNewsSummary = createSelector([selectSummaryStore], (s) => s.isLoadingNewsSummary);

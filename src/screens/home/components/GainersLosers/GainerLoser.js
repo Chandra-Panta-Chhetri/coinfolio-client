@@ -1,34 +1,35 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Card, Text, Avatar } from "react-native-paper";
-import { GLOBAL_CONSTANTS } from "../../../../constants";
+import { Card, Text } from "react-native-paper";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../styles";
 import { getStylesBasedOnSign, formatNumBasedOnSignWorklet } from "../../../../utils";
-import { TouchableNativeFeedback } from "../../../../shared-components";
+import { TouchableNativeFeedback, IconImage } from "../../../../shared-components";
 import { useNavigation } from "@react-navigation/native";
 
 const GainerLoser = ({ coin, containerStyle = null }) => {
   const navigation = useNavigation();
+  const { image, name, symbol, priceUsd, changePercent24Hr } = coin;
+
+  const onPress = () => {};
 
   return (
-    <TouchableNativeFeedback viewContainerStyle={containerStyle}>
+    <TouchableNativeFeedback viewContainerStyle={containerStyle} onPress={onPress}>
       <Card style={GLOBAL_STYLES.borderRadius}>
         <Card.Content style={STYLES.gainerLoserCardBody}>
-          <Avatar.Image
-            size={GLOBAL_CONSTANTS.AVATAR_IMAGE_SIZE}
+          <IconImage
             source={{
-              uri: coin.image
+              uri: image
             }}
           />
           <View style={STYLES.gainerLoserInfoContainer}>
             <View>
-              <Text style={TYPOGRAPHY.subheading}>{coin.fullName}</Text>
-              <Text style={TYPOGRAPHY.body1}>{coin.ticker}</Text>
+              <Text style={TYPOGRAPHY.subheading}>{name}</Text>
+              <Text style={TYPOGRAPHY.body1}>{symbol}</Text>
             </View>
             <View style={STYLES.priceAndPercent}>
-              <Text style={TYPOGRAPHY.subheading}>${coin.price}</Text>
-              <Text style={[TYPOGRAPHY.body1, getStylesBasedOnSign(coin.percentChange)]}>
-                {formatNumBasedOnSignWorklet(coin.percentChange)}%
+              <Text style={TYPOGRAPHY.subheading}>${priceUsd}</Text>
+              <Text style={[TYPOGRAPHY.body1, getStylesBasedOnSign(changePercent24Hr)]}>
+                {formatNumBasedOnSignWorklet(changePercent24Hr)}%
               </Text>
             </View>
           </View>

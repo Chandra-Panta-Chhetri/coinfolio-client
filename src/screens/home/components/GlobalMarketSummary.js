@@ -2,30 +2,11 @@ import React, { useEffect } from "react";
 import { StyleSheet, ScrollView, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { connect } from "react-redux";
-import { selectGlobalSummary, selectIsLoadingSummary, startGlobalSummaryFetch } from "../../../redux/summary";
+import { selectGlobalSummary, selectIsLoadingGlobal, startGlobalSummaryFetch } from "../../../redux/summary";
 import { Skeleton } from "../../../shared-components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 
-const METRICS = [
-  {
-    label: "Market Cap",
-    key: "marketCap"
-  },
-  {
-    label: "24h Vol",
-    key: "24hVolume"
-  },
-  {
-    label: "BTC Dominance",
-    key: "btcDominance"
-  },
-  {
-    label: "ETH Dominance",
-    key: "ethDominance"
-  }
-];
-
-const GlobalMarketSummarySkeleton = () => (
+const MarketSummarySkeleton = () => (
   <Card style={STYLES.container}>
     <Card.Content style={STYLES.rowFlexbox}>
       <Skeleton style={STYLES.globalSkeleton} />
@@ -38,18 +19,18 @@ const GlobalMarketSummary = ({ globalSummary, fetchGlobalSummary, isLoading }) =
     fetchGlobalSummary();
   }, []);
 
-  if (isLoading && globalSummary === null) {
-    return <GlobalMarketSummarySkeleton />;
+  if (isLoading || globalSummary === null) {
+    return <MarketSummarySkeleton />;
   }
 
   return (
     <Card style={STYLES.container}>
       <Card.Content>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {METRICS.map((m) => (
-            <View style={STYLES.summaryItem} key={m.label}>
-              <Text style={TYPOGRAPHY.body2}>{m.label}: </Text>
-              <Text style={TYPOGRAPHY.body2}>{globalSummary[m.key]}</Text>
+          {Object.keys(globalSummary).map((key) => (
+            <View style={STYLES.summaryItem} key={globalSummary[key].label}>
+              <Text style={TYPOGRAPHY.body2}>{globalSummary[key].label}: </Text>
+              <Text style={TYPOGRAPHY.body2}>{globalSummary[key].value}</Text>
             </View>
           ))}
         </ScrollView>
@@ -79,7 +60,7 @@ const STYLES = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   globalSummary: selectGlobalSummary(state),
-  isLoading: selectIsLoadingSummary(state)
+  isLoading: selectIsLoadingGlobal(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
