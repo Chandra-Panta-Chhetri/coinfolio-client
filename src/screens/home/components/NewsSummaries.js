@@ -3,15 +3,11 @@ import { View } from "react-native";
 import HeadingWithSeeAll from "./HeadingWithSeeAll";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
-import {
-  selectNewsSummary,
-  startNewsSummaryFetch,
-  MAX_NEWS_SUMMARIES,
-  selectIsLoadingNewsSummary
-} from "../../../redux/summary";
+import { selectNewsSummary, startNewsSummaryFetch, selectIsLoadingNewsSummary } from "../../../redux/summary";
 import { NewsItemSkeleton, NewsItem } from "../../../shared-components";
 import { GLOBAL_STYLES } from "../../../styles";
 
+const MAX_NEWS_SUMMARIES = 4;
 const DUMMY_SKELETON_ARRAY = Array(MAX_NEWS_SUMMARIES).fill("1");
 
 const NewsSummaries = ({ news, isLoading, fetchNewsSummary }) => {
@@ -19,7 +15,7 @@ const NewsSummaries = ({ news, isLoading, fetchNewsSummary }) => {
   const toNewsScreen = () => navigation.navigate("Discover", { screen: "News" });
 
   useEffect(() => {
-    fetchNewsSummary();
+    fetchNewsSummary(MAX_NEWS_SUMMARIES);
   }, []);
 
   return (
@@ -44,7 +40,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchNewsSummary: () => dispatch(startNewsSummaryFetch())
+  fetchNewsSummary: (limit) => dispatch(startNewsSummaryFetch(limit))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewsSummaries);

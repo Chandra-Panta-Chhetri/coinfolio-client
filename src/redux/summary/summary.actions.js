@@ -1,7 +1,8 @@
 import SUMMARY_ACTION_TYPES from "./summary.action.types";
 
-export const startTopCoinsFetch = () => ({
-  type: SUMMARY_ACTION_TYPES.START_TOP_COINS_FETCH
+export const startTopCoinsFetch = (limit) => ({
+  type: SUMMARY_ACTION_TYPES.START_TOP_COINS_FETCH,
+  payload: limit
 });
 
 export const topCoinsFetchSuccess = (coins) => ({
@@ -14,8 +15,9 @@ export const topCoinsFetchFail = (errorMsg) => ({
   payload: errorMsg
 });
 
-export const startGainersLosersFetch = () => ({
-  type: SUMMARY_ACTION_TYPES.START_GAINERS_LOSERS_FETCH
+export const startGainersLosersFetch = (limit) => ({
+  type: SUMMARY_ACTION_TYPES.START_GAINERS_LOSERS_FETCH,
+  payload: limit
 });
 
 export const gainersLosersFetchSuccess = (coins) => ({
@@ -28,8 +30,9 @@ export const gainersLosersFetchFail = (errorMsg) => ({
   payload: errorMsg
 });
 
-export const startNewsSummaryFetch = () => ({
-  type: SUMMARY_ACTION_TYPES.NEWS_SUMMARY_FETCH
+export const startNewsSummaryFetch = (limit) => ({
+  type: SUMMARY_ACTION_TYPES.NEWS_SUMMARY_FETCH,
+  payload: limit
 });
 
 export const newsSummarySuccess = (news) => ({

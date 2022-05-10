@@ -12,11 +12,9 @@ import SUMMARY_ACTION_TYPES from "./summary.action.types";
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import { newsAPI, marketsAPI } from "../../api";
 
-export const MAX_NEWS_SUMMARIES = 4;
-
-function* fetchTopCoins() {
+function* fetchTopCoins({ payload: limit }) {
   try {
-    const coins = yield marketsAPI.fetchTopCoins({ limit: 5 });
+    const coins = yield marketsAPI.getTopCoins({ limit });
     yield put(topCoinsFetchSuccess(coins));
   } catch (err) {
     yield put(topCoinsFetchFail("Error while fetching the top coins"));
@@ -25,31 +23,30 @@ function* fetchTopCoins() {
 
 function* fetchGlobalSummary() {
   try {
-    const globalSummary = yield marketsAPI.fetchMarketSummary();
+    const globalSummary = yield marketsAPI.getMarketSummary();
     yield put(globalSummaryFetchSuccess(globalSummary));
   } catch (err) {
-    yield put(globalSummaryFetchFail("Error while fetching the global market summary"));
+    yield put(globalSummaryFetchFail("Error while getting the global market summary"));
   }
 }
 
-function* fetchGainersLosers() {
+function* fetchGainersLosers({ payload: limit }) {
   try {
-    const res = yield marketsAPI.fetchGainersLosers({ limit: 2 });
-    const { gainers, losers } = yield res;
-    const coins = [...gainers, ...losers];
+    const res = yield marketsAPI.getGainersLosers({ limit });
+    const coins = [...res.gainers, ...res.losers];
     yield put(gainersLosersFetchSuccess(coins));
   } catch (err) {
-    yield put(gainersLosersFetchFail("Error while fetching the gainers and losers"));
+    yield put(gainersLosersFetchFail("Error while getting the gainers and losers"));
   }
 }
 
-function* fetchNewsSummary() {
+function* fetchNewsSummary({ payload: limit }) {
   try {
-    const res = yield newsAPI.fetchNews();
-    const newsSummary = yield res.results.slice(0, MAX_NEWS_SUMMARIES);
+    const res = yield newsAPI.getNews();
+    const newsSummary = yield res.results.slice(0, limit);
     yield put(newsSummarySuccess(newsSummary));
   } catch (err) {
-    yield put(newsSummaryFail("There was an error while fetching the news"));
+    yield put(newsSummaryFail("Error while getting the news"));
   }
 }
 

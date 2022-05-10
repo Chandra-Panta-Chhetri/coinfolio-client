@@ -6,7 +6,7 @@ import { selectGlobalSummary, selectIsLoadingGlobal, startGlobalSummaryFetch } f
 import { Skeleton } from "../../../shared-components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 
-const GlobalMarketSummarySkeleton = () => (
+const MarketSummarySkeleton = () => (
   <Card style={STYLES.container}>
     <Card.Content style={STYLES.rowFlexbox}>
       <Skeleton style={STYLES.globalSkeleton} />
@@ -20,7 +20,7 @@ const GlobalMarketSummary = ({ globalSummary, fetchGlobalSummary, isLoading }) =
   }, []);
 
   if (isLoading || globalSummary === null) {
-    return <GlobalMarketSummarySkeleton />;
+    return <MarketSummarySkeleton />;
   }
 
   return (

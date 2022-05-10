@@ -8,25 +8,28 @@ import { useNavigation } from "@react-navigation/native";
 
 const GainerLoser = ({ coin, containerStyle = null }) => {
   const navigation = useNavigation();
+  const { image, name, symbol, priceUsd, changePercent24Hr } = coin;
+
+  const onPress = () => {};
 
   return (
-    <TouchableNativeFeedback viewContainerStyle={containerStyle}>
+    <TouchableNativeFeedback viewContainerStyle={containerStyle} onPress={onPress}>
       <Card style={GLOBAL_STYLES.borderRadius}>
         <Card.Content style={STYLES.gainerLoserCardBody}>
           <IconImage
             source={{
-              uri: coin.image
+              uri: image
             }}
           />
           <View style={STYLES.gainerLoserInfoContainer}>
             <View>
-              <Text style={TYPOGRAPHY.subheading}>{coin.name}</Text>
-              <Text style={TYPOGRAPHY.body1}>{coin.symbol}</Text>
+              <Text style={TYPOGRAPHY.subheading}>{name}</Text>
+              <Text style={TYPOGRAPHY.body1}>{symbol}</Text>
             </View>
             <View style={STYLES.priceAndPercent}>
-              <Text style={TYPOGRAPHY.subheading}>${coin.priceUsd}</Text>
-              <Text style={[TYPOGRAPHY.body1, getStylesBasedOnSign(coin.changePercent24Hr)]}>
-                {formatNumBasedOnSignWorklet(coin.changePercent24Hr)}%
+              <Text style={TYPOGRAPHY.subheading}>${priceUsd}</Text>
+              <Text style={[TYPOGRAPHY.body1, getStylesBasedOnSign(changePercent24Hr)]}>
+                {formatNumBasedOnSignWorklet(changePercent24Hr)}%
               </Text>
             </View>
           </View>

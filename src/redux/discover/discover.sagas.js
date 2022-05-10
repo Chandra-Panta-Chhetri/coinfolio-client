@@ -19,7 +19,7 @@ import { toISOSubstring } from "../../utils";
 
 function* getNews({ payload: { filter } }) {
   try {
-    const response = yield newsAPI.fetchNews({ filter });
+    const response = yield newsAPI.getNews({ filter });
     const news = yield response.results;
     if (news.length === 0) {
       return yield put(noMoreNews());
@@ -33,7 +33,7 @@ function* getNews({ payload: { filter } }) {
 function* getMoreNews({ payload: { filter } }) {
   try {
     const page = yield select(selectNewsPage);
-    const res = yield newsAPI.fetchNews({ filter, page });
+    const res = yield newsAPI.getNews({ filter, page });
     const news = yield res.results;
     const currentNews = yield select(selectNews);
     const combinedNews = yield [...currentNews, ...news];

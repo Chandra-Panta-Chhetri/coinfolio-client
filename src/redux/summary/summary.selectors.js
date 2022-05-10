@@ -10,8 +10,6 @@ export const selectNewsSummary = createSelector([selectSummaryStore], (s) => s.n
 
 export const selectGlobalSummary = createSelector([selectSummaryStore], (s) => s.global);
 
-export const selectNumLoadingReq = createSelector([selectSummaryStore], (s) => s.numLoadingReq);
-
 export const selectIsLoadingGlobal = createSelector([selectSummaryStore], (s) => s.isLoadingGlobal);
 
 export const selectIsLoadingTopCoins = createSelector([selectSummaryStore], (s) => s.isLoadingTopCoins);

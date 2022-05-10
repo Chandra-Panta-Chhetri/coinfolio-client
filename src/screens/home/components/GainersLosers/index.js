@@ -16,12 +16,12 @@ const GainersLosers = ({ coins, isLoading, fetchGainersLosers }) => {
   const toMarketScreen = () => navigation.navigate("MarketOverview");
 
   useEffect(() => {
-    fetchGainersLosers();
+    fetchGainersLosers(Math.floor(NUM_SKELETON / 2));
   }, []);
 
   return (
     <View style={GLOBAL_STYLES.componentContainer}>
-      <HeadingWithSeeAll title="Gainers & Losers" subheading="Based on Top 100 Coins" onSeeAllPress={toMarketScreen} />
+      <HeadingWithSeeAll title="Gainers & Losers" onSeeAllPress={toMarketScreen} />
       <View>
         {isLoading || coins.length === 0
           ? DUMMY_SKELETON_ARRAY.map((_, i) => (
@@ -41,7 +41,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchGainersLosers: () => dispatch(startGainersLosersFetch())
+  fetchGainersLosers: (limit) => dispatch(startGainersLosersFetch(limit))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GainersLosers);

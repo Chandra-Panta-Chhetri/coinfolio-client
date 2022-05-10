@@ -6,22 +6,25 @@ import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../styles";
 import { getStylesBasedOnSign, formatNumBasedOnSignWorklet } from "../../../../utils";
 import { useNavigation } from "@react-navigation/native";
 
-const TopCoin = ({ item }) => {
+const TopCoin = ({ item: coin }) => {
   const navigation = useNavigation();
+  const { symbol, priceUsd, changePercent24Hr, image } = coin;
+
+  const onPress = () => {};
 
   return (
-    <TouchableNativeFeedback viewContainerStyle={STYLES.androidContainer}>
+    <TouchableNativeFeedback viewContainerStyle={STYLES.androidContainer} onPress={onPress}>
       <Card style={STYLES.topCoinCard}>
         <Card.Content>
           <IconImage
             source={{
-              uri: item.image
+              uri: image
             }}
           />
-          <Text style={TYPOGRAPHY.body2}>{item.symbol}</Text>
-          <Text style={TYPOGRAPHY.body1}>${item.priceUsd}</Text>
-          <Text style={[TYPOGRAPHY.body1, getStylesBasedOnSign(item.changePercent24Hr)]}>
-            {formatNumBasedOnSignWorklet(item.changePercent24Hr)}%
+          <Text style={TYPOGRAPHY.body2}>{symbol}</Text>
+          <Text style={TYPOGRAPHY.body1}>${priceUsd}</Text>
+          <Text style={[TYPOGRAPHY.body1, getStylesBasedOnSign(changePercent24Hr)]}>
+            {formatNumBasedOnSignWorklet(changePercent24Hr)}%
           </Text>
         </Card.Content>
       </Card>

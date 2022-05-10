@@ -8,7 +8,7 @@ import TopCoin from "./TopCoin";
 import TopCoinSkeleton from "./TopCoinSkeleton";
 import { GLOBAL_STYLES } from "../../../../styles";
 
-const NUM_SKELETON = 10;
+const NUM_SKELETON = 5;
 const DUMMY_SKELETON_ARRAY = Array(NUM_SKELETON).fill("1");
 
 const TopCoins = ({ coins, isLoading, fetchTopCoins }) => {
@@ -16,7 +16,7 @@ const TopCoins = ({ coins, isLoading, fetchTopCoins }) => {
   const toMarketScreen = () => navigation.navigate("MarketOverview");
 
   useEffect(() => {
-    fetchTopCoins();
+    fetchTopCoins(NUM_SKELETON);
   }, []);
 
   return (
@@ -51,7 +51,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchTopCoins: () => dispatch(startTopCoinsFetch())
+  fetchTopCoins: (limit) => dispatch(startTopCoinsFetch(limit))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopCoins);
