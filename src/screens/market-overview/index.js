@@ -25,7 +25,7 @@ const ListHeaderComponent = () => (
 const renderMarketItemSkeleton = ({ index }) => <Skeleton style={[STYLES.overviewItemSkeleton, { marginBottom: 6 }]} />;
 
 const renderMarketItem = ({ item, index }) => (
-  <OverviewItem item={item} key={item.id} containerStyle={{ marginBottom: 6 }} />
+  <OverviewItem item={item} key={item.id + index} containerStyle={{ marginBottom: 6 }} />
 );
 
 const MarketOverviewScreen = ({ markets, getMarkets, isLoading, isLoadingMore, perPage, getMoreMarkets, hasMore }) => {
