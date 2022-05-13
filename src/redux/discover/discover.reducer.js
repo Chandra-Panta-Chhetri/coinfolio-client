@@ -40,12 +40,22 @@ const discoverReducer = (prevState = INITIAL_STATE, action) => {
         hasMoreEvents: true,
         eventsPage: 1
       };
+    case DISCOVER_ACTION_TYPES.INITIAL_NEWS_FAIL:
+      return {
+        ...prevState,
+        isLoadingNews: false
+      };
     case DISCOVER_ACTION_TYPES.INITIAL_NEWS_SUCCESS:
       return {
         ...prevState,
         news: action.payload,
         isLoadingNews: false,
         newsPage: prevState.newsPage + 1
+      };
+    case DISCOVER_ACTION_TYPES.INITIAL_EVENTS_FAIL:
+      return {
+        ...prevState,
+        isLoadingEvents: false
       };
     case DISCOVER_ACTION_TYPES.INITIAL_EVENTS_SUCCESS:
       return {

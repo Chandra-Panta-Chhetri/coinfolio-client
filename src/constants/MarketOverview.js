@@ -6,7 +6,7 @@ const SORT_BY = {
     },
     {
       label: "24h Volume",
-      value: "volume"
+      value: "volumeUsd24Hr"
     },
     {
       label: "Name",
@@ -14,35 +14,15 @@ const SORT_BY = {
     },
     {
       label: "Market Cap",
-      value: "mcap"
+      value: "marketCapUsd"
     },
     {
       label: "Percent Change",
-      value: "percent"
+      value: "changePercent24Hr"
     },
     {
       label: "Price",
-      value: "price"
-    }
-  ],
-  get DEFAULT_FILTER() {
-    return this.FILTERS[0];
-  }
-};
-
-const LIMIT = {
-  FILTERS: [
-    {
-      label: "Full List",
-      value: "full"
-    },
-    {
-      label: "Top 50",
-      value: "top50"
-    },
-    {
-      label: "Top 100",
-      value: "top100"
+      value: "priceUsd"
     }
   ],
   get DEFAULT_FILTER() {
@@ -54,9 +34,9 @@ const SORT_ORDER = {
   FILTERS: [
     {
       label: "Asc",
-      value: "asc"
+      value: "ASC"
     },
-    { label: "Desc", value: "desc" }
+    { label: "Desc", value: "DESC" }
   ],
   get DEFAULT_FILTER() {
     return this.FILTERS[0];
@@ -74,11 +54,7 @@ const SHOW_ONLY = {
 };
 
 export default {
-  LIMIT,
   SORT_BY,
   SORT_ORDER,
-  SHOW_ONLY,
-  SPARK_LINE: {
-    MAX_NUM_POINTS_TO_SHOW: 30
-  }
+  SHOW_ONLY
 };

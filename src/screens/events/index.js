@@ -23,7 +23,7 @@ const renderEventItem = ({ item, index }) => <EventItem key={item.id.toString()}
 
 const EventsScreen = ({
   navigation,
-  fetchInitialEvents,
+  fetchEvents,
   events,
   isLoading,
   fetchMoreEvents,
@@ -38,7 +38,7 @@ const EventsScreen = ({
   });
 
   useEffect(() => {
-    fetchInitialEvents();
+    fetchEvents();
   }, []);
 
   return (
@@ -76,7 +76,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchInitialEvents: () => dispatch(startEventsFetch()),
+  fetchEvents: () => dispatch(startEventsFetch()),
   fetchMoreEvents: () => dispatch(startNextEventsFetch())
 });
 

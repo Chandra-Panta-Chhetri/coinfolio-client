@@ -29,7 +29,7 @@ const InfiniteScroll = ({
   const renderFooter = () =>
     hasMoreToFetch ? <ActivityIndicator style={STYLES.footer} animating={hasMoreToFetch} hidesWhenStopped /> : null;
 
-  if (isLoading) {
+  if (isLoading || data.length === 0) {
     return (
       <AnimatedFlatList
         data={dummySkeletonArray}

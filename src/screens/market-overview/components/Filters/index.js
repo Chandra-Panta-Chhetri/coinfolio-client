@@ -24,14 +24,6 @@ const Filters = ({ activeFilters, updateMarketFilters }) => (
       bottomSheetKey="sort-order-filter"
     />
     <BottomSheetFilter
-      filters={MARKET_OVERVIEW_CONSTANTS.LIMIT.FILTERS}
-      filterLabel={`Limit to ${activeFilters.limit.label}`}
-      filterStyles={STYLES.filterContainer}
-      activeFilter={activeFilters.limit}
-      onFilterSelect={(selectedVal) => updateMarketFilters({ limit: selectedVal })}
-      bottomSheetKey="limit-filter"
-    />
-    <BottomSheetFilter
       filters={MARKET_OVERVIEW_CONSTANTS.SHOW_ONLY.FILTERS}
       filterLabel={`Showing ${activeFilters.showOnly.label}`}
       activeFilter={activeFilters.showOnly}

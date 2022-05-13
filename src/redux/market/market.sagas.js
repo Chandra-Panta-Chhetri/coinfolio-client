@@ -1,5 +1,11 @@
 import { takeLatest, put, call, all, select } from "redux-saga/effects";
-import { noMoreMarkets, marketsFetchSuccess, marketsFetchFail } from "./market.actions";
+import {
+  noMoreMarkets,
+  marketsFetchSuccess,
+  marketsFetchFail,
+  moreMarketsSuccess,
+  moreMarketsFail
+} from "./market.actions";
 import MARKET_ACTION_TYPES from "./market.action.types";
 import {
   selectCurrentPage,
@@ -8,10 +14,30 @@ import {
   selectMarkets,
   selectHasMoreMarkets
 } from "./market.selectors";
-import dummydata from "../portfolio/dummydata.json";
-import { delayJS } from "../../utils";
+import { marketsAPI } from "../../api";
 
 function* fetchMarkets() {
+  try {
+    const filters = yield select(selectMarketFilters);
+    const perPage = yield select(selectMarketsPerPage);
+    const markets = yield marketsAPI.getMarkets({
+      sortBy: filters.sortBy.value,
+      sortOrder: filters.sortOrder.value,
+      perPage,
+      page: 1
+    });
+
+    if (markets.length === 0) {
+      return yield put(noMoreMarkets());
+    }
+
+    yield put(marketsFetchSuccess(markets));
+  } catch (err) {
+    yield put(marketsFetchFail("Error while fetching the markets"));
+  }
+}
+
+function* fetchMoreMarkets() {
   try {
     const hasMore = yield select(selectHasMoreMarkets);
     if (!hasMore) {
@@ -23,42 +49,31 @@ function* fetchMarkets() {
     const perPage = yield select(selectMarketsPerPage);
     const currentMarkets = yield select(selectMarkets);
 
-    let newMarkets = [
-      {
-        iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png",
-        rank: Math.floor(Math.random() * 500),
-        symbol: "BTC",
-        marketCap: 123032,
-        sparkLine: dummydata.data.prices.week,
-        price: 64000,
-        percentChange: 2.3
-      },
-      {
-        iconUrl: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
-        rank: Math.floor(Math.random() * 500),
-        symbol: "ETH",
-        marketCap: 23032,
-        sparkLine: dummydata.data.prices.week,
-        price: 4000,
-        percentChange: -5.2
-      }
-    ];
+    const newMarkets = yield marketsAPI.getMarkets({
+      sortBy: filters.sortBy.value,
+      sortOrder: filters.sortOrder.value,
+      perPage,
+      page: pageNum
+    });
 
     if (newMarkets.length === 0) {
       return yield put(noMoreMarkets());
     }
     const combinedMarkets = [...currentMarkets, ...newMarkets];
-    yield delayJS(3000);
-    yield put(marketsFetchSuccess(combinedMarkets));
+    yield put(moreMarketsSuccess(combinedMarkets));
   } catch (err) {
-    yield put(marketsFetchFail());
+    yield put(moreMarketsFail("Error while fetching more markets"));
   }
 }
 
 function* watchMarketsFetch() {
-  yield takeLatest([MARKET_ACTION_TYPES.UPDATE_FILTERS, MARKET_ACTION_TYPES.START_MARKETS_FETCH], fetchMarkets);
+  yield takeLatest([MARKET_ACTION_TYPES.UPDATE_FILTERS, MARKET_ACTION_TYPES.INITIAL_MARKETS_FETCH], fetchMarkets);
+}
+
+function* watchMoreMarketsFetch() {
+  yield takeLatest(MARKET_ACTION_TYPES.FETCH_MORE_MARKETS, fetchMoreMarkets);
 }
 
 export default function* marketSagas() {
-  yield all([call(watchMarketsFetch)]);
+  yield all([call(watchMarketsFetch), call(watchMoreMarketsFetch)]);
 }

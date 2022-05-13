@@ -1,11 +1,19 @@
 import React, { useEffect } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { Header, Filters, OverviewItem } from "./components";
 import { GLOBAL_STYLES } from "../../styles";
 import { useTheme } from "react-native-paper";
 import { connect } from "react-redux";
-import { selectIsFetchingMarkets, selectMarkets, startMarketsFetch, selectMarketsPerPage } from "../../redux/market";
-import { Skeleton } from "../../shared-components";
+import {
+  selectIsFetchingMarkets,
+  selectMarkets,
+  startMarketsFetch,
+  selectMarketsPerPage,
+  selectIsFetchingMoreMarkets,
+  startNextMarketsFetch,
+  selectHasMoreMarkets
+} from "../../redux/market";
+import { Skeleton, InfiniteScroll } from "../../shared-components";
 
 const ListHeaderComponent = () => (
   <>
@@ -14,45 +22,32 @@ const ListHeaderComponent = () => (
   </>
 );
 
-const MarketOverviewScreen = ({ markets = [], getMarkets, isLoadingMarkets, perPage }) => {
+const renderMarketItemSkeleton = ({ index }) => <Skeleton style={[STYLES.overviewItemSkeleton, { marginBottom: 6 }]} />;
+
+const renderMarketItem = ({ item, index }) => (
+  <OverviewItem item={item} key={item.id} containerStyle={{ marginBottom: 6 }} />
+);
+
+const MarketOverviewScreen = ({ markets, getMarkets, isLoading, isLoadingMore, perPage, getMoreMarkets, hasMore }) => {
   useEffect(() => {
     getMarkets();
   }, []);
 
   const { colors } = useTheme();
-  const DUMMY_SKELETON_ARRAY = Array(perPage).fill("1");
-
-  if (isLoadingMarkets) {
-    return (
-      <FlatList
-        ListHeaderComponent={ListHeaderComponent}
-        contentContainerStyle={GLOBAL_STYLES.screenContainer}
-        showsVerticalScrollIndicator={false}
-        data={DUMMY_SKELETON_ARRAY}
-        keyExtractor={(_, i) => i}
-        ListHeaderComponentStyle={[STYLES.listHeader, { backgroundColor: colors.background }]}
-        stickyHeaderIndices={[0]}
-        renderItem={({ _, index }) => (
-          <Skeleton
-            style={[STYLES.overviewItemSkeleton, { marginBottom: index !== DUMMY_SKELETON_ARRAY.length - 1 ? 6 : 0 }]}
-          />
-        )}
-      />
-    );
-  }
 
   return (
-    <FlatList
-      ListHeaderComponent={ListHeaderComponent}
-      contentContainerStyle={GLOBAL_STYLES.screenContainer}
-      showsVerticalScrollIndicator={false}
+    <InfiniteScroll
+      isLoading={isLoading}
+      isLoadingMore={isLoadingMore}
       data={markets}
-      keyExtractor={(m) => m.rank}
+      numSkeletons={perPage}
+      ListHeaderComponent={ListHeaderComponent}
+      onEndReached={getMoreMarkets}
+      hasMoreToFetch={hasMore}
       ListHeaderComponentStyle={[STYLES.listHeader, { backgroundColor: colors.background }]}
-      stickyHeaderIndices={[0]}
-      renderItem={({ item, index }) => (
-        <OverviewItem item={item} containerStyle={{ marginBottom: index !== markets.length - 1 ? 6 : 0 }} />
-      )}
+      renderDataItem={renderMarketItem}
+      renderSkeleton={renderMarketItemSkeleton}
+      contentContainerStyle={GLOBAL_STYLES.screenContainer}
     />
   );
 };
@@ -69,12 +64,15 @@ const STYLES = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   markets: selectMarkets(state),
-  isLoadingMarkets: selectIsFetchingMarkets(state),
-  perPage: selectMarketsPerPage(state)
+  isLoading: selectIsFetchingMarkets(state),
+  isLoadingMore: selectIsFetchingMoreMarkets(state),
+  perPage: selectMarketsPerPage(state),
+  hasMore: selectHasMoreMarkets(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getMarkets: () => dispatch(startMarketsFetch())
+  getMarkets: () => dispatch(startMarketsFetch()),
+  getMoreMarkets: () => dispatch(startNextMarketsFetch())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MarketOverviewScreen);

@@ -20,7 +20,7 @@ const BottomSheetFilter = ({
           <TouchableSelectOption
             label={f.label}
             onSelect={() => {
-              onFilterSelect && onFilterSelect(f);
+              f.value !== activeFilter.value && onFilterSelect && onFilterSelect(f);
               closeBottomSheet();
             }}
             isSelected={activeFilter.value === f.value}
