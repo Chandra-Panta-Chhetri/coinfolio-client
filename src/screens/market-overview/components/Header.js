@@ -23,8 +23,7 @@ const STYLES = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
-    ...GLOBAL_STYLES.componentContainer
+    alignItems: "center"
   }
 });
 

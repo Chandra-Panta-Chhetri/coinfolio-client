@@ -2,11 +2,12 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { IconImage } from "../../../shared-components";
 import { formatNumBasedOnSignWorklet, getStylesBasedOnSign } from "../../../utils";
-import { Text } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 
 const MarketOverviewItem = ({ item, containerStyle = {} }) => {
   const { changePercent24Hr, name, priceUsd, image, rank, marketCap } = item;
+  const { colors } = useTheme();
 
   return (
     <View style={[STYLES.container, containerStyle]}>
@@ -17,7 +18,7 @@ const MarketOverviewItem = ({ item, containerStyle = {} }) => {
       />
       <View style={STYLES.rankNamePercentChange}>
         <View style={STYLES.rankName}>
-          <Text style={STYLES.rank}>{rank}</Text>
+          <Text style={[STYLES.rank, { borderColor: colors.text }]}>{rank}</Text>
           <Text numberOfLines={1} style={TYPOGRAPHY.body2}>
             {name}
           </Text>
@@ -49,7 +50,6 @@ const STYLES = StyleSheet.create({
     paddingHorizontal: 5,
     marginRight: 4,
     textAlign: "center",
-    borderColor: "black",
     borderWidth: 1
   },
   priceMarketCap: {

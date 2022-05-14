@@ -22,13 +22,19 @@ const ListHeaderComponent = () => (
   </>
 );
 
-const renderMarketItemSkeleton = ({ index }) => <Skeleton style={[STYLES.overviewItemSkeleton, { marginBottom: 6 }]} />;
-
-const renderMarketItem = ({ item, index }) => (
-  <OverviewItem item={item} key={item.id + index} containerStyle={{ marginBottom: 6 }} />
-);
-
 const MarketOverviewScreen = ({ markets, getMarkets, isLoading, isLoadingMore, perPage, getMoreMarkets, hasMore }) => {
+  const renderMarketItemSkeleton = ({ index }) => (
+    <Skeleton style={[STYLES.overviewItemSkeleton, { marginBottom: index !== perPage - 1 ? 6 : 0 }]} />
+  );
+
+  const renderMarketItem = ({ item, index }) => (
+    <OverviewItem
+      item={item}
+      key={item.id + index}
+      containerStyle={{ marginBottom: index !== markets.length - 1 ? 6 : 0 }}
+    />
+  );
+
   useEffect(() => {
     getMarkets();
   }, []);
@@ -42,9 +48,7 @@ const MarketOverviewScreen = ({ markets, getMarkets, isLoading, isLoadingMore, p
       data={markets}
       numSkeletons={perPage}
       ListHeaderComponent={ListHeaderComponent}
-      onEndReached={() => {
-        console.log("here");
-      }}
+      onEndReached={getMoreMarkets}
       hasMoreToFetch={hasMore}
       ListHeaderComponentStyle={[STYLES.listHeader, { backgroundColor: colors.background }]}
       renderDataItem={renderMarketItem}
