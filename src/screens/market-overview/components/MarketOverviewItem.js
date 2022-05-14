@@ -6,7 +6,7 @@ import { Text } from "react-native-paper";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 
 const MarketOverviewItem = ({ item, containerStyle = {} }) => {
-  const { changePercent24Hr, name, priceUsd, symbol, image, rank, marketCap } = item;
+  const { changePercent24Hr, name, priceUsd, image, rank, marketCap } = item;
 
   return (
     <View style={[STYLES.container, containerStyle]}>
@@ -15,21 +15,21 @@ const MarketOverviewItem = ({ item, containerStyle = {} }) => {
           uri: image
         }}
       />
-      <View style={STYLES.rankSymbolMarketCap}>
-        <View style={STYLES.rankSymbol}>
-          <Text style={[STYLES.rank, TYPOGRAPHY.body1]}>{rank}</Text>
+      <View style={STYLES.rankNamePercentChange}>
+        <View style={STYLES.rankName}>
+          <Text style={STYLES.rank}>{rank}</Text>
           <Text numberOfLines={1} style={TYPOGRAPHY.body2}>
-            {symbol}
+            {name}
           </Text>
         </View>
-        <Text numberOfLines={1} style={TYPOGRAPHY.body1}>
-          MCap - {marketCap}
-        </Text>
-      </View>
-      <View style={STYLES.pricePercent}>
-        <Text style={TYPOGRAPHY.body2}>${priceUsd}</Text>
         <Text style={[getStylesBasedOnSign(changePercent24Hr), TYPOGRAPHY.body1]}>
           {formatNumBasedOnSignWorklet(changePercent24Hr)}%
+        </Text>
+      </View>
+      <View style={STYLES.priceMarketCap}>
+        <Text style={TYPOGRAPHY.body2}>${priceUsd}</Text>
+        <Text numberOfLines={1} style={TYPOGRAPHY.body1}>
+          MCap {marketCap}
         </Text>
       </View>
     </View>
@@ -39,27 +39,22 @@ const MarketOverviewItem = ({ item, containerStyle = {} }) => {
 const STYLES = StyleSheet.create({
   container: {
     flexDirection: "row",
-    alignItems: "center",
     flex: 1
   },
-  rankSymbolMarketCap: { flex: 1, marginLeft: 5 },
-  rankSymbol: { flexDirection: "row", alignItems: "center" },
+  rankNamePercentChange: { flex: 0.7, marginLeft: 5 },
+  rankName: { flexDirection: "row", alignItems: "center" },
   rank: {
+    ...TYPOGRAPHY.caption,
     ...GLOBAL_STYLES.borderRadius,
-    borderWidth: 1,
-    padding: 3,
-    marginRight: 5,
+    paddingHorizontal: 5,
+    marginRight: 4,
     textAlign: "center",
-    borderColor: "grey"
+    borderColor: "black",
+    borderWidth: 1
   },
-  sparkline: {
-    height: "100%",
-    flex: 1,
-    width: "100%"
-  },
-  pricePercent: {
+  priceMarketCap: {
     alignItems: "flex-end",
-    flex: 0.6
+    flex: 1
   }
 });
 
