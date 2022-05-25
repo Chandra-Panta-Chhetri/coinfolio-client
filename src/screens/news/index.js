@@ -25,7 +25,7 @@ const NewsScreen = ({ isLoading, news, fetchInitialNews, fetchMoreNews, isLoadin
   const [newsFilterIndex, setNewsFilterIndex] = useState(NEWS_CONSTANTS.DEFAULT_FILTER_INDEX);
 
   useEffect(() => {
-    fetchInitialNews();
+    //fetchInitialNews();
   }, []);
 
   const onFilterSelect = (selectedVal, selectedIndex) => {

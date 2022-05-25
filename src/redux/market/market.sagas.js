@@ -4,7 +4,13 @@ import {
   marketsFetchSuccess,
   marketsFetchFail,
   moreMarketsSuccess,
-  moreMarketsFail
+  moreMarketsFail,
+  trendingSearchesSuccess,
+  trendingSearchesFail,
+  recentSearchesFail,
+  recentSearchesSuccess,
+  searchResultsFail,
+  searchResultsSuccess
 } from "./market.actions";
 import MARKET_ACTION_TYPES from "./market.action.types";
 import {
@@ -66,6 +72,82 @@ function* fetchMoreMarkets() {
   }
 }
 
+function* fetchTrendingSearches() {
+  try {
+    const searches = [
+      {
+        image: "https://coincap.io/static/logo_mark.png",
+        name: "Bitcoin",
+        id: "bitcoin",
+        symbol: "BTC"
+      },
+      {
+        image: "https://coincap.io/static/logo_mark.png",
+        name: "Ethereum",
+        id: "ethereum",
+        symbol: "ETH"
+      }
+    ];
+    yield new Promise((res, rej) =>
+      setTimeout(() => {
+        res();
+      }, 5000)
+    );
+    yield put(trendingSearchesSuccess(searches));
+  } catch (err) {
+    yield put(trendingSearchesFail("Error while fetching trending searches"));
+  }
+}
+
+function* fetchRecentSearches() {
+  try {
+    const searches = [
+      {
+        image: "https://coincap.io/static/logo_mark.png",
+        name: "Bitcoin",
+        id: "bitcoin",
+        symbol: "BTC"
+      },
+      {
+        image: "https://coincap.io/static/logo_mark.png",
+        name: "Ethereum",
+        id: "ethereum",
+        symbol: "ETH"
+      }
+    ];
+    yield new Promise((res, rej) =>
+      setTimeout(() => {
+        res();
+      }, 5000)
+    );
+    yield put(recentSearchesSuccess(searches));
+  } catch (err) {
+    yield put(recentSearchesFail("Error while fetching recent searches"));
+  }
+}
+
+function* fetchSearchResults() {
+  try {
+    const searches = [
+      {
+        image: "https://coincap.io/static/logo_mark.png",
+        name: "Bitcoin",
+        id: "bitcoin",
+        symbol: "BTC"
+      },
+      {
+        image: "https://coincap.io/static/logo_mark.png",
+        name: "Ethereum",
+        id: "ethereum",
+        symbol: "ETH"
+      }
+    ];
+    yield put(searchResultsSuccess(searches));
+  } catch (err) {
+    yield put(searchResultsFail("Error while fetching search results"));
+  }
+}
+
 function* watchMarketsFetch() {
   yield takeLatest([MARKET_ACTION_TYPES.UPDATE_FILTERS, MARKET_ACTION_TYPES.INITIAL_MARKETS_FETCH], fetchMarkets);
 }
@@ -74,6 +156,24 @@ function* watchMoreMarketsFetch() {
   yield takeLatest(MARKET_ACTION_TYPES.FETCH_MORE_MARKETS, fetchMoreMarkets);
 }
 
+function* watchTrendingSearchesFetch() {
+  yield takeLatest(MARKET_ACTION_TYPES.FETCH_TRENDING_SEARCHES, fetchTrendingSearches);
+}
+
+function* watchRecentSearchesFetch() {
+  yield takeLatest(MARKET_ACTION_TYPES.FETCH_RECENT_SEARCHES, fetchRecentSearches);
+}
+
+function* watchSearchResultsFetch() {
+  yield takeLatest(MARKET_ACTION_TYPES.FETCH_SEARCH_RESULTS, fetchSearchResults);
+}
+
 export default function* marketSagas() {
-  yield all([call(watchMarketsFetch), call(watchMoreMarketsFetch)]);
+  yield all([
+    call(watchMarketsFetch),
+    call(watchMoreMarketsFetch),
+    call(watchTrendingSearchesFetch),
+    call(watchRecentSearchesFetch),
+    call(watchSearchResultsFetch)
+  ]);
 }

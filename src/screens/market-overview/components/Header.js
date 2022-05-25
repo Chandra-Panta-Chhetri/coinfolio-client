@@ -12,9 +12,7 @@ const Header = () => {
   return (
     <View style={STYLES.container}>
       <Text style={TYPOGRAPHY.display1}>Markets</Text>
-      <View>
-        <SearchIconButton onPress={goToSearchScreen} />
-      </View>
+      <SearchIconButton onPress={goToSearchScreen} />
     </View>
   );
 };

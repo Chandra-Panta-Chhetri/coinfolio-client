@@ -36,7 +36,7 @@ const MarketOverviewScreen = ({ markets, getMarkets, isLoading, isLoadingMore, p
   );
 
   useEffect(() => {
-    getMarkets();
+    //getMarkets();
   }, []);
 
   const { colors } = useTheme();

@@ -36,3 +36,46 @@ export const moreMarketsSuccess = (markets) => ({
 export const noMoreMarkets = () => ({
   type: MARKET_ACTION_TYPES.NO_MORE_MARKETS
 });
+
+export const startTrendingSearchesFetch = () => ({
+  type: MARKET_ACTION_TYPES.FETCH_TRENDING_SEARCHES
+});
+
+export const trendingSearchesFail = (errorMsg) => ({
+  type: MARKET_ACTION_TYPES.FETCH_TRENDING_FAIL,
+  payload: errorMsg
+});
+
+export const trendingSearchesSuccess = (searches) => ({
+  type: MARKET_ACTION_TYPES.FETCH_TRENDING_SUCCESS,
+  payload: searches
+});
+
+export const startRecentSearchesFetch = () => ({
+  type: MARKET_ACTION_TYPES.FETCH_RECENT_SEARCHES
+});
+
+export const recentSearchesFail = (errorMsg) => ({
+  type: MARKET_ACTION_TYPES.FETCH_RECENT_SEARCHES_FAIL,
+  payload: errorMsg
+});
+
+export const recentSearchesSuccess = (searches) => ({
+  type: MARKET_ACTION_TYPES.FETCH_RECENT_SEARCHES_SUCCESS,
+  payload: searches
+});
+
+export const startSearchResultsFetch = (keyword) => ({
+  type: MARKET_ACTION_TYPES.FETCH_SEARCH_RESULTS,
+  payload: keyword
+});
+
+export const searchResultsFail = (errorMsg) => ({
+  type: MARKET_ACTION_TYPES.FETCH_SEARCH_RESULTS_FAIL,
+  payload: errorMsg
+});
+
+export const searchResultsSuccess = (searches) => ({
+  type: MARKET_ACTION_TYPES.FETCH_SEARCH_RESULTS_SUCCESS,
+  payload: searches
+});

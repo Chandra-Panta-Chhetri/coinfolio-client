@@ -38,7 +38,7 @@ const EventsScreen = ({
   });
 
   useEffect(() => {
-    fetchEvents();
+    //fetchEvents();
   }, []);
 
   return (

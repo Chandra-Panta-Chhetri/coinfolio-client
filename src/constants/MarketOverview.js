@@ -53,8 +53,11 @@ const SHOW_ONLY = {
   }
 };
 
+const NUM_SEARCH_RESULT_SKELETONS = 4;
+
 export default {
   SORT_BY,
   SORT_ORDER,
-  SHOW_ONLY
+  SHOW_ONLY,
+  NUM_SEARCH_RESULT_SKELETONS
 };

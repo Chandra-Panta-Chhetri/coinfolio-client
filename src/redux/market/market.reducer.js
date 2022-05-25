@@ -12,7 +12,13 @@ const INITIAL_STATE = {
     sortBy: MARKET_OVERVIEW_CONSTANTS.SORT_BY.DEFAULT_FILTER,
     sortOrder: MARKET_OVERVIEW_CONSTANTS.SORT_ORDER.DEFAULT_FILTER,
     showOnly: MARKET_OVERVIEW_CONSTANTS.SHOW_ONLY.DEFAULT_FILTER
-  }
+  },
+  trendingSearches: [],
+  recentSearches: [],
+  searchResults: [],
+  isLoadingSearchResults: false,
+  isLoadingTrendingSearches: true,
+  isLoadingRecentSearches: true
 };
 
 const marketReducer = (prevState = INITIAL_STATE, action) => {
@@ -70,6 +76,54 @@ const marketReducer = (prevState = INITIAL_STATE, action) => {
         isLoadingMoreMarkets: false,
         markets: action.payload,
         pageNum: prevState.pageNum + 1
+      };
+    case MARKET_ACTION_TYPES.FETCH_TRENDING_SEARCHES:
+      return {
+        ...prevState,
+        isLoadingTrendingSearches: true
+      };
+    case MARKET_ACTION_TYPES.FETCH_TRENDING_SUCCESS:
+      return {
+        ...prevState,
+        trendingSearches: action.payload,
+        isLoadingTrendingSearches: false
+      };
+    case MARKET_ACTION_TYPES.FETCH_TRENDING_FAIL:
+      return {
+        ...prevState,
+        isLoadingTrendingSearches: false
+      };
+    case MARKET_ACTION_TYPES.FETCH_RECENT_SEARCHES:
+      return {
+        ...prevState,
+        isLoadingRecentSearches: true
+      };
+    case MARKET_ACTION_TYPES.FETCH_RECENT_SEARCHES_FAIL:
+      return {
+        ...prevState,
+        isLoadingRecentSearches: false
+      };
+    case MARKET_ACTION_TYPES.FETCH_RECENT_SEARCHES_SUCCESS:
+      return {
+        ...prevState,
+        recentSearches: action.payload,
+        isLoadingRecentSearches: false
+      };
+    case MARKET_ACTION_TYPES.FETCH_SEARCH_RESULTS:
+      return {
+        ...prevState,
+        isLoadingSearchResults: true
+      };
+    case MARKET_ACTION_TYPES.FETCH_SEARCH_RESULTS_FAIL:
+      return {
+        ...prevState,
+        isLoadingSearchResults: false
+      };
+    case MARKET_ACTION_TYPES.FETCH_SEARCH_RESULTS_SUCCESS:
+      return {
+        ...prevState,
+        searchResults: action.payload,
+        isLoadingSearchResults: false
       };
     default:
       return prevState;

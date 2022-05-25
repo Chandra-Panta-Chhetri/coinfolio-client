@@ -15,8 +15,8 @@ export default StyleSheet.create({
     borderBottomWidth: 0.4
   },
   iconSize: {
-    width: GLOBAL_CONSTANTS.AVATAR_IMAGE_SIZE,
-    height: GLOBAL_CONSTANTS.AVATAR_IMAGE_SIZE
+    width: GLOBAL_CONSTANTS.ICON_SIZE,
+    height: GLOBAL_CONSTANTS.ICON_SIZE
   },
   iconRoundness: {
     borderRadius: 30
