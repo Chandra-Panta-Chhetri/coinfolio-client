@@ -126,22 +126,9 @@ function* fetchRecentSearches() {
   }
 }
 
-function* fetchSearchResults() {
+function* fetchSearchResults({ payload: keyword }) {
   try {
-    const searches = [
-      {
-        image: "https://coincap.io/static/logo_mark.png",
-        name: "Bitcoin",
-        id: "bitcoin",
-        symbol: "BTC"
-      },
-      {
-        image: "https://coincap.io/static/logo_mark.png",
-        name: "Ethereum",
-        id: "ethereum",
-        symbol: "ETH"
-      }
-    ];
+    const searches = yield marketsAPI.getCoinsByKeyword(keyword);
     yield put(searchResultsSuccess(searches));
   } catch (err) {
     yield put(searchResultsFail("Error while fetching search results"));

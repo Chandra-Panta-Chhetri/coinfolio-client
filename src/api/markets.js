@@ -19,3 +19,8 @@ export const getMarkets = async (query = {}) => {
   const res = await axios.get("/markets", { params: query });
   return res.data.data;
 };
+
+export const getCoinsByKeyword = async (keyword = "") => {
+  const res = await axios.get("/markets/search", { params: { search: keyword } });
+  return res.data.data;
+};

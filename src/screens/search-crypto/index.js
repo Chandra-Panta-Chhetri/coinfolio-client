@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { CloseIconButton, InfiniteScroll, Skeleton } from "../../shared-components";
@@ -17,6 +17,7 @@ import {
   selectIsLoadingSearchResults
 } from "../../redux/market";
 import { MARKET_OVERVIEW_CONSTANTS } from "../../constants";
+import { debounce } from "lodash";
 
 const renderSearchResult = ({ item, index }) => <Text>Search Result</Text>;
 
@@ -31,6 +32,60 @@ const renderSearchSkeleton = ({ index }) => (
   />
 );
 
+const ListHeaderComponent = ({
+  navigation,
+  searchByKeyword,
+  trendingSearches,
+  recentSearches,
+  isLoadingTrendingSearches,
+  isLoadingRecentSearches
+}) => {
+  const [keyword, setKeyword] = useState("");
+  const closeScreen = () => navigation.navigate("MarketOverview");
+
+  const clearRecentSearches = () => {};
+
+  const search = useCallback(
+    debounce((searchTerm) => {
+      searchByKeyword(searchTerm);
+    }, 500),
+    []
+  );
+
+  const onKeywordChange = (text) => {
+    setKeyword(text);
+    search(text);
+  };
+
+  return (
+    <>
+      <View style={STYLES.container}>
+        <Text style={STYLES.heading}>Search</Text>
+        <CloseIconButton onPress={closeScreen} />
+      </View>
+      <TextInput
+        style={STYLES.searchBar}
+        placeholder="BTC/Bitcoin"
+        mode="outlined"
+        value={keyword}
+        onChangeText={onKeywordChange}
+      />
+      {keyword === "" && (
+        <SearchCategory label="Trending" searches={trendingSearches} isLoading={isLoadingTrendingSearches} />
+      )}
+      {keyword === "" && (
+        <SearchCategory
+          label="History"
+          searches={recentSearches}
+          onHeadingClick={clearRecentSearches}
+          headingBtnLabel="Clear"
+          isLoading={isLoadingRecentSearches}
+        />
+      )}
+    </>
+  );
+};
+
 const SearchCryptoScreen = ({
   navigation,
   trendingSearches,
@@ -43,37 +98,10 @@ const SearchCryptoScreen = ({
   isLoadingRecentSearches,
   isLoadingSearchResults
 }) => {
-  const [keyword, setKeyword] = useState(null);
-  const closeScreen = () => navigation.navigate("MarketOverview");
-
   useEffect(() => {
     getTrendingSearches();
     getRecentSearches();
   }, []);
-
-  const clearRecentSearches = () => {};
-
-  const ListHeaderComponent = () => (
-    <>
-      <View style={STYLES.container}>
-        <Text style={STYLES.heading}>Search</Text>
-        <CloseIconButton onPress={closeScreen} />
-      </View>
-      <TextInput style={STYLES.searchBar} placeholder="BTC/Bitcoin" mode="outlined" />
-      {!isLoadingSearchResults && (
-        <SearchCategory label="Trending" searches={trendingSearches} isLoading={isLoadingTrendingSearches} />
-      )}
-      {!isLoadingSearchResults && (
-        <SearchCategory
-          label="History"
-          searches={recentSearches}
-          onHeadingClick={clearRecentSearches}
-          headingBtnLabel="Clear"
-          isLoading={isLoadingRecentSearches}
-        />
-      )}
-    </>
-  );
 
   return (
     <InfiniteScroll
@@ -83,7 +111,16 @@ const SearchCryptoScreen = ({
       numSkeletons={MARKET_OVERVIEW_CONSTANTS.NUM_SEARCH_RESULT_SKELETONS}
       hasMoreToFetch={false}
       contentContainerStyle={GLOBAL_STYLES.screenContainer}
-      ListHeaderComponent={ListHeaderComponent}
+      ListHeaderComponent={
+        <ListHeaderComponent
+          isLoadingRecentSearches={isLoadingRecentSearches}
+          isLoadingTrendingSearches={isLoadingTrendingSearches}
+          navigation={navigation}
+          recentSearches={recentSearches}
+          searchByKeyword={searchByKeyword}
+          trendingSearches={trendingSearches}
+        />
+      }
       renderDataItem={renderSearchResult}
       renderSkeleton={renderSearchSkeleton}
     />
