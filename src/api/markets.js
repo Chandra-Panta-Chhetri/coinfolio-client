@@ -20,7 +20,10 @@ export const getMarkets = async (query = {}) => {
   return res.data.data;
 };
 
-export const getCoinsByKeyword = async (keyword = "") => {
+export const getCoinsByKeyword = async (keyword) => {
+  if (keyword === "") {
+    return [];
+  }
   const res = await axios.get("/markets/search", { params: { search: keyword } });
   return res.data.data;
 };

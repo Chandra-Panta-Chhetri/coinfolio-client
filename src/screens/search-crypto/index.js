@@ -4,7 +4,7 @@ import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { CloseIconButton, InfiniteScroll, Skeleton } from "../../shared-components";
 import { Text, TextInput } from "react-native-paper";
 import { connect } from "react-redux";
-import { SearchCategory } from "./components";
+import { SearchCategory, SearchItem } from "./components";
 import {
   selectTrendingSearches,
   selectRecentSearches,
@@ -19,7 +19,7 @@ import {
 import { MARKET_OVERVIEW_CONSTANTS } from "../../constants";
 import { debounce } from "lodash";
 
-const renderSearchResult = ({ item, index }) => <Text>Search Result</Text>;
+const renderSearchResult = ({ item, index }) => <SearchItem search={item} key={item.id} />;
 
 const renderSearchSkeleton = ({ index }) => (
   <Skeleton
