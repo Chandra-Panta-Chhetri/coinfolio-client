@@ -3,12 +3,13 @@ import { StyleSheet, View } from "react-native";
 import { TYPOGRAPHY } from "../../../styles";
 import { IconImage, TouchableNativeFeedback } from "../../../shared-components";
 import { Text } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
-const SearchItem = ({ navigation, search, containerStyles = {} }) => {
+const SearchItem = ({ search, containerStyles = {} }) => {
+  const navigation = useNavigation();
   const { image, name, symbol } = search;
-  const onClick = () => {
-    //navigation.navigate("")
-  };
+
+  const onClick = () => navigation.navigate("AssetDetail", {});
 
   return (
     <TouchableNativeFeedback onPress={onClick}>

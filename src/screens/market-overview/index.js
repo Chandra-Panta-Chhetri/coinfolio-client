@@ -26,7 +26,7 @@ const renderItem = ({ item, index }) => <OverviewItem item={item} key={item.id +
 
 const MarketOverviewScreen = ({ markets, getMarkets, isLoading, isLoadingMore, perPage, getMoreMarkets, hasMore }) => {
   useEffect(() => {
-    // getMarkets();
+    getMarkets();
   }, []);
 
   const { colors } = useTheme();

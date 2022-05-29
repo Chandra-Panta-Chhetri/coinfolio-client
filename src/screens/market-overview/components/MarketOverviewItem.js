@@ -11,7 +11,7 @@ const MarketOverviewItem = ({ item }) => {
   const { colors } = useTheme();
   const navigation = useNavigation();
 
-  const onClick = () => navigation.navigate("", {});
+  const onClick = () => navigation.navigate("AssetDetail", {});
 
   return (
     <TouchableNativeFeedback onPress={onClick}>

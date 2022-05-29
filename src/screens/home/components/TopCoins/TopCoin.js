@@ -10,7 +10,9 @@ const TopCoin = ({ item: coin }) => {
   const navigation = useNavigation();
   const { symbol, priceUsd, changePercent24Hr, image } = coin;
 
-  const onPress = () => {};
+  const onPress = () => {
+    navigation.navigate("AssetDetail", {});
+  };
 
   return (
     <TouchableNativeFeedback viewContainerStyle={STYLES.androidContainer} onPress={onPress}>
