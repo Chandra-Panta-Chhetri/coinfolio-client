@@ -20,7 +20,7 @@ const TopCoins = ({ coins, isLoading, fetchTopCoins }) => {
   }, []);
 
   return (
-    <View style={GLOBAL_STYLES.componentContainer}>
+    <View style={GLOBAL_STYLES.lgMarginBottom}>
       <HeadingWithSeeAll title="Top Coins" onSeeAllPress={toMarketScreen} />
       {isLoading || coins.length === 0 ? (
         <FlatList

@@ -39,7 +39,7 @@ const SelectEventFiltersScreen = ({ fetchEvents, updateEventFilters, navigation,
   return (
     <View style={[GLOBAL_STYLES.screenContainer, STYLES.flex]}>
       <View style={STYLES.flex}>
-        <View style={GLOBAL_STYLES.componentContainer}>
+        <View style={GLOBAL_STYLES.lgMarginBottom}>
           <Text style={STYLES.filterLabel}>Date range</Text>
           <DatePicker
             onConfirm={onDateRangeConfirm}
@@ -84,7 +84,7 @@ const STYLES = StyleSheet.create({
     flex: 1
   },
   filterLabel: {
-    marginBottom: 5,
+    ...GLOBAL_STYLES.smMarginBottom,
     ...TYPOGRAPHY.subheading
   },
   buttonContainer: {

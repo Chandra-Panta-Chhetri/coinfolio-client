@@ -32,7 +32,7 @@ const SearchCategory = ({ label, searches, onHeadingClick, headingBtnLabel, isLo
                 style={[
                   STYLES.searchResultSkeleton,
                   {
-                    marginBottom: i !== DUMMY_SKELETON_ARRAY.length - 1 ? 6 : 0
+                    marginBottom: i !== DUMMY_SKELETON_ARRAY.length - 1 ? GLOBAL_STYLES.smMarginBottom.marginBottom : 0
                   }
                 ]}
               />
@@ -45,7 +45,7 @@ const SearchCategory = ({ label, searches, onHeadingClick, headingBtnLabel, isLo
 const STYLES = StyleSheet.create({
   container: {},
   header: {
-    ...GLOBAL_STYLES.componentContainer,
+    ...GLOBAL_STYLES.lgMarginBottom,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"

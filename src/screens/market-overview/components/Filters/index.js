@@ -4,6 +4,7 @@ import BottomSheetFilter from "./BottomSheetFilter";
 import { MARKET_OVERVIEW_CONSTANTS } from "../../../../constants";
 import { connect } from "react-redux";
 import { selectMarketFilters, updateFilters } from "../../../../redux/market";
+import { GLOBAL_STYLES } from "../../../../styles";
 
 const Filters = ({ activeFilters, updateMarketFilters }) => (
   <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={STYLES.container}>
@@ -36,8 +37,8 @@ const Filters = ({ activeFilters, updateMarketFilters }) => (
 
 const STYLES = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    marginBottom: 5
+    ...GLOBAL_STYLES.smMarginBottom,
+    flexGrow: 1
   },
   filterContainer: { marginRight: 10, flexGrow: 1 },
   flexGrow: {

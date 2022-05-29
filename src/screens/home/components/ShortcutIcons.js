@@ -54,7 +54,7 @@ const ShortcutIcons = () => (
 
 const STYLES = StyleSheet.create({
   container: {
-    ...GLOBAL_STYLES.componentContainer,
+    ...GLOBAL_STYLES.lgMarginBottom,
     justifyContent: "space-between",
     flex: 1
   },

@@ -1,5 +1,5 @@
 import React from "react";
-import { FilterBadge, TouchableSelectOption } from "../../../../shared-components";
+import { Badge, TouchableOption } from "../../../../shared-components";
 import { useBottomSheet } from "../../../../hooks";
 
 const BottomSheetFilter = ({
@@ -7,17 +7,17 @@ const BottomSheetFilter = ({
   filterStyles = {},
   onFilterSelect,
   activeFilter = {},
-  filterLabel = "",
-  bottomSheetKey = ""
+  filterLabel,
+  bottomSheetKey
 }) => {
   const { openBottomSheet, BottomSheet, closeBottomSheet } = useBottomSheet({ name: bottomSheetKey });
 
   return (
     <>
-      <FilterBadge label={filterLabel} onPress={openBottomSheet} containerStyle={filterStyles} />
+      <Badge label={filterLabel} onPress={openBottomSheet} containerStyle={filterStyles} />
       <BottomSheet>
         {filters.map((f) => (
-          <TouchableSelectOption
+          <TouchableOption
             label={f.label}
             onSelect={() => {
               f.value !== activeFilter.value && onFilterSelect && onFilterSelect(f);

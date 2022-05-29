@@ -72,7 +72,7 @@ const PieChart = ({
   if (width === 0 && height === 0) {
     return (
       <View onLayout={onLayout} style={pieChartStyle}>
-        <Skeleton style={GLOBAL_STYLES.fullContainerDimension} />
+        <Skeleton style={GLOBAL_STYLES.fullContainer} />
       </View>
     );
   }

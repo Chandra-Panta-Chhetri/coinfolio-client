@@ -15,31 +15,30 @@ import {
 } from "../../redux/market";
 import { Skeleton, InfiniteScroll } from "../../shared-components";
 
-const ListHeaderComponent = () => (
+const ListHeader = () => (
   <>
     <Header />
     <Filters />
   </>
 );
 
+const renderItem = ({ item, index }) => <OverviewItem item={item} key={item.id + index} />;
+
 const MarketOverviewScreen = ({ markets, getMarkets, isLoading, isLoadingMore, perPage, getMoreMarkets, hasMore }) => {
-  const renderMarketItemSkeleton = ({ index }) => (
-    <Skeleton style={[STYLES.overviewItemSkeleton, { marginBottom: index !== perPage - 1 ? 6 : 0 }]} />
-  );
-
-  const renderMarketItem = ({ item, index }) => (
-    <OverviewItem
-      item={item}
-      key={item.id + index}
-      containerStyle={{ marginBottom: index !== markets.length - 1 ? 6 : 0 }}
-    />
-  );
-
   useEffect(() => {
-    //getMarkets();
+    // getMarkets();
   }, []);
 
   const { colors } = useTheme();
+
+  const renderSkeleton = ({ index }) => (
+    <Skeleton
+      style={[
+        STYLES.itemSkeleton,
+        { marginBottom: index !== perPage - 1 ? GLOBAL_STYLES.smMarginBottom.marginBottom : 0 }
+      ]}
+    />
+  );
 
   return (
     <InfiniteScroll
@@ -47,12 +46,12 @@ const MarketOverviewScreen = ({ markets, getMarkets, isLoading, isLoadingMore, p
       isLoadingMore={isLoadingMore}
       data={markets}
       numSkeletons={perPage}
-      ListHeaderComponent={ListHeaderComponent}
+      ListHeaderComponent={ListHeader}
       onEndReached={getMoreMarkets}
       hasMoreToFetch={hasMore}
       ListHeaderComponentStyle={[STYLES.listHeader, { backgroundColor: colors.background }]}
-      renderDataItem={renderMarketItem}
-      renderSkeleton={renderMarketItemSkeleton}
+      renderDataItem={renderItem}
+      renderSkeleton={renderSkeleton}
       contentContainerStyle={GLOBAL_STYLES.screenContainer}
     />
   );
@@ -60,9 +59,9 @@ const MarketOverviewScreen = ({ markets, getMarkets, isLoading, isLoadingMore, p
 
 const STYLES = StyleSheet.create({
   listHeader: {
-    marginBottom: 10
+    ...GLOBAL_STYLES.mdMarginBottom
   },
-  overviewItemSkeleton: {
+  itemSkeleton: {
     width: "100%",
     height: 60
   }

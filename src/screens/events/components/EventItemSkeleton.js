@@ -36,10 +36,10 @@ const STYLES = StyleSheet.create({
     ...GLOBAL_STYLES.borderRadius
   },
   date: {
+    ...GLOBAL_STYLES.smMarginBottom,
+    ...GLOBAL_STYLES.borderRadius,
     height: 15,
-    width: "30%",
-    marginBottom: 5,
-    ...GLOBAL_STYLES.borderRadius
+    width: "30%"
   },
   iconCoinLabel: {
     flexDirection: "row",

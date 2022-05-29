@@ -50,7 +50,7 @@ const STYLES = StyleSheet.create({
   signUpBtn: {
     marginVertical: 10
   },
-  animationContainer: { alignItems: "center", marginBottom: 10 },
+  animationContainer: { ...GLOBAL_STYLES.mdMarginBottom, alignItems: "center" },
   animation: {
     width: "100%",
     height: 270

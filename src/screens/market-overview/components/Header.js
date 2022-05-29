@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { Text } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { SearchIconButton } from "../../../shared-components";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
+import { TYPOGRAPHY } from "../../../styles";
 
 const Header = () => {
   const navigation = useNavigation();

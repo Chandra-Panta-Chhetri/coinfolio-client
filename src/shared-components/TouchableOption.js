@@ -5,7 +5,7 @@ import { useTheme, Text } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import { TYPOGRAPHY } from "../styles";
 
-const TouchableSelectOption = ({ isSelected = false, onSelect, label = "" }) => {
+const TouchableOption = ({ isSelected = false, onSelect, label }) => {
   const { colors } = useTheme();
 
   return (
@@ -27,4 +27,4 @@ const STYLES = StyleSheet.create({
   }
 });
 
-export default TouchableSelectOption;
+export default TouchableOption;

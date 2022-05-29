@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 import { Card, Text, useTheme } from "react-native-paper";
-import { TouchableNativeFeedback, Badge, IconImage } from "../../../shared-components";
+import { TouchableNativeFeedback, Chip, IconImage } from "../../../shared-components";
 import { useNavigation } from "@react-navigation/native";
 
 const EventDetail = ({ event, index }) => {
@@ -29,7 +29,7 @@ const EventDetail = ({ event, index }) => {
                   {event.coins.length > 1 ? ` + ${event.coins.length - 1}` : ""}
                 </Text>
               </View>
-              <Badge label={event.category} containerStyle={STYLES.category} />
+              <Chip label={event.category} containerStyle={STYLES.category} />
             </View>
           </View>
           <View style={STYLES.infoContainer}>

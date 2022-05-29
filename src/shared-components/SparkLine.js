@@ -9,7 +9,7 @@ import { buildSparkLine } from "../utils";
 
 const sparkLinePath = ({
   data = {},
-  chartStyle = GLOBAL_STYLES.fullContainerDimension,
+  chartStyle = GLOBAL_STYLES.fullContainer,
   svgConfig = LINE_CHART_CONSTANTS.SVG_LINE_CONFIG,
   isPositive = false,
   xValueAccessor = LINE_CHART_CONSTANTS.DEFAULT_ACCESSOR_FUNC,
@@ -40,7 +40,7 @@ const sparkLinePath = ({
   if ((width === 0 && height === 0) || !sparkLinePath.current) {
     return (
       <View onLayout={onLayout} style={chartStyle}>
-        <Skeleton style={GLOBAL_STYLES.fullContainerDimension} />
+        <Skeleton style={GLOBAL_STYLES.fullContainer} />
       </View>
     );
   }

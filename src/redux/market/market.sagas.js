@@ -65,6 +65,7 @@ function* fetchMoreMarkets() {
     if (newMarkets.length === 0) {
       return yield put(noMoreMarkets());
     }
+
     const combinedMarkets = [...currentMarkets, ...newMarkets];
     yield put(moreMarketsSuccess(combinedMarkets));
   } catch (err) {

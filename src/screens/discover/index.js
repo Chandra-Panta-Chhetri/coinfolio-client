@@ -4,7 +4,7 @@ import EventsScreen from "../events";
 import NewsScreen from "../news";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { View, StyleSheet } from "react-native";
-import { Badge } from "../../shared-components";
+import { Chip } from "../../shared-components";
 import { Ionicons } from "@expo/vector-icons";
 import { GLOBAL_CONSTANTS } from "../../constants";
 import { Text } from "react-native-paper";
@@ -52,7 +52,7 @@ const BadgeTabBar = ({ state, descriptors, navigation }) => {
         }
 
         return (
-          <Badge
+          <Chip
             containerStyle={tabContainerStyle}
             key={i}
             accessibilityRole="button"
@@ -61,7 +61,7 @@ const BadgeTabBar = ({ state, descriptors, navigation }) => {
             accessibilityLabel={options.tabBarAccessibilityLabel}
             label={label}
             isHighlighted={isFocused}
-            icon={options.tabBarIcon}
+            Icon={options.tabBarIcon}
           />
         );
       })}
@@ -118,9 +118,9 @@ const STYLES = StyleSheet.create({
   },
   heading: {
     ...GLOBAL_STYLES.screenContainer,
+    ...GLOBAL_STYLES.smMarginBottom,
     ...TYPOGRAPHY.display1,
-    paddingBottom: 0,
-    marginBottom: 5
+    paddingBottom: 0
   }
 });
 

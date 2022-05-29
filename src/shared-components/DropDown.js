@@ -4,7 +4,7 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import TouchableNativeFeedback from "./TouchableNativeFeedback";
 import { AntDesign } from "@expo/vector-icons";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../styles";
-import TouchableSelectOption from "./TouchableSelectOption";
+import TouchableOption from "./TouchableOption";
 
 const DropDown = ({ selectedIndex = 0, onSelect, options = [], containerStyle = {} }) => {
   const { colors } = useTheme();
@@ -54,7 +54,7 @@ const DropDown = ({ selectedIndex = 0, onSelect, options = [], containerStyle = 
       >
         <ScrollView style={STYLES.optionsContainer}>
           {options.map((op, i) => (
-            <TouchableSelectOption
+            <TouchableOption
               label={op.label}
               key={op.value}
               isSelected={selectedIndex === i}

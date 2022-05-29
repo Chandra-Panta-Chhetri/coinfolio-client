@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-paper";
-import { TYPOGRAPHY } from "../../../styles";
+import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 
 const HeadingWithSeeAll = ({ title = "", seeAllBtnLabel = "See All", subheading, onSeeAllPress }) => (
   <View style={STYLES.container}>
@@ -17,7 +17,7 @@ const HeadingWithSeeAll = ({ title = "", seeAllBtnLabel = "See All", subheading,
 
 const STYLES = StyleSheet.create({
   container: {
-    marginBottom: 10
+    ...GLOBAL_STYLES.mdMarginBottom
   },
   headingAndSellAll: {
     flexDirection: "row",

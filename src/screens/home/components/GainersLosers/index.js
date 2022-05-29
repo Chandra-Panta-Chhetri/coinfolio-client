@@ -20,7 +20,7 @@ const GainersLosers = ({ coins, isLoading, fetchGainersLosers }) => {
   }, []);
 
   return (
-    <View style={GLOBAL_STYLES.componentContainer}>
+    <View style={GLOBAL_STYLES.lgMarginBottom}>
       <HeadingWithSeeAll title="Gainers & Losers" onSeeAllPress={toMarketScreen} />
       <View>
         {isLoading || coins.length === 0
