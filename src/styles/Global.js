@@ -15,18 +15,24 @@ export default StyleSheet.create({
     borderBottomWidth: 0.4
   },
   iconSize: {
-    width: GLOBAL_CONSTANTS.AVATAR_IMAGE_SIZE,
-    height: GLOBAL_CONSTANTS.AVATAR_IMAGE_SIZE
+    width: GLOBAL_CONSTANTS.ICON_SIZE,
+    height: GLOBAL_CONSTANTS.ICON_SIZE
   },
   iconRoundness: {
-    borderRadius: 30
+    borderRadius: GLOBAL_CONSTANTS.ICON_SIZE
   },
   screenContainer: {
     paddingHorizontal: 10,
     paddingVertical: 25
   },
-  componentContainer: {
+  lgMarginBottom: {
     marginBottom: 15
+  },
+  mdMarginBottom: {
+    marginBottom: 10
+  },
+  smMarginBottom: {
+    marginBottom: 6
   },
   flatListContentContainer: {
     padding: 1
@@ -37,7 +43,7 @@ export default StyleSheet.create({
   negativeNum: {
     color: COLORS.ERROR
   },
-  fullContainerDimension: {
+  fullContainer: {
     height: "100%",
     width: "100%"
   },

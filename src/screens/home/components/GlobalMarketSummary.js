@@ -54,7 +54,7 @@ const STYLES = StyleSheet.create({
   },
   container: {
     ...GLOBAL_STYLES.borderRadius,
-    ...GLOBAL_STYLES.componentContainer
+    ...GLOBAL_STYLES.lgMarginBottom
   }
 });
 

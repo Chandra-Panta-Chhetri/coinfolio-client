@@ -25,7 +25,7 @@ const NewsScreen = ({ isLoading, news, fetchInitialNews, fetchMoreNews, isLoadin
   const [newsFilterIndex, setNewsFilterIndex] = useState(NEWS_CONSTANTS.DEFAULT_FILTER_INDEX);
 
   useEffect(() => {
-    fetchInitialNews();
+    //fetchInitialNews();
   }, []);
 
   const onFilterSelect = (selectedVal, selectedIndex) => {
@@ -63,7 +63,7 @@ const NewsScreen = ({ isLoading, news, fetchInitialNews, fetchMoreNews, isLoadin
 
 const STYLES = StyleSheet.create({
   dropDownContainer: {
-    marginBottom: GLOBAL_STYLES.componentContainer.marginBottom - 1,
+    marginBottom: GLOBAL_STYLES.lgMarginBottom.marginBottom - 1,
     marginHorizontal: GLOBAL_STYLES.screenContainer.paddingHorizontal
   },
   newsList: {

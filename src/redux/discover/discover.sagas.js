@@ -55,7 +55,7 @@ function* getEvents() {
       ...(filters.dateRange.start && { dateRangeStart: toISOSubstring(filters.dateRange.start) }),
       ...(filters.dateRange.end && { dateRangeEnd: toISOSubstring(filters.dateRange.end) })
     };
-    const res = yield eventsAPI.fetchEvents(filtersDTO);
+    const res = yield eventsAPI.getEvents(filtersDTO);
     const events = yield res.results;
     if (events.length === 0) {
       return yield put(noMoreEvents());
@@ -77,7 +77,7 @@ function* getMoreEvents() {
       ...(filters.dateRange.start && { dateRangeStart: toISOSubstring(filters.dateRange.start) }),
       ...(filters.dateRange.end && { dateRangeEnd: toISOSubstring(filters.dateRange.end) })
     };
-    const res = yield eventsAPI.fetchEvents(filtersDTO);
+    const res = yield eventsAPI.getEvents(filtersDTO);
     const events = yield res.results;
     const currentEvents = yield select(selectEvents);
     const combinedEvents = yield [...currentEvents, ...events];

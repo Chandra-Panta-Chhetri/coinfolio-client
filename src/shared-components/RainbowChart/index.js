@@ -104,7 +104,7 @@ const LineChart = ({
   if (width === 0 && height === 0) {
     return (
       <View onLayout={onLayout} style={chartStyle}>
-        <Skeleton style={GLOBAL_STYLES.fullContainerDimension} />
+        <Skeleton style={GLOBAL_STYLES.fullContainer} />
       </View>
     );
   }
@@ -122,7 +122,7 @@ const LineChart = ({
         />
       </View>
       <View style={[chartStyle, STYLES.relativePosition]}>
-        <Svg style={GLOBAL_STYLES.fullContainerDimension}>
+        <Svg style={GLOBAL_STYLES.fullContainer}>
           <AnimatedPath animatedProps={animatedPathProps} {...svgConfig} stroke={themeColors.text} />
         </Svg>
         <Cursor
@@ -181,7 +181,7 @@ const STYLES = StyleSheet.create({
     marginTop: 30
   },
   headerContainer: {
-    marginBottom: 10
+    ...GLOBAL_STYLES.mdMarginBottom
   },
   relativePosition: {
     position: "relative"

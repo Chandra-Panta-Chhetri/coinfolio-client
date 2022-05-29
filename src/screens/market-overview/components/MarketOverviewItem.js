@@ -1,75 +1,67 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { SparkLine, IconImage } from "../../../shared-components";
+import { IconImage, TouchableNativeFeedback } from "../../../shared-components";
 import { formatNumBasedOnSignWorklet, getStylesBasedOnSign } from "../../../utils";
-import { Text } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
+import { useNavigation } from "@react-navigation/native";
 
-const xValueAccessor = (dataInstance) => dataInstance[1];
-const yValueAccessor = (dataInstance) => dataInstance[0];
-const dataPointsAccessor = (data) => data.prices;
+const MarketOverviewItem = ({ item }) => {
+  const { changePercent24Hr, name, priceUsd, image, rank, marketCap } = item;
+  const { colors } = useTheme();
+  const navigation = useNavigation();
 
-const MarketOverviewItem = ({ item, containerStyle = {} }) => {
+  const onClick = () => navigation.navigate("AssetDetail", {});
+
   return (
-    <View style={[STYLES.container, containerStyle]}>
-      <IconImage
-        source={{
-          uri: item.iconUrl
-        }}
-      />
-      <View style={STYLES.rankSymbolMarketCap}>
-        <View style={STYLES.rankSymbol}>
-          <Text style={[STYLES.rank, TYPOGRAPHY.body1]}>{item.rank}</Text>
-          <Text numberOfLines={1} style={TYPOGRAPHY.body2}>
-            {item.symbol}
+    <TouchableNativeFeedback onPress={onClick}>
+      <View style={[STYLES.container]}>
+        <IconImage
+          source={{
+            uri: image
+          }}
+        />
+        <View style={STYLES.rankNamePercentChange}>
+          <View style={STYLES.rankName}>
+            <Text style={[STYLES.rank, { borderColor: colors.text }]}>{rank}</Text>
+            <Text numberOfLines={1} style={TYPOGRAPHY.body2}>
+              {name}
+            </Text>
+          </View>
+          <Text style={[getStylesBasedOnSign(changePercent24Hr), TYPOGRAPHY.body1]}>
+            {formatNumBasedOnSignWorklet(changePercent24Hr)}%
           </Text>
         </View>
-        <Text numberOfLines={1} style={TYPOGRAPHY.body1}>
-          MCap - {item.marketCap}
-        </Text>
+        <View style={STYLES.priceMarketCap}>
+          <Text style={TYPOGRAPHY.body2}>${priceUsd}</Text>
+          <Text numberOfLines={1} style={TYPOGRAPHY.body1}>
+            MCap {marketCap}
+          </Text>
+        </View>
       </View>
-      <SparkLine
-        data={item.sparkLine}
-        isPositive={item.percentChange >= 0}
-        chartStyle={STYLES.sparkline}
-        xValueAccessor={xValueAccessor}
-        yValueAccessor={yValueAccessor}
-        dataPointsAccessor={dataPointsAccessor}
-      />
-      <View style={STYLES.pricePercent}>
-        <Text style={TYPOGRAPHY.body2}>${item.price}</Text>
-        <Text style={[getStylesBasedOnSign(item.percentChange), TYPOGRAPHY.body1]}>
-          {formatNumBasedOnSignWorklet(item.percentChange)}%
-        </Text>
-      </View>
-    </View>
+    </TouchableNativeFeedback>
   );
 };
 
 const STYLES = StyleSheet.create({
   container: {
     flexDirection: "row",
-    alignItems: "center",
-    flex: 1
-  },
-  rankSymbolMarketCap: { flex: 1, marginLeft: 5 },
-  rankSymbol: { flexDirection: "row", alignItems: "center" },
-  rank: {
-    ...GLOBAL_STYLES.borderRadius,
-    borderWidth: 1,
-    padding: 3,
-    marginRight: 5,
-    textAlign: "center",
-    borderColor: "grey"
-  },
-  sparkline: {
-    height: "100%",
     flex: 1,
-    width: "100%"
+    alignItems: "center"
   },
-  pricePercent: {
+  rankNamePercentChange: { flex: 0.7, marginLeft: 5 },
+  rankName: { flexDirection: "row", alignItems: "center" },
+  rank: {
+    ...TYPOGRAPHY.caption,
+    ...GLOBAL_STYLES.borderRadius,
+    paddingHorizontal: 5,
+    marginRight: 4,
+    textAlign: "center",
+    borderWidth: 1
+  },
+  priceMarketCap: {
     alignItems: "flex-end",
-    flex: 0.6
+    flex: 1
   }
 });
 

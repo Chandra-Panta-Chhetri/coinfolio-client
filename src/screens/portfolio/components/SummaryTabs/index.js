@@ -10,16 +10,10 @@ const TAB_ICON_SIZE = 20;
 
 const SummaryTabs = () => {
   return (
-    <View style={GLOBAL_STYLES.componentContainer}>
+    <View style={GLOBAL_STYLES.lgMarginBottom}>
       <Tabs tabHeadingMarginBottom={10}>
-        <HistoricValue
-          tabLabel="Historic Value"
-          iconComponent={<Entypo name="line-graph" size={TAB_ICON_SIZE} />}
-        />
-        <Allocations
-          tabLabel="Allocations"
-          iconComponent={<Entypo name="pie-chart" size={TAB_ICON_SIZE} />}
-        />
+        <HistoricValue tabLabel="Historic Value" iconComponent={<Entypo name="line-graph" size={TAB_ICON_SIZE} />} />
+        <Allocations tabLabel="Allocations" iconComponent={<Entypo name="pie-chart" size={TAB_ICON_SIZE} />} />
       </Tabs>
     </View>
   );

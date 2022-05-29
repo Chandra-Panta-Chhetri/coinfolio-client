@@ -10,7 +10,7 @@ const InfiniteScroll = ({
   isLoading,
   isLoadingMore,
   data,
-  numSkeletons,
+  numSkeletons = 1,
   onEndReached,
   hasMoreToFetch,
   renderSkeleton,
@@ -22,7 +22,7 @@ const InfiniteScroll = ({
 
   const onScrollToEnd = () => {
     if (!isLoadingMore && hasMoreToFetch) {
-      onEndReached();
+      onEndReached && onEndReached();
     }
   };
 
@@ -32,19 +32,20 @@ const InfiniteScroll = ({
   if (isLoading) {
     return (
       <AnimatedFlatList
+        {...otherProps}
         data={dummySkeletonArray}
         keyExtractor={(_, i) => i}
         renderItem={renderSkeleton}
         showsVerticalScrollIndicator={false}
         style={GLOBAL_STYLES.flatListContentContainer}
         contentContainerStyle={contentContainerStyle}
-        {...otherProps}
       />
     );
   }
 
   return (
     <AnimatedFlatList
+      {...otherProps}
       data={data}
       renderItem={renderDataItem}
       showsVerticalScrollIndicator={false}
@@ -53,7 +54,6 @@ const InfiniteScroll = ({
       onEndReached={onScrollToEnd}
       onEndReachedThreshold={0.5}
       ListFooterComponent={renderFooter}
-      {...otherProps}
     />
   );
 };

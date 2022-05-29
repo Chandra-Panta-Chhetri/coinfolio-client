@@ -20,7 +20,7 @@ const CurrentValueSkeleton = () => (
 const STYLES = StyleSheet.create({
   container: {
     ...GLOBAL_STYLES.borderRadius,
-    ...GLOBAL_STYLES.componentContainer
+    ...GLOBAL_STYLES.lgMarginBottom
   },
   valueSkeleton: {
     ...GLOBAL_STYLES.borderRadius,
@@ -33,14 +33,14 @@ const STYLES = StyleSheet.create({
     width: "25%"
   },
   subheadingSkeleton: {
+    ...GLOBAL_STYLES.mdMarginBottom,
     ...GLOBAL_STYLES.borderRadius,
     height: 20,
-    marginBottom: 10,
     width: "35%"
   },
   rowFlexbox: {
+    ...GLOBAL_STYLES.mdMarginBottom,
     flexDirection: "row",
-    marginBottom: 10,
     justifyContent: "space-between"
   }
 });

@@ -2,11 +2,7 @@ import React from "react";
 import { FlatList, View, StyleSheet } from "react-native";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { connect } from "react-redux";
-import {
-  selectCurrentUser,
-  selectIsChangingAuthState,
-  startLogOut
-} from "../../redux/user";
+import { selectCurrentUser, selectIsChangingAuthState, startLogOut } from "../../redux/user";
 import SETTINGS_CONSTANTS from "./Constants";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Text } from "react-native-paper";
@@ -52,15 +48,8 @@ const SettingsScreen = ({ logOut, currentUser, isLoggingOut, navigation }) => {
             <>
               <SettingItem
                 label="Logout"
-                iconComponent={
-                  <MaterialIcons
-                    name="logout"
-                    size={SETTINGS_CONSTANTS.ICON_SIZE}
-                  />
-                }
-                iconBackgroundColor={
-                  SETTINGS_CONSTANTS.LOG_OUT_BACKGROUND_COLOR
-                }
+                iconComponent={<MaterialIcons name="logout" size={SETTINGS_CONSTANTS.ICON_SIZE} />}
+                iconBackgroundColor={SETTINGS_CONSTANTS.LOG_OUT_BACKGROUND_COLOR}
                 endComponent={<MoreOptionsIndicator />}
                 onPress={openDialog}
               />
@@ -76,7 +65,7 @@ const SettingsScreen = ({ logOut, currentUser, isLoggingOut, navigation }) => {
 
 const STYLES = StyleSheet.create({
   userDetailsContainer: {
-    ...GLOBAL_STYLES.componentContainer,
+    ...GLOBAL_STYLES.lgMarginBottom,
     justifyContent: "center",
     alignItems: "center",
     minHeight: 130

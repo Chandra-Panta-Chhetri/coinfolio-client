@@ -32,7 +32,7 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
         onScroll={scrollHandler}
         ListHeaderComponent={
           <>
-            <CardScrollView containerStyle={GLOBAL_STYLES.componentContainer}>
+            <CardScrollView containerStyle={GLOBAL_STYLES.lgMarginBottom}>
               <CurrentValue />
               <AllTimeProfit />
             </CardScrollView>

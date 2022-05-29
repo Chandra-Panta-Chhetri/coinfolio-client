@@ -10,7 +10,9 @@ const GainerLoser = ({ coin, containerStyle = null }) => {
   const navigation = useNavigation();
   const { image, name, symbol, priceUsd, changePercent24Hr } = coin;
 
-  const onPress = () => {};
+  const onPress = () => {
+    navigation.navigate("AssetDetail", {});
+  };
 
   return (
     <TouchableNativeFeedback viewContainerStyle={containerStyle} onPress={onPress}>

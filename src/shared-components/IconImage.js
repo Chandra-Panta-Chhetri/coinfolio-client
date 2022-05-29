@@ -1,15 +1,23 @@
-import { Avatar } from "react-native-paper";
-import React from "react";
-import { StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Image } from "react-native";
 import { GLOBAL_CONSTANTS } from "../constants";
 
-const IconImage = ({ source }) => (
-  <Avatar.Image size={GLOBAL_CONSTANTS.AVATAR_IMAGE_SIZE} source={source} style={STYLES.icon} />
-);
+const IconImage = ({ source, fallbackURL = "https://coincap.io/static/logo_mark.png" }) => {
+  const [imageURL, setImageURL] = useState(source.uri);
+
+  const onLoadError = () => {
+    setImageURL(fallbackURL);
+  };
+
+  return <Image source={{ uri: imageURL }} onError={onLoadError} style={STYLES.icon} />;
+};
 
 const STYLES = StyleSheet.create({
   icon: {
-    backgroundColor: "transparent"
+    backgroundColor: "transparent",
+    width: 35,
+    height: 35,
+    borderRadius: 35 / 2
   }
 });
 

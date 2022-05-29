@@ -4,12 +4,12 @@ import { Text, Button, Card } from "react-native-paper";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 
 const LogInOrCreateAccount = ({ navigation }) => (
-  <Card style={GLOBAL_STYLES.componentContainer}>
+  <Card style={GLOBAL_STYLES.lgMarginBottom}>
     <Card.Content>
       <Text style={TYPOGRAPHY.title}>Get More Features!</Text>
       <Text style={TYPOGRAPHY.body1}>
-        Login or create an account to get access to features such as custom
-        price alerts, watchlist, portfolio tracker & more!
+        Login or create an account to get access to features such as custom price alerts, watchlist, portfolio tracker &
+        more!
       </Text>
       <View style={STYLES.container}>
         <Button
@@ -20,11 +20,7 @@ const LogInOrCreateAccount = ({ navigation }) => (
         >
           Login
         </Button>
-        <Button
-          labelStyle={TYPOGRAPHY.button}
-          onPress={() => navigation.navigate("SignUp")}
-          mode="contained"
-        >
+        <Button labelStyle={TYPOGRAPHY.button} onPress={() => navigation.navigate("SignUp")} mode="contained">
           Create an account
         </Button>
       </View>

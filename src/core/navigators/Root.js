@@ -16,7 +16,8 @@ import {
   ChangeEmailOrNameScreen,
   SelectEventFiltersScreen,
   EventDetailScreen,
-  SearchCryptoScreen
+  SearchCryptoScreen,
+  AssetDetailScreen
 } from "../../screens";
 import { CloseIconButton } from "../../shared-components";
 
@@ -27,26 +28,10 @@ const RootNavigator = () => {
 
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="BottomTabsHome"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{ headerTitle: "Login" }}
-      />
-      <Stack.Screen
-        name="SignUp"
-        component={SignUpScreen}
-        options={{ headerTitle: "Sign Up" }}
-      />
-      <Stack.Screen
-        name="PriceAlert"
-        component={PriceAlertScreen}
-        options={{ headerTitle: "Price Alerts" }}
-      />
+      <Stack.Screen name="BottomTabsHome" component={BottomTabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name="Login" component={LoginScreen} options={{ headerTitle: "Login" }} />
+      <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerTitle: "Sign Up" }} />
+      <Stack.Screen name="PriceAlert" component={PriceAlertScreen} options={{ headerTitle: "Price Alerts" }} />
       <Stack.Screen
         name="CompareCurrency"
         component={CompareCurrencyScreen}
@@ -77,6 +62,7 @@ const RootNavigator = () => {
         component={TermsAndPrivacyScreen}
         options={{ headerTitle: "Terms and Privacy" }}
       />
+      <Stack.Screen name="AssetDetail" component={AssetDetailScreen} options={{ headerTitle: "Asset Detail" }} />
       <Stack.Screen
         name="ChangePassword"
         component={ChangePasswordScreen}
@@ -94,24 +80,11 @@ const RootNavigator = () => {
           headerTitle: "Select Filters",
           headerTitleAlign: "center",
           headerLeft: null,
-          headerRight: () => (
-            <CloseIconButton
-              style={{ marginRight: 10 }}
-              onPress={() => navigation.goBack()}
-            />
-          )
+          headerRight: () => <CloseIconButton style={{ marginRight: 10 }} onPress={() => navigation.goBack()} />
         })}
       />
-      <Stack.Screen
-        name="EventDetails"
-        component={EventDetailScreen}
-        options={{ headerTitle: "Event Details" }}
-      />
-      <Stack.Screen
-        name="SearchCrypto"
-        component={SearchCryptoScreen}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="EventDetails" component={EventDetailScreen} options={{ headerTitle: "Event Details" }} />
+      <Stack.Screen name="SearchCrypto" component={SearchCryptoScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };

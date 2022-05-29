@@ -4,6 +4,7 @@ import BottomSheetFilter from "./BottomSheetFilter";
 import { MARKET_OVERVIEW_CONSTANTS } from "../../../../constants";
 import { connect } from "react-redux";
 import { selectMarketFilters, updateFilters } from "../../../../redux/market";
+import { GLOBAL_STYLES } from "../../../../styles";
 
 const Filters = ({ activeFilters, updateMarketFilters }) => (
   <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={STYLES.container}>
@@ -24,14 +25,6 @@ const Filters = ({ activeFilters, updateMarketFilters }) => (
       bottomSheetKey="sort-order-filter"
     />
     <BottomSheetFilter
-      filters={MARKET_OVERVIEW_CONSTANTS.LIMIT.FILTERS}
-      filterLabel={`Limit to ${activeFilters.limit.label}`}
-      filterStyles={STYLES.filterContainer}
-      activeFilter={activeFilters.limit}
-      onFilterSelect={(selectedVal) => updateMarketFilters({ limit: selectedVal })}
-      bottomSheetKey="limit-filter"
-    />
-    <BottomSheetFilter
       filters={MARKET_OVERVIEW_CONSTANTS.SHOW_ONLY.FILTERS}
       filterLabel={`Showing ${activeFilters.showOnly.label}`}
       activeFilter={activeFilters.showOnly}
@@ -44,8 +37,8 @@ const Filters = ({ activeFilters, updateMarketFilters }) => (
 
 const STYLES = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    marginBottom: 5
+    ...GLOBAL_STYLES.smMarginBottom,
+    flexGrow: 1
   },
   filterContainer: { marginRight: 10, flexGrow: 1 },
   flexGrow: {
