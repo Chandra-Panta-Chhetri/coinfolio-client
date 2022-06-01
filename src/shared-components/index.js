@@ -19,3 +19,7 @@ export { default as NewsItem } from "./NewsItem";
 export { default as NewsItemSkeleton } from "./NewsItem/Skeleton";
 export { default as InfiniteScroll } from "./InfiniteScroll";
 export { default as IconImage } from "./IconImage";
+export { default as TextInput } from "./TextInput";
+export { default as Button } from "./Button";
+export { default as Link } from "./Link";
+export { default as PasswordInput } from "./PasswordInput";

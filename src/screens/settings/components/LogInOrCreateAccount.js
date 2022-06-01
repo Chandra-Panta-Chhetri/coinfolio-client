@@ -1,7 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Text, Button, Card } from "react-native-paper";
+import { Text, Card } from "react-native-paper";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
+import { Button } from "../../../shared-components";
 
 const LogInOrCreateAccount = ({ navigation }) => (
   <Card style={GLOBAL_STYLES.lgMarginBottom}>
@@ -13,16 +14,12 @@ const LogInOrCreateAccount = ({ navigation }) => (
       </Text>
       <View style={STYLES.container}>
         <Button
-          labelStyle={TYPOGRAPHY.button}
           onPress={() => navigation.navigate("Login")}
           mode="contained"
           style={STYLES.logInButton}
-        >
-          Login
-        </Button>
-        <Button labelStyle={TYPOGRAPHY.button} onPress={() => navigation.navigate("SignUp")} mode="contained">
-          Create an account
-        </Button>
+          label="Login"
+        />
+        <Button label="Create an account" onPress={() => navigation.navigate("SignUp")} mode="contained" />
       </View>
     </Card.Content>
   </Card>

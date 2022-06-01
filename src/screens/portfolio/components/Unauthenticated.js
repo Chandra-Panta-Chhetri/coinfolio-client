@@ -1,8 +1,9 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 import LottieView from "lottie-react-native";
+import { Button } from "../../../shared-components";
 
 const Unauthenticated = ({ navigation }) => {
   const { colors } = useTheme();
@@ -14,29 +15,23 @@ const Unauthenticated = ({ navigation }) => {
       </View>
       <Text style={STYLES.heading}>Track Your Crypto Investments</Text>
       <Text style={STYLES.subheading}>
-        Signup or login to track your crypto transactions, current balance and profit/loss.
+        Sign up or log in to track your crypto transactions, current balance and profit/loss.
       </Text>
       <Button
         onPress={() => navigation.navigate("SignUp")}
         style={STYLES.signUpBtn}
         mode="contained"
-        labelStyle={TYPOGRAPHY.button}
-      >
-        Create an account
-      </Button>
+        label="Create an account"
+      />
       <Button
         onPress={() => navigation.navigate("Login")}
         mode="contained"
         color={colors.card}
-        labelStyle={[
-          TYPOGRAPHY.button,
-          {
-            color: colors.text
-          }
-        ]}
-      >
-        Login
-      </Button>
+        labelStyle={{
+          color: colors.text
+        }}
+        label="Login"
+      />
     </View>
   );
 };

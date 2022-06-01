@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
-import { Text, Button } from "react-native-paper";
+import { Text } from "react-native-paper";
 import SearchItem from "./SearchItem";
-import { Skeleton } from "../../../shared-components";
+import { Skeleton, Button } from "../../../shared-components";
 import { MARKET_OVERVIEW_CONSTANTS } from "../../../constants";
 
 const DUMMY_SKELETON_ARRAY = Array(MARKET_OVERVIEW_CONSTANTS.NUM_SEARCH_RESULT_SKELETONS).fill("1");
@@ -17,11 +17,7 @@ const SearchCategory = ({ label, searches, onHeadingClick, headingBtnLabel, isLo
     <View style={STYLES.container}>
       <View style={STYLES.header}>
         <Text style={[TYPOGRAPHY.subheading]}>{label}</Text>
-        {onHeadingClick && (
-          <Button compact onPress={onClick} labelStyle={TYPOGRAPHY.button}>
-            {headingBtnLabel}
-          </Button>
-        )}
+        {onHeadingClick && <Button compact onPress={onClick} label={headingBtnLabel} />}
       </View>
       <View>
         {!isLoading
