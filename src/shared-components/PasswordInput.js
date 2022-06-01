@@ -7,7 +7,15 @@ import TextInput from "./TextInput";
 const PasswordInput = (props) => {
   const [isShown, setIsShown] = useState(false);
 
-  return <TextInput {...props} secureTextEntry label="Password" style={[GLOBAL_STYLES.smMarginBottom, props.style]} />;
+  return (
+    <TextInput
+      {...props}
+      secureTextEntry={!isShown}
+      label="Password"
+      style={[GLOBAL_STYLES.smMarginBottom, props.style]}
+      right={<TextInput.Icon name={isShown ? "eye" : "eye-off"} onPress={() => setIsShown((isShown) => !isShown)} />}
+    />
+  );
 };
 
 export default PasswordInput;

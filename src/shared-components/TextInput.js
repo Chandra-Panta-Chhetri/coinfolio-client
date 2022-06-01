@@ -7,4 +7,6 @@ const CustomTextInput = (props) => {
   return <TextInput {...props} mode="outlined" activeOutlineColor={colors.text} />;
 };
 
+CustomTextInput.Icon = TextInput.Icon;
+
 export default CustomTextInput;
