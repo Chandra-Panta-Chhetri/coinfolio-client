@@ -16,16 +16,12 @@ const LoginScreen = () => {
 const STYLES = StyleSheet.create({
   container: {
     ...GLOBAL_STYLES.screenContainer,
-    flex: 1,
-    borderColor: "red",
-    borderWidth: 1
+    flex: 1
   },
   heading: {
     ...TYPOGRAPHY.title,
     ...TYPOGRAPHY.textAlignCenter,
-    ...GLOBAL_STYLES.lgMarginBottom,
-    borderColor: "red",
-    borderWidth: 1
+    ...GLOBAL_STYLES.lgMarginBottom
   }
 });
 

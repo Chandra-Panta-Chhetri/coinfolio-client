@@ -10,8 +10,8 @@ const Link = ({ label, navigateTo, navigationParams, ...otherProps }) => {
   const onPress = () => navigation.navigate(navigateTo, navigationParams);
 
   return (
-    <TouchableOpacity onPress={onPress}>
-      <Text {...otherProps} style={[TYPOGRAPHY.body1, otherProps.style]}>
+    <TouchableOpacity onPress={onPress} style={[otherProps.containerStyle]}>
+      <Text {...otherProps} style={[TYPOGRAPHY.body2, otherProps.textStyle]}>
         {label}
       </Text>
     </TouchableOpacity>

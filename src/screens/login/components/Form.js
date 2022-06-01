@@ -45,11 +45,11 @@ const Form = () => {
           )}
           name="password"
         />
-        <Link label="Forgot password?" navigateTo="SignUp" style={{ alignSelf: "flex-end" }} />
+        <Link label="Forgot password ?" navigateTo="SignUp" containerStyle={STYLES.forgotPassword} />
       </View>
       <View>
-        <Button label="Log in" onPress={handleSubmit(onSubmit)} mode="contained" />
-        <Link navigateTo="SignUp" label="Don't have an account?" />
+        <Button label="Log in" onPress={handleSubmit(onSubmit)} mode="contained" style={GLOBAL_STYLES.mdMarginBottom} />
+        <Link navigateTo="SignUp" label="Don't have an account ?" containerStyle={STYLES.signUp} />
       </View>
     </View>
   );
@@ -57,15 +57,18 @@ const Form = () => {
 
 const STYLES = StyleSheet.create({
   container: {
-    borderColor: "red",
-    borderWidth: 1,
     flex: 1,
     justifyContent: "space-between"
   },
   field: {
     ...GLOBAL_STYLES.lgMarginBottom
   },
-  forgotPassword: {}
+  forgotPassword: {
+    alignSelf: "flex-end"
+  },
+  signUp: {
+    alignSelf: "center"
+  }
 });
 
 export default Form;
