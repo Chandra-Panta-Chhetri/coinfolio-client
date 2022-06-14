@@ -1,108 +1,74 @@
 import { takeLatest, put, call, all, select } from "redux-saga/effects";
 import {
-  signInSuccess,
-  signInFail,
-  signUpFail,
+  loginSuccess,
+  loginFail,
+  userRegisterFail,
   logOutSuccess,
   logOutFail,
-  startEmailSignIn
+  userRegisterSuccess
 } from "./user.actions";
 import USER_ACTION_TYPES from "./user.action.types";
-import { selectHasAutoSignedIn } from "./user.selectors";
+import { authAPI } from "../../api";
+import * as SecureStore from "expo-secure-store";
 import { addSuccessNotification } from "../notification";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
-function* setUserFromAuth(user) {
-  yield put(signInSuccess(user));
-  yield AsyncStorage.setItem("user", JSON.stringify(user));
-}
-
-function* signInWithEmail({ payload: { email, password } }) {
+function* loginWithEmail({ payload: credentials }) {
   try {
+    const { user, token } = yield authAPI.login(credentials);
+    yield SecureStore.setItemAsync("token", token);
+    yield put(addSuccessNotification("Logged in successfully!"));
+    yield put(loginSuccess(user, token));
   } catch (err) {
-    yield put(signInFail("Email or password incorrect"));
+    yield put(loginFail(err?.response?.data?.message));
   }
 }
 
-function* autoSignIn() {
+function* autoLogin() {
   try {
-    const user = yield AsyncStorage.getItem("user");
-    if (!user) {
-      throw Error();
-    }
-    yield call(setUserFromAuth, user);
+    const token = yield SecureStore.getItemAsync("token");
+    const user = yield authAPI.getUserFromToken(token);
+    yield put(loginSuccess(user, token));
   } catch (err) {
-    yield put(signInFail("Please login again for security purposes"));
+    yield put(loginFail("Please login again for security purposes"));
   }
 }
 
-function* signOutUser() {
+function* logOutUser() {
   try {
-    yield AsyncStorage.removeItem("user");
+    yield SecureStore.deleteItemAsync("token");
+    yield put(addSuccessNotification("Logged out successfully!"));
     yield put(logOutSuccess());
   } catch (err) {
-    yield put(logOutFail("Signing out failed, please try again"));
+    yield put(logOutFail("Logout failed, please try again"));
   }
 }
 
-function* signUpUser({ payload: { newUserInfo } }) {
-  const { email, password, fullName, confirmPassword } = yield newUserInfo;
+function* registerNewUser({ payload: newUser }) {
   try {
-    if (password !== confirmPassword) throw Error("Passwords must match");
-    yield put(startEmailSignIn({ email, password }));
+    const { user, token } = yield authAPI.registerUser(newUser);
+    yield SecureStore.setItemAsync("token", token);
+    yield put(userRegisterSuccess(user, token));
   } catch (err) {
-    yield put(
-      signUpFail(err.message || "Sign up error. Please try again later.")
-    );
+    yield put(userRegisterFail(err.response.data.message));
   }
 }
 
-function* handleSignInSuccess({ payload: loggedInUser }) {
-  const hasAutoLoggedIn = yield select(selectHasAutoSignedIn);
-  if (!hasAutoLoggedIn) {
-    yield put(addSuccessNotification(`Welcome back ${loggedInUser.fullName}!`));
-    yield AsyncStorage.setItem("hasAutoSignedIn", JSON.stringify(true));
-  }
-  yield AsyncStorage.setItem("user", JSON.stringify(loggedInUser));
+function* watchEmailLogin() {
+  yield takeLatest(USER_ACTION_TYPES.EMAIL_LOGIN, loginWithEmail);
 }
 
-function* handleLogOutSuccess() {
-  yield AsyncStorage.removeItem("user");
-  yield AsyncStorage.setItem("hasAutoSignedIn", JSON.stringify(false));
-  yield put(addSuccessNotification("Logged out successfully"));
+function* watchAutoLogIn() {
+  yield takeLatest(USER_ACTION_TYPES.AUTO_LOGIN, autoLogin);
 }
 
-function* watchEmailSignIn() {
-  yield takeLatest(USER_ACTION_TYPES.START_EMAIL_SIGN_IN, signInWithEmail);
+function* watchRegister() {
+  yield takeLatest(USER_ACTION_TYPES.REGISTER, registerNewUser);
 }
 
-function* watchGetUserFromSession() {
-  yield takeLatest(USER_ACTION_TYPES.START_AUTO_SIGN_IN, autoSignIn);
-}
-
-function* watchSignUpStart() {
-  yield takeLatest(USER_ACTION_TYPES.START_SIGN_UP, signUpUser);
-}
-
-function* watchSignInSuccess() {
-  yield takeLatest(USER_ACTION_TYPES.SIGN_IN_SUCCESS, handleSignInSuccess);
-}
-
-function* watchStartLogOut() {
-  yield takeLatest(USER_ACTION_TYPES.START_LOG_OUT, signOutUser);
-}
-
-function* watchLogOutSuccess() {
-  yield takeLatest(USER_ACTION_TYPES.LOG_OUT_SUCCESS, handleLogOutSuccess);
+function* watchLogOut() {
+  yield takeLatest(USER_ACTION_TYPES.LOG_OUT, logOutUser);
 }
 
 export default function* userSagas() {
-  yield all([
-    call(watchSignUpStart),
-    call(watchEmailSignIn),
-    call(watchGetUserFromSession),
-    call(watchSignInSuccess),
-    call(watchStartLogOut),
-    call(watchLogOutSuccess)
-  ]);
+  yield all([call(watchRegister), call(watchEmailLogin), call(watchAutoLogIn), call(watchLogOut)]);
 }

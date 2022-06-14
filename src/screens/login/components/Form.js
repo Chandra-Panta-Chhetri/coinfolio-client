@@ -1,11 +1,13 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
+import { GLOBAL_STYLES } from "../../../styles";
 import { useTheme } from "react-native-paper";
 import { useForm, Controller } from "react-hook-form";
 import { TextInput, Button, Link, PasswordInput } from "../../../shared-components";
+import { connect } from "react-redux";
+import { selectIsChangingAuthState, startEmailLogin } from "../../../redux/user";
 
-const Form = () => {
+const Form = ({ isLoggingIn, login }) => {
   const { colors } = useTheme();
   const {
     control,
@@ -19,7 +21,8 @@ const Form = () => {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    console.log(errors);
+    login(data);
   };
 
   return (
@@ -31,7 +34,14 @@ const Form = () => {
             required: true
           }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput onBlur={onBlur} onChangeText={onChange} value={value} label="Email" style={STYLES.field} />
+            <TextInput
+              returnKeyType="next"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              label="Email"
+              style={STYLES.field}
+            />
           )}
           name="email"
         />
@@ -48,7 +58,14 @@ const Form = () => {
         <Link label="Forgot password ?" navigateTo="SignUp" containerStyle={STYLES.forgotPassword} />
       </View>
       <View>
-        <Button label="Log in" onPress={handleSubmit(onSubmit)} mode="contained" style={GLOBAL_STYLES.mdMarginBottom} />
+        <Button
+          label={isLoggingIn ? "Logging in..." : "Log in"}
+          disabled={isLoggingIn}
+          loading={isLoggingIn}
+          onPress={handleSubmit(onSubmit)}
+          mode="contained"
+          style={GLOBAL_STYLES.mdMarginBottom}
+        />
         <Link navigateTo="SignUp" label="Don't have an account ?" containerStyle={STYLES.signUp} />
       </View>
     </View>
@@ -71,4 +88,12 @@ const STYLES = StyleSheet.create({
   }
 });
 
-export default Form;
+const mapStateToProps = (state) => ({
+  isLoggingIn: selectIsChangingAuthState(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  login: (credentials) => dispatch(startEmailLogin(credentials))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

@@ -21,25 +21,61 @@ import {
 } from "../../screens";
 import { CloseIconButton } from "../../shared-components";
 import { TYPOGRAPHY } from "../../styles";
+import { connect } from "react-redux";
+import { selectIsUserAuthenticated } from "../../redux/user";
 
 const Stack = createStackNavigator();
 
-const RootNavigator = () => {
+const RootNavigator = ({ isAuthenticated }) => {
   const { colors } = useTheme();
 
   return (
     <Stack.Navigator>
       <Stack.Screen name="BottomTabsHome" component={BottomTabNavigator} options={{ headerShown: false }} />
-      <Stack.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{ headerTitle: "Login", headerTitleAlign: "center", headerTitleStyle: TYPOGRAPHY.headline }}
-      />
-      <Stack.Screen
-        name="SignUp"
-        component={SignUpScreen}
-        options={{ headerTitle: "Sign Up", headerTitleAlign: "center", headerTitleStyle: TYPOGRAPHY.headline }}
-      />
+      {isAuthenticated ? (
+        <>
+          <Stack.Screen
+            name="ChangePassword"
+            component={ChangePasswordScreen}
+            options={{
+              headerTitle: "Change Password",
+              headerTitleAlign: "center",
+              headerTitleStyle: TYPOGRAPHY.headline
+            }}
+          />
+          <Stack.Screen
+            name="ChangeEmailOrName"
+            component={ChangeEmailOrNameScreen}
+            options={{
+              headerTitle: "Change Email or Name",
+              headerTitleAlign: "center",
+              headerTitleStyle: TYPOGRAPHY.headline
+            }}
+          />
+          <Stack.Screen
+            name="AddTransaction"
+            component={AddTransactionScreen}
+            options={{
+              headerTitle: "Add Transaction",
+              headerTitleAlign: "center",
+              headerTitleStyle: TYPOGRAPHY.headline
+            }}
+          />
+        </>
+      ) : (
+        <>
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ headerTitle: "Login", headerTitleAlign: "center", headerTitleStyle: TYPOGRAPHY.headline }}
+          />
+          <Stack.Screen
+            name="SignUp"
+            component={SignUpScreen}
+            options={{ headerTitle: "Sign Up", headerTitleAlign: "center", headerTitleStyle: TYPOGRAPHY.headline }}
+          />
+        </>
+      )}
       <Stack.Screen
         name="PriceAlert"
         component={PriceAlertScreen}
@@ -62,11 +98,6 @@ const RootNavigator = () => {
           headerTitleAlign: "center",
           headerTitleStyle: TYPOGRAPHY.headline
         }}
-      />
-      <Stack.Screen
-        name="AddTransaction"
-        component={AddTransactionScreen}
-        options={{ headerTitle: "Add Transaction", headerTitleAlign: "center", headerTitleStyle: TYPOGRAPHY.headline }}
       />
       <Stack.Screen
         name="SelectCurrency"
@@ -97,20 +128,6 @@ const RootNavigator = () => {
         options={{ headerTitle: "Asset Detail", headerTitleAlign: "center", headerTitleStyle: TYPOGRAPHY.headline }}
       />
       <Stack.Screen
-        name="ChangePassword"
-        component={ChangePasswordScreen}
-        options={{ headerTitle: "Change Password", headerTitleAlign: "center", headerTitleStyle: TYPOGRAPHY.headline }}
-      />
-      <Stack.Screen
-        name="ChangeEmailOrName"
-        component={ChangeEmailOrNameScreen}
-        options={{
-          headerTitle: "Change Email or Name",
-          headerTitleAlign: "center",
-          headerTitleStyle: TYPOGRAPHY.headline
-        }}
-      />
-      <Stack.Screen
         name="SelectEventFilters"
         component={SelectEventFiltersScreen}
         options={({ navigation }) => ({
@@ -131,4 +148,8 @@ const RootNavigator = () => {
   );
 };
 
-export default RootNavigator;
+const mapStateToProps = (state) => ({
+  isAuthenticated: selectIsUserAuthenticated(state)
+});
+
+export default connect(mapStateToProps)(RootNavigator);
