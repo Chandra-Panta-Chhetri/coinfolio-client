@@ -6,6 +6,9 @@
     "slug": "coinfolio",
     "version": "1.0.0",
     "assetBundlePatterns": ["**/*"],
-    "orientation": "portrait"
+    "orientation": "portrait",
+    "android": {
+      "softwareKeyboardLayoutMode": "pan"
+    }
   }
 }

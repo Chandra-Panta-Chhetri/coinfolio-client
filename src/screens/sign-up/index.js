@@ -1,15 +1,16 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Keyboard, StyleSheet } from "react-native";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { Text } from "react-native-paper";
 import { Form } from "./components";
+import { PressableView } from "../../shared-components";
 
 const SignUpScreen = () => {
   return (
-    <View style={STYLES.container}>
+    <PressableView viewStyle={STYLES.container} onPress={Keyboard.dismiss}>
       <Text style={STYLES.heading}>Create New Account</Text>
       <Form />
-    </View>
+    </PressableView>
   );
 };
 

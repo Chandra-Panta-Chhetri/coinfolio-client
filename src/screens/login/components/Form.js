@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, KeyboardAvoidingView, Platform } from "react-native";
 import { GLOBAL_STYLES } from "../../../styles";
 import { useTheme } from "react-native-paper";
 import { useForm, Controller } from "react-hook-form";
@@ -28,7 +28,13 @@ const Form = ({ isLoggingIn, login }) => {
 
   return (
     <View style={STYLES.container}>
-      <View>
+      <KeyboardAvoidingView
+        behavior={Platform.select({
+          ios: "padding",
+          android: "height"
+        })}
+        style={STYLES.flex}
+      >
         <Controller
           control={control}
           rules={{
@@ -64,7 +70,7 @@ const Form = ({ isLoggingIn, login }) => {
           name="password"
         />
         <Link label="Forgot password ?" navigateTo="SignUp" containerStyle={STYLES.forgotPassword} />
-      </View>
+      </KeyboardAvoidingView>
       <View>
         <Button
           label={isLoggingIn ? "Logging in..." : "Log in"}
@@ -72,7 +78,7 @@ const Form = ({ isLoggingIn, login }) => {
           loading={isLoggingIn}
           onPress={handleSubmit(onSubmit)}
           mode="contained"
-          style={GLOBAL_STYLES.mdMarginBottom}
+          style={[GLOBAL_STYLES.mdMarginBottom]}
         />
         <Link navigateTo="SignUp" label="Don't have an account ?" containerStyle={STYLES.signUp} />
       </View>
@@ -93,6 +99,9 @@ const STYLES = StyleSheet.create({
   },
   signUp: {
     alignSelf: "center"
+  },
+  flex: {
+    flex: 1
   }
 });
 

@@ -1,15 +1,16 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Keyboard } from "react-native";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { Text } from "react-native-paper";
 import { Form } from "./components";
+import { PressableView } from "../../shared-components";
 
 const LoginScreen = () => {
   return (
-    <View style={STYLES.container}>
+    <PressableView onPress={Keyboard.dismiss} viewStyle={STYLES.container}>
       <Text style={STYLES.heading}>Welcome Back</Text>
       <Form />
-    </View>
+    </PressableView>
   );
 };
 

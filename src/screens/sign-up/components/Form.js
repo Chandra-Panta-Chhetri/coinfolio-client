@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { StyleSheet, View } from "react-native";
+import { KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import { GLOBAL_STYLES } from "../../../styles";
 import { useForm, Controller } from "react-hook-form";
 import { TextInput, Button, Link, PasswordInput } from "../../../shared-components";
@@ -27,7 +27,13 @@ const Form = ({ isSigningUp, registerUser }) => {
 
   return (
     <View style={STYLES.container}>
-      <View>
+      <KeyboardAvoidingView
+        behavior={Platform.select({
+          ios: "padding",
+          android: "height"
+        })}
+        style={STYLES.flex}
+      >
         <Controller
           control={control}
           rules={{
@@ -81,7 +87,7 @@ const Form = ({ isSigningUp, registerUser }) => {
           )}
           name="password"
         />
-      </View>
+      </KeyboardAvoidingView>
       <View>
         <Button
           label={isSigningUp ? "Creating account..." : "Create"}
@@ -110,6 +116,9 @@ const STYLES = StyleSheet.create({
   },
   signUp: {
     alignSelf: "center"
+  },
+  flex: {
+    flex: 1
   }
 });
 
