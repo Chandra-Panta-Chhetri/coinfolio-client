@@ -19,7 +19,7 @@ function* loginWithEmail({ payload: credentials }) {
     yield put(addSuccessNotification("Logged in successfully!"));
     yield put(loginSuccess(user, token));
   } catch (err) {
-    yield put(loginFail(err?.response?.data?.message));
+    yield put(loginFail(err?.response?.data?.message || "The server seems to be offline. Please try again later"));
   }
 }
 
@@ -39,7 +39,9 @@ function* registerNewUser({ payload: newUser }) {
     yield SecureStore.setItemAsync("token", token);
     yield put(userRegisterSuccess(user, token));
   } catch (err) {
-    yield put(userRegisterFail(err.response.data.message));
+    yield put(
+      userRegisterFail(err?.response?.data?.message || "The server seems to be offline. Please try again later")
+    );
   }
 }
 

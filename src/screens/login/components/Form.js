@@ -12,7 +12,7 @@ const Form = ({ isLoggingIn, login }) => {
   const {
     control,
     handleSubmit,
-    formState: { errors }
+    formState: { errors, isValid, isDirty }
   } = useForm({
     defaultValues: {
       email: "",
@@ -68,7 +68,7 @@ const Form = ({ isLoggingIn, login }) => {
       <View>
         <Button
           label={isLoggingIn ? "Logging in..." : "Log in"}
-          disabled={isLoggingIn}
+          disabled={isLoggingIn || !isValid || !isDirty}
           loading={isLoggingIn}
           onPress={handleSubmit(onSubmit)}
           mode="contained"

@@ -1,18 +1,16 @@
 import React, { useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { GLOBAL_STYLES } from "../../../styles";
-import { useTheme } from "react-native-paper";
 import { useForm, Controller } from "react-hook-form";
 import { TextInput, Button, Link, PasswordInput } from "../../../shared-components";
 import { connect } from "react-redux";
 import { selectIsChangingAuthState, startUserRegister } from "../../../redux/user";
 
 const Form = ({ isSigningUp, registerUser }) => {
-  const { colors } = useTheme();
   const {
     control,
     handleSubmit,
-    formState: { errors }
+    formState: { errors, isValid, isDirty }
   } = useForm({
     defaultValues: {
       email: "",
@@ -87,7 +85,7 @@ const Form = ({ isSigningUp, registerUser }) => {
       <View>
         <Button
           label={isSigningUp ? "Creating account..." : "Create"}
-          disabled={isSigningUp}
+          disabled={isSigningUp || !isValid || !isDirty}
           loading={isSigningUp}
           onPress={handleSubmit(onSubmit)}
           mode="contained"
