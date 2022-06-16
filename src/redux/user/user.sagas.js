@@ -23,16 +23,6 @@ function* loginWithEmail({ payload: credentials }) {
   }
 }
 
-function* autoLogin() {
-  try {
-    const token = yield SecureStore.getItemAsync("token");
-    const user = yield authAPI.getUserFromToken(token);
-    yield put(loginSuccess(user, token));
-  } catch (err) {
-    yield put(loginFail("Please login again for security purposes"));
-  }
-}
-
 function* logOutUser() {
   try {
     yield SecureStore.deleteItemAsync("token");
@@ -57,10 +47,6 @@ function* watchEmailLogin() {
   yield takeLatest(USER_ACTION_TYPES.EMAIL_LOGIN, loginWithEmail);
 }
 
-function* watchAutoLogIn() {
-  yield takeLatest(USER_ACTION_TYPES.AUTO_LOGIN, autoLogin);
-}
-
 function* watchRegister() {
   yield takeLatest(USER_ACTION_TYPES.REGISTER, registerNewUser);
 }
@@ -70,5 +56,5 @@ function* watchLogOut() {
 }
 
 export default function* userSagas() {
-  yield all([call(watchRegister), call(watchEmailLogin), call(watchAutoLogIn), call(watchLogOut)]);
+  yield all([call(watchRegister), call(watchEmailLogin), call(watchLogOut)]);
 }

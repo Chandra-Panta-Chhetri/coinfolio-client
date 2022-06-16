@@ -11,7 +11,6 @@ const userReducer = (prevState = INITIAL_STATE, action) => {
     case USER_ACTION_TYPES.EMAIL_LOGIN:
     case USER_ACTION_TYPES.REGISTER:
     case USER_ACTION_TYPES.LOG_OUT:
-    case USER_ACTION_TYPES.AUTO_LOGIN:
       return {
         ...prevState,
         isChangingAuthState: true

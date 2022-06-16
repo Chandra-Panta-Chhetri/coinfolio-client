@@ -1,9 +1,5 @@
 import USER_ACTION_TYPES from "./user.action.types";
 
-export const startAutoLogin = () => ({
-  type: USER_ACTION_TYPES.AUTO_LOGIN
-});
-
 export const startEmailLogin = (credentials) => ({
   type: USER_ACTION_TYPES.EMAIL_LOGIN,
   payload: credentials
