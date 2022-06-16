@@ -1,11 +1,13 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { TextInput, useTheme } from "react-native-paper";
 
-const CustomTextInput = (props) => {
+const CustomTextInput = forwardRef((props, ref) => {
   const { colors } = useTheme();
 
-  return <TextInput {...props} mode="outlined" activeOutlineColor={colors.text} selectionColor={colors.primary} />;
-};
+  return (
+    <TextInput {...props} ref={ref} mode="outlined" activeOutlineColor={colors.text} selectionColor={colors.primary} />
+  );
+});
 
 CustomTextInput.Icon = TextInput.Icon;
 

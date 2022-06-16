@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 import { StyleSheet, View } from "react-native";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
+import { GLOBAL_STYLES } from "../../../styles";
 import { useTheme } from "react-native-paper";
 import { useForm, Controller } from "react-hook-form";
 import { TextInput, Button, Link, PasswordInput } from "../../../shared-components";
@@ -19,6 +19,8 @@ const Form = ({ isSigningUp, registerUser }) => {
       password: ""
     }
   });
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
 
   const onSubmit = (data) => {
     console.log(errors);
@@ -41,6 +43,7 @@ const Form = ({ isSigningUp, registerUser }) => {
               value={value}
               label="Name"
               style={STYLES.field}
+              onSubmitEditing={() => emailInputRef.current?.focus()}
             />
           )}
           name="name"
@@ -58,6 +61,8 @@ const Form = ({ isSigningUp, registerUser }) => {
               value={value}
               label="Email"
               style={STYLES.field}
+              ref={emailInputRef}
+              onSubmitEditing={() => passwordInputRef.current?.focus()}
             />
           )}
           name="email"
@@ -68,7 +73,13 @@ const Form = ({ isSigningUp, registerUser }) => {
             required: true
           }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <PasswordInput onBlur={onBlur} onChangeText={onChange} value={value} style={GLOBAL_STYLES.smMarginBottom} />
+            <PasswordInput
+              ref={passwordInputRef}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              style={GLOBAL_STYLES.smMarginBottom}
+            />
           )}
           name="password"
         />

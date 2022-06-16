@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import { GLOBAL_STYLES } from "../../../styles";
 import { useTheme } from "react-native-paper";
@@ -19,6 +19,7 @@ const Form = ({ isLoggingIn, login }) => {
       password: ""
     }
   });
+  const passwordInputRef = useRef();
 
   const onSubmit = (data) => {
     console.log(errors);
@@ -41,6 +42,7 @@ const Form = ({ isLoggingIn, login }) => {
               value={value}
               label="Email"
               style={STYLES.field}
+              onSubmitEditing={() => passwordInputRef.current?.focus()}
             />
           )}
           name="email"
@@ -51,7 +53,13 @@ const Form = ({ isLoggingIn, login }) => {
             required: true
           }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <PasswordInput onBlur={onBlur} onChangeText={onChange} value={value} style={GLOBAL_STYLES.smMarginBottom} />
+            <PasswordInput
+              ref={passwordInputRef}
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              style={GLOBAL_STYLES.smMarginBottom}
+            />
           )}
           name="password"
         />
