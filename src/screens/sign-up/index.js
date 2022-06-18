@@ -1,24 +1,28 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { Keyboard, StyleSheet } from "react-native";
+import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
+import { Text } from "react-native-paper";
+import { Form } from "./components";
+import { PressableView } from "../../shared-components";
 
-function SignUpScreen() {
+const SignUpScreen = () => {
   return (
-    <View style={STYLES.container}>
-      <Text style={STYLES.text}>SignUp Screen</Text>
-    </View>
+    <PressableView viewStyle={STYLES.container} onPress={Keyboard.dismiss}>
+      <Text style={STYLES.heading}>Create New Account</Text>
+      <Form />
+    </PressableView>
   );
-}
+};
 
 const STYLES = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
+    ...GLOBAL_STYLES.screenContainer,
+    flex: 1
   },
-  text: {
-    color: "#101010",
-    fontSize: 24,
-    fontWeight: "bold"
+  heading: {
+    ...TYPOGRAPHY.title,
+    ...TYPOGRAPHY.textAlignCenter,
+    ...GLOBAL_STYLES.lgMarginBottom
   }
 });
 

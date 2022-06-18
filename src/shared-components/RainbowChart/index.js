@@ -68,7 +68,7 @@ const LineChart = ({
   const xPanGesturePos = useSharedValue(0);
   const isPanGestureActive = useSharedValue(false);
 
-  const selectedGraph = useDerivedValue(() => modifiedData[currentSelected.value].data, [modifiedData]);
+  const selectedGraph = useDerivedValue(() => modifiedData[currentSelected.value].data || {}, [modifiedData]);
 
   const hasPathsBeenCalculated = useDerivedValue(() => !!selectedGraph.value.path);
 

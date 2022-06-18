@@ -53,7 +53,6 @@ export default StyleSheet.create({
   button: {
     fontSize: 14,
     lineHeight: 20,
-    textTransform: "uppercase",
     fontWeight: "700"
   },
   bold: {

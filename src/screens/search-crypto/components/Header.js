@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
-import { CloseIconButton } from "../../../shared-components";
-import { Text, TextInput, useTheme } from "react-native-paper";
+import { CloseIconButton, TextInput } from "../../../shared-components";
+import { Text } from "react-native-paper";
 import { connect } from "react-redux";
 import SearchCategory from "./SearchCategory";
 import {
@@ -23,7 +23,6 @@ const Header = ({
   isLoadingRecentSearches
 }) => {
   const navigation = useNavigation();
-  const { colors } = useTheme();
   const [keyword, setKeyword] = useState("");
   const closeScreen = () => navigation.navigate("MarketOverview");
 
@@ -47,14 +46,7 @@ const Header = ({
         <Text style={STYLES.heading}>Search</Text>
         <CloseIconButton onPress={closeScreen} />
       </View>
-      <TextInput
-        style={STYLES.searchBar}
-        placeholder="BTC/Bitcoin"
-        mode="outlined"
-        value={keyword}
-        onChangeText={onKeywordChange}
-        activeOutlineColor={colors.text}
-      />
+      <TextInput style={STYLES.searchBar} placeholder="BTC/Bitcoin" value={keyword} onChangeText={onKeywordChange} />
       {keyword === "" && (
         <SearchCategory label="Trending" searches={trendingSearches} isLoading={isLoadingTrendingSearches} />
       )}

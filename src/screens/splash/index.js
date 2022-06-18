@@ -1,13 +1,14 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
+import { useTheme } from "react-native-paper";
 
-function SplashScreen() {
+const SplashScreen = () => {
   return (
     <View style={STYLES.container}>
       <Text style={STYLES.text}>Splash Screen</Text>
     </View>
   );
-}
+};
 
 const STYLES = StyleSheet.create({
   container: {

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { DropDown, DatePicker } from "../../shared-components";
+import { DropDown, DatePicker, Button } from "../../shared-components";
 import { connect } from "react-redux";
 import { selectEventFilters, startEventsFetch, updateEventFilters } from "../../redux/discover";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 import { EVENTS_CONSTANTS } from "../../constants";
 
 const SelectEventFiltersScreen = ({ fetchEvents, updateEventFilters, navigation, appliedFilters }) => {
@@ -57,23 +57,8 @@ const SelectEventFiltersScreen = ({ fetchEvents, updateEventFilters, navigation,
         </View>
       </View>
       <View style={STYLES.buttonContainer}>
-        <Button
-          labelStyle={TYPOGRAPHY.button}
-          mode="contained"
-          onPress={applyFilter}
-          style={[STYLES.applyButton, STYLES.flex]}
-        >
-          Apply
-        </Button>
-        <Button
-          labelStyle={TYPOGRAPHY.button}
-          mode="contained"
-          onPress={resetFilters}
-          color={colors.card}
-          style={STYLES.flex}
-        >
-          Reset
-        </Button>
+        <Button mode="contained" onPress={applyFilter} style={[STYLES.applyButton, STYLES.flex]} label="Apply" />
+        <Button mode="contained" onPress={resetFilters} color={colors.card} style={STYLES.flex} label="Reset" />
       </View>
     </View>
   );

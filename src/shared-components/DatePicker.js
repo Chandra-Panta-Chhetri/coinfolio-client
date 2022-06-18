@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import CalendarPicker from "react-native-calendar-picker";
-import { useTheme, Portal, Modal, Button, Text } from "react-native-paper";
+import { useTheme, Portal, Modal, Text } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import TouchableNativeFeedback from "./TouchableNativeFeedback";
+import Button from "./Button";
 
 const DatePicker = ({ isRangePicker = true, onConfirm, initialStartDate = null, initialEndDate = null }) => {
   const { colors } = useTheme();
@@ -88,12 +89,8 @@ const DatePicker = ({ isRangePicker = true, onConfirm, initialStartDate = null, 
             previousComponent={<MaterialIcons name="navigate-before" size={28} color={colors.text} />}
           />
           <View style={STYLES.modalActionButtons}>
-            <Button labelStyle={TYPOGRAPHY.button} onPress={closePicker} color={colors.notification}>
-              Cancel
-            </Button>
-            <Button labelStyle={TYPOGRAPHY.button} onPress={confirmSelectedDates} disabled={!endDate}>
-              Ok
-            </Button>
+            <Button label="Cancel" onPress={closePicker} color={colors.notification} />
+            <Button label="Ok" onPress={confirmSelectedDates} disabled={!endDate} />
           </View>
         </Modal>
       </Portal>

@@ -1,44 +1,37 @@
 import USER_ACTION_TYPES from "./user.action.types";
 
-export const startAutoSignIn = () => ({
-  type: USER_ACTION_TYPES.START_AUTO_SIGN_IN
+export const startEmailLogin = (credentials) => ({
+  type: USER_ACTION_TYPES.EMAIL_LOGIN,
+  payload: credentials
 });
 
-export const startEmailSignIn = ({ email, password }) => ({
-  type: USER_ACTION_TYPES.START_EMAIL_SIGN_IN,
-  payload: {
-    email,
-    password,
-    loadingText: "Signing in"
-  }
+export const loginSuccess = (user, token) => ({
+  type: USER_ACTION_TYPES.LOGIN_SUCCESS,
+  payload: { user, token }
 });
 
-export const signInSuccess = (user) => ({
-  type: USER_ACTION_TYPES.SIGN_IN_SUCCESS,
-  payload: user
-});
-
-export const signInFail = (errorMsg) => ({
-  type: USER_ACTION_TYPES.SIGN_IN_FAIL,
+export const loginFail = (errorMsg) => ({
+  type: USER_ACTION_TYPES.LOGIN_FAIL,
   payload: errorMsg
 });
 
-export const startSignUp = (newUserInfo) => ({
-  type: USER_ACTION_TYPES.START_SIGN_UP,
-  payload: {
-    newUserInfo,
-    loadingText: "Creating new account"
-  }
+export const startUserRegister = (newUser) => ({
+  type: USER_ACTION_TYPES.REGISTER,
+  payload: newUser
 });
 
-export const signUpFail = (errorMsg) => ({
-  type: USER_ACTION_TYPES.SIGN_UP_FAIL,
+export const userRegisterFail = (errorMsg) => ({
+  type: USER_ACTION_TYPES.REGISTER_FAIL,
   payload: errorMsg
+});
+
+export const userRegisterSuccess = (user, token) => ({
+  type: USER_ACTION_TYPES.REGISTER_SUCCESS,
+  payload: { user, token }
 });
 
 export const startLogOut = () => ({
-  type: USER_ACTION_TYPES.START_LOG_OUT,
-  payload: { loadingText: "Signing out" }
+  type: USER_ACTION_TYPES.LOG_OUT
 });
 
 export const logOutSuccess = () => ({
