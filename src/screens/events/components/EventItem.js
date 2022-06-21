@@ -4,6 +4,7 @@ import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 import { Card, Text, useTheme } from "react-native-paper";
 import { TouchableNativeFeedback, Chip, IconImage } from "../../../shared-components";
 import { useNavigation } from "@react-navigation/native";
+import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const EventDetail = ({ event, index }) => {
   const { colors } = useTheme();
@@ -49,10 +50,10 @@ const EventDetail = ({ event, index }) => {
 
 const STYLES = StyleSheet.create({
   androidContainer: {
-    marginTop: 10
+    marginTop: GLOBAL_CONSTANTS.MD_MARGIN
   },
   infoContainer: {
-    marginTop: 10
+    marginTop: GLOBAL_CONSTANTS.MD_MARGIN
   },
   iconCoinLabel: { flexDirection: "row", alignItems: "center" },
   coinLabel: {
@@ -63,7 +64,7 @@ const STYLES = StyleSheet.create({
   coinsInvolvedContainer: {
     flexDirection: "row",
     flex: 1,
-    marginLeft: 7,
+    marginLeft: GLOBAL_CONSTANTS.SM_MARGIN,
     flex: 1,
     alignItems: "center"
   },

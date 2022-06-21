@@ -7,6 +7,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { PressableView, IconImage } from "../../../shared-components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 import { formatNumBasedOnSignWorklet, getStylesBasedOnSign } from "../../../utils";
+import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const STYLES = StyleSheet.create({
   dataHeader: { borderBottomWidth: 0 },
@@ -20,14 +21,14 @@ const STYLES = StyleSheet.create({
     flex: 1
   },
   marginRight: {
-    marginRight: 8
+    marginRight: GLOBAL_CONSTANTS.MD_MARGIN
   },
   assetTableCell: {
     alignItems: "center",
     flexDirection: "row",
     flex: 1.3
   },
-  assetNameAndTicker: { marginLeft: 7, flex: 1 },
+  assetNameAndTicker: { marginLeft: GLOBAL_CONSTANTS.SM_MARGIN, flex: 1 },
   assetTableHeading: {
     flexGrow: 1.8,
     flexDirection: "row",
@@ -40,7 +41,7 @@ const STYLES = StyleSheet.create({
     flexDirection: "row"
   },
   sortArrow: {
-    marginLeft: 6
+    marginLeft: GLOBAL_CONSTANTS.SM_MARGIN
   }
 });
 

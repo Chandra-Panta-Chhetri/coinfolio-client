@@ -5,6 +5,7 @@ import { formatNumBasedOnSignWorklet, getStylesBasedOnSign } from "../../../util
 import { Text, useTheme } from "react-native-paper";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 import { useNavigation } from "@react-navigation/native";
+import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const MarketOverviewItem = ({ item }) => {
   const { changePercent24Hr, name, priceUsd, image, rank, marketCap } = item;
@@ -49,13 +50,13 @@ const STYLES = StyleSheet.create({
     flex: 1,
     alignItems: "center"
   },
-  rankNamePercentChange: { flex: 0.7, marginLeft: 5 },
+  rankNamePercentChange: { flex: 0.7, marginLeft: GLOBAL_CONSTANTS.SM_MARGIN },
   rankName: { flexDirection: "row", alignItems: "center" },
   rank: {
     ...TYPOGRAPHY.caption,
     ...GLOBAL_STYLES.borderRadius,
     paddingHorizontal: 5,
-    marginRight: 4,
+    marginRight: GLOBAL_CONSTANTS.SM_MARGIN,
     textAlign: "center",
     borderWidth: 1
   },

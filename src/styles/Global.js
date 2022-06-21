@@ -26,13 +26,13 @@ export default StyleSheet.create({
     paddingVertical: 25
   },
   lgMarginBottom: {
-    marginBottom: 15
+    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN
   },
   mdMarginBottom: {
-    marginBottom: 10
+    marginBottom: GLOBAL_CONSTANTS.MD_MARGIN
   },
   smMarginBottom: {
-    marginBottom: 6
+    marginBottom: GLOBAL_CONSTANTS.SM_MARGIN
   },
   flatListContentContainer: {
     padding: 1
@@ -48,6 +48,6 @@ export default StyleSheet.create({
     width: "100%"
   },
   cardMargin: {
-    marginTop: 10
+    marginTop: GLOBAL_CONSTANTS.MD_MARGIN
   }
 });

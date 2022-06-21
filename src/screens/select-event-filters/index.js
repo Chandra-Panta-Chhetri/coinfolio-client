@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { selectEventFilters, startEventsFetch, updateEventFilters } from "../../redux/discover";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { Text, useTheme } from "react-native-paper";
-import { EVENTS_CONSTANTS } from "../../constants";
+import { EVENTS_CONSTANTS, GLOBAL_CONSTANTS } from "../../constants";
 
 const SelectEventFiltersScreen = ({ fetchEvents, updateEventFilters, navigation, appliedFilters }) => {
   const { colors } = useTheme();
@@ -77,7 +77,7 @@ const STYLES = StyleSheet.create({
     justifyContent: "space-between"
   },
   applyButton: {
-    marginRight: 10
+    marginRight: GLOBAL_CONSTANTS.MD_MARGIN
   }
 });
 

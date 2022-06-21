@@ -4,6 +4,7 @@ import { Card, Text } from "react-native-paper";
 import SETTINGS_CONSTANTS from "../Constants";
 import { TYPOGRAPHY } from "../../../styles";
 import { TouchableNativeFeedback } from "../../../shared-components";
+import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const SettingItem = ({
   label = "",
@@ -31,9 +32,7 @@ const SettingItem = ({
           </View>
           <View style={STYLES.labelContainer}>
             <Text style={TYPOGRAPHY.subheading}>{label}</Text>
-            {subheading ? (
-              <Text style={TYPOGRAPHY.caption}>{subheading}</Text>
-            ) : null}
+            {subheading ? <Text style={TYPOGRAPHY.caption}>{subheading}</Text> : null}
           </View>
         </View>
         <View style={STYLES.endComponentContainer}>{endComponent}</View>
@@ -42,18 +41,14 @@ const SettingItem = ({
   );
 
   if (onPress) {
-    return (
-      <TouchableNativeFeedback onPress={onPress}>
-        {mainComponent}
-      </TouchableNativeFeedback>
-    );
+    return <TouchableNativeFeedback onPress={onPress}>{mainComponent}</TouchableNativeFeedback>;
   }
 
   return mainComponent;
 };
 
 const STYLES = StyleSheet.create({
-  container: { marginTop: 10 },
+  container: { marginTop: GLOBAL_CONSTANTS.MD_MARGIN },
   cardContent: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -74,7 +69,7 @@ const STYLES = StyleSheet.create({
     height: SETTINGS_CONSTANTS.ICON_SIZE * 2
   },
   labelContainer: {
-    marginLeft: 8,
+    marginLeft: GLOBAL_CONSTANTS.MD_MARGIN,
     flex: 1
   },
   endComponentContainer: {

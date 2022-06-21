@@ -5,13 +5,14 @@ import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../styles";
 import { getStylesBasedOnSign, formatNumBasedOnSignWorklet } from "../../../../utils";
 import { TouchableNativeFeedback, IconImage } from "../../../../shared-components";
 import { useNavigation } from "@react-navigation/native";
+import { GLOBAL_CONSTANTS } from "../../../../constants";
 
 const GainerLoser = ({ coin, containerStyle = null }) => {
   const navigation = useNavigation();
   const { image, name, symbol, priceUsd, changePercent24Hr } = coin;
 
   const onPress = () => {
-    navigation.navigate("AssetDetail", {});
+    navigation.navigate("AssetDetail", { image, name });
   };
 
   return (
@@ -50,7 +51,7 @@ const STYLES = StyleSheet.create({
     flexDirection: "row",
     flex: 1,
     justifyContent: "space-between",
-    marginLeft: 10
+    marginLeft: GLOBAL_CONSTANTS.MD_MARGIN
   },
   priceAndPercent: {
     alignItems: "flex-end"

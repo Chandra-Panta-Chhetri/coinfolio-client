@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card } from "react-native-paper";
+import { GLOBAL_CONSTANTS } from "../../constants";
 import { GLOBAL_STYLES } from "../../styles";
 import Skeleton from "../Skeleton";
 
@@ -22,7 +23,7 @@ const STYLES = StyleSheet.create({
   },
   subheadingSkeleton: {
     height: 25,
-    marginTop: 10,
+    marginTop: GLOBAL_CONSTANTS.MD_MARGIN,
     width: "30%",
     ...GLOBAL_STYLES.borderRadius
   },

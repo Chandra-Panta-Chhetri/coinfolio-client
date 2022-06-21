@@ -14,6 +14,7 @@ import {
   selectHasMoreMarkets
 } from "../../redux/market";
 import { Skeleton, InfiniteScroll } from "../../shared-components";
+import { GLOBAL_CONSTANTS } from "../../constants";
 
 const ListHeader = () => (
   <>
@@ -32,12 +33,7 @@ const MarketOverviewScreen = ({ markets, getMarkets, isLoading, isLoadingMore, p
   const { colors } = useTheme();
 
   const renderSkeleton = ({ index }) => (
-    <Skeleton
-      style={[
-        STYLES.itemSkeleton,
-        { marginBottom: index !== perPage - 1 ? GLOBAL_STYLES.smMarginBottom.marginBottom : 0 }
-      ]}
-    />
+    <Skeleton style={[STYLES.itemSkeleton, { marginBottom: index !== perPage - 1 ? GLOBAL_CONSTANTS.SM_MARGIN : 0 }]} />
   );
 
   return (

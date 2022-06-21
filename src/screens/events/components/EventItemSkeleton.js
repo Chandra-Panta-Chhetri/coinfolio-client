@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { GLOBAL_STYLES } from "../../../styles";
 import { Skeleton } from "../../../shared-components";
 import { Card } from "react-native-paper";
+import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const EventDetailSkeleton = ({ containerStyle }) => (
   <Card style={[containerStyle, GLOBAL_STYLES.borderRadius]}>
@@ -24,7 +25,7 @@ const EventDetailSkeleton = ({ containerStyle }) => (
 
 const STYLES = StyleSheet.create({
   infoContainer: {
-    marginTop: 10
+    marginTop: GLOBAL_CONSTANTS.MD_MARGIN
   },
   icon: {
     ...GLOBAL_STYLES.iconSize,
@@ -47,7 +48,7 @@ const STYLES = StyleSheet.create({
   },
   coinsInvolved: {
     height: 15,
-    marginLeft: 10,
+    marginLeft: GLOBAL_CONSTANTS.MD_MARGIN,
     width: "30%",
     ...GLOBAL_STYLES.borderRadius
   },

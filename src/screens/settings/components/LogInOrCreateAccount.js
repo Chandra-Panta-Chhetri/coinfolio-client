@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { Text, Card } from "react-native-paper";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 import { Button } from "../../../shared-components";
+import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const LogInOrCreateAccount = ({ navigation }) => (
   <Card style={GLOBAL_STYLES.lgMarginBottom}>
@@ -31,7 +32,7 @@ const STYLES = StyleSheet.create({
     justifyContent: "space-between",
     marginVertical: 10
   },
-  logInButton: { marginRight: 10, flex: 1 }
+  logInButton: { marginRight: GLOBAL_CONSTANTS.MD_MARGIN, flex: 1 }
 });
 
 export default LogInOrCreateAccount;

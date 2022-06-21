@@ -5,6 +5,7 @@ import { TouchableNativeFeedback, IconImage } from "../../../../shared-component
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../styles";
 import { getStylesBasedOnSign, formatNumBasedOnSignWorklet } from "../../../../utils";
 import { useNavigation } from "@react-navigation/native";
+import { GLOBAL_CONSTANTS } from "../../../../constants";
 
 const TopCoin = ({ item: coin }) => {
   const navigation = useNavigation();
@@ -40,7 +41,7 @@ const STYLES = StyleSheet.create({
     width: 125
   },
   androidContainer: {
-    marginRight: 7
+    marginRight: GLOBAL_CONSTANTS.MD_MARGIN
   }
 });
 

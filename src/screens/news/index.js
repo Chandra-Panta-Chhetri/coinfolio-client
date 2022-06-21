@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { GLOBAL_STYLES } from "../../styles";
-import { NEWS_CONSTANTS } from "../../constants";
+import { GLOBAL_CONSTANTS, NEWS_CONSTANTS } from "../../constants";
 import { connect } from "react-redux";
 import {
   selectNews,
@@ -63,7 +63,7 @@ const NewsScreen = ({ isLoading, news, fetchInitialNews, fetchMoreNews, isLoadin
 
 const STYLES = StyleSheet.create({
   dropDownContainer: {
-    marginBottom: GLOBAL_STYLES.lgMarginBottom.marginBottom - 1,
+    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN - 1,
     marginHorizontal: GLOBAL_STYLES.screenContainer.paddingHorizontal
   },
   newsList: {

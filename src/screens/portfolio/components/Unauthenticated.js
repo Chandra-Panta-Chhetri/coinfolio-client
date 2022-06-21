@@ -24,7 +24,12 @@ const Unauthenticated = ({ navigation }) => {
         label="Create an account"
       />
       <Button
-        onPress={() => navigation.navigate("Login")}
+        onPress={() =>
+          navigation.navigate("AssetDetail", {
+            image: "https://assets.coincap.io/assets/icons/btc@2x.png",
+            name: "BTC"
+          })
+        }
         mode="contained"
         color={colors.card}
         labelStyle={{

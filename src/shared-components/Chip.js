@@ -2,7 +2,7 @@ import React from "react";
 import { useTheme, Text } from "react-native-paper";
 import PressableView from "./PressableView";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../styles";
-import { COLORS } from "../constants";
+import { COLORS, GLOBAL_CONSTANTS } from "../constants";
 
 const Chip = ({
   isHighlighted = false,
@@ -37,7 +37,7 @@ const Chip = ({
           TYPOGRAPHY.subheading,
           {
             color: textColor,
-            marginLeft: Icon ? 5 : 0
+            marginLeft: Icon ? GLOBAL_CONSTANTS.SM_MARGIN : 0
           }
         ]}
       >

@@ -114,7 +114,7 @@ const STYLES = StyleSheet.create({
     alignItems: "center",
     padding: 3,
     justifyContent: "center",
-    marginRight: 10
+    marginRight: GLOBAL_CONSTANTS.MD_MARGIN
   },
   heading: {
     ...GLOBAL_STYLES.screenContainer,

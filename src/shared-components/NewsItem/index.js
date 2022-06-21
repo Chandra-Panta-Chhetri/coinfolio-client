@@ -4,6 +4,7 @@ import { Card, Text } from "react-native-paper";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import TouchableNativeFeedback from "../TouchableNativeFeedback";
 import * as Linking from "expo-linking";
+import { GLOBAL_CONSTANTS } from "../../constants";
 
 const formatDate = (isoString) => new Date(isoString).toDateString();
 
@@ -36,10 +37,10 @@ class NewsItem extends PureComponent {
 const STYLES = StyleSheet.create({
   newsInfo: {
     flex: 1,
-    marginRight: 15
+    marginRight: GLOBAL_CONSTANTS.LG_MARGIN
   },
   dateSourceContainer: {
-    marginTop: 4,
+    marginTop: GLOBAL_CONSTANTS.SM_MARGIN,
     flexDirection: "row",
     justifyContent: "space-between"
   }

@@ -10,7 +10,7 @@ import {
   startRecentSearchesFetch,
   selectIsLoadingSearchResults
 } from "../../redux/market";
-import { MARKET_OVERVIEW_CONSTANTS } from "../../constants";
+import { GLOBAL_CONSTANTS, MARKET_OVERVIEW_CONSTANTS } from "../../constants";
 
 const renderSearchResult = ({ item }) => <SearchItem search={item} key={item.id} />;
 
@@ -20,9 +20,7 @@ const renderSkeleton = ({ index }) => (
       STYLES.searchSkeleton,
       {
         marginBottom:
-          index !== MARKET_OVERVIEW_CONSTANTS.NUM_SEARCH_RESULT_SKELETONS - 1
-            ? GLOBAL_STYLES.smMarginBottom.marginBottom
-            : 0
+          index !== MARKET_OVERVIEW_CONSTANTS.NUM_SEARCH_RESULT_SKELETONS - 1 ? GLOBAL_CONSTANTS.SM_MARGIN : 0
       }
     ]}
   />

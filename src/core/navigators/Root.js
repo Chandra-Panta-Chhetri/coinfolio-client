@@ -23,12 +23,12 @@ import { CloseIconButton } from "../../shared-components";
 import { TYPOGRAPHY } from "../../styles";
 import { connect } from "react-redux";
 import { selectIsUserAuthenticated } from "../../redux/user";
+import { GLOBAL_CONSTANTS } from "../../constants";
+import { AssetDetailFavorite, AssetDetailHeaderTitle } from "../../screens/asset-detail/components";
 
 const Stack = createStackNavigator();
 
 const RootNavigator = ({ isAuthenticated }) => {
-  const { colors } = useTheme();
-
   return (
     <Stack.Navigator>
       <Stack.Screen name="BottomTabsHome" component={BottomTabNavigator} options={{ headerShown: false }} />
@@ -125,7 +125,11 @@ const RootNavigator = ({ isAuthenticated }) => {
       <Stack.Screen
         name="AssetDetail"
         component={AssetDetailScreen}
-        options={{ headerTitle: "Asset Detail", headerTitleAlign: "center", headerTitleStyle: TYPOGRAPHY.headline }}
+        options={({ route }) => ({
+          headerTitle: () => <AssetDetailHeaderTitle {...route} />,
+          headerTitleAlign: "center",
+          headerRight: () => <AssetDetailFavorite {...route} />
+        })}
       />
       <Stack.Screen
         name="SelectEventFilters"
@@ -134,7 +138,9 @@ const RootNavigator = ({ isAuthenticated }) => {
           headerTitle: "Select Filters",
           headerTitleAlign: "center",
           headerLeft: null,
-          headerRight: () => <CloseIconButton style={{ marginRight: 10 }} onPress={() => navigation.goBack()} />,
+          headerRight: () => (
+            <CloseIconButton style={{ marginRight: GLOBAL_CONSTANTS.MD_MARGIN }} onPress={() => navigation.goBack()} />
+          ),
           headerTitleStyle: TYPOGRAPHY.headline
         })}
       />

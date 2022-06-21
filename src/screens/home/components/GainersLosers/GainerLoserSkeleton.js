@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { Card } from "react-native-paper";
 import { GLOBAL_STYLES } from "../../../../styles";
 import { Skeleton } from "../../../../shared-components";
+import { GLOBAL_CONSTANTS } from "../../../../constants";
 
 const GainerLoserSkeleton = ({ containerStyle }) => (
   <Card style={[containerStyle, GLOBAL_STYLES.borderRadius]}>
@@ -27,7 +28,7 @@ const STYLES = StyleSheet.create({
   },
   infoContainer: {
     flex: 1,
-    marginLeft: 10
+    marginLeft: GLOBAL_CONSTANTS.MD_MARGIN
   },
   fullNamePrice: {
     ...GLOBAL_STYLES.borderRadius,
@@ -37,7 +38,7 @@ const STYLES = StyleSheet.create({
   symbolPercent: {
     ...GLOBAL_STYLES.borderRadius,
     height: 15,
-    marginTop: 10,
+    marginTop: GLOBAL_CONSTANTS.MD_MARGIN,
     flex: 1
   },
   rowFlexbox: {
