@@ -1,6 +1,7 @@
 import React from "react";
 import { useTheme, Text } from "react-native-paper";
 import PressableView from "./PressableView";
+import { StyleSheet } from "react-native";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../styles";
 import { COLORS, GLOBAL_CONSTANTS } from "../constants";
 
@@ -28,13 +29,13 @@ const Chip = ({
 
   return (
     <PressableView
-      viewStyle={[GLOBAL_STYLES.iconRoundness, isHighlighted ? highlightedStyles : defaultStyles, containerStyle]}
+      viewStyle={[STYLES.container, isHighlighted ? highlightedStyles : defaultStyles, containerStyle]}
       {...otherProps}
     >
       {Icon && <Icon color={textColor} />}
       <Text
         style={[
-          TYPOGRAPHY.subheading,
+          STYLES.label,
           {
             color: textColor,
             marginLeft: Icon ? GLOBAL_CONSTANTS.SM_MARGIN : 0
@@ -46,5 +47,18 @@ const Chip = ({
     </PressableView>
   );
 };
+
+const STYLES = StyleSheet.create({
+  container: {
+    ...GLOBAL_STYLES.iconRoundness,
+    paddingHorizontal: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  label: {
+    ...TYPOGRAPHY.subheading
+  }
+});
 
 export default Chip;
