@@ -24,3 +24,5 @@ export { default as Button } from "./Button";
 export { default as Link } from "./Link";
 export { default as PasswordInput } from "./PasswordInput";
 export { default as BadgeTabBar } from "./BadgeTabBar";
+export { default as OutlinedText } from "./OutlinedText";
+export { default as MultiColumnView } from "./MultiColumnView";

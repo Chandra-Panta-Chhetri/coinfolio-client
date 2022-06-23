@@ -1,10 +1,6 @@
 import React from "react";
 import { ReText } from "react-native-redash";
-import Reanimated, {
-  useAnimatedStyle,
-  useDerivedValue,
-  useSharedValue
-} from "react-native-reanimated";
+import Reanimated, { useAnimatedStyle, useDerivedValue, useSharedValue } from "react-native-reanimated";
 import { TYPOGRAPHY } from "../../styles";
 import { boundXCoordinateWorklet } from "../../utils";
 
@@ -18,8 +14,7 @@ const ChartLabelItem = ({
 }) => {
   const labelWidth = useSharedValue(0);
 
-  const onLayout = (event) =>
-    (labelWidth.value = event.nativeEvent.layout.width);
+  const onLayout = (event) => (labelWidth.value = event.nativeEvent.layout.width);
 
   const labelInfo = useDerivedValue(() =>
     selectedGraph.value.labelCoordinates
@@ -33,16 +28,11 @@ const ChartLabelItem = ({
 
   const animatedLabelContainer = useAnimatedStyle(
     () => ({
-      opacity:
-        isPanGestureActive.value || !hasPathsBeenCalculated.value ? 0 : 1,
+      opacity: isPanGestureActive.value || !hasPathsBeenCalculated.value ? 0 : 1,
       position: "absolute",
       transform: [
         {
-          translateX: boundXCoordinateWorklet(
-            labelInfo.value.x,
-            maxWidth,
-            labelWidth.value
-          )
+          translateX: boundXCoordinateWorklet(labelInfo.value.x, maxWidth, labelWidth.value)
         },
         { translateY: labelInfo.value.y }
       ]
@@ -50,9 +40,7 @@ const ChartLabelItem = ({
     [maxWidth]
   );
 
-  const labelValue = useDerivedValue(
-    () => `$${parseFloat(labelInfo.value.val).toFixed(2)}`
-  );
+  const labelValue = useDerivedValue(() => `$${parseFloat(labelInfo.value.val).toFixed(2)}`);
 
   const STYLES = {
     ...TYPOGRAPHY.textAlignCenter,

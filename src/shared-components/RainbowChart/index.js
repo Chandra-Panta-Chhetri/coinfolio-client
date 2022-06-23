@@ -59,7 +59,7 @@ const LineChart = ({
     setModifiedData(formattedData);
   };
 
-  const buttonWidth = data.length && width / data.length;
+  const buttonWidth = (data.length && width / data.length) || 0;
 
   const pathTransistion = useSharedValue(0);
   const previousSelected = useSharedValue(initialSelectedGraph);
@@ -68,9 +68,14 @@ const LineChart = ({
   const xPanGesturePos = useSharedValue(0);
   const isPanGestureActive = useSharedValue(false);
 
-  const selectedGraph = useDerivedValue(() => modifiedData[currentSelected.value].data || {}, [modifiedData]);
+  const hasPathsBeenCalculated = useDerivedValue(
+    () => modifiedData[currentSelected.value].data.path !== undefined,
+    [modifiedData]
+  );
 
-  const hasPathsBeenCalculated = useDerivedValue(() => !!selectedGraph.value.path);
+  const selectedGraph = useDerivedValue(() =>
+    hasPathsBeenCalculated.value ? modifiedData[currentSelected.value].data : {}
+  );
 
   const animatedLabelOverlay = useAnimatedStyle(
     () => ({
@@ -84,14 +89,14 @@ const LineChart = ({
   }));
 
   const animatedPathProps = useAnimatedProps(() => {
-    const previousPath = modifiedData[previousSelected.value].data.path;
-    const currentPath = modifiedData[currentSelected.value].data.path;
+    const previousPath = hasPathsBeenCalculated ? modifiedData[previousSelected.value].data.path : "";
+    const currentPath = hasPathsBeenCalculated ? modifiedData[currentSelected.value].data.path : "";
 
     return {
       d: !previousPath ? "" : mixPath(pathTransistion.value, previousPath, currentPath),
       strokeWidth: withTiming(isPanGestureActive.value ? svgConfig.strokeWidth + 1 : svgConfig.strokeWidth)
     };
-  }, [modifiedData, svgConfig]);
+  }, [modifiedData]);
 
   const handleTimeFilterClick = (index) => {
     if (currentSelected.value === index) return;
@@ -101,7 +106,7 @@ const LineChart = ({
     pathTransistion.value = withTiming(1);
   };
 
-  if (width === 0 && height === 0) {
+  if (!hasBeenCalculated) {
     return (
       <View onLayout={onLayout} style={chartStyle}>
         <Skeleton style={GLOBAL_STYLES.fullContainer} />
@@ -178,7 +183,8 @@ const STYLES = StyleSheet.create({
     flexDirection: "row",
     alignSelf: "center",
     width: "100%",
-    marginTop: 30
+    marginTop: 30,
+    position: "relative"
   },
   headerContainer: {
     ...GLOBAL_STYLES.mdMarginBottom
