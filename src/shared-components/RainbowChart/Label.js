@@ -16,15 +16,17 @@ const ChartLabelItem = ({
 
   const onLayout = (event) => (labelWidth.value = event.nativeEvent.layout.width);
 
-  const labelInfo = useDerivedValue(() =>
-    selectedGraph.value.labelCoordinates
+  const labelInfo = useDerivedValue(() => {
+    console.log(selectedGraph.value.labelCoordinates);
+
+    return hasPathsBeenCalculated.value
       ? selectedGraph.value.labelCoordinates[indexOfCoordinates]
       : {
           x: 0,
           y: 0,
           val: 0
-        }
-  );
+        };
+  });
 
   const animatedLabelContainer = useAnimatedStyle(
     () => ({

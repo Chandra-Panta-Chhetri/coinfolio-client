@@ -2,7 +2,7 @@ import React from "react";
 import { useTheme, Text } from "react-native-paper";
 import PressableView from "./PressableView";
 import { StyleSheet } from "react-native";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../styles";
+import { TYPOGRAPHY } from "../styles";
 import { COLORS, GLOBAL_CONSTANTS } from "../constants";
 
 const Chip = ({
@@ -16,13 +16,13 @@ const Chip = ({
 }) => {
   const { colors, dark: isDarkMode } = useTheme();
   const highlightedStyles = highlightedStyle || {
-    backgroundColor: isDarkMode ? colors.text : colors.primary,
-    color: isDarkMode ? colors.border : "white"
+    backgroundColor: colors.primary,
+    color: COLORS.WHITE
   };
 
   const defaultStyles = defaultStyle || {
     color: colors.text,
-    backgroundColor: isDarkMode ? colors.border : COLORS.LIGHT_GREY
+    backgroundColor: colors.border
   };
 
   const textColor = isHighlighted ? highlightedStyles.color : defaultStyles.color;

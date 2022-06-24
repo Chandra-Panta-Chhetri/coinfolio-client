@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Text } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 import { LineChart, MultiColumnView, OutlinedText } from "../../shared-components";
 
 import dummydata from "../../redux/portfolio/dummydata.json";
@@ -11,28 +11,23 @@ const values = dummydata.data.prices;
 const historicValue = [
   {
     label: "1h",
-    data: values.hour,
-    defaultTimeLabel: "Past Hour"
+    data: values.hour
   },
   {
     label: "1d",
-    data: values.day,
-    defaultTimeLabel: "Past Day"
+    data: values.day
   },
   {
     label: "1m",
-    data: values.month,
-    defaultTimeLabel: "Past Month"
+    data: values.month
   },
   {
     label: "1y",
-    data: values.year,
-    defaultTimeLabel: "Past Year"
+    data: values.year
   },
   {
     label: "All",
-    data: values.all,
-    defaultTimeLabel: "All Time"
+    data: values.all
   }
 ];
 
@@ -70,6 +65,8 @@ const Statistic = ({ label, value }) => (
 );
 
 const AssetDetailOverviewScreen = () => {
+  const { colors } = useTheme();
+
   useEffect(() => {}, []);
 
   return (
@@ -94,11 +91,11 @@ const AssetDetailOverviewScreen = () => {
         dataPointsAccessor={dataPointsAccessor}
       />
       <View style={STYLES.statsContainer}>
-        <Text style={TYPOGRAPHY.headline}>Statistics</Text>
+        <Text style={STYLES.statsHeading}>Statistics</Text>
         <MultiColumnView
           sections={STATS_SECTIONS}
           renderItem={Statistic}
-          SectionSeparator={() => <View style={STYLES.statsSeparator} />}
+          SectionSeparator={() => <View style={[STYLES.statsSeparator, { borderColor: colors.text }]} />}
         />
       </View>
     </ScrollView>
@@ -106,14 +103,13 @@ const AssetDetailOverviewScreen = () => {
 };
 
 const STYLES = StyleSheet.create({
+  statsHeading: {
+    ...TYPOGRAPHY.headline,
+    marginBottom: GLOBAL_CONSTANTS.MD_MARGIN
+  },
   container: {
     ...GLOBAL_STYLES.screenContainer,
-    paddingTop: 0,
-    ...{ borderColor: "red", borderWidth: 1 }
-  },
-  header: {
-    marginBottom: GLOBAL_CONSTANTS.MD_MARGIN,
-    ...{ borderColor: "red", borderWidth: 1 }
+    paddingTop: 0
   },
   fullName: {
     ...TYPOGRAPHY.subheading,
@@ -121,12 +117,11 @@ const STYLES = StyleSheet.create({
   },
   nameRank: { flexDirection: "row", alignItems: "center" },
   statsContainer: {
-    marginBottom: GLOBAL_CONSTANTS.MD_MARGIN,
-    ...{ borderColor: "red", borderWidth: 1 }
+    marginTop: GLOBAL_CONSTANTS.LG_MARGIN
   },
-  statsSeparator: { borderWidth: 1, borderColor: "black", marginRight: GLOBAL_CONSTANTS.MD_MARGIN },
+  statsSeparator: { borderWidth: 1, marginRight: GLOBAL_CONSTANTS.MD_MARGIN },
   statistic: {
-    ...{ borderColor: "red", borderWidth: 1 }
+    marginBottom: GLOBAL_CONSTANTS.SM_MARGIN
   },
   lineChart: {
     width: "100%",

@@ -31,9 +31,7 @@ const Header = ({
   });
 
   const xVal = useDerivedValue(() => {
-    if (hasPathsBeenCalculated.value) {
-      if (!isPanGestureActive.value) return selectedGraph.value.defaultTimeLabel;
-
+    if (hasPathsBeenCalculated.value && isPanGestureActive.value) {
       const xValForPos = interpolate(
         xPanGesturePos.value,
         selectedGraph.value.xAxis.range,

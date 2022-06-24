@@ -18,7 +18,7 @@ import Label from "./Label";
 import RAINBOW_CHART_CONSTANTS from "./constants";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { Text, useTheme } from "react-native-paper";
-import { GLOBAL_CONSTANTS } from "../../constants";
+import { COLORS, GLOBAL_CONSTANTS } from "../../constants";
 
 const AnimatedPath = Reanimated.createAnimatedComponent(Path);
 
@@ -32,24 +32,19 @@ const LineChart = ({
   percentChangeAccessor = RAINBOW_CHART_CONSTANTS.DEFAULT_ACCESSOR_FUNC,
   dataPointsAccessor = RAINBOW_CHART_CONSTANTS.DEFAULT_ACCESSOR_FUNC
 }) => {
-  const { colors: themeColors } = useTheme();
+  const { colors: themeColors, dark: isDarkMode } = useTheme();
   const [chartDimensions, setChartDimensions] = useState({
     width: 0,
     height: 0,
     hasBeenCalculated: false
   });
   const [modifiedData, setModifiedData] = useState(data);
-  const { width, height, hasBeenCalculated } = chartDimensions;
+  const { width, hasBeenCalculated } = chartDimensions;
 
   const onLayout = (event) => {
     if (hasBeenCalculated) return;
     const chartHeight = event.nativeEvent.layout.height;
     const chartWidth = event.nativeEvent.layout.width;
-    setChartDimensions({
-      height: chartHeight,
-      width: chartWidth,
-      hasBeenCalculated: true
-    });
     const valueAccessors = {
       xValueAccessor,
       yValueAccessor,
@@ -58,6 +53,11 @@ const LineChart = ({
     };
     const formattedData = formatData(data, chartWidth, chartHeight, valueAccessors);
     setModifiedData(formattedData);
+    setChartDimensions({
+      height: chartHeight,
+      width: chartWidth,
+      hasBeenCalculated: true
+    });
   };
 
   const buttonWidth = (data.length && width / data.length) || 0;
@@ -86,7 +86,7 @@ const LineChart = ({
   );
 
   const animatedTimeFilters = useAnimatedStyle(() => ({
-    opacity: withTiming(isPanGestureActive.value || !hasPathsBeenCalculated.value ? 0 : 1)
+    opacity: withTiming(!hasPathsBeenCalculated.value ? 0 : 1)
   }));
 
   const animatedPathProps = useAnimatedProps(() => {
@@ -152,14 +152,20 @@ const LineChart = ({
           />
         ))}
       </View>
-      <Reanimated.View style={[STYLES.timeFilterContainer, animatedTimeFilters]}>
+      <Reanimated.View
+        style={[
+          STYLES.timeFilterContainer,
+          animatedTimeFilters,
+          { backgroundColor: isDarkMode ? themeColors.surface : themeColors.border }
+        ]}
+      >
         <View style={StyleSheet.absoluteFill}>
           <Reanimated.View
             style={[
               STYLES.timeFilterOverlay,
               {
                 width: buttonWidth,
-                backgroundColor: themeColors.backgroundSelection
+                backgroundColor: isDarkMode ? themeColors.border : themeColors.surface
               },
               animatedLabelOverlay
             ]}
@@ -167,7 +173,7 @@ const LineChart = ({
         </View>
         {data.map((d, i) => (
           <PressableView key={d.label} onPress={() => handleTimeFilterClick(i)} viewStyle={{ width: buttonWidth }}>
-            <Text style={[TYPOGRAPHY.subheading, TYPOGRAPHY.textAlignCenter]}>{d.label}</Text>
+            <Text style={STYLES.timeFilterLabel}>{d.label}</Text>
           </PressableView>
         ))}
       </Reanimated.View>
@@ -180,11 +186,15 @@ const STYLES = StyleSheet.create({
     justifyContent: "space-between",
     position: "relative"
   },
+  timeFilterLabel: {
+    ...TYPOGRAPHY.subheading,
+    ...TYPOGRAPHY.textAlignCenter
+  },
   timeFilterContainer: {
     flexDirection: "row",
     alignSelf: "center",
     width: "100%",
-    marginTop: 30,
+    marginTop: 35,
     position: "relative"
   },
   headerContainer: {
@@ -194,8 +204,7 @@ const STYLES = StyleSheet.create({
     position: "relative"
   },
   timeFilterOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
+    ...StyleSheet.absoluteFillObject
   }
 });
 

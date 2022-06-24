@@ -49,19 +49,9 @@ const Cursor = ({
     ]
   }));
 
-  const animatedVerticalBar = useAnimatedStyle(() => ({
-    transform: [
-      { translateX: xPanGesturePos.value },
-      {
-        scale: withSpring(isPanGestureActive.value ? 1 : 0, RAINBOW_CHART_CONSTANTS.ACTIVE_GESTURE_ANIMATION_CONFIG)
-      }
-    ]
-  }));
-
   return (
     <PanGestureHandler onGestureEvent={onGestureEvent}>
       <Reanimated.View style={StyleSheet.absoluteFill}>
-        <Reanimated.View style={[STYLES.verticalBar, animatedVerticalBar, { borderLeftColor: themeColors.text }]} />
         <Reanimated.View
           style={[
             {
@@ -77,14 +67,5 @@ const Cursor = ({
     </PanGestureHandler>
   );
 };
-
-const STYLES = StyleSheet.create({
-  verticalBar: {
-    borderLeftWidth: 2,
-    position: "absolute",
-    top: 0,
-    bottom: 0
-  }
-});
 
 export default Cursor;

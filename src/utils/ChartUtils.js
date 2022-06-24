@@ -151,8 +151,5 @@ export const buildLineChart = (
 export const formatData = (data, chartWidth, chartHeight, valueAccessors) =>
   data.map((d) => ({
     label: d.label,
-    data: {
-      defaultTimeLabel: d.defaultTimeLabel,
-      ...buildLineChart(d.data, chartWidth, chartHeight, valueAccessors)
-    }
+    data: buildLineChart(d.data, chartWidth, chartHeight, valueAccessors)
   }));

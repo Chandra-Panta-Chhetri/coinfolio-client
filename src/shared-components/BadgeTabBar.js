@@ -6,7 +6,7 @@ import { GLOBAL_CONSTANTS } from "../constants";
 
 const BadgeTabBar = ({ state, descriptors, navigation, containerStyles }) => {
   return (
-    <View style={[GLOBAL_STYLES.screenContainer, containerStyles]}>
+    <View style={[STYLES.container, containerStyles]}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={[STYLES.tabs]}>
         {state.routes.map((route, i) => {
           const { options } = descriptors[route.key];
@@ -50,6 +50,9 @@ const BadgeTabBar = ({ state, descriptors, navigation, containerStyles }) => {
 };
 
 const STYLES = StyleSheet.create({
+  container: {
+    ...GLOBAL_STYLES.screenContainer
+  },
   tabs: {
     flexGrow: 1
   },

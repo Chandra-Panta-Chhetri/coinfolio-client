@@ -8,7 +8,7 @@ export default StyleSheet.create({
   },
   screenContainer: {
     paddingHorizontal: 10,
-    paddingVertical: 25
+    paddingVertical: 20
   },
   flatListContentContainer: {
     padding: 1

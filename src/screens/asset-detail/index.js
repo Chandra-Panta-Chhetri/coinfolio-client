@@ -17,7 +17,7 @@ const AssetDetailScreen = () => (
       lazy: true,
       tabBarScrollEnabled: true
     }}
-    tabBar={BadgeTabBar}
+    tabBar={(props) => <BadgeTabBar {...props} containerStyles={STYLES.tabBar} />}
   >
     <Tab.Screen
       name="AssetDetailOverview"
@@ -57,6 +57,8 @@ const AssetDetailScreen = () => (
   </Tab.Navigator>
 );
 
-const STYLES = StyleSheet.create({});
+const STYLES = StyleSheet.create({
+  tabBar: { paddingBottom: 10 }
+});
 
 export default AssetDetailScreen;

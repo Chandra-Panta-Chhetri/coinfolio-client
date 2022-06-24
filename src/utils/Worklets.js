@@ -1,4 +1,5 @@
 import "react-native-reanimated";
+import { COLORS } from "../constants";
 
 export function roundPercentWorklet(num) {
   "worklet";
@@ -9,8 +10,7 @@ export function formatAmPmWorklet(date) {
   "worklet";
   const hours = date.getHours() <= 12 ? date.getHours() : date.getHours() - 12;
   const formattedHour = hours < 10 ? "0" + hours : hours;
-  const minutes =
-    date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+  const minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
   const amOrPm = date.getHours() >= 12 ? "PM" : "AM";
   return formattedHour + ":" + minutes + " " + amOrPm;
 }
@@ -38,5 +38,5 @@ export function formatNumBasedOnSignWorklet(num, strToAppend = " ") {
 
 export function getStylesBasedOnSignWorklet(num) {
   "worklet";
-  return num >= 0 ? { color: "#4ecf3b" } : { color: "#eb1c1b" };
+  return num >= 0 ? { color: COLORS.SUCCESS } : { color: COLORS.ERROR };
 }
