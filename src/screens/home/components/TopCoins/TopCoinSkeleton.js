@@ -17,24 +17,24 @@ const TopCoinSkeleton = () => (
 
 const STYLES = StyleSheet.create({
   cardContainer: {
-    ...GLOBAL_STYLES.borderRadius,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
     marginRight: GLOBAL_CONSTANTS.MD_MARGIN,
     width: 125
   },
   symbol: {
-    ...GLOBAL_STYLES.borderRadius,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
     width: 50,
     height: 10,
     marginTop: GLOBAL_CONSTANTS.MD_MARGIN
   },
   price: {
-    ...GLOBAL_STYLES.borderRadius,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
     width: 100,
     height: 10,
     marginTop: GLOBAL_CONSTANTS.MD_MARGIN
   },
   icon: {
-    ...GLOBAL_STYLES.iconRoundness,
+    borderRadius: GLOBAL_CONSTANTS.ICON_SIZE,
     ...GLOBAL_STYLES.iconSize
   }
 });

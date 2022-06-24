@@ -37,7 +37,7 @@ const TopCoin = ({ item: coin }) => {
 
 const STYLES = StyleSheet.create({
   topCoinCard: {
-    ...GLOBAL_STYLES.borderRadius,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
     width: 125
   },
   androidContainer: {

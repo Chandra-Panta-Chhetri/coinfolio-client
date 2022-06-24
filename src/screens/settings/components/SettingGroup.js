@@ -3,9 +3,10 @@ import { StyleSheet, View } from "react-native";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 import { Text } from "react-native-paper";
 import SettingItem from "./SettingItem";
+import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const SettingGroup = ({ settingOptions = [], heading = "", includeContainerStyle = true }) => (
-  <View style={includeContainerStyle ? GLOBAL_STYLES.lgMarginBottom : undefined}>
+  <View style={includeContainerStyle ? STYLES.container : undefined}>
     <Text style={STYLES.heading}>{heading}</Text>
     {settingOptions.map((settingOption) => (
       <SettingItem key={settingOption.label} {...settingOption} />
@@ -14,7 +15,10 @@ const SettingGroup = ({ settingOptions = [], heading = "", includeContainerStyle
 );
 
 const STYLES = StyleSheet.create({
-  heading: { ...TYPOGRAPHY.title, fontWeight: "normal" }
+  heading: { ...TYPOGRAPHY.title, fontWeight: "normal" },
+  container: {
+    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN
+  }
 });
 
 export default SettingGroup;

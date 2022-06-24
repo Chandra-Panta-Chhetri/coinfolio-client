@@ -53,7 +53,7 @@ const DiscoverScreen = () => (
 const STYLES = StyleSheet.create({
   heading: {
     ...GLOBAL_STYLES.screenContainer,
-    ...GLOBAL_STYLES.smMarginBottom,
+    marginBottom: GLOBAL_CONSTANTS.SM_MARGIN,
     ...TYPOGRAPHY.display1,
     paddingBottom: 0
   },

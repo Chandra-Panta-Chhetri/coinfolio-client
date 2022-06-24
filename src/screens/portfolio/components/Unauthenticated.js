@@ -4,6 +4,7 @@ import { Text, useTheme } from "react-native-paper";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 import LottieView from "lottie-react-native";
 import { Button } from "../../../shared-components";
+import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const Unauthenticated = ({ navigation }) => {
   const { colors } = useTheme();
@@ -50,7 +51,7 @@ const STYLES = StyleSheet.create({
   signUpBtn: {
     marginVertical: 10
   },
-  animationContainer: { ...GLOBAL_STYLES.mdMarginBottom, alignItems: "center" },
+  animationContainer: { marginBottom: GLOBAL_CONSTANTS.MD_MARGIN, alignItems: "center" },
   animation: {
     width: "100%",
     height: 270

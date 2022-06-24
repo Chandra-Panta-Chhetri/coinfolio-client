@@ -4,7 +4,8 @@ import { Text } from "react-native-paper";
 import { LineChart, MultiColumnView, OutlinedText } from "../../shared-components";
 
 import dummydata from "../../redux/portfolio/dummydata.json";
-import { GLOBAL_STYLES } from "../../styles";
+import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
+import { GLOBAL_CONSTANTS } from "../../constants";
 
 const values = dummydata.data.prices;
 const historicValue = [
@@ -58,9 +59,13 @@ const STATS_SECTIONS = [
 ];
 
 const Statistic = ({ label, value }) => (
-  <View key={label}>
-    <Text>{label}</Text>
-    <Text>{value}</Text>
+  <View key={label} style={STYLES.statistic}>
+    <Text style={TYPOGRAPHY.body1} numberOfLines={1}>
+      {label}
+    </Text>
+    <Text style={TYPOGRAPHY.body1} numberOfLines={1}>
+      {value}
+    </Text>
   </View>
 );
 
@@ -69,12 +74,16 @@ const AssetDetailOverviewScreen = () => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={STYLES.container}>
-      <View>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text>Bitcoin</Text>
-          <OutlinedText text={"1"} />
+      <View style={STYLES.header}>
+        <View style={STYLES.nameRank}>
+          <Text style={STYLES.fullName} numberOfLines={1}>
+            Bitcoin
+          </Text>
+          <OutlinedText text={"1"} style={TYPOGRAPHY.caption} />
         </View>
-        <Text>$20,600.11</Text>
+        <Text style={TYPOGRAPHY.display1} numberOfLines={1}>
+          $20,600.11
+        </Text>
       </View>
       <LineChart
         data={historicValue}
@@ -84,12 +93,12 @@ const AssetDetailOverviewScreen = () => {
         percentChangeAccessor={percentChangeAccessor}
         dataPointsAccessor={dataPointsAccessor}
       />
-      <View>
-        <Text>Statistics</Text>
+      <View style={STYLES.statsContainer}>
+        <Text style={TYPOGRAPHY.headline}>Statistics</Text>
         <MultiColumnView
           sections={STATS_SECTIONS}
           renderItem={Statistic}
-          SectionSeparator={() => <View style={{ borderWidth: 1, borderColor: "black", marginRight: 10 }} />}
+          SectionSeparator={() => <View style={STYLES.statsSeparator} />}
         />
       </View>
     </ScrollView>
@@ -100,6 +109,23 @@ const STYLES = StyleSheet.create({
   container: {
     ...GLOBAL_STYLES.screenContainer,
     paddingTop: 0,
+    ...{ borderColor: "red", borderWidth: 1 }
+  },
+  header: {
+    marginBottom: GLOBAL_CONSTANTS.MD_MARGIN,
+    ...{ borderColor: "red", borderWidth: 1 }
+  },
+  fullName: {
+    ...TYPOGRAPHY.subheading,
+    marginRight: GLOBAL_CONSTANTS.SM_MARGIN
+  },
+  nameRank: { flexDirection: "row", alignItems: "center" },
+  statsContainer: {
+    marginBottom: GLOBAL_CONSTANTS.MD_MARGIN,
+    ...{ borderColor: "red", borderWidth: 1 }
+  },
+  statsSeparator: { borderWidth: 1, borderColor: "black", marginRight: GLOBAL_CONSTANTS.MD_MARGIN },
+  statistic: {
     ...{ borderColor: "red", borderWidth: 1 }
   },
   lineChart: {

@@ -6,7 +6,7 @@ import { Button } from "../../../shared-components";
 import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const LogInOrCreateAccount = ({ navigation }) => (
-  <Card style={GLOBAL_STYLES.lgMarginBottom}>
+  <Card style={STYLES.cardContainer}>
     <Card.Content>
       <Text style={TYPOGRAPHY.title}>Get More Features!</Text>
       <Text style={TYPOGRAPHY.body1}>
@@ -31,6 +31,9 @@ const STYLES = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginVertical: 10
+  },
+  cardContainer: {
+    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN
   },
   logInButton: { marginRight: GLOBAL_CONSTANTS.MD_MARGIN, flex: 1 }
 });

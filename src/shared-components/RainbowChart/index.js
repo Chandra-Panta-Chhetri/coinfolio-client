@@ -18,6 +18,7 @@ import Label from "./Label";
 import RAINBOW_CHART_CONSTANTS from "./constants";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { Text, useTheme } from "react-native-paper";
+import { GLOBAL_CONSTANTS } from "../../constants";
 
 const AnimatedPath = Reanimated.createAnimatedComponent(Path);
 
@@ -187,14 +188,14 @@ const STYLES = StyleSheet.create({
     position: "relative"
   },
   headerContainer: {
-    ...GLOBAL_STYLES.mdMarginBottom
+    marginBottom: GLOBAL_CONSTANTS.MD_MARGIN
   },
   relativePosition: {
     position: "relative"
   },
   timeFilterOverlay: {
     ...StyleSheet.absoluteFillObject,
-    ...GLOBAL_STYLES.borderRadius
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   }
 });
 

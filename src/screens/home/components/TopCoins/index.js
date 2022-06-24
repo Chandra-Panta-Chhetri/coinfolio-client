@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, FlatList } from "react-native";
+import { View, FlatList, StyleSheet } from "react-native";
 import HeadingWithSeeAll from "../HeadingWithSeeAll";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -7,6 +7,7 @@ import { selectTopCoins, startTopCoinsFetch, selectIsLoadingTopCoins } from "../
 import TopCoin from "./TopCoin";
 import TopCoinSkeleton from "./TopCoinSkeleton";
 import { GLOBAL_STYLES } from "../../../../styles";
+import { GLOBAL_CONSTANTS } from "../../../../constants";
 
 const NUM_SKELETON = 5;
 const DUMMY_SKELETON_ARRAY = Array(NUM_SKELETON).fill("1");
@@ -20,7 +21,7 @@ const TopCoins = ({ coins, isLoading, fetchTopCoins }) => {
   }, []);
 
   return (
-    <View style={GLOBAL_STYLES.lgMarginBottom}>
+    <View style={STYLES.container}>
       <HeadingWithSeeAll title="Top Coins" onSeeAllPress={toMarketScreen} />
       {isLoading || coins.length === 0 ? (
         <FlatList
@@ -44,6 +45,12 @@ const TopCoins = ({ coins, isLoading, fetchTopCoins }) => {
     </View>
   );
 };
+
+const STYLES = StyleSheet.create({
+  container: {
+    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN
+  }
+});
 
 const mapStateToProps = (state) => ({
   coins: selectTopCoins(state),

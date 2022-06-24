@@ -6,7 +6,7 @@ import { GLOBAL_STYLES } from "../../styles";
 import Skeleton from "../Skeleton";
 
 const NewsItemSkeleton = ({ containerStyle }) => (
-  <Card style={[GLOBAL_STYLES.borderRadius, containerStyle]}>
+  <Card style={[STYLES.cardContainer, containerStyle]}>
     <Card.Content>
       <Skeleton style={STYLES.titleSkeleton} />
       <View style={STYLES.dateSourceContainer}>
@@ -19,17 +19,20 @@ const NewsItemSkeleton = ({ containerStyle }) => (
 const STYLES = StyleSheet.create({
   titleSkeleton: {
     height: 35,
-    ...GLOBAL_STYLES.borderRadius
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   },
   subheadingSkeleton: {
     height: 25,
     marginTop: GLOBAL_CONSTANTS.MD_MARGIN,
     width: "30%",
-    ...GLOBAL_STYLES.borderRadius
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   },
   dateSourceContainer: {
     flexDirection: "row",
     justifyContent: "space-between"
+  },
+  cardContainer: {
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   }
 });
 

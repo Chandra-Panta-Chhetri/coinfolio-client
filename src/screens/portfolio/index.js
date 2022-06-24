@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { selectCurrentUser } from "../../redux/user";
 import { createStructuredSelector } from "reselect";
@@ -8,6 +8,7 @@ import { GLOBAL_STYLES } from "../../styles";
 import { CardScrollView } from "../../shared-components";
 import { useHiddenFABOnScroll } from "../../hooks";
 import { CurrentValue, AssetsBreakdown, AllTimeProfit, SummaryTabs, Unauthenticated } from "./components";
+import { GLOBAL_CONSTANTS } from "../../constants";
 
 const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
@@ -32,7 +33,7 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
         onScroll={scrollHandler}
         ListHeaderComponent={
           <>
-            <CardScrollView containerStyle={GLOBAL_STYLES.lgMarginBottom}>
+            <CardScrollView containerStyle={STYLES.cardContainer}>
               <CurrentValue />
               <AllTimeProfit />
             </CardScrollView>
@@ -46,6 +47,12 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
     </>
   );
 }
+
+const STYLES = StyleSheet.create({
+  cardContainer: {
+    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN
+  }
+});
 
 const mapStateToProps = createStructuredSelector({
   isAuthenticated: selectCurrentUser

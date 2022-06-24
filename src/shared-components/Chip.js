@@ -50,7 +50,7 @@ const Chip = ({
 
 const STYLES = StyleSheet.create({
   container: {
-    ...GLOBAL_STYLES.iconRoundness,
+    borderRadius: GLOBAL_CONSTANTS.ICON_SIZE,
     paddingHorizontal: 10,
     flexDirection: "row",
     alignItems: "center",

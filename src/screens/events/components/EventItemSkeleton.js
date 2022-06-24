@@ -6,7 +6,7 @@ import { Card } from "react-native-paper";
 import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const EventDetailSkeleton = ({ containerStyle }) => (
-  <Card style={[containerStyle, GLOBAL_STYLES.borderRadius]}>
+  <Card style={[containerStyle, STYLES.cardContainer]}>
     <Card.Content>
       <View style={STYLES.iconCoinLabel}>
         <Skeleton style={STYLES.icon} />
@@ -27,18 +27,21 @@ const STYLES = StyleSheet.create({
   infoContainer: {
     marginTop: GLOBAL_CONSTANTS.MD_MARGIN
   },
+  cardContainer: {
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
+  },
   icon: {
     ...GLOBAL_STYLES.iconSize,
-    ...GLOBAL_STYLES.iconRoundness
+    borderRadius: GLOBAL_CONSTANTS.ICON_SIZE
   },
   title: {
     height: 15,
     width: "60%",
-    ...GLOBAL_STYLES.borderRadius
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   },
   date: {
-    ...GLOBAL_STYLES.smMarginBottom,
-    ...GLOBAL_STYLES.borderRadius,
+    marginBottom: GLOBAL_CONSTANTS.SM_MARGIN,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
     height: 15,
     width: "30%"
   },
@@ -50,12 +53,12 @@ const STYLES = StyleSheet.create({
     height: 15,
     marginLeft: GLOBAL_CONSTANTS.MD_MARGIN,
     width: "30%",
-    ...GLOBAL_STYLES.borderRadius
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   },
   label: {
     height: 15,
     width: "50%",
-    ...GLOBAL_STYLES.borderRadius
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   },
   coinLabel: {
     flexDirection: "row",

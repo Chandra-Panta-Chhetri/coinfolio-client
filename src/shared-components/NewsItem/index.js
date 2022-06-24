@@ -18,7 +18,7 @@ class NewsItem extends PureComponent {
     const { news, containerStyle } = this.props;
     return (
       <TouchableNativeFeedback viewContainerStyle={containerStyle} onPress={this.onNewsPress}>
-        <Card style={GLOBAL_STYLES.borderRadius}>
+        <Card style={STYLES.cardContainer}>
           <Card.Content>
             <Text style={TYPOGRAPHY.body2} numberOfLines={2}>
               {news.title}
@@ -43,6 +43,9 @@ const STYLES = StyleSheet.create({
     marginTop: GLOBAL_CONSTANTS.SM_MARGIN,
     flexDirection: "row",
     justifyContent: "space-between"
+  },
+  cardContainer: {
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   }
 });
 

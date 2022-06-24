@@ -1,8 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
-import { COLORS } from "../constants";
-import { GLOBAL_STYLES } from "../styles";
+import { COLORS, GLOBAL_CONSTANTS } from "../constants";
 import TouchableNativeFeedback from "./TouchableNativeFeedback";
 
 const Badge = ({ label, onPress, containerStyle = {} }) => {
@@ -19,7 +18,7 @@ const Badge = ({ label, onPress, containerStyle = {} }) => {
 
 const STYLES = StyleSheet.create({
   container: {
-    ...GLOBAL_STYLES.borderRadius,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
     padding: 7,
     flexDirection: "row",
     justifyContent: "center",

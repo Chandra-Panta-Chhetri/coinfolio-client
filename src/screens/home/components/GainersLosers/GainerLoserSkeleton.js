@@ -6,7 +6,7 @@ import { Skeleton } from "../../../../shared-components";
 import { GLOBAL_CONSTANTS } from "../../../../constants";
 
 const GainerLoserSkeleton = ({ containerStyle }) => (
-  <Card style={[containerStyle, GLOBAL_STYLES.borderRadius]}>
+  <Card style={[containerStyle, STYLES.cardContainer]}>
     <Card.Content style={STYLES.cardBody}>
       <Skeleton style={STYLES.icon} />
       <View style={STYLES.infoContainer}>
@@ -26,17 +26,20 @@ const STYLES = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center"
   },
+  cardContainer: {
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
+  },
   infoContainer: {
     flex: 1,
     marginLeft: GLOBAL_CONSTANTS.MD_MARGIN
   },
   fullNamePrice: {
-    ...GLOBAL_STYLES.borderRadius,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
     height: 15,
     flex: 1
   },
   symbolPercent: {
-    ...GLOBAL_STYLES.borderRadius,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
     height: 15,
     marginTop: GLOBAL_CONSTANTS.MD_MARGIN,
     flex: 1
@@ -46,7 +49,7 @@ const STYLES = StyleSheet.create({
   },
   icon: {
     ...GLOBAL_STYLES.iconSize,
-    ...GLOBAL_STYLES.iconRoundness
+    borderRadius: GLOBAL_CONSTANTS.ICON_SIZE
   }
 });
 

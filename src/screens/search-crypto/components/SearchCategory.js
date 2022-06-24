@@ -41,7 +41,7 @@ const SearchCategory = ({ label, searches, onHeadingClick, headingBtnLabel, isLo
 const STYLES = StyleSheet.create({
   container: {},
   header: {
-    ...GLOBAL_STYLES.lgMarginBottom,
+    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"

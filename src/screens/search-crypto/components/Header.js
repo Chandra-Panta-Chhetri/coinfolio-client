@@ -14,6 +14,7 @@ import {
 import { debounce } from "lodash";
 import { useNavigation } from "@react-navigation/native";
 import { TYPOGRAPHY, GLOBAL_STYLES } from "../../../styles";
+import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const Header = ({
   searchByKeyword,
@@ -72,7 +73,7 @@ const STYLES = StyleSheet.create({
   heading: {
     ...TYPOGRAPHY.display1
   },
-  searchBar: { ...GLOBAL_STYLES.lgMarginBottom }
+  searchBar: { marginBottom: GLOBAL_CONSTANTS.LG_MARGIN }
 });
 
 const mapStateToProps = (state) => ({

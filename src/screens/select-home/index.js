@@ -57,7 +57,7 @@ const SelectHomeScreen = ({ currentHomeScreen, changeHomeScreen }) => {
 };
 
 const STYLES = StyleSheet.create({
-  touchableNativeContainer: { ...GLOBAL_STYLES.mdMarginBottom },
+  touchableNativeContainer: { marginBottom: GLOBAL_CONSTANTS.MD_MARGIN },
   radioButtonGroup: {
     flexDirection: "row",
     justifyContent: "space-between",

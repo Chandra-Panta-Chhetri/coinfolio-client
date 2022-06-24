@@ -16,6 +16,7 @@ import {
   MoreOptionsIndicator,
   LogInOrCreateAccount
 } from "./components";
+import { GLOBAL_CONSTANTS } from "../../constants";
 
 const UserDetails = ({ currentUser }) => (
   <View style={STYLES.userDetailsContainer}>
@@ -65,7 +66,7 @@ const SettingsScreen = ({ logOut, currentUser, isLoggingOut, navigation }) => {
 
 const STYLES = StyleSheet.create({
   userDetailsContainer: {
-    ...GLOBAL_STYLES.lgMarginBottom,
+    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN,
     justifyContent: "center",
     alignItems: "center",
     minHeight: 130

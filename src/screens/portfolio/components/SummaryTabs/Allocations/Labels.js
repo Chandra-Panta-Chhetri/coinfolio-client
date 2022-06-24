@@ -26,7 +26,7 @@ const AllocationLabels = ({ data = [], selectedSlice = null, changeSelectedSlice
               STYLES.labelContainer,
               i === selectedSlice
                 ? {
-                    ...GLOBAL_STYLES.borderRadius,
+                    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
                     backgroundColor: colors.backgroundSelection
                   }
                 : null
@@ -56,7 +56,7 @@ const STYLES = StyleSheet.create({
     justifyContent: "center"
   },
   pieSliceDot: {
-    ...GLOBAL_STYLES.borderRadius,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
     width: 10,
     height: 5,
     marginRight: GLOBAL_CONSTANTS.SM_MARGIN

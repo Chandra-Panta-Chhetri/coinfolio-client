@@ -1,7 +1,7 @@
 import React from "react";
 import { GLOBAL_STYLES } from "../styles";
 import { StyleSheet, ScrollView, View } from "react-native";
-import { Chip } from "../shared-components";
+import Chip from "../shared-components/Chip";
 import { GLOBAL_CONSTANTS } from "../constants";
 
 const BadgeTabBar = ({ state, descriptors, navigation, containerStyles }) => {

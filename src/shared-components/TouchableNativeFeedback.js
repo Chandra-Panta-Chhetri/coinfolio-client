@@ -3,7 +3,8 @@ import {
   TouchableOpacity,
   TouchableNativeFeedback as RNTouchableNativeFeedback,
   Platform,
-  View
+  View,
+  StyleSheet
 } from "react-native";
 import { useTheme } from "react-native-paper";
 import { GLOBAL_STYLES } from "../styles";
@@ -18,19 +19,11 @@ const TouchableNativeFeedback = ({
 }) => {
   const { colors } = useTheme();
 
-  return Platform.OS === "android" &&
-    Platform.Version >=
-      GLOBAL_CONSTANTS.MIN_ANDROID_VERSION_FOR_TOUCHABLE_RIPPLES ? (
-    <View
-      style={[viewContainerStyle, GLOBAL_STYLES.borderRadius]}
-      onLayout={onLayout}
-    >
+  return Platform.OS === "android" && Platform.Version >= GLOBAL_CONSTANTS.MIN_ANDROID_VERSION_FOR_TOUCHABLE_RIPPLES ? (
+    <View style={[viewContainerStyle, STYLES.androidContainer]} onLayout={onLayout}>
       <RNTouchableNativeFeedback
         {...otherProps}
-        background={RNTouchableNativeFeedback.Ripple(
-          colors.touchableRipple,
-          false
-        )}
+        background={RNTouchableNativeFeedback.Ripple(colors.touchableRipple, false)}
         onPress={onPress}
       >
         {children}
@@ -48,5 +41,11 @@ const TouchableNativeFeedback = ({
     </TouchableOpacity>
   );
 };
+
+const STYLES = StyleSheet.create({
+  androidContainer: {
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
+  }
+});
 
 export default TouchableNativeFeedback;

@@ -17,7 +17,7 @@ const GainerLoser = ({ coin, containerStyle = null }) => {
 
   return (
     <TouchableNativeFeedback viewContainerStyle={containerStyle} onPress={onPress}>
-      <Card style={GLOBAL_STYLES.borderRadius}>
+      <Card style={STYLES.cardContainer}>
         <Card.Content style={STYLES.gainerLoserCardBody}>
           <IconImage
             source={{
@@ -46,6 +46,9 @@ const STYLES = StyleSheet.create({
   gainerLoserCardBody: {
     flexDirection: "row",
     alignItems: "center"
+  },
+  cardContainer: {
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   },
   gainerLoserInfoContainer: {
     flexDirection: "row",

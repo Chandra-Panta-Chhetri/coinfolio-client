@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, useTheme } from "react-native-paper";
 import { StyleSheet } from "react-native";
-import { GLOBAL_STYLES } from "../styles";
+import { GLOBAL_CONSTANTS } from "../constants";
 
 const OutlinedText = ({ text, ...otherProps }) => {
   const { colors } = useTheme();
@@ -15,7 +15,7 @@ const OutlinedText = ({ text, ...otherProps }) => {
 
 const STYLES = StyleSheet.create({
   container: {
-    ...GLOBAL_STYLES.borderRadius,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
     paddingHorizontal: 5,
     textAlign: "center",
     borderWidth: 1

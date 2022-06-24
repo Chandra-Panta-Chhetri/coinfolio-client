@@ -15,7 +15,7 @@ const STYLES = StyleSheet.create({
     paddingVertical: 8,
     borderTopColor: "black",
     borderBottomColor: "black",
-    ...GLOBAL_STYLES.tableTopBorderWidth
+    borderTopWidth: GLOBAL_CONSTANTS.TABLE_BORDER_WIDTH
   },
   flex: {
     flex: 1
@@ -117,10 +117,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
         {sortedAssets.map((asset, i) => (
           <DataTable.Row
             key={asset.ticker}
-            style={[
-              STYLES.dataRow,
-              i + 1 === assets.length ? GLOBAL_STYLES.tableBottomBorderWidth : { borderBottomWidth: 0 }
-            ]}
+            style={[STYLES.dataRow, { borderBottomWidth: i + 1 === assets.length ? GLOBAL_CONSTANTS.BORDER_WIDTH : 0 }]}
           >
             <View style={[STYLES.assetTableCell, STYLES.marginRight]}>
               <IconImage

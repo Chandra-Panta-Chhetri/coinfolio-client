@@ -15,7 +15,7 @@ const EventDetail = ({ event, index }) => {
       viewContainerStyle={index !== 0 ? STYLES.androidContainer : null}
       onPress={() => navigation.navigate("EventDetails", { eventName: event.title })}
     >
-      <Card style={GLOBAL_STYLES.borderRadius}>
+      <Card style={STYLES.cardContainer}>
         <Card.Content>
           <View style={STYLES.iconCoinLabel}>
             <IconImage
@@ -51,6 +51,9 @@ const EventDetail = ({ event, index }) => {
 const STYLES = StyleSheet.create({
   androidContainer: {
     marginTop: GLOBAL_CONSTANTS.MD_MARGIN
+  },
+  cardContainer: {
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   },
   infoContainer: {
     marginTop: GLOBAL_CONSTANTS.MD_MARGIN

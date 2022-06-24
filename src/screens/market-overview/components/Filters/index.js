@@ -37,7 +37,7 @@ const Filters = ({ activeFilters, updateMarketFilters }) => (
 
 const STYLES = StyleSheet.create({
   container: {
-    ...GLOBAL_STYLES.smMarginBottom,
+    marginBottom: GLOBAL_CONSTANTS.SM_MARGIN,
     flexGrow: 1
   },
   filterContainer: { marginRight: GLOBAL_CONSTANTS.MD_MARGIN, flexGrow: 1 },

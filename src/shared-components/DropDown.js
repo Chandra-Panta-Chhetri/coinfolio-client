@@ -3,8 +3,9 @@ import { Menu, useTheme, Text } from "react-native-paper";
 import { StyleSheet, View, ScrollView } from "react-native";
 import TouchableNativeFeedback from "./TouchableNativeFeedback";
 import { AntDesign } from "@expo/vector-icons";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../styles";
+import { TYPOGRAPHY } from "../styles";
 import TouchableOption from "./TouchableOption";
+import { GLOBAL_CONSTANTS } from "../constants";
 
 const DropDown = ({ selectedIndex = 0, onSelect, options = [], containerStyle = {} }) => {
   const { colors } = useTheme();
@@ -33,7 +34,7 @@ const DropDown = ({ selectedIndex = 0, onSelect, options = [], containerStyle = 
         onPress={toggleDropDownVisibility}
         viewContainerStyle={{
           borderColor: colors.text,
-          ...GLOBAL_STYLES.borderWidth
+          borderWidth: GLOBAL_CONSTANTS.BORDER_WIDTH
         }}
         onLayout={onLayout}
       >
@@ -84,7 +85,7 @@ const STYLES = StyleSheet.create({
   },
   menuContent: {
     paddingVertical: 0,
-    ...GLOBAL_STYLES.borderRadius
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   },
   dropDownAnchor: {
     height: 1

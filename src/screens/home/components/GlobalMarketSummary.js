@@ -46,7 +46,7 @@ const STYLES = StyleSheet.create({
     flexDirection: "row"
   },
   globalSkeleton: {
-    ...GLOBAL_STYLES.borderRadius,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
     height: 20,
     flex: 1
   },
@@ -54,8 +54,8 @@ const STYLES = StyleSheet.create({
     flexDirection: "row"
   },
   container: {
-    ...GLOBAL_STYLES.borderRadius,
-    ...GLOBAL_STYLES.lgMarginBottom
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
+    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN
   }
 });
 

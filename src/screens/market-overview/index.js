@@ -55,7 +55,7 @@ const MarketOverviewScreen = ({ markets, getMarkets, isLoading, isLoadingMore, p
 
 const STYLES = StyleSheet.create({
   listHeader: {
-    ...GLOBAL_STYLES.mdMarginBottom
+    marginBottom: GLOBAL_CONSTANTS.MD_MARGIN
   },
   itemSkeleton: {
     width: "100%",

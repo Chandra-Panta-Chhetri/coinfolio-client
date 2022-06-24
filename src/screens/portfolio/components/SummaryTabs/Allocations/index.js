@@ -7,6 +7,7 @@ import { selectPortfolioAssets } from "../../../../../redux/portfolio";
 import { roundPercentWorklet } from "../../../../../utils";
 import { GLOBAL_STYLES } from "../../../../../styles";
 import Labels from "./Labels";
+import { GLOBAL_CONSTANTS } from "../../../../../constants";
 
 const MAX_TO_SHOW = 5;
 const SLICE_COLORS = ["#ced6e5", "#f8921c", "#627eea", "#f2ba31", "#4c9d7c"];
@@ -45,7 +46,7 @@ const Allocations = ({ assets }) => {
   }, []);
 
   return (
-    <Card style={GLOBAL_STYLES.borderRadius}>
+    <Card style={STYLES.cardContainer}>
       <Card.Content>
         <PieChart
           pieChartStyle={STYLES.pieChart}
@@ -66,6 +67,9 @@ const STYLES = StyleSheet.create({
   pieChart: {
     height: 180,
     width: "100%"
+  },
+  cardContainer: {
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   }
 });
 
