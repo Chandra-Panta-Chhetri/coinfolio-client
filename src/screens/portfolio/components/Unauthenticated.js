@@ -28,9 +28,11 @@ const Unauthenticated = ({ navigation }) => {
         onPress={() =>
           navigation.navigate("AssetDetail", {
             image: "https://assets.coincap.io/assets/icons/btc@2x.png",
-            name: "BTC"
+            name: "BTC",
+            screen: "AssetDetailMarkets"
           })
         }
+        // onPress={() => navigation.navigate("Login")}
         mode="contained"
         color={colors.card}
         labelStyle={{

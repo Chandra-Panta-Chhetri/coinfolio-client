@@ -17,7 +17,7 @@ const ChartLabelItem = ({
   const onLayout = (event) => (labelWidth.value = event.nativeEvent.layout.width);
 
   const labelInfo = useDerivedValue(() => {
-    console.log(selectedGraph.value.labelCoordinates);
+    // console.log(selectedGraph.value.labelCoordinates);
 
     return hasPathsBeenCalculated.value
       ? selectedGraph.value.labelCoordinates[indexOfCoordinates]

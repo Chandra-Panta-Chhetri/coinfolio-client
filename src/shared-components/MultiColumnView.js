@@ -5,12 +5,10 @@ const MultiColumnView = ({ sections = [], renderItem, SectionSeparator, sectionS
   return (
     <View style={STYLES.container}>
       {sections.map(({ data }, index) => (
-        <>
-          <View key={index} style={[STYLES.sectionItem, sectionStyle]}>
-            {data.map(renderItem)}
-          </View>
+        <React.Fragment key={index}>
+          <View style={[STYLES.sectionItem, sectionStyle]}>{data.map(renderItem)}</View>
           {SectionSeparator && index !== sections.length - 1 && <SectionSeparator />}
-        </>
+        </React.Fragment>
       ))}
     </View>
   );

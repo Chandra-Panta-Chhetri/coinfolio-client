@@ -3,7 +3,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { StyleSheet } from "react-native";
 import { BadgeTabBar } from "../../shared-components";
 import AssetDetailOverviewScreen from "../asset-detail-overview";
-import AssetDetailExchangesScreen from "../asset-detail-exchanges";
+import AssetDetailMarketsScreen from "../asset-detail-markets";
 import AssetDetailAboutScreen from "../asset-detail-about";
 import AssetDetailNewsScreen from "../asset-detail-news";
 import AssetDetailEventsScreen from "../asset-detail-events";
@@ -27,10 +27,10 @@ const AssetDetailScreen = () => (
       }}
     />
     <Tab.Screen
-      name="AssetDetailExchanges"
-      component={AssetDetailExchangesScreen}
+      name="AssetDetailMarkets"
+      component={AssetDetailMarketsScreen}
       options={{
-        title: "Exchanges"
+        title: "Markets"
       }}
     />
     <Tab.Screen
