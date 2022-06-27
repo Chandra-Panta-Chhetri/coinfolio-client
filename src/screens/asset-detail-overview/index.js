@@ -70,7 +70,7 @@ const AssetDetailOverviewScreen = () => {
   useEffect(() => {}, []);
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={STYLES.container}>
+    <ScrollView contentContainerStyle={STYLES.container}>
       <View style={STYLES.header}>
         <View style={STYLES.nameRank}>
           <Text style={STYLES.fullName} numberOfLines={1}>

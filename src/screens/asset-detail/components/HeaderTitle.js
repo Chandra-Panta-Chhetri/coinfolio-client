@@ -11,9 +11,9 @@ const HeaderTitle = (props) => {
   } = props;
 
   return (
-    <View style={{ flexDirection: "row", alignItems: "flex-end" }}>
+    <View style={{ flexDirection: "row", alignItems: "center" }}>
       <IconImage source={{ uri: image }} />
-      <Text style={[TYPOGRAPHY.headline, { marginLeft: GLOBAL_CONSTANTS.SM_MARGIN }]}>{name}</Text>
+      <Text style={[TYPOGRAPHY.title, { marginLeft: GLOBAL_CONSTANTS.SM_MARGIN }]}>{name}</Text>
     </View>
   );
 };

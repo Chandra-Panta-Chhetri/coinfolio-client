@@ -19,12 +19,7 @@ const Table = ({ headings = [], containerStyle, renderRow, data = [] }) => {
   };
 
   return (
-    <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={containerStyle}
-      onLayout={onLayout}
-    >
+    <ScrollView horizontal contentContainerStyle={containerStyle} onLayout={onLayout}>
       <View>
         <View style={[STYLES.row]}>
           {headings.map((th) => (
@@ -36,7 +31,6 @@ const Table = ({ headings = [], containerStyle, renderRow, data = [] }) => {
         <FlatList
           data={data}
           horizontal={false}
-          showsVerticalScrollIndicator={false}
           renderItem={(props) => (
             <View style={STYLES.row} key={props.index}>
               {renderRow(props, cellStyle)}

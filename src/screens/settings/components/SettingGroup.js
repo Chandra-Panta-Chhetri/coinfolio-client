@@ -15,7 +15,7 @@ const SettingGroup = ({ settingOptions = [], heading = "", includeContainerStyle
 );
 
 const STYLES = StyleSheet.create({
-  heading: { ...TYPOGRAPHY.title, fontWeight: "normal" },
+  heading: { ...TYPOGRAPHY.title },
   container: {
     marginBottom: GLOBAL_CONSTANTS.LG_MARGIN
   }
