@@ -84,8 +84,9 @@ function* getMoreEvents() {
     if (events.length === 0 || combinedEvents.length >= res.metadata.total_count) {
       return yield put(noMoreEvents());
     }
-    yield put(moreEventsSuccess(combinedNews));
+    yield put(moreEventsSuccess(combinedEvents));
   } catch (err) {
+    console.log(err.message);
     yield put(moreEventsFail("There was an error while fetching more events"));
   }
 }

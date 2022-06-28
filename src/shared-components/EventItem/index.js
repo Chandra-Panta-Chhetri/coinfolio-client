@@ -1,12 +1,14 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
+import { TYPOGRAPHY } from "../../styles";
 import { Card, Text, useTheme } from "react-native-paper";
-import { TouchableNativeFeedback, Chip, IconImage } from "../../../shared-components";
+import TouchableNativeFeedback from "../TouchableNativeFeedback";
+import Chip from "../Chip";
+import IconImage from "../IconImage";
 import { useNavigation } from "@react-navigation/native";
-import { GLOBAL_CONSTANTS } from "../../../constants";
+import { GLOBAL_CONSTANTS } from "../../constants";
 
-const EventDetail = ({ event, index }) => {
+const EventItem = ({ event, index }) => {
   const { colors } = useTheme();
   const navigation = useNavigation();
 
@@ -80,4 +82,4 @@ const STYLES = StyleSheet.create({
   }
 });
 
-export default EventDetail;
+export default EventItem;

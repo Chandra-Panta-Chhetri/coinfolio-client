@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Text } from "react-native-paper";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
+import { TYPOGRAPHY } from "../../styles";
 import TouchableNativeFeedback from "../TouchableNativeFeedback";
 import * as Linking from "expo-linking";
 import { GLOBAL_CONSTANTS } from "../../constants";

@@ -1,11 +1,11 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { GLOBAL_STYLES } from "../../../styles";
-import { Skeleton } from "../../../shared-components";
+import { GLOBAL_STYLES } from "../../styles";
+import Skeleton from "../Skeleton";
 import { Card } from "react-native-paper";
-import { GLOBAL_CONSTANTS } from "../../../constants";
+import { GLOBAL_CONSTANTS } from "../../constants";
 
-const EventDetailSkeleton = ({ containerStyle }) => (
+const EventItemSkeleton = ({ containerStyle }) => (
   <Card style={[containerStyle, STYLES.cardContainer]}>
     <Card.Content>
       <View style={STYLES.iconCoinLabel}>
@@ -67,4 +67,4 @@ const STYLES = StyleSheet.create({
   }
 });
 
-export default EventDetailSkeleton;
+export default EventItemSkeleton;
