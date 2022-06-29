@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { EventsList } from "../../shared-components";
 
-const AssetDetailEventsScreen = () => {
+const AssetDetailEventsScreen = ({ navigation }) => {
   useEffect(() => {
     console.log("asset detail events screen mounted");
   }, []);
+
+  const navigateToFilters = () => navigation.navigate("AssetDetailEventFilters");
 
   return (
     <EventsList
@@ -13,7 +15,7 @@ const AssetDetailEventsScreen = () => {
       hasMoreToFetch={false}
       events={[]}
       fetchMore={() => console.log("fetching more")}
-      onFABClick={() => console.log("fab button clicked")}
+      onFABClick={navigateToFilters}
     />
   );
 };

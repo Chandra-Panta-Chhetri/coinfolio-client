@@ -19,7 +19,7 @@ const EventsScreen = ({
   isLoadingMore,
   hasMoreToFetch
 }) => {
-  const navigateToFiltersScreen = () => navigation.navigate("SelectEventFilters");
+  const navigateToFiltersScreen = () => navigation.navigate("DiscoverEventFilters");
 
   useEffect(() => {
     fetchEvents();

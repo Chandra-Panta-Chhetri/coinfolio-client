@@ -14,10 +14,11 @@ import {
   TermsAndPrivacyScreen,
   ChangePasswordScreen,
   ChangeEmailOrNameScreen,
-  SelectEventFiltersScreen,
+  DiscoverEventFiltersScreen,
   EventDetailScreen,
   SearchCryptoScreen,
-  AssetDetailScreen
+  AssetDetailScreen,
+  AssetDetailEventFiltersScreen
 } from "../../screens";
 import { CloseIconButton } from "../../shared-components";
 import { TYPOGRAPHY } from "../../styles";
@@ -101,13 +102,23 @@ const RootNavigator = ({ isAuthenticated }) => {
         component={AssetDetailScreen}
         options={({ route }) => ({
           headerTitle: () => <AssetDetailHeaderTitle {...route} />,
-
           headerRight: () => <AssetDetailFavorite {...route} />
         })}
       />
       <Stack.Screen
-        name="SelectEventFilters"
-        component={SelectEventFiltersScreen}
+        name="DiscoverEventFilters"
+        component={DiscoverEventFiltersScreen}
+        options={({ navigation }) => ({
+          headerTitle: "Select Filters",
+          headerLeft: null,
+          headerRight: () => (
+            <CloseIconButton style={{ marginRight: GLOBAL_CONSTANTS.MD_MARGIN }} onPress={() => navigation.goBack()} />
+          )
+        })}
+      />
+      <Stack.Screen
+        name="AssetDetailEventFilters"
+        component={AssetDetailEventFiltersScreen}
         options={({ navigation }) => ({
           headerTitle: "Select Filters",
           headerLeft: null,

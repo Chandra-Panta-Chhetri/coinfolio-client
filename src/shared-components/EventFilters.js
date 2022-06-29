@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { DropDown, DatePicker, Button } from "../../shared-components";
-import { connect } from "react-redux";
-import { selectEventFilters, startEventsFetch, updateEventFilters } from "../../redux/discover";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
+import Button from "./Button";
+import DatePicker from "./DatePicker";
+import DropDown from "./DropDown";
+import { GLOBAL_STYLES, TYPOGRAPHY } from "../styles";
 import { Text, useTheme } from "react-native-paper";
-import { EVENTS_CONSTANTS, GLOBAL_CONSTANTS } from "../../constants";
+import { EVENTS_CONSTANTS, GLOBAL_CONSTANTS } from "../constants";
 
-const SelectEventFiltersScreen = ({ fetchEvents, updateEventFilters, navigation, appliedFilters }) => {
+const EventFilters = ({ defaultFilters, onApplyFilters }) => {
   const { colors } = useTheme();
-  const [filters, setFilters] = useState(appliedFilters);
+  const [filters, setFilters] = useState(defaultFilters);
 
   const onDateRangeConfirm = (dateRange) =>
     setFilters({
@@ -17,13 +17,9 @@ const SelectEventFiltersScreen = ({ fetchEvents, updateEventFilters, navigation,
       dateRange: dateRange
     });
 
-  const applyFilter = () => {
-    updateEventFilters(filters);
-    fetchEvents();
-    navigation.navigate("Discover", { screen: "Events" });
-  };
-
   const onShowOnlyDropDownSelect = (_, selectedIndex) => setFilters({ ...filters, showOnly: selectedIndex });
+
+  const applyFilters = () => onApplyFilters && onApplyFilters(filters);
 
   const resetFilters = () => {
     setFilters({
@@ -57,7 +53,7 @@ const SelectEventFiltersScreen = ({ fetchEvents, updateEventFilters, navigation,
         </View>
       </View>
       <View style={STYLES.buttonContainer}>
-        <Button mode="contained" onPress={applyFilter} style={[STYLES.applyButton, STYLES.flex]} label="Apply" />
+        <Button mode="contained" onPress={applyFilters} style={[STYLES.applyButton, STYLES.flex]} label="Apply" />
         <Button mode="contained" onPress={resetFilters} color={colors.card} style={STYLES.flex} label="Reset" />
       </View>
     </View>
@@ -72,8 +68,8 @@ const STYLES = StyleSheet.create({
     flex: 1
   },
   filterLabel: {
-    marginBottom: GLOBAL_CONSTANTS.SM_MARGIN,
-    ...TYPOGRAPHY.subheading
+    ...TYPOGRAPHY.subheading,
+    marginBottom: GLOBAL_CONSTANTS.SM_MARGIN
   },
   buttonContainer: {
     flexDirection: "row",
@@ -84,13 +80,4 @@ const STYLES = StyleSheet.create({
   }
 });
 
-const mapStateToProps = (state) => ({
-  appliedFilters: selectEventFilters(state)
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  fetchEvents: () => dispatch(startEventsFetch()),
-  updateEventFilters: (filters) => dispatch(updateEventFilters(filters))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SelectEventFiltersScreen);
+export default EventFilters;
