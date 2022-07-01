@@ -1,5 +1,5 @@
 import DISCOVER_ACTION_TYPES from "./discover.action.types";
-import { NEWS_CONSTANTS, EVENTS_CONSTANTS } from "../../constants";
+import { NEWS_CONSTANTS } from "../../constants";
 
 export const startNewsFetch = (filter = NEWS_CONSTANTS.DEFAULT_FILTER) => ({
   type: DISCOVER_ACTION_TYPES.INITIAL_NEWS_FETCH,
@@ -64,16 +64,6 @@ export const updateEventFilters = (filters) => ({
   type: DISCOVER_ACTION_TYPES.UPDATE_EVENT_FILTERS,
   payload: filters
 });
-
-export const resetEventFilters = () =>
-  updateEventFilters({
-    dateRange: {
-      start: null,
-      end: null
-    },
-    showOnly: EVENTS_CONSTANTS.DEFAULT_SHOW_ONLY_FILTER_INDEX,
-    limit: EVENTS_CONSTANTS.NUM_TO_SHOW
-  });
 
 export const noMoreNews = () => ({
   type: DISCOVER_ACTION_TYPES.NO_MORE_NEWS

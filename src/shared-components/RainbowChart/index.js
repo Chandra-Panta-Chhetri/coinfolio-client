@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { formatData } from "../../utils";
@@ -39,20 +39,12 @@ const LineChart = ({
     hasBeenCalculated: false
   });
   const [modifiedData, setModifiedData] = useState(data);
-  const { width, hasBeenCalculated } = chartDimensions;
+  const { width, hasBeenCalculated, height } = chartDimensions;
 
   const onLayout = (event) => {
     if (hasBeenCalculated) return;
     const chartHeight = event.nativeEvent.layout.height;
     const chartWidth = event.nativeEvent.layout.width;
-    const valueAccessors = {
-      xValueAccessor,
-      yValueAccessor,
-      percentChangeAccessor,
-      dataPointsAccessor
-    };
-    const formattedData = formatData(data, chartWidth, chartHeight, valueAccessors);
-    setModifiedData(formattedData);
     setChartDimensions({
       height: chartHeight,
       width: chartWidth,
@@ -60,7 +52,20 @@ const LineChart = ({
     });
   };
 
-  const buttonWidth = (data.length && width / data.length) || 0;
+  useEffect(() => {
+    if (hasBeenCalculated && data.length > 0) {
+      const valueAccessors = {
+        xValueAccessor,
+        yValueAccessor,
+        percentChangeAccessor,
+        dataPointsAccessor
+      };
+      const formattedData = formatData(data, width, height, valueAccessors);
+      setModifiedData(formattedData);
+    }
+  }, [data, hasBeenCalculated]);
+
+  const buttonWidth = (modifiedData.length && width / modifiedData.length) || 0;
 
   const pathTransistion = useSharedValue(0);
   const previousSelected = useSharedValue(initialSelectedGraph);
@@ -70,7 +75,7 @@ const LineChart = ({
   const isPanGestureActive = useSharedValue(false);
 
   const hasPathsBeenCalculated = useDerivedValue(
-    () => modifiedData[currentSelected.value].data.path !== undefined,
+    () => modifiedData.length > 0 && modifiedData[currentSelected.value].data.path !== undefined,
     [modifiedData]
   );
 
@@ -90,8 +95,8 @@ const LineChart = ({
   }));
 
   const animatedPathProps = useAnimatedProps(() => {
-    const previousPath = hasPathsBeenCalculated ? modifiedData[previousSelected.value].data.path : "";
-    const currentPath = hasPathsBeenCalculated ? modifiedData[currentSelected.value].data.path : "";
+    const previousPath = hasPathsBeenCalculated.value ? modifiedData[previousSelected.value].data.path : "";
+    const currentPath = hasPathsBeenCalculated.value ? modifiedData[currentSelected.value].data.path : "";
 
     return {
       d: !previousPath ? "" : mixPath(pathTransistion.value, previousPath, currentPath),
@@ -107,7 +112,7 @@ const LineChart = ({
     pathTransistion.value = withTiming(1);
   };
 
-  if (!hasBeenCalculated) {
+  if (!hasBeenCalculated || data.length === 0) {
     return (
       <View onLayout={onLayout} style={chartStyle}>
         <Skeleton style={GLOBAL_STYLES.fullContainer} />

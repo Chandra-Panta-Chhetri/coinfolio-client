@@ -2,56 +2,15 @@ import React, { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 import { LineChart, MultiColumnView, OutlinedText } from "../../shared-components";
-
-import dummydata from "../../redux/portfolio/dummydata.json";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { GLOBAL_CONSTANTS } from "../../constants";
-
-const values = dummydata.data.prices;
-const historicValue = [
-  {
-    label: "1h",
-    data: values.hour
-  },
-  {
-    label: "1d",
-    data: values.day
-  },
-  {
-    label: "1m",
-    data: values.month
-  },
-  {
-    label: "1y",
-    data: values.year
-  },
-  {
-    label: "All",
-    data: values.all
-  }
-];
+import { connect } from "react-redux";
+import { selectAssetOverview, selectIsLoadingAssetOverview, startAssetOverviewFetch } from "../../redux/asset-detail";
 
 const xValueAccessor = (dataInstance) => dataInstance[1];
 const yValueAccessor = (dataInstance) => dataInstance[0];
 const percentChangeAccessor = (data) => data.percent_change;
 const dataPointsAccessor = (data) => data.prices;
-
-const STATS_SECTIONS = [
-  {
-    data: [
-      { label: "Market Cap", value: "$300 Bn" },
-      { label: "Volume 24h", value: "$30 Bn" },
-      { label: "Max Supply", value: "21.00 M" }
-    ]
-  },
-  {
-    data: [
-      { label: "Total Supply", value: "19.07 M" },
-      { label: "Dominance", value: "40%" },
-      { label: "All Time High", value: "$25,323.23" }
-    ]
-  }
-];
 
 const Statistic = ({ label, value }) => (
   <View key={label} style={STYLES.statistic}>
@@ -64,26 +23,28 @@ const Statistic = ({ label, value }) => (
   </View>
 );
 
-const AssetDetailOverviewScreen = () => {
+const AssetDetailOverviewScreen = ({ overview, isLoading, fetchOverview }) => {
   const { colors } = useTheme();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    fetchOverview();
+  }, []);
 
   return (
     <ScrollView contentContainerStyle={STYLES.container}>
       <View style={STYLES.header}>
         <View style={STYLES.nameRank}>
           <Text style={STYLES.fullName} numberOfLines={1}>
-            Bitcoin
+            {overview.name}
           </Text>
-          <OutlinedText text={"1"} style={TYPOGRAPHY.caption} />
+          <OutlinedText text={overview.rank} style={TYPOGRAPHY.caption} />
         </View>
         <Text style={TYPOGRAPHY.display1} numberOfLines={1}>
-          $20,600.11
+          ${overview.priceUsd}
         </Text>
       </View>
       <LineChart
-        data={historicValue}
+        data={overview.historicValue}
         chartStyle={STYLES.lineChart}
         xValueAccessor={xValueAccessor}
         yValueAccessor={yValueAccessor}
@@ -93,7 +54,7 @@ const AssetDetailOverviewScreen = () => {
       <View style={STYLES.statsContainer}>
         <Text style={STYLES.statsHeading}>Statistics</Text>
         <MultiColumnView
-          sections={STATS_SECTIONS}
+          sections={overview.statistics}
           renderItem={Statistic}
           SectionSeparator={() => <View style={[STYLES.statsSeparator, { borderColor: colors.text }]} />}
         />
@@ -129,4 +90,13 @@ const STYLES = StyleSheet.create({
   }
 });
 
-export default AssetDetailOverviewScreen;
+const mapStateToProps = (state) => ({
+  overview: selectAssetOverview(state),
+  isLoading: selectIsLoadingAssetOverview(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchOverview: (id) => dispatch(startAssetOverviewFetch(id))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AssetDetailOverviewScreen);

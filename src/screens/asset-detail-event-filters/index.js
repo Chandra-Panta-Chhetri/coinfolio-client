@@ -1,26 +1,25 @@
 import { EventFilters } from "../../shared-components";
 import React from "react";
-import { EVENTS_CONSTANTS } from "../../constants";
+import { connect } from "react-redux";
+import { selectAssetEventFilters, startAssetEventsFetch, updateAssetEventFilters } from "../../redux/asset-detail";
 
-const AssetDetailEventFiltersScreen = ({
-  navigation,
-  appliedFilters = {
-    dateRange: {
-      start: null,
-      end: null
-    },
-    showOnly: EVENTS_CONSTANTS.DEFAULT_SHOW_ONLY_FILTER_INDEX,
-    limit: EVENTS_CONSTANTS.NUM_TO_SHOW
-  }
-}) => {
+const AssetDetailEventFiltersScreen = ({ fetchEvents, updateEventFilters, navigation, appliedFilters }) => {
   const onApplyFilters = (filters) => {
-    console.log(filters);
-    // updateEventFilters(filters);
-    // fetchEvents();
+    updateEventFilters(filters);
+    fetchEvents();
     navigation.navigate("AssetDetail", { screen: "AssetDetailEvents" });
   };
 
   return <EventFilters defaultFilters={appliedFilters} onApplyFilters={onApplyFilters} />;
 };
 
-export default AssetDetailEventFiltersScreen;
+const mapStateToProps = (state) => ({
+  appliedFilters: selectAssetEventFilters(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchEvents: () => dispatch(startAssetEventsFetch()),
+  updateEventFilters: (filters) => dispatch(updateAssetEventFilters(filters))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AssetDetailEventFiltersScreen);

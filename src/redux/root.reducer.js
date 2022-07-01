@@ -6,6 +6,7 @@ import { portfolioReducer } from "./portfolio";
 import { discoverReducer } from "./discover";
 import { combineReducers } from "redux";
 import { marketReducer } from "./market";
+import { assetDetailReducer } from "./asset-detail";
 
 export default combineReducers({
   user: userReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   summary: summaryReducer,
   portfolio: portfolioReducer,
   discover: discoverReducer,
-  market: marketReducer
+  market: marketReducer,
+  assetDetail: assetDetailReducer
 });

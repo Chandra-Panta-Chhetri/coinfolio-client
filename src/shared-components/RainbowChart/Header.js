@@ -42,10 +42,12 @@ const Header = ({
     return "";
   });
 
-  const percentChange = useDerivedValue(() => selectedGraph.value.percentChange || 0);
+  const percentChange = useDerivedValue(() => (hasPathsBeenCalculated.value && selectedGraph.value.percentChange) || 0);
 
-  const percentChangeLabel = useDerivedValue(() =>
-    selectedGraph.value.percentChange ? `${formatNumBasedOnSignWorklet(roundPercentWorklet(percentChange.value))}%` : ""
+  const percentChangeLabel = useDerivedValue(
+    () =>
+      (hasPathsBeenCalculated.value && `${formatNumBasedOnSignWorklet(roundPercentWorklet(percentChange.value))}%`) ||
+      ""
   );
 
   const animatedPercentChange = useAnimatedStyle(() => ({

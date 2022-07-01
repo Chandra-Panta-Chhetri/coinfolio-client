@@ -12,7 +12,7 @@ import {
   noMoreNews
 } from "./discover.actions";
 import DISCOVER_ACTION_TYPES from "./discover.action.types";
-import { selectEventFilters, selectNewsPage, selectNews, selectEvents } from "./discover.selectors";
+import { selectEventFilters, selectNewsPage, selectNews, selectEvents, selectEventsPage } from "./discover.selectors";
 import { newsAPI, eventsAPI } from "../../api";
 import { EVENTS_CONSTANTS } from "../../constants";
 import { toISOSubstring } from "../../utils";
@@ -68,7 +68,7 @@ function* getEvents() {
 
 function* getMoreEvents() {
   try {
-    const page = yield select(selectNewsPage);
+    const page = yield select(selectEventsPage);
     const filters = yield select(selectEventFilters);
     const filtersDTO = {
       max: filters.limit,

@@ -10,12 +10,12 @@ import {
 } from "../../redux/discover";
 import { NewsList } from "../../shared-components";
 
-const NewsScreen = ({ fetchInitialNews, fetchMoreNews, ...otherProps }) => {
+const NewsScreen = ({ fetchNews, fetchMoreNews, ...otherProps }) => {
   useEffect(() => {
-    fetchInitialNews();
+    fetchNews();
   }, []);
 
-  return <NewsList fetchMore={fetchMoreNews} onFilterChange={fetchInitialNews} {...otherProps} />;
+  return <NewsList fetchMore={fetchMoreNews} onFilterChange={fetchNews} {...otherProps} />;
 };
 
 const mapStateToProps = (state) => ({
@@ -26,7 +26,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchInitialNews: (filter) => dispatch(startNewsFetch(filter)),
+  fetchNews: (filter) => dispatch(startNewsFetch(filter)),
   fetchMoreNews: (filter) => dispatch(startNextNewsFetch({ filter }))
 });
 

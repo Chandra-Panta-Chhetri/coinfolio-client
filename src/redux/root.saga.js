@@ -5,6 +5,7 @@ import { summarySagas } from "./summary";
 import { portfolioSagas } from "./portfolio";
 import { discoverSagas } from "./discover";
 import { marketSagas } from "./market";
+import { assetDetailSagas } from "./asset-detail";
 
 function* rootSaga() {
   yield all([
@@ -13,7 +14,8 @@ function* rootSaga() {
     call(summarySagas),
     call(portfolioSagas),
     call(discoverSagas),
-    call(marketSagas)
+    call(marketSagas),
+    call(assetDetailSagas)
   ]);
 }
 

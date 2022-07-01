@@ -22,14 +22,7 @@ const EventFilters = ({ defaultFilters, onApplyFilters }) => {
   const applyFilters = () => onApplyFilters && onApplyFilters(filters);
 
   const resetFilters = () => {
-    setFilters({
-      dateRange: {
-        start: null,
-        end: null
-      },
-      showOnly: EVENTS_CONSTANTS.DEFAULT_SHOW_ONLY_FILTER_INDEX,
-      limit: EVENTS_CONSTANTS.NUM_TO_SHOW
-    });
+    setFilters(EVENTS_CONSTANTS.DEFAULT_FILTERS);
   };
 
   return (

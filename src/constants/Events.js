@@ -13,6 +13,15 @@ export default {
       value: "hot_events"
     }
   ],
-  NUM_TO_SHOW: 12,
-  DEFAULT_SHOW_ONLY_FILTER_INDEX: 0
+  NUM_TO_SHOW: 6,
+  get DEFAULT_FILTERS() {
+    return {
+      dateRange: {
+        start: null,
+        end: null
+      },
+      showOnly: 0,
+      limit: 12
+    };
+  }
 };

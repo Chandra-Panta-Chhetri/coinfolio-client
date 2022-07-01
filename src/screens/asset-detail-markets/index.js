@@ -1,36 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Text } from "react-native-paper";
 import { StyleSheet } from "react-native";
 import { GLOBAL_STYLES } from "../../styles";
 import { Table } from "../../shared-components";
-
-const tableData = [
-  { name: "Binance", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-  { name: "Newton", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-  { name: "Crypto.com", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-  { name: "Coinbase", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-  { name: "AscendEx", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-  { name: "Kucoin", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-  { name: "ByBit", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-  { name: "Crypto.com", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-  { name: "Coinbase", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-  { name: "AscendEx", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-  { name: "Kucoin", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-  { name: "ByBit", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-  { name: "Crypto.com", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-  { name: "Coinbase", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-  { name: "AscendEx", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-  { name: "Kucoin", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-  { name: "ByBit", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" }
-];
+import { connect } from "react-redux";
+import { selectAssetMarkets, selectIsLoadingAssetMarkets, startAssetMarketsFetch } from "../../redux/asset-detail";
 
 const tableHeadings = ["Name", "Pair", "Price", "24H Volume"];
 
-const AssetDetailMarketsScreen = () => {
+const AssetDetailMarketsScreen = ({ fetchMarkets, markets, isLoading }) => {
+  useEffect(() => {
+    fetchMarkets();
+  }, []);
+
   return (
     <Table
       headings={tableHeadings}
-      data={tableData}
+      data={markets}
       containerStyle={STYLES.table}
       renderRow={({ item }, cellStyle) => (
         <>
@@ -51,4 +37,13 @@ const STYLES = StyleSheet.create({
   }
 });
 
-export default AssetDetailMarketsScreen;
+const mapStateToProps = (state) => ({
+  markets: selectAssetMarkets(state),
+  isLoading: selectIsLoadingAssetMarkets(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchMarkets: (id) => dispatch(startAssetMarketsFetch(id))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AssetDetailMarketsScreen);
