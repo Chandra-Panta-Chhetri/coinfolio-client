@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Text } from "react-native-paper";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../styles";
+import { TYPOGRAPHY } from "../../../../styles";
 import { getStylesBasedOnSign, formatNumBasedOnSignWorklet } from "../../../../utils";
 import { TouchableNativeFeedback, IconImage } from "../../../../shared-components";
 import { useNavigation } from "@react-navigation/native";
@@ -9,11 +9,9 @@ import { GLOBAL_CONSTANTS } from "../../../../constants";
 
 const GainerLoser = ({ coin, containerStyle = null }) => {
   const navigation = useNavigation();
-  const { image, name, symbol, priceUsd, changePercent24Hr } = coin;
+  const { image, name, symbol, priceUsd, changePercent24Hr, id } = coin;
 
-  const onPress = () => {
-    navigation.navigate("AssetDetail", { image, name });
-  };
+  const onPress = () => navigation.navigate("AssetDetail", { image, name, symbol, id });
 
   return (
     <TouchableNativeFeedback viewContainerStyle={containerStyle} onPress={onPress}>

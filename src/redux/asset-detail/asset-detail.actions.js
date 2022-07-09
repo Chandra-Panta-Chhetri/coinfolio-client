@@ -16,9 +16,9 @@ export const assetOverviewSuccess = (overview) => ({
   payload: overview
 });
 
-export const startAssetMarketsFetch = (id) => ({
+export const startAssetMarketsFetch = (id, query) => ({
   type: ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_MARKETS,
-  payload: id
+  payload: { id, query }
 });
 
 export const assetMarketsFail = (errorMsg) => ({
@@ -31,9 +31,9 @@ export const assetMarketsSuccess = (markets) => ({
   payload: markets
 });
 
-export const startAssetAboutFetch = (id) => ({
+export const startAssetAboutFetch = (id, query) => ({
   type: ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_ABOUT,
-  payload: id
+  payload: { id, query }
 });
 
 export const assetAboutFail = (errorMsg) => ({
@@ -46,9 +46,9 @@ export const assetAboutSuccess = (about) => ({
   payload: about
 });
 
-export const startAssetNewsFetch = (filter = NEWS_CONSTANTS.DEFAULT_FILTER) => ({
+export const startAssetNewsFetch = (query) => ({
   type: ASSET_DETAIL_ACTION_TYPES.INITIAL_ASSET_NEWS_FETCH,
-  payload: { filter }
+  payload: query
 });
 
 export const initialAssetNewsSuccess = (news) => ({
@@ -76,8 +76,9 @@ export const moreAssetNewsFail = (errorMsg) => ({
   payload: errorMsg
 });
 
-export const startAssetEventsFetch = () => ({
-  type: ASSET_DETAIL_ACTION_TYPES.INITIAL_ASSET_EVENTS_FETCH
+export const startAssetEventsFetch = (query = {}) => ({
+  type: ASSET_DETAIL_ACTION_TYPES.INITIAL_ASSET_EVENTS_FETCH,
+  payload: query
 });
 
 export const initialAssetEventsSuccess = (events) => ({
@@ -90,7 +91,7 @@ export const initialAssetEventsFail = (errorMsg) => ({
   payload: errorMsg
 });
 
-export const startNextAssetEventsFetch = (query) => ({
+export const startNextAssetEventsFetch = (query = {}) => ({
   type: ASSET_DETAIL_ACTION_TYPES.FETCH_MORE_ASSET_EVENTS,
   payload: query
 });

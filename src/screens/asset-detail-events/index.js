@@ -9,6 +9,7 @@ import {
   startAssetEventsFetch,
   startNextAssetEventsFetch
 } from "../../redux/asset-detail";
+import { lowerCaseAndHyphenate } from "../../utils";
 
 const AssetDetailEventsScreen = ({
   navigation,
@@ -17,18 +18,24 @@ const AssetDetailEventsScreen = ({
   isLoading,
   fetchMoreEvents,
   isLoadingMore,
-  hasMoreToFetch
+  hasMoreToFetch,
+  route
 }) => {
+  const { params } = route;
+  const query = { coins: lowerCaseAndHyphenate(params.name) };
+
   useEffect(() => {
-    console.log("asset detail events screen mounted");
-    //fetchEvents()
+    console.log(params, "in asset event");
+    // fetchEvents(query);
   }, []);
 
-  const navigateToFilters = () => navigation.navigate("AssetDetailEventFilters");
+  const navigateToFilters = () => navigation.navigate("AssetDetailEventFilters", query);
+
+  const fetchMore = () => fetchMoreEvents(query);
 
   return (
     <EventsList
-      fetchMore={fetchMoreEvents}
+      fetchMore={fetchMore}
       hasMoreToFetch={hasMoreToFetch}
       isLoading={isLoading}
       isLoadingMore={isLoadingMore}
@@ -46,8 +53,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchEvents: () => dispatch(startAssetEventsFetch()),
-  fetchMoreEvents: () => dispatch(startNextAssetEventsFetch())
+  fetchEvents: (query) => dispatch(startAssetEventsFetch(query)),
+  fetchMoreEvents: (query) => dispatch(startNextAssetEventsFetch(query))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AssetDetailEventsScreen);

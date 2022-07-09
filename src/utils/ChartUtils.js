@@ -58,7 +58,7 @@ const findMaxAndMinYX = (dataPoints) => {
 };
 
 export const buildSparkLine = (
-  data = [],
+  data = {},
   chartWidth = 0,
   chartHeight = 0,
   { xValueAccessor, yValueAccessor, dataPointsAccessor },
@@ -75,13 +75,13 @@ export const buildSparkLine = (
 };
 
 const getSvgPath = (
-  data = [],
+  data = {},
   chartWidth = 0,
   chartHeight = 0,
   { xValueAccessor, yValueAccessor, dataPointsAccessor },
   maxPointsToShow
 ) => {
-  const dataPoints = dataPointsAccessor(data).slice(0, maxPointsToShow);
+  const dataPoints = (dataPointsAccessor(data) || []).slice(0, maxPointsToShow);
   const parsedDataPoints = dataPoints.map((dp) => [parseFloat(xValueAccessor(dp)), parseFloat(yValueAccessor(dp))]);
   const extremas = findMaxAndMinYX(parsedDataPoints);
   const scaleXDomain = [extremas.x.minVal, extremas.x.maxVal];
@@ -115,7 +115,7 @@ const getSvgPath = (
 };
 
 export const buildLineChart = (
-  data = [],
+  data = {},
   chartWidth = 0,
   chartHeight = 0,
   { xValueAccessor, yValueAccessor, percentChangeAccessor, dataPointsAccessor },
@@ -129,7 +129,7 @@ export const buildLineChart = (
     maxPointsToShow
   );
   return {
-    percentChange: percentChangeAccessor(data),
+    percentChange: percentChangeAccessor(data) || 0,
     path: parse(path),
     labelCoordinates: [
       {
@@ -151,5 +151,5 @@ export const buildLineChart = (
 export const formatData = (data, chartWidth, chartHeight, valueAccessors) =>
   data.map((d) => ({
     label: d.label,
-    data: buildLineChart(d.data, chartWidth, chartHeight, valueAccessors)
+    data: buildLineChart(d.history, chartWidth, chartHeight, valueAccessors)
   }));

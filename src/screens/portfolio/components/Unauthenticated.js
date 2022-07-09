@@ -28,7 +28,9 @@ const Unauthenticated = ({ navigation }) => {
         onPress={() =>
           navigation.navigate("AssetDetail", {
             image: "https://assets.coincap.io/assets/icons/btc@2x.png",
-            name: "BTC"
+            symbol: "BTC",
+            id: "bitcoin",
+            name: "Bitcoin"
           })
         }
         // onPress={() => navigation.navigate("Login")}

@@ -8,41 +8,50 @@ import { GLOBAL_CONSTANTS } from "../../constants";
 import { PressableView } from "../../shared-components";
 import { connect } from "react-redux";
 import { selectAssetAbout, selectIsLoadingAssetAbout, startAssetAboutFetch } from "../../redux/asset-detail";
+import { AboutSkeleton } from "./components";
 
-const AssetDetailAboutScreen = ({ about, isLoading, fetchAbout }) => {
+const AssetDetailAboutScreen = ({ about, isLoading, fetchAbout, route }) => {
   const { colors } = useTheme();
   const { links = [], description } = about;
+  const { params } = route;
 
   useEffect(() => {
-    fetchAbout();
+    console.log(params, "in about");
+    // fetchAbout(params.id, { symbol: params.symbol, name: params.name });
   }, []);
 
   return (
     <ScrollView contentContainerStyle={STYLES.container}>
-      <Card style={STYLES.linksCard}>
-        <Card.Content>
-          {links.map((l, i) => (
-            <PressableView
-              onPress={() => Linking.openURL(l.value)}
-              key={l.label}
-              viewStyle={[
-                STYLES.linkContainer,
-                {
-                  borderColor: colors.border,
-                  borderBottomWidth: i === links.length - 1 ? 0 : GLOBAL_CONSTANTS.TABLE_BORDER_WIDTH
-                }
-              ]}
-            >
-              <Text style={STYLES.linkLabel}>{l.label}</Text>
-              <View style={STYLES.linkValueContainer}>
-                <Text style={STYLES.linkValue}>{l.value}</Text>
-                <EvilIcons name="external-link" size={GLOBAL_CONSTANTS.ICON_SIZE} color={colors.text} />
-              </View>
-            </PressableView>
-          ))}
-        </Card.Content>
-      </Card>
-      <Text style={TYPOGRAPHY.body1}>{description}</Text>
+      {isLoading ? (
+        <AboutSkeleton />
+      ) : (
+        <>
+          <Card style={STYLES.linksCard}>
+            <Card.Content>
+              {links.map((l, i) => (
+                <PressableView
+                  onPress={() => Linking.openURL(l.value)}
+                  key={l.label}
+                  viewStyle={[
+                    STYLES.linkContainer,
+                    {
+                      borderColor: colors.border,
+                      borderBottomWidth: i === links.length - 1 ? 0 : GLOBAL_CONSTANTS.TABLE_BORDER_WIDTH
+                    }
+                  ]}
+                >
+                  <Text style={STYLES.linkLabel}>{l.label}</Text>
+                  <View style={STYLES.linkValueContainer}>
+                    <Text style={STYLES.linkValue}>{l.value}</Text>
+                    <EvilIcons name="external-link" size={GLOBAL_CONSTANTS.ICON_SIZE} color={colors.text} />
+                  </View>
+                </PressableView>
+              ))}
+            </Card.Content>
+          </Card>
+          <Text style={TYPOGRAPHY.body1}>{description}</Text>
+        </>
+      )}
     </ScrollView>
   );
 };
@@ -83,7 +92,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchAbout: (id) => dispatch(startAssetAboutFetch(id))
+  fetchAbout: (id, query) => dispatch(startAssetAboutFetch(id, query))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AssetDetailAboutScreen);

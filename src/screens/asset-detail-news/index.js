@@ -10,11 +10,15 @@ import {
   startNextAssetNewsFetch
 } from "../../redux/asset-detail";
 
-const AssetDetailNewsScreen = ({ news, hasMoreToFetch, isLoading, isLoadingMore, fetchNews, fetchMoreNews }) => {
+const AssetDetailNewsScreen = ({ news, hasMoreToFetch, isLoading, isLoadingMore, fetchNews, fetchMoreNews, route }) => {
+  const { params } = route;
+
   useEffect(() => {
-    console.log("asset detail news screen mounted");
-    //fetchNews();
+    console.log(params, "in asset news");
+    //fetchNews({ currencies: params.symbol });
   }, []);
+
+  const fetchMore = (filter) => fetchMoreNews({ filter, currencies: params.symbol });
 
   return (
     <NewsList
@@ -22,7 +26,7 @@ const AssetDetailNewsScreen = ({ news, hasMoreToFetch, isLoading, isLoadingMore,
       hasMoreToFetch={hasMoreToFetch}
       isLoadingMore={isLoadingMore}
       onFilterChange={fetchNews}
-      fetchMore={fetchMoreNews}
+      fetchMore={fetchMore}
       news={news}
     />
   );
@@ -36,8 +40,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchNews: (filter) => dispatch(startAssetNewsFetch(filter)),
-  fetchMoreNews: (filter) => dispatch(startNextAssetNewsFetch({ filter }))
+  fetchNews: (query) => dispatch(startAssetNewsFetch(query)),
+  fetchMoreNews: (query) => dispatch(startNextAssetNewsFetch(query))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AssetDetailNewsScreen);

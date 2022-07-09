@@ -10,7 +10,7 @@ import AssetDetailEventsScreen from "../asset-detail-events";
 
 const Tab = createMaterialTopTabNavigator();
 
-const AssetDetailScreen = () => (
+const AssetDetailScreen = ({ route }) => (
   <Tab.Navigator
     screenOptions={{
       swipeEnabled: false,
@@ -25,6 +25,7 @@ const AssetDetailScreen = () => (
       options={{
         title: "Overview"
       }}
+      initialParams={route.params}
     />
     <Tab.Screen
       name="AssetDetailMarkets"
@@ -32,6 +33,7 @@ const AssetDetailScreen = () => (
       options={{
         title: "Markets"
       }}
+      initialParams={route.params}
     />
     <Tab.Screen
       name="AssetDetailAbout"
@@ -39,6 +41,7 @@ const AssetDetailScreen = () => (
       options={{
         title: "About"
       }}
+      initialParams={route.params}
     />
     <Tab.Screen
       name="AssetDetailNews"
@@ -46,6 +49,7 @@ const AssetDetailScreen = () => (
       options={{
         title: "News"
       }}
+      initialParams={route.params}
     />
     <Tab.Screen
       name="AssetDetailEvents"
@@ -53,6 +57,7 @@ const AssetDetailScreen = () => (
       options={{
         title: "Events"
       }}
+      initialParams={route.params}
     />
   </Tab.Navigator>
 );

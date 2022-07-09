@@ -25,137 +25,43 @@ import {
   noMoreAssetNews,
   noMoreAssetEvents
 } from "./asset-detail.actions";
-import { newsAPI, eventsAPI } from "../../api";
+import { newsAPI, eventsAPI, marketsAPI } from "../../api";
 import { EVENTS_CONSTANTS } from "../../constants";
-import { toISOSubstring, delayJS } from "../../utils";
+import { toISOSubstring } from "../../utils";
 
-import dummydata from "../portfolio/dummydata.json";
-const values = dummydata.data.prices;
-const historicValue = [
-  {
-    label: "1h",
-    data: values.hour
-  },
-  {
-    label: "1d",
-    data: values.day
-  },
-  {
-    label: "1m",
-    data: values.month
-  },
-  {
-    label: "1y",
-    data: values.year
-  },
-  {
-    label: "All",
-    data: values.all
-  }
-];
-
-function* getAssetOverview({}) {
+function* getAssetOverview({ payload: id }) {
   try {
-    const overview = {
-      priceUsd: "20,600.11",
-      rank: 1,
-      name: "Bitcoin",
-      statistics: [
-        {
-          data: [
-            { label: "Market Cap", value: "$300 Bn" },
-            { label: "Volume 24h", value: "$30 Bn" },
-            { label: "Max Supply", value: "21.00 M" }
-          ]
-        },
-        {
-          data: [
-            { label: "Total Supply", value: "19.07 M" },
-            { label: "Dominance", value: "40%" },
-            { label: "All Time High", value: "$25,323.23" }
-          ]
-        }
-      ],
-      historicValue
-    };
-    yield delayJS(4000);
+    const overview = yield marketsAPI.getAssetOverview(id);
     yield put(assetOverviewSuccess(overview));
   } catch (err) {
     yield put(assetOverviewFail("Server error while fetching the overview"));
   }
 }
 
-function* getAssetMarkets({}) {
+function* getAssetMarkets({ payload: id }) {
   try {
-    const markets = [
-      { name: "Binance", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-      { name: "Newton", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-      { name: "Crypto.com", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-      { name: "Coinbase", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-      { name: "AscendEx", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-      { name: "Kucoin", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-      { name: "ByBit", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-      { name: "Crypto.com", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-      { name: "Coinbase", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-      { name: "AscendEx", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-      { name: "Kucoin", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-      { name: "ByBit", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-      { name: "Crypto.com", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-      { name: "Coinbase", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-      { name: "AscendEx", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-      { name: "Kucoin", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" },
-      { name: "ByBit", pair: "BTC/USDT", price: "$21,200.52", vol24h: "$2,514,164" }
-    ];
-    yield delayJS(5000);
+    const markets = yield marketsAPI.getAssetExchanges(id);
     yield put(assetMarketsSuccess(markets));
   } catch (err) {
     yield put(assetMarketsFail("Server error while fetching the markets"));
   }
 }
 
-function* getAssetAbout({}) {
+function* getAssetAbout({ payload: { id, query } }) {
   try {
-    console.log("here in asset about");
-    const about = {
-      links: [
-        {
-          label: "Website",
-          value: "https://www.ethereum.org"
-        },
-        {
-          label: "Source Code",
-          value: "https://www.ethereum.org"
-        },
-        {
-          label: "Block Explorer",
-          value: "https://www.ethereum.org"
-        },
-        {
-          label: "Reddit",
-          value: "https://www.ethereum.org"
-        },
-        {
-          label: "Facebook",
-          value: "https://www.ethereum.org"
-        },
-        {
-          label: "Twitter",
-          value: "https://www.ethereum.org"
-        }
-      ],
-      description:
-        "Ethereum is a global, open-source platform for decentralized applications. In other words, the vision is to create a world computer that anyone can build applications in a decentralized manner; while all states and data are distributed and publicly accessible. Ethereum supports smart contracts in which developers can write code in order to program digital value. Examples of decentralized apps (dapps) that are built on Ethereum includes token, non-fungible tokens, decentralized finance apps, lending protocol, decentralized exchanges, and much more."
-    };
-    yield delayJS(5000);
+    const about = yield marketsAPI.getAssetAbout(id, query);
     yield put(assetAboutSuccess(about));
   } catch (err) {
     yield put(assetAboutFail("Server error while fetching the about"));
   }
 }
 
-function* getNews({ payload: { filter } }) {
+function* getNews({ payload: query }) {
   try {
-    const response = yield newsAPI.getNews({ filter });
+    const response = yield newsAPI.getNews({
+      ...query,
+      filter: query.filter || NEWS_CONSTANTS.DEFAULT_FILTER
+    });
     const news = yield response.results;
     if (news.length === 0) {
       return yield put(noMoreAssetNews());
@@ -166,10 +72,10 @@ function* getNews({ payload: { filter } }) {
   }
 }
 
-function* getMoreNews({ payload: { filter } }) {
+function* getMoreNews({ payload: query }) {
   try {
     const page = yield select(selectAssetNewsPage);
-    const res = yield newsAPI.getNews({ filter, page });
+    const res = yield newsAPI.getNews({ ...query, page });
     const news = yield res.results;
     const currentNews = yield select(selectAssetNews);
     const combinedNews = yield [...currentNews, ...news];
@@ -182,14 +88,15 @@ function* getMoreNews({ payload: { filter } }) {
   }
 }
 
-function* getEvents() {
+function* getEvents({ payload: query }) {
   try {
     const filters = yield select(selectAssetEventFilters);
     const filtersDTO = {
       max: filters.limit,
       showOnly: EVENTS_CONSTANTS.SHOW_ONLY_FILTERS[filters.showOnly].value,
       ...(filters.dateRange.start && { dateRangeStart: toISOSubstring(filters.dateRange.start) }),
-      ...(filters.dateRange.end && { dateRangeEnd: toISOSubstring(filters.dateRange.end) })
+      ...(filters.dateRange.end && { dateRangeEnd: toISOSubstring(filters.dateRange.end) }),
+      ...query
     };
     const res = yield eventsAPI.getEvents(filtersDTO);
     const events = yield res.results;
@@ -202,7 +109,7 @@ function* getEvents() {
   }
 }
 
-function* getMoreEvents() {
+function* getMoreEvents({ payload: query }) {
   try {
     const page = yield select(selectAssetEventsPage);
     const filters = yield select(selectAssetEventFilters);
@@ -211,7 +118,8 @@ function* getMoreEvents() {
       showOnly: EVENTS_CONSTANTS.SHOW_ONLY_FILTERS[filters.showOnly].value,
       page,
       ...(filters.dateRange.start && { dateRangeStart: toISOSubstring(filters.dateRange.start) }),
-      ...(filters.dateRange.end && { dateRangeEnd: toISOSubstring(filters.dateRange.end) })
+      ...(filters.dateRange.end && { dateRangeEnd: toISOSubstring(filters.dateRange.end) }),
+      ...query
     };
     const res = yield eventsAPI.getEvents(filtersDTO);
     const events = yield res.results;

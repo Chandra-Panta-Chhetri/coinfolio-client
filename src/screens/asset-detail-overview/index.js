@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
-import { LineChart, MultiColumnView, OutlinedText } from "../../shared-components";
+import { LineChart, MultiColumnView, OutlinedText, Skeleton } from "../../shared-components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { GLOBAL_CONSTANTS } from "../../constants";
 import { connect } from "react-redux";
 import { selectAssetOverview, selectIsLoadingAssetOverview, startAssetOverviewFetch } from "../../redux/asset-detail";
 
-const xValueAccessor = (dataInstance) => dataInstance[1];
-const yValueAccessor = (dataInstance) => dataInstance[0];
+const xValueAccessor = (dataInstance) => dataInstance.time;
+const yValueAccessor = (dataInstance) => dataInstance.priceUsd;
 const percentChangeAccessor = (data) => data.percent_change;
 const dataPointsAccessor = (data) => data.prices;
 
@@ -23,11 +23,13 @@ const Statistic = ({ label, value }) => (
   </View>
 );
 
-const AssetDetailOverviewScreen = ({ overview, isLoading, fetchOverview }) => {
+const AssetDetailOverviewScreen = ({ overview, isLoading, fetchOverview, route }) => {
   const { colors } = useTheme();
+  const { params } = route;
 
   useEffect(() => {
-    fetchOverview();
+    console.log(params, "in overview");
+    //fetchOverview(params.id);
   }, []);
 
   return (
@@ -44,7 +46,7 @@ const AssetDetailOverviewScreen = ({ overview, isLoading, fetchOverview }) => {
         </Text>
       </View>
       <LineChart
-        data={overview.historicValue}
+        data={overview.priceHistory}
         chartStyle={STYLES.lineChart}
         xValueAccessor={xValueAccessor}
         yValueAccessor={yValueAccessor}

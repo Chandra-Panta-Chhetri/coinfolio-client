@@ -8,14 +8,14 @@ import { useNavigation } from "@react-navigation/native";
 import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const MarketOverviewItem = ({ item }) => {
-  const { changePercent24Hr, name, priceUsd, image, rank, marketCap } = item;
+  const { changePercent24Hr, name, priceUsd, image, rank, marketCap, id, symbol } = item;
   const { colors } = useTheme();
   const navigation = useNavigation();
 
-  const onClick = () => navigation.navigate("AssetDetail", {});
+  const onPress = () => navigation.navigate("AssetDetail", { image, symbol, id, name });
 
   return (
-    <TouchableNativeFeedback onPress={onClick}>
+    <TouchableNativeFeedback onPress={onPress}>
       <View style={[STYLES.container]}>
         <IconImage
           source={{

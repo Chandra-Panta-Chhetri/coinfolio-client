@@ -5,15 +5,21 @@ import { GLOBAL_STYLES } from "../../styles";
 import { Table } from "../../shared-components";
 import { connect } from "react-redux";
 import { selectAssetMarkets, selectIsLoadingAssetMarkets, startAssetMarketsFetch } from "../../redux/asset-detail";
+import { MarketsSkeleton } from "./components";
 
 const tableHeadings = ["Name", "Pair", "Price", "24H Volume"];
 
-const AssetDetailMarketsScreen = ({ fetchMarkets, markets, isLoading }) => {
+const AssetDetailMarketsScreen = ({ fetchMarkets, markets, isLoading, route }) => {
+  const { params } = route;
+
   useEffect(() => {
-    fetchMarkets();
+    console.log(params, "in markets");
+    // fetchMarkets(params.id);
   }, []);
 
-  return (
+  return isLoading ? (
+    <MarketsSkeleton />
+  ) : (
     <Table
       headings={tableHeadings}
       data={markets}
@@ -43,7 +49,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchMarkets: (id) => dispatch(startAssetMarketsFetch(id))
+  fetchMarkets: (id, query) => dispatch(startAssetMarketsFetch(id, query))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AssetDetailMarketsScreen);

@@ -8,9 +8,9 @@ import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const SearchItem = ({ search, containerStyles = {} }) => {
   const navigation = useNavigation();
-  const { image, name, symbol } = search;
+  const { image, name, symbol, id } = search;
 
-  const onClick = () => navigation.navigate("AssetDetail", {});
+  const onClick = () => navigation.navigate("AssetDetail", { image, name, symbol, id });
 
   return (
     <TouchableNativeFeedback onPress={onClick}>

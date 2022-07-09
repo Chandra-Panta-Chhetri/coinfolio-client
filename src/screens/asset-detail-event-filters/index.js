@@ -3,10 +3,13 @@ import React from "react";
 import { connect } from "react-redux";
 import { selectAssetEventFilters, startAssetEventsFetch, updateAssetEventFilters } from "../../redux/asset-detail";
 
-const AssetDetailEventFiltersScreen = ({ fetchEvents, updateEventFilters, navigation, appliedFilters }) => {
+const AssetDetailEventFiltersScreen = ({ fetchEvents, updateEventFilters, navigation, appliedFilters, route }) => {
+  const { params } = route;
+  console.log("in event filters", params);
+
   const onApplyFilters = (filters) => {
     updateEventFilters(filters);
-    fetchEvents();
+    fetchEvents(params.query);
     navigation.navigate("AssetDetail", { screen: "AssetDetailEvents" });
   };
 
@@ -18,7 +21,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchEvents: () => dispatch(startAssetEventsFetch()),
+  fetchEvents: (query) => dispatch(startAssetEventsFetch(query)),
   updateEventFilters: (filters) => dispatch(updateAssetEventFilters(filters))
 });
 
