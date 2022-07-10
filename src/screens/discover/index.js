@@ -29,6 +29,7 @@ const DiscoverScreen = () => (
         tabBarScrollEnabled: true
       }}
       tabBar={(props) => <BadgeTabBar {...props} containerStyles={STYLES.tabBarContainer} />}
+      backBehavior="none"
     >
       <Tab.Screen
         name="News"

@@ -1,6 +1,5 @@
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { StyleSheet } from "react-native";
 import { BadgeTabBar } from "../../shared-components";
 import AssetDetailOverviewScreen from "../asset-detail-overview";
 import AssetDetailMarketsScreen from "../asset-detail-markets";
@@ -18,6 +17,7 @@ const AssetDetailScreen = ({ route }) => (
       tabBarScrollEnabled: true
     }}
     tabBar={BadgeTabBar}
+    backBehavior="none"
   >
     <Tab.Screen
       name="AssetDetailOverview"
@@ -61,9 +61,5 @@ const AssetDetailScreen = ({ route }) => (
     />
   </Tab.Navigator>
 );
-
-const STYLES = StyleSheet.create({
-  tabBar: {}
-});
 
 export default AssetDetailScreen;

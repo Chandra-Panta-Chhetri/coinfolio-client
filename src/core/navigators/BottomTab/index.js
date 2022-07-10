@@ -24,6 +24,7 @@ const BottomTabNavigator = ({ homeScreen }) => {
       activeColor={colors.primary}
       barStyle={tabBarStyle}
       initialRouteName={homeScreen.value}
+      backBehavior="none"
     >
       <BottomTab.Screen
         name="Home"
