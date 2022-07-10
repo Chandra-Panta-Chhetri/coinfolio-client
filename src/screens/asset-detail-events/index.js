@@ -22,11 +22,10 @@ const AssetDetailEventsScreen = ({
   route
 }) => {
   const { params } = route;
-  const query = { coins: lowerCaseAndHyphenate(params.name) };
+  const query = { coins: "roseon-finance" };
 
   useEffect(() => {
-    console.log(params, "in asset event");
-    // fetchEvents(query);
+    fetchEvents(query);
   }, []);
 
   const navigateToFilters = () => navigation.navigate("AssetDetailEventFilters", query);

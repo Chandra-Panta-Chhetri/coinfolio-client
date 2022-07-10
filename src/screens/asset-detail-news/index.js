@@ -14,18 +14,19 @@ const AssetDetailNewsScreen = ({ news, hasMoreToFetch, isLoading, isLoadingMore,
   const { params } = route;
 
   useEffect(() => {
-    console.log(params, "in asset news");
-    //fetchNews({ currencies: params.symbol });
+    fetchNews({ currencies: params.symbol });
   }, []);
 
-  const fetchMore = (filter) => fetchMoreNews({ filter, currencies: params.symbol });
+  const fetchMore = () => fetchMoreNews({ currencies: params.symbol });
+
+  const onFilterChange = (filter) => fetchNews({ filter, currencies: params.symbol });
 
   return (
     <NewsList
       isLoading={isLoading}
       hasMoreToFetch={hasMoreToFetch}
       isLoadingMore={isLoadingMore}
-      onFilterChange={fetchNews}
+      onFilterChange={onFilterChange}
       fetchMore={fetchMore}
       news={news}
     />

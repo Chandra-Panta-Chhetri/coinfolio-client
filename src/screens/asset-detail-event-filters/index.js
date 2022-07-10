@@ -5,7 +5,7 @@ import { selectAssetEventFilters, startAssetEventsFetch, updateAssetEventFilters
 
 const AssetDetailEventFiltersScreen = ({ fetchEvents, updateEventFilters, navigation, appliedFilters, route }) => {
   const { params } = route;
-  console.log("in event filters", params);
+  console.log(params);
 
   const onApplyFilters = (filters) => {
     updateEventFilters(filters);

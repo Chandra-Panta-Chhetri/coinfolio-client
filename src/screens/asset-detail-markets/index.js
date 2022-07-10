@@ -13,8 +13,7 @@ const AssetDetailMarketsScreen = ({ fetchMarkets, markets, isLoading, route }) =
   const { params } = route;
 
   useEffect(() => {
-    console.log(params, "in markets");
-    // fetchMarkets(params.id);
+    fetchMarkets(params.id);
   }, []);
 
   return isLoading ? (
@@ -28,8 +27,12 @@ const AssetDetailMarketsScreen = ({ fetchMarkets, markets, isLoading, route }) =
         <>
           <Text style={cellStyle}>{item.name}</Text>
           <Text style={cellStyle}>{item.pair}</Text>
-          <Text style={cellStyle}>{item.price}</Text>
-          <Text style={cellStyle}>{item.vol24h}</Text>
+          <Text style={cellStyle} numberOfLines={1}>
+            {item.priceUsd}
+          </Text>
+          <Text style={cellStyle} numberOfLines={1}>
+            {item.vol24h}
+          </Text>
         </>
       )}
     />

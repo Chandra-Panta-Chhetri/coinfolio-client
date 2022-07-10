@@ -5,9 +5,7 @@ import { GLOBAL_CONSTANTS } from "../constants";
 const IconImage = ({ source, fallbackURL = "https://coincap.io/static/logo_mark.png" }) => {
   const [imageURL, setImageURL] = useState(source.uri);
 
-  const onLoadError = () => {
-    setImageURL(fallbackURL);
-  };
+  const onLoadError = () => setImageURL(fallbackURL);
 
   return <Image source={{ uri: imageURL }} onError={onLoadError} style={STYLES.icon} />;
 };

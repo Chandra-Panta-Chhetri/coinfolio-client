@@ -39,6 +39,8 @@ export const getAssetExchanges = async (id, query = { perPage: 2000, page: 1 }) 
 };
 
 export const getAssetAbout = async (id, query) => {
+  // console.log("making asset-about req");
   const res = await axios.get(`/markets/${id}/about`, { params: query });
+  // console.log("asset about response", res.data);
   return res.data;
 };

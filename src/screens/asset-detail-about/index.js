@@ -16,8 +16,7 @@ const AssetDetailAboutScreen = ({ about, isLoading, fetchAbout, route }) => {
   const { params } = route;
 
   useEffect(() => {
-    console.log(params, "in about");
-    // fetchAbout(params.id, { symbol: params.symbol, name: params.name });
+    fetchAbout(params.id, { symbol: params.symbol, name: params.name });
   }, []);
 
   return (
@@ -28,7 +27,7 @@ const AssetDetailAboutScreen = ({ about, isLoading, fetchAbout, route }) => {
         <>
           <Card style={STYLES.linksCard}>
             <Card.Content>
-              {links.map((l, i) => (
+              {[].map((l, i) => (
                 <PressableView
                   onPress={() => Linking.openURL(l.value)}
                   key={l.label}

@@ -9,7 +9,7 @@ import { selectAssetOverview, selectIsLoadingAssetOverview, startAssetOverviewFe
 
 const xValueAccessor = (dataInstance) => dataInstance.time;
 const yValueAccessor = (dataInstance) => dataInstance.priceUsd;
-const percentChangeAccessor = (data) => data.percent_change;
+const percentChangeAccessor = (data) => data.percentChange;
 const dataPointsAccessor = (data) => data.prices;
 
 const Statistic = ({ label, value }) => (
@@ -28,7 +28,6 @@ const AssetDetailOverviewScreen = ({ overview, isLoading, fetchOverview, route }
   const { params } = route;
 
   useEffect(() => {
-    console.log(params, "in overview");
     //fetchOverview(params.id);
   }, []);
 

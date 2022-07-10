@@ -26,7 +26,7 @@ import {
   noMoreAssetEvents
 } from "./asset-detail.actions";
 import { newsAPI, eventsAPI, marketsAPI } from "../../api";
-import { EVENTS_CONSTANTS } from "../../constants";
+import { EVENTS_CONSTANTS, NEWS_CONSTANTS } from "../../constants";
 import { toISOSubstring } from "../../utils";
 
 function* getAssetOverview({ payload: id }) {
@@ -38,9 +38,9 @@ function* getAssetOverview({ payload: id }) {
   }
 }
 
-function* getAssetMarkets({ payload: id }) {
+function* getAssetMarkets({ payload: { id, query } }) {
   try {
-    const markets = yield marketsAPI.getAssetExchanges(id);
+    const markets = yield marketsAPI.getAssetExchanges(id, query);
     yield put(assetMarketsSuccess(markets));
   } catch (err) {
     yield put(assetMarketsFail("Server error while fetching the markets"));
@@ -93,7 +93,6 @@ function* getEvents({ payload: query }) {
     const filters = yield select(selectAssetEventFilters);
     const filtersDTO = {
       max: filters.limit,
-      showOnly: EVENTS_CONSTANTS.SHOW_ONLY_FILTERS[filters.showOnly].value,
       ...(filters.dateRange.start && { dateRangeStart: toISOSubstring(filters.dateRange.start) }),
       ...(filters.dateRange.end && { dateRangeEnd: toISOSubstring(filters.dateRange.end) }),
       ...query
@@ -115,7 +114,6 @@ function* getMoreEvents({ payload: query }) {
     const filters = yield select(selectAssetEventFilters);
     const filtersDTO = {
       max: filters.limit,
-      showOnly: EVENTS_CONSTANTS.SHOW_ONLY_FILTERS[filters.showOnly].value,
       page,
       ...(filters.dateRange.start && { dateRangeStart: toISOSubstring(filters.dateRange.start) }),
       ...(filters.dateRange.end && { dateRangeEnd: toISOSubstring(filters.dateRange.end) }),
