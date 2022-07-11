@@ -38,7 +38,7 @@ const LineChart = ({
     height: 0,
     hasBeenCalculated: false
   });
-  const [modifiedData, setModifiedData] = useState(data);
+  const [modifiedData, setModifiedData] = useState([]);
   const { width, hasBeenCalculated, height } = chartDimensions;
 
   const onLayout = (event) => {
@@ -74,10 +74,13 @@ const LineChart = ({
   const xPanGesturePos = useSharedValue(0);
   const isPanGestureActive = useSharedValue(false);
 
-  const hasPathsBeenCalculated = useDerivedValue(
-    () => modifiedData.length > 0 && modifiedData[currentSelected.value].data.path !== undefined,
-    [modifiedData]
-  );
+  const hasPathsBeenCalculated = useDerivedValue(() => {
+    return (
+      modifiedData[currentSelected.value] &&
+      modifiedData[currentSelected.value].data &&
+      modifiedData[currentSelected.value].data.path
+    );
+  }, [modifiedData]);
 
   const selectedGraph = useDerivedValue(() =>
     hasPathsBeenCalculated.value ? modifiedData[currentSelected.value].data : {}

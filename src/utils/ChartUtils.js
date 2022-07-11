@@ -83,6 +83,7 @@ const getSvgPath = (
   const dataPoints = (dataPointsAccessor(data) || []).slice(0, maxPointsToShow);
   const parsedDataPoints = dataPoints.map((dp) => [parseFloat(xValueAccessor(dp)), parseFloat(yValueAccessor(dp))]);
   const extremas = findMaxAndMinYX(parsedDataPoints);
+  console.log(extremas);
   const scaleXDomain = [extremas.x.minVal, extremas.x.maxVal];
   const scaleYDomain = [extremas.y.minVal, extremas.y.maxVal];
   const scaleXRange = [0, chartWidth];

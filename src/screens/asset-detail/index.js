@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { BadgeTabBar } from "../../shared-components";
 import AssetDetailOverviewScreen from "../asset-detail-overview";
@@ -9,57 +9,59 @@ import AssetDetailEventsScreen from "../asset-detail-events";
 
 const Tab = createMaterialTopTabNavigator();
 
-const AssetDetailScreen = ({ route }) => (
-  <Tab.Navigator
-    screenOptions={{
-      swipeEnabled: false,
-      lazy: true,
-      tabBarScrollEnabled: true
-    }}
-    tabBar={BadgeTabBar}
-    backBehavior="none"
-  >
-    <Tab.Screen
-      name="AssetDetailOverview"
-      component={AssetDetailOverviewScreen}
-      options={{
-        title: "Overview"
+const AssetDetailScreen = ({ route }) => {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        swipeEnabled: false,
+        lazy: true,
+        tabBarScrollEnabled: true
       }}
-      initialParams={route.params}
-    />
-    <Tab.Screen
-      name="AssetDetailMarkets"
-      component={AssetDetailMarketsScreen}
-      options={{
-        title: "Markets"
-      }}
-      initialParams={route.params}
-    />
-    <Tab.Screen
-      name="AssetDetailAbout"
-      component={AssetDetailAboutScreen}
-      options={{
-        title: "About"
-      }}
-      initialParams={route.params}
-    />
-    <Tab.Screen
-      name="AssetDetailNews"
-      component={AssetDetailNewsScreen}
-      options={{
-        title: "News"
-      }}
-      initialParams={route.params}
-    />
-    <Tab.Screen
-      name="AssetDetailEvents"
-      component={AssetDetailEventsScreen}
-      options={{
-        title: "Events"
-      }}
-      initialParams={route.params}
-    />
-  </Tab.Navigator>
-);
+      tabBar={BadgeTabBar}
+      backBehavior="none"
+    >
+      <Tab.Screen
+        name="AssetDetailOverview"
+        component={AssetDetailOverviewScreen}
+        options={{
+          title: "Overview"
+        }}
+        initialParams={route.params}
+      />
+      <Tab.Screen
+        name="AssetDetailMarkets"
+        component={AssetDetailMarketsScreen}
+        options={{
+          title: "Markets"
+        }}
+        initialParams={route.params}
+      />
+      <Tab.Screen
+        name="AssetDetailAbout"
+        component={AssetDetailAboutScreen}
+        options={{
+          title: "About"
+        }}
+        initialParams={route.params}
+      />
+      <Tab.Screen
+        name="AssetDetailNews"
+        component={AssetDetailNewsScreen}
+        options={{
+          title: "News"
+        }}
+        initialParams={route.params}
+      />
+      <Tab.Screen
+        name="AssetDetailEvents"
+        component={AssetDetailEventsScreen}
+        options={{
+          title: "Events"
+        }}
+        initialParams={route.params}
+      />
+    </Tab.Navigator>
+  );
+};
 
 export default AssetDetailScreen;

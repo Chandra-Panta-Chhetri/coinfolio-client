@@ -40,7 +40,7 @@ const ChartLabelItem = ({
     [maxWidth]
   );
 
-  const labelValue = useDerivedValue(() => `$${parseFloat(labelInfo.value.val).toFixed(2)}`);
+  const labelValue = useDerivedValue(() => `$${parseFloat(labelInfo.value.val).toFixed(4)}`);
 
   const STYLES = {
     ...TYPOGRAPHY.textAlignCenter,
