@@ -32,3 +32,4 @@ export { default as EventsList } from "./EventsList";
 export { default as EventItem } from "./EventItem";
 export { default as EventItemSkeleton } from "./EventItem/Skeleton";
 export { default as EventFilters } from "./EventFilters";
+export { default as ExternalLink } from "./ExternalLink";

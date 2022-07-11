@@ -7,13 +7,13 @@ import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const HeaderTitle = (props) => {
   const {
-    params: { image, name }
+    params: { image, symbol }
   } = props;
 
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
       <IconImage source={{ uri: image }} />
-      <Text style={[TYPOGRAPHY.title, { marginLeft: GLOBAL_CONSTANTS.SM_MARGIN }]}>{name}</Text>
+      <Text style={[TYPOGRAPHY.title, { marginLeft: GLOBAL_CONSTANTS.SM_MARGIN }]}>{symbol}</Text>
     </View>
   );
 };

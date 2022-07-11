@@ -15,9 +15,9 @@ export function formatAmPmWorklet(date) {
   return formattedHour + ":" + minutes + " " + amOrPm;
 }
 
-export function formatTimeWorklet(date) {
+export function formatTimeWorklet(unixTime) {
   "worklet";
-  const jsDate = new Date(date * 1000);
+  const jsDate = new Date(unixTime);
   const dateStr = jsDate.toDateString().split(" ").slice(1, 4).join(" ");
   const timeStr = formatAmPmWorklet(jsDate);
   return `${dateStr} ${timeStr}`;
