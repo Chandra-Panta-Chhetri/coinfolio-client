@@ -13,7 +13,7 @@ const AssetDetailMarketsScreen = ({ fetchMarkets, markets, isLoading, route }) =
   const { params } = route;
 
   useEffect(() => {
-    //fetchMarkets(params.id);
+    fetchMarkets(params.id);
   }, []);
 
   return isLoading ? (

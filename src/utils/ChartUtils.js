@@ -150,7 +150,6 @@ export const buildLineChart = (
 export const formatData = (data, chartWidth, chartHeight, valueAccessors) => {
   const numPointsPerData = data.map((d) => valueAccessors.dataPointsAccessor(d.history).length);
   const maxPointsToShow = Math.min(...numPointsPerData);
-  console.log(numPointsPerData);
 
   return data.map((d) => ({
     label: d.label,

@@ -14,10 +14,10 @@ const AssetDetailNewsScreen = ({ news, hasMoreToFetch, isLoading, isLoadingMore,
   const { params } = route;
 
   useEffect(() => {
-    // fetchNews({ currencies: params.symbol });
+    fetchNews({ currencies: params.symbol });
   }, []);
 
-  const fetchMore = () => fetchMoreNews({ currencies: params.symbol });
+  const fetchMore = (filter) => fetchMoreNews({ filter, currencies: params.symbol });
 
   const onFilterChange = (filter) => fetchNews({ filter, currencies: params.symbol });
 

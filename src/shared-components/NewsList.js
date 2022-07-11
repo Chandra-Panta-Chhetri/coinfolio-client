@@ -12,7 +12,11 @@ const renderNewsSkeleton = ({ index }) => (
 );
 
 const renderNewsItem = ({ item, index }) => (
-  <NewsItem key={item.id.toString()} news={item} containerStyle={index !== 0 ? GLOBAL_STYLES.cardMargin : null} />
+  <NewsItem
+    key={item.id.toString() + index}
+    news={item}
+    containerStyle={index !== 0 ? GLOBAL_STYLES.cardMargin : null}
+  />
 );
 
 const NewsList = ({ isLoading, news, onFilterChange, fetchMore, isLoadingMore, hasMoreToFetch }) => {

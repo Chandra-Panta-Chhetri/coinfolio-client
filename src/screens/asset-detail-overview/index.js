@@ -28,21 +28,29 @@ const AssetDetailOverviewScreen = ({ overview, isLoading, fetchOverview, route }
   const { params } = route;
 
   useEffect(() => {
-    //fetchOverview(params.id);
+    fetchOverview(params.id);
   }, []);
 
   return (
     <ScrollView contentContainerStyle={STYLES.container}>
       <View style={STYLES.header}>
-        <View style={STYLES.nameRank}>
-          <Text style={STYLES.fullName} numberOfLines={1}>
-            {overview.name}
+        {isLoading ? (
+          <Skeleton style={STYLES.textSkeleton} />
+        ) : (
+          <View style={STYLES.nameRank}>
+            <Text style={STYLES.fullName} numberOfLines={1}>
+              {overview.name}
+            </Text>
+            <OutlinedText text={overview.rank} style={TYPOGRAPHY.caption} />
+          </View>
+        )}
+        {isLoading ? (
+          <Skeleton style={STYLES.textSkeleton} />
+        ) : (
+          <Text style={TYPOGRAPHY.display1} numberOfLines={1}>
+            ${overview.priceUsd}
           </Text>
-          <OutlinedText text={overview.rank} style={TYPOGRAPHY.caption} />
-        </View>
-        <Text style={TYPOGRAPHY.display1} numberOfLines={1}>
-          ${overview.priceUsd}
-        </Text>
+        )}
       </View>
       <LineChart
         data={overview.priceHistory}
@@ -54,11 +62,15 @@ const AssetDetailOverviewScreen = ({ overview, isLoading, fetchOverview, route }
       />
       <View style={STYLES.statsContainer}>
         <Text style={STYLES.statsHeading}>Statistics</Text>
-        <MultiColumnView
-          sections={overview.statistics}
-          renderItem={Statistic}
-          SectionSeparator={() => <View style={[STYLES.statsSeparator, { borderColor: colors.text }]} />}
-        />
+        {isLoading ? (
+          <Skeleton style={STYLES.statsSkeleton} />
+        ) : (
+          <MultiColumnView
+            sections={overview.statistics}
+            renderItem={Statistic}
+            SectionSeparator={() => <View style={[STYLES.statsSeparator, { borderColor: colors.text }]} />}
+          />
+        )}
       </View>
     </ScrollView>
   );
@@ -88,7 +100,9 @@ const STYLES = StyleSheet.create({
   lineChart: {
     width: "100%",
     height: 180
-  }
+  },
+  textSkeleton: { width: "100%", height: 30, marginBottom: GLOBAL_CONSTANTS.LG_MARGIN },
+  statsSkeleton: { width: "100%", height: 250 }
 });
 
 const mapStateToProps = (state) => ({

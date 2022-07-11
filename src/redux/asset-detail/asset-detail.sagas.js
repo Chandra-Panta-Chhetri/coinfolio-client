@@ -75,7 +75,7 @@ function* getNews({ payload: query }) {
 function* getMoreNews({ payload: query }) {
   try {
     const page = yield select(selectAssetNewsPage);
-    const res = yield newsAPI.getNews({ ...query, page });
+    const res = yield newsAPI.getNews({ ...query, filter: query.filter || NEWS_CONSTANTS.DEFAULT_FILTER, page });
     const news = yield res.results;
     const currentNews = yield select(selectAssetNews);
     const combinedNews = yield [...currentNews, ...news];

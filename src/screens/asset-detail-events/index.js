@@ -25,7 +25,7 @@ const AssetDetailEventsScreen = ({
   const query = { coins: lowerCaseAndHyphenate(params.name) };
 
   useEffect(() => {
-    //fetchEvents(query);
+    fetchEvents(query);
   }, []);
 
   const navigateToFilters = () => navigation.navigate("AssetDetailEventFilters", query);

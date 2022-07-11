@@ -1,9 +1,17 @@
 import React from "react";
 import { Skeleton } from "../../../shared-components";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { GLOBAL_STYLES } from "../../../styles";
 
-const MarketsSkeleton = () => null;
+const MarketsSkeleton = () => (
+  <View style={STYLES.container}>
+    <Skeleton style={STYLES.table} />
+  </View>
+);
 
-const STYLES = StyleSheet.create({});
+const STYLES = StyleSheet.create({
+  container: { ...GLOBAL_STYLES.screenContainer, paddingVertical: 0 },
+  table: { height: "99%" }
+});
 
 export default MarketsSkeleton;
