@@ -22,11 +22,12 @@ const BadgeTabBar = ({ state, descriptors, navigation, containerStyles }) => {
           const onPress = () => {
             const event = navigation.emit({
               type: "tabPress",
-              target: route.key
+              target: route.key,
+              canPreventDefault: true
             });
 
             if (!isFocused && !event.defaultPrevented) {
-              navigation.navigate(route.name);
+              navigation.navigate({ name: route.name, merge: true });
             }
           };
 

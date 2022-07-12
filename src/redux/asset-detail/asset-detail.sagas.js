@@ -95,7 +95,8 @@ function* getEvents({ payload: query }) {
       max: filters.limit,
       ...(filters.dateRange.start && { dateRangeStart: toISOSubstring(filters.dateRange.start) }),
       ...(filters.dateRange.end && { dateRangeEnd: toISOSubstring(filters.dateRange.end) }),
-      ...query
+      ...query,
+      sortBy: EVENTS_CONSTANTS.SHOW_ONLY_FILTERS[filters.sortBy].value
     };
     const res = yield eventsAPI.getEvents(filtersDTO);
     const events = yield res.results;
@@ -117,7 +118,8 @@ function* getMoreEvents({ payload: query }) {
       page,
       ...(filters.dateRange.start && { dateRangeStart: toISOSubstring(filters.dateRange.start) }),
       ...(filters.dateRange.end && { dateRangeEnd: toISOSubstring(filters.dateRange.end) }),
-      ...query
+      ...query,
+      sortBy: EVENTS_CONSTANTS.SHOW_ONLY_FILTERS[filters.sortBy].value
     };
     const res = yield eventsAPI.getEvents(filtersDTO);
     const events = yield res.results;

@@ -14,13 +14,23 @@ export default {
     }
   ],
   NUM_TO_SHOW: 6,
-  get DEFAULT_FILTERS() {
+  get DEFAULT_DISCOVER_FILTERS() {
     return {
       dateRange: {
         start: null,
         end: null
       },
       showOnly: 0,
+      limit: 12
+    };
+  },
+  get DEFAULT_ASSET_FILTERS() {
+    return {
+      dateRange: {
+        start: null,
+        end: null
+      },
+      sortBy: 0,
       limit: 12
     };
   }

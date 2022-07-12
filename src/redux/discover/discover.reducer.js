@@ -4,7 +4,7 @@ import { EVENTS_CONSTANTS } from "../../constants";
 const INITIAL_STATE = {
   news: [],
   events: [],
-  eventFilters: EVENTS_CONSTANTS.DEFAULT_FILTERS,
+  eventFilters: EVENTS_CONSTANTS.DEFAULT_DISCOVER_FILTERS,
   isLoadingNews: true,
   isLoadingEvents: true,
   isLoadingMoreNews: false,
