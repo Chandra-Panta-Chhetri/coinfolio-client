@@ -16,7 +16,7 @@ const AssetDetailAboutScreen = ({ about, isLoading, fetchAbout, route }) => {
   const { params } = route;
 
   useEffect(() => {
-    fetchAbout(params.id, { symbol: params.symbol, name: params.name });
+    fetchAbout(params.id, { symbol: params.symbol });
   }, []);
 
   return (
