@@ -47,9 +47,9 @@ function* getAssetMarkets({ payload: { id, query } }) {
   }
 }
 
-function* getAssetAbout({ payload: { id, query } }) {
+function* getAssetAbout({ payload: id }) {
   try {
-    const about = yield marketsAPI.getAssetAbout(id, query);
+    const about = yield marketsAPI.getAssetAbout(id);
     yield put(assetAboutSuccess(about));
   } catch (err) {
     yield put(assetAboutFail("Server error while fetching the about"));

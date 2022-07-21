@@ -38,7 +38,7 @@ export const getAssetExchanges = async (id, query = { perPage: 2000, page: 1 }) 
   return res.data.data;
 };
 
-export const getAssetAbout = async (id, query) => {
-  const res = await axios.get(`/markets/${id}/about`, { params: query });
+export const getAssetAbout = async (id) => {
+  const res = await axios.get(`/markets/${id}/about`);
   return res.data;
 };

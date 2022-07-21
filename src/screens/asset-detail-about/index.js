@@ -16,7 +16,7 @@ const AssetDetailAboutScreen = ({ about, isLoading, fetchAbout, route }) => {
   const { params } = route;
 
   useEffect(() => {
-    fetchAbout(params.id, { symbol: params.symbol });
+    fetchAbout(params.id);
   }, []);
 
   return (
@@ -93,7 +93,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchAbout: (id, query) => dispatch(startAssetAboutFetch(id, query))
+  fetchAbout: (id) => dispatch(startAssetAboutFetch(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AssetDetailAboutScreen);

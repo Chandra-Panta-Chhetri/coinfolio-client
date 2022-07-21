@@ -31,9 +31,9 @@ export const assetMarketsSuccess = (markets) => ({
   payload: markets
 });
 
-export const startAssetAboutFetch = (id, query) => ({
+export const startAssetAboutFetch = (id) => ({
   type: ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_ABOUT,
-  payload: { id, query }
+  payload: id
 });
 
 export const assetAboutFail = (errorMsg) => ({
