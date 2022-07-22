@@ -4,6 +4,7 @@ import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { Text } from "react-native-paper";
 import { Form } from "./components";
 import { PressableView } from "../../shared-components";
+import { GLOBAL_CONSTANTS } from "../../constants";
 
 const LoginScreen = () => {
   return (
@@ -22,7 +23,7 @@ const STYLES = StyleSheet.create({
   heading: {
     ...TYPOGRAPHY.title,
     ...TYPOGRAPHY.textAlignCenter,
-    ...GLOBAL_STYLES.lgMarginBottom
+    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN
   }
 });
 

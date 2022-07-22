@@ -2,17 +2,16 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { TouchableNativeFeedback, IconImage } from "../../../../shared-components";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../styles";
+import { TYPOGRAPHY } from "../../../../styles";
 import { getStylesBasedOnSign, formatNumBasedOnSignWorklet } from "../../../../utils";
 import { useNavigation } from "@react-navigation/native";
+import { GLOBAL_CONSTANTS } from "../../../../constants";
 
 const TopCoin = ({ item: coin }) => {
   const navigation = useNavigation();
-  const { symbol, priceUsd, changePercent24Hr, image } = coin;
+  const { symbol, priceUsd, changePercent24Hr, image, name, id } = coin;
 
-  const onPress = () => {
-    navigation.navigate("AssetDetail", {});
-  };
+  const onPress = () => navigation.navigate("AssetDetail", { image, symbol, name, id });
 
   return (
     <TouchableNativeFeedback viewContainerStyle={STYLES.androidContainer} onPress={onPress}>
@@ -36,11 +35,11 @@ const TopCoin = ({ item: coin }) => {
 
 const STYLES = StyleSheet.create({
   topCoinCard: {
-    ...GLOBAL_STYLES.borderRadius,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
     width: 125
   },
   androidContainer: {
-    marginRight: 7
+    marginRight: GLOBAL_CONSTANTS.MD_MARGIN
   }
 });
 

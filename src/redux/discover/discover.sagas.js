@@ -12,7 +12,7 @@ import {
   noMoreNews
 } from "./discover.actions";
 import DISCOVER_ACTION_TYPES from "./discover.action.types";
-import { selectEventFilters, selectNewsPage, selectNews, selectEvents } from "./discover.selectors";
+import { selectEventFilters, selectNewsPage, selectNews, selectEvents, selectEventsPage } from "./discover.selectors";
 import { newsAPI, eventsAPI } from "../../api";
 import { EVENTS_CONSTANTS } from "../../constants";
 import { toISOSubstring } from "../../utils";
@@ -68,7 +68,7 @@ function* getEvents() {
 
 function* getMoreEvents() {
   try {
-    const page = yield select(selectNewsPage);
+    const page = yield select(selectEventsPage);
     const filters = yield select(selectEventFilters);
     const filtersDTO = {
       max: filters.limit,
@@ -84,8 +84,9 @@ function* getMoreEvents() {
     if (events.length === 0 || combinedEvents.length >= res.metadata.total_count) {
       return yield put(noMoreEvents());
     }
-    yield put(moreEventsSuccess(combinedNews));
+    yield put(moreEventsSuccess(combinedEvents));
   } catch (err) {
+    console.log(err.message);
     yield put(moreEventsFail("There was an error while fetching more events"));
   }
 }

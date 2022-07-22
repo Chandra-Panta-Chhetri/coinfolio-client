@@ -3,11 +3,11 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import EventsScreen from "../events";
 import NewsScreen from "../news";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
-import { View, StyleSheet } from "react-native";
-import { Chip } from "../../shared-components";
+import { StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { GLOBAL_CONSTANTS } from "../../constants";
 import { Text } from "react-native-paper";
+import { BadgeTabBar } from "../../shared-components";
 
 const NewsTabIcon = ({ color, size = GLOBAL_CONSTANTS.TAB_ICON_SIZE }) => (
   <Ionicons name="newspaper-outline" size={size} color={color} />
@@ -19,56 +19,6 @@ const EventsTabIcon = ({ color, size = GLOBAL_CONSTANTS.TAB_ICON_SIZE }) => (
 
 const Tab = createMaterialTopTabNavigator();
 
-const BadgeTabBar = ({ state, descriptors, navigation }) => {
-  const numTabs = state.routes.length;
-
-  return (
-    <View style={STYLES.tabs}>
-      {state.routes.map((route, i) => {
-        const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
-
-        const isFocused = state.index === i;
-
-        const onPress = () => {
-          const event = navigation.emit({
-            type: "tabPress",
-            target: route.key
-          });
-
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name);
-          }
-        };
-
-        const tabContainerStyle = STYLES.tabContainer;
-        if (numTabs === i + 1) {
-          tabContainerStyle.marginRight = 0;
-        }
-
-        return (
-          <Chip
-            containerStyle={tabContainerStyle}
-            key={i}
-            accessibilityRole="button"
-            onPress={onPress}
-            accessibilityState={isFocused ? { selected: true } : {}}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            label={label}
-            isHighlighted={isFocused}
-            Icon={options.tabBarIcon}
-          />
-        );
-      })}
-    </View>
-  );
-};
-
 const DiscoverScreen = () => (
   <>
     <Text style={STYLES.heading}>Discover</Text>
@@ -78,14 +28,14 @@ const DiscoverScreen = () => (
         lazy: true,
         tabBarScrollEnabled: true
       }}
-      tabBar={(props) => <BadgeTabBar {...props} />}
+      tabBar={(props) => <BadgeTabBar {...props} containerStyles={STYLES.tabBarContainer} />}
+      backBehavior="none"
     >
       <Tab.Screen
         name="News"
         component={NewsScreen}
         options={{
           title: "News",
-          tabBarLabelStyle: TYPOGRAPHY.body1,
           tabBarIcon: NewsTabIcon
         }}
       />
@@ -94,7 +44,6 @@ const DiscoverScreen = () => (
         component={EventsScreen}
         options={{
           title: "Events",
-          tabBarLabelStyle: TYPOGRAPHY.body1,
           tabBarIcon: EventsTabIcon
         }}
       />
@@ -103,24 +52,14 @@ const DiscoverScreen = () => (
 );
 
 const STYLES = StyleSheet.create({
-  tabs: {
-    flexDirection: "row",
-    ...GLOBAL_STYLES.screenContainer,
-    paddingTop: 0
-  },
-  tabContainer: {
-    flexGrow: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 3,
-    justifyContent: "center",
-    marginRight: 10
-  },
   heading: {
     ...GLOBAL_STYLES.screenContainer,
-    ...GLOBAL_STYLES.smMarginBottom,
+    marginBottom: GLOBAL_CONSTANTS.SM_MARGIN,
     ...TYPOGRAPHY.display1,
     paddingBottom: 0
+  },
+  tabBarContainer: {
+    paddingTop: 0
   }
 });
 

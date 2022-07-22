@@ -1,12 +1,7 @@
 import React, { useState } from "react";
-import { ConfirmationDialog as Dialog } from "../shared-components";
+import Dialog from "../shared-components/ConfirmationDialog";
 
-export const useConfirmationDialog = (
-  confirmationTitle,
-  confirmationText,
-  onConfirmCb,
-  isLoading
-) => {
+export const useConfirmationDialog = (confirmationTitle, confirmationText, onConfirmCb, isLoading) => {
   const [isVisible, setIsVisible] = useState(false);
   const openDialog = () => setIsVisible(true);
   const closeDialog = () => setIsVisible(false);

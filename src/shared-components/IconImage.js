@@ -5,9 +5,7 @@ import { GLOBAL_CONSTANTS } from "../constants";
 const IconImage = ({ source, fallbackURL = "https://coincap.io/static/logo_mark.png" }) => {
   const [imageURL, setImageURL] = useState(source.uri);
 
-  const onLoadError = () => {
-    setImageURL(fallbackURL);
-  };
+  const onLoadError = () => setImageURL(fallbackURL);
 
   return <Image source={{ uri: imageURL }} onError={onLoadError} style={STYLES.icon} />;
 };
@@ -15,9 +13,9 @@ const IconImage = ({ source, fallbackURL = "https://coincap.io/static/logo_mark.
 const STYLES = StyleSheet.create({
   icon: {
     backgroundColor: "transparent",
-    width: 35,
-    height: 35,
-    borderRadius: 35 / 2
+    width: GLOBAL_CONSTANTS.ICON_SIZE,
+    height: GLOBAL_CONSTANTS.ICON_SIZE,
+    borderRadius: GLOBAL_CONSTANTS.ICON_SIZE / 2
   }
 });
 

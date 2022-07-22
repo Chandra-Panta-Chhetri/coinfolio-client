@@ -1,20 +1,21 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { IconImage, TouchableNativeFeedback } from "../../../shared-components";
+import { IconImage, OutlinedText, TouchableNativeFeedback } from "../../../shared-components";
 import { formatNumBasedOnSignWorklet, getStylesBasedOnSign } from "../../../utils";
 import { Text, useTheme } from "react-native-paper";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
+import { TYPOGRAPHY } from "../../../styles";
 import { useNavigation } from "@react-navigation/native";
+import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const MarketOverviewItem = ({ item }) => {
-  const { changePercent24Hr, name, priceUsd, image, rank, marketCap } = item;
+  const { changePercent24Hr, name, priceUsd, image, rank, marketCap, id, symbol } = item;
   const { colors } = useTheme();
   const navigation = useNavigation();
 
-  const onClick = () => navigation.navigate("AssetDetail", {});
+  const onPress = () => navigation.navigate("AssetDetail", { image, symbol, id, name });
 
   return (
-    <TouchableNativeFeedback onPress={onClick}>
+    <TouchableNativeFeedback onPress={onPress}>
       <View style={[STYLES.container]}>
         <IconImage
           source={{
@@ -23,7 +24,7 @@ const MarketOverviewItem = ({ item }) => {
         />
         <View style={STYLES.rankNamePercentChange}>
           <View style={STYLES.rankName}>
-            <Text style={[STYLES.rank, { borderColor: colors.text }]}>{rank}</Text>
+            <OutlinedText text={rank} style={STYLES.rank} />
             <Text numberOfLines={1} style={TYPOGRAPHY.body2}>
               {name}
             </Text>
@@ -49,15 +50,11 @@ const STYLES = StyleSheet.create({
     flex: 1,
     alignItems: "center"
   },
-  rankNamePercentChange: { flex: 0.7, marginLeft: 5 },
+  rankNamePercentChange: { flex: 0.7, marginLeft: GLOBAL_CONSTANTS.SM_MARGIN },
   rankName: { flexDirection: "row", alignItems: "center" },
   rank: {
     ...TYPOGRAPHY.caption,
-    ...GLOBAL_STYLES.borderRadius,
-    paddingHorizontal: 5,
-    marginRight: 4,
-    textAlign: "center",
-    borderWidth: 1
+    marginRight: GLOBAL_CONSTANTS.SM_MARGIN
   },
   priceMarketCap: {
     alignItems: "flex-end",

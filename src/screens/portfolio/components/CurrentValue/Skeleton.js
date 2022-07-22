@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { Card } from "react-native-paper";
 import { GLOBAL_STYLES } from "../../../../styles";
 import { Skeleton } from "../../../../shared-components";
+import { GLOBAL_CONSTANTS } from "../../../../constants";
 
 const CurrentValueSkeleton = () => (
   <Card style={STYLES.container}>
@@ -19,27 +20,27 @@ const CurrentValueSkeleton = () => (
 
 const STYLES = StyleSheet.create({
   container: {
-    ...GLOBAL_STYLES.borderRadius,
-    ...GLOBAL_STYLES.lgMarginBottom
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
+    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN
   },
   valueSkeleton: {
-    ...GLOBAL_STYLES.borderRadius,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
     height: 25,
     width: "60%"
   },
   percentSkeleton: {
-    ...GLOBAL_STYLES.borderRadius,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
     height: 25,
     width: "25%"
   },
   subheadingSkeleton: {
-    ...GLOBAL_STYLES.mdMarginBottom,
-    ...GLOBAL_STYLES.borderRadius,
+    marginBottom: GLOBAL_CONSTANTS.MD_MARGIN,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
     height: 20,
     width: "35%"
   },
   rowFlexbox: {
-    ...GLOBAL_STYLES.mdMarginBottom,
+    marginBottom: GLOBAL_CONSTANTS.MD_MARGIN,
     flexDirection: "row",
     justifyContent: "space-between"
   }

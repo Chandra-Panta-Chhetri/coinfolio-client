@@ -3,6 +3,7 @@ import React from "react";
 import { ActivityIndicator } from "react-native-paper";
 import { GLOBAL_STYLES } from "../styles";
 import Reanimated from "react-native-reanimated";
+import { GLOBAL_CONSTANTS } from "../constants";
 
 const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
@@ -60,7 +61,7 @@ const InfiniteScroll = ({
 
 const STYLES = StyleSheet.create({
   footer: {
-    marginTop: 10
+    marginTop: GLOBAL_CONSTANTS.MD_MARGIN
   }
 });
 

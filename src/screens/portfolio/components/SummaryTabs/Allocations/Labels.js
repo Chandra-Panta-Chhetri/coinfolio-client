@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { Text, useTheme } from "react-native-paper";
+import { GLOBAL_CONSTANTS } from "../../../../../constants";
 import { TouchableNativeFeedback } from "../../../../../shared-components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../../styles";
 
@@ -25,7 +26,7 @@ const AllocationLabels = ({ data = [], selectedSlice = null, changeSelectedSlice
               STYLES.labelContainer,
               i === selectedSlice
                 ? {
-                    ...GLOBAL_STYLES.borderRadius,
+                    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
                     backgroundColor: colors.backgroundSelection
                   }
                 : null
@@ -45,7 +46,7 @@ const STYLES = StyleSheet.create({
     flexGrow: 1
   },
   container: {
-    marginTop: 10
+    marginTop: GLOBAL_CONSTANTS.MD_MARGIN
   },
   labelContainer: {
     flexDirection: "row",
@@ -55,10 +56,10 @@ const STYLES = StyleSheet.create({
     justifyContent: "center"
   },
   pieSliceDot: {
-    ...GLOBAL_STYLES.borderRadius,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
     width: 10,
     height: 5,
-    marginRight: 4
+    marginRight: GLOBAL_CONSTANTS.SM_MARGIN
   },
   touchableOpacityContainer: { marginRight: 0, flexGrow: 1 }
 });

@@ -6,6 +6,7 @@ import { GLOBAL_STYLES, TYPOGRAPHY } from "../styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import TouchableNativeFeedback from "./TouchableNativeFeedback";
 import Button from "./Button";
+import { GLOBAL_CONSTANTS } from "../constants";
 
 const DatePicker = ({ isRangePicker = true, onConfirm, initialStartDate = null, initialEndDate = null }) => {
   const { colors } = useTheme();
@@ -52,7 +53,7 @@ const DatePicker = ({ isRangePicker = true, onConfirm, initialStartDate = null, 
     <>
       <TouchableNativeFeedback
         onPress={showModal}
-        viewContainerStyle={[GLOBAL_STYLES.borderWidth, { borderColor: colors.text }]}
+        viewContainerStyle={[STYLES.nativeFeedbackContainer, { borderColor: colors.text }]}
       >
         <View style={STYLES.dateOutputContainer}>
           <Text style={TYPOGRAPHY.body1}>{startDate ? new Date(startDate).toDateString() : "..."}</Text>
@@ -99,10 +100,13 @@ const DatePicker = ({ isRangePicker = true, onConfirm, initialStartDate = null, 
 };
 
 const STYLES = StyleSheet.create({
+  nativeFeedbackContainer: {
+    borderWidth: GLOBAL_CONSTANTS.BORDER_WIDTH
+  },
   modalContainer: {
     paddingHorizontal: 10,
     paddingVertical: 20,
-    ...GLOBAL_STYLES.borderRadius
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   },
   modalWrapper: {
     marginHorizontal: 10

@@ -1,7 +1,6 @@
 import * as shape from "d3-shape";
 import { scaleLinear } from "d3-scale";
 import { parse } from "react-native-redash";
-import RAINBOW_CHART_CONSTANTS from "../shared-components/RainbowChart/constants";
 import { MARKET_OVERVIEW_CONSTANTS } from "../constants";
 
 const findMaxAndMinYX = (dataPoints) => {
@@ -58,11 +57,11 @@ const findMaxAndMinYX = (dataPoints) => {
 };
 
 export const buildSparkLine = (
-  data = [],
+  data = {},
   chartWidth = 0,
   chartHeight = 0,
   { xValueAccessor, yValueAccessor, dataPointsAccessor },
-  maxPointsToShow = MARKET_OVERVIEW_CONSTANTS.SPARK_LINE.MAX_NUM_POINTS_TO_SHOW
+  maxPointsToShow
 ) => {
   const { path } = getSvgPath(
     data,
@@ -75,13 +74,13 @@ export const buildSparkLine = (
 };
 
 const getSvgPath = (
-  data = [],
+  data = {},
   chartWidth = 0,
   chartHeight = 0,
   { xValueAccessor, yValueAccessor, dataPointsAccessor },
   maxPointsToShow
 ) => {
-  const dataPoints = dataPointsAccessor(data).slice(0, maxPointsToShow);
+  const dataPoints = (dataPointsAccessor(data) || []).slice(0, maxPointsToShow);
   const parsedDataPoints = dataPoints.map((dp) => [parseFloat(xValueAccessor(dp)), parseFloat(yValueAccessor(dp))]);
   const extremas = findMaxAndMinYX(parsedDataPoints);
   const scaleXDomain = [extremas.x.minVal, extremas.x.maxVal];
@@ -115,11 +114,11 @@ const getSvgPath = (
 };
 
 export const buildLineChart = (
-  data = [],
+  data = {},
   chartWidth = 0,
   chartHeight = 0,
   { xValueAccessor, yValueAccessor, percentChangeAccessor, dataPointsAccessor },
-  maxPointsToShow = RAINBOW_CHART_CONSTANTS.MAX_NUM_POINTS_TO_SHOW
+  maxPointsToShow
 ) => {
   const { path, dataPoints, extremas, xAxis, yAxis, scaleX } = getSvgPath(
     data,
@@ -129,7 +128,7 @@ export const buildLineChart = (
     maxPointsToShow
   );
   return {
-    percentChange: percentChangeAccessor(data),
+    percentChange: percentChangeAccessor(data) || 0,
     path: parse(path),
     labelCoordinates: [
       {
@@ -148,11 +147,12 @@ export const buildLineChart = (
   };
 };
 
-export const formatData = (data, chartWidth, chartHeight, valueAccessors) =>
-  data.map((d) => ({
+export const formatData = (data, chartWidth, chartHeight, valueAccessors) => {
+  const numPointsPerData = data.map((d) => valueAccessors.dataPointsAccessor(d.history).length);
+  const maxPointsToShow = Math.min(...numPointsPerData);
+
+  return data.map((d) => ({
     label: d.label,
-    data: {
-      defaultTimeLabel: d.defaultTimeLabel,
-      ...buildLineChart(d.data, chartWidth, chartHeight, valueAccessors)
-    }
+    data: buildLineChart(d.history, chartWidth, chartHeight, valueAccessors, maxPointsToShow)
   }));
+};

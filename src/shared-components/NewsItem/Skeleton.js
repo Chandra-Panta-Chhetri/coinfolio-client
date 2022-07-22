@@ -1,11 +1,11 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card } from "react-native-paper";
-import { GLOBAL_STYLES } from "../../styles";
+import { GLOBAL_CONSTANTS } from "../../constants";
 import Skeleton from "../Skeleton";
 
 const NewsItemSkeleton = ({ containerStyle }) => (
-  <Card style={[GLOBAL_STYLES.borderRadius, containerStyle]}>
+  <Card style={[STYLES.cardContainer, containerStyle]}>
     <Card.Content>
       <Skeleton style={STYLES.titleSkeleton} />
       <View style={STYLES.dateSourceContainer}>
@@ -17,18 +17,21 @@ const NewsItemSkeleton = ({ containerStyle }) => (
 
 const STYLES = StyleSheet.create({
   titleSkeleton: {
-    height: 35,
-    ...GLOBAL_STYLES.borderRadius
+    height: 20,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   },
   subheadingSkeleton: {
-    height: 25,
-    marginTop: 10,
+    height: 20,
+    marginTop: GLOBAL_CONSTANTS.MD_MARGIN,
     width: "30%",
-    ...GLOBAL_STYLES.borderRadius
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   },
   dateSourceContainer: {
     flexDirection: "row",
     justifyContent: "space-between"
+  },
+  cardContainer: {
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   }
 });
 

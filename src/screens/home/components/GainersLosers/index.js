@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import HeadingWithSeeAll from "../HeadingWithSeeAll";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -7,6 +7,7 @@ import { selectGainersLosers, selectIsLoadingGainersLosers, startGainersLosersFe
 import GainerLoser from "./GainerLoser";
 import GainerLoserSkeleton from "./GainerLoserSkeleton";
 import { GLOBAL_STYLES } from "../../../../styles";
+import { GLOBAL_CONSTANTS } from "../../../../constants";
 
 const NUM_SKELETON = 4;
 const DUMMY_SKELETON_ARRAY = Array(NUM_SKELETON).fill("1");
@@ -20,7 +21,7 @@ const GainersLosers = ({ coins, isLoading, fetchGainersLosers }) => {
   }, []);
 
   return (
-    <View style={GLOBAL_STYLES.lgMarginBottom}>
+    <View style={STYLES.container}>
       <HeadingWithSeeAll title="Gainers & Losers" onSeeAllPress={toMarketScreen} />
       <View>
         {isLoading || coins.length === 0
@@ -34,6 +35,12 @@ const GainersLosers = ({ coins, isLoading, fetchGainersLosers }) => {
     </View>
   );
 };
+
+const STYLES = StyleSheet.create({
+  container: {
+    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN
+  }
+});
 
 const mapStateToProps = (state) => ({
   coins: selectGainersLosers(state),

@@ -1,9 +1,10 @@
 import React, { PureComponent } from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Text } from "react-native-paper";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
+import { TYPOGRAPHY } from "../../styles";
 import TouchableNativeFeedback from "../TouchableNativeFeedback";
 import * as Linking from "expo-linking";
+import { GLOBAL_CONSTANTS } from "../../constants";
 
 const formatDate = (isoString) => new Date(isoString).toDateString();
 
@@ -17,7 +18,7 @@ class NewsItem extends PureComponent {
     const { news, containerStyle } = this.props;
     return (
       <TouchableNativeFeedback viewContainerStyle={containerStyle} onPress={this.onNewsPress}>
-        <Card style={GLOBAL_STYLES.borderRadius}>
+        <Card style={STYLES.cardContainer}>
           <Card.Content>
             <Text style={TYPOGRAPHY.body2} numberOfLines={2}>
               {news.title}
@@ -36,12 +37,15 @@ class NewsItem extends PureComponent {
 const STYLES = StyleSheet.create({
   newsInfo: {
     flex: 1,
-    marginRight: 15
+    marginRight: GLOBAL_CONSTANTS.LG_MARGIN
   },
   dateSourceContainer: {
-    marginTop: 4,
+    marginTop: GLOBAL_CONSTANTS.SM_MARGIN,
     flexDirection: "row",
     justifyContent: "space-between"
+  },
+  cardContainer: {
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   }
 });
 

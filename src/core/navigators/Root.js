@@ -14,23 +14,24 @@ import {
   TermsAndPrivacyScreen,
   ChangePasswordScreen,
   ChangeEmailOrNameScreen,
-  SelectEventFiltersScreen,
+  DiscoverEventFiltersScreen,
   EventDetailScreen,
   SearchCryptoScreen,
-  AssetDetailScreen
+  AssetDetailScreen,
+  AssetDetailEventFiltersScreen
 } from "../../screens";
 import { CloseIconButton } from "../../shared-components";
 import { TYPOGRAPHY } from "../../styles";
 import { connect } from "react-redux";
 import { selectIsUserAuthenticated } from "../../redux/user";
+import { GLOBAL_CONSTANTS } from "../../constants";
+import { AssetDetailFavorite, AssetDetailHeaderTitle } from "../../screens/asset-detail/components";
 
 const Stack = createStackNavigator();
 
 const RootNavigator = ({ isAuthenticated }) => {
-  const { colors } = useTheme();
-
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerTitleStyle: TYPOGRAPHY.title, headerTitleAlign: "center" }}>
       <Stack.Screen name="BottomTabsHome" component={BottomTabNavigator} options={{ headerShown: false }} />
       {isAuthenticated ? (
         <>
@@ -38,111 +39,95 @@ const RootNavigator = ({ isAuthenticated }) => {
             name="ChangePassword"
             component={ChangePasswordScreen}
             options={{
-              headerTitle: "Change Password",
-              headerTitleAlign: "center",
-              headerTitleStyle: TYPOGRAPHY.headline
+              headerTitle: "Change Password"
             }}
           />
           <Stack.Screen
             name="ChangeEmailOrName"
             component={ChangeEmailOrNameScreen}
             options={{
-              headerTitle: "Change Email or Name",
-              headerTitleAlign: "center",
-              headerTitleStyle: TYPOGRAPHY.headline
+              headerTitle: "Change Email or Name"
             }}
           />
           <Stack.Screen
             name="AddTransaction"
             component={AddTransactionScreen}
             options={{
-              headerTitle: "Add Transaction",
-              headerTitleAlign: "center",
-              headerTitleStyle: TYPOGRAPHY.headline
+              headerTitle: "Add Transaction"
             }}
           />
         </>
       ) : (
         <>
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{ headerTitle: "Login", headerTitleAlign: "center", headerTitleStyle: TYPOGRAPHY.headline }}
-          />
-          <Stack.Screen
-            name="SignUp"
-            component={SignUpScreen}
-            options={{ headerTitle: "Sign Up", headerTitleAlign: "center", headerTitleStyle: TYPOGRAPHY.headline }}
-          />
+          <Stack.Screen name="Login" component={LoginScreen} options={{ headerTitle: "Login" }} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} options={{ headerTitle: "Sign Up" }} />
         </>
       )}
-      <Stack.Screen
-        name="PriceAlert"
-        component={PriceAlertScreen}
-        options={{ headerTitle: "Price Alerts", headerTitleAlign: "center", headerTitleStyle: TYPOGRAPHY.headline }}
-      />
+      <Stack.Screen name="PriceAlert" component={PriceAlertScreen} options={{ headerTitle: "Price Alerts" }} />
       <Stack.Screen
         name="CompareCurrency"
         component={CompareCurrencyScreen}
         options={{
-          headerTitle: "Compare Currencies",
-          headerTitleAlign: "center",
-          headerTitleStyle: TYPOGRAPHY.headline
+          headerTitle: "Compare Currencies"
         }}
       />
       <Stack.Screen
         name="ConvertCurrency"
         component={ConvertCurrencyScreen}
         options={{
-          headerTitle: "Currency Converter",
-          headerTitleAlign: "center",
-          headerTitleStyle: TYPOGRAPHY.headline
+          headerTitle: "Currency Converter"
         }}
       />
       <Stack.Screen
         name="SelectCurrency"
         component={SelectCurrencyScreen}
-        options={{ headerTitle: "Select Currency", headerTitleAlign: "center", headerTitleStyle: TYPOGRAPHY.headline }}
+        options={{ headerTitle: "Select Currency" }}
       />
       <Stack.Screen
         name="SelectHomeScreen"
         component={SelectHomeScreen}
         options={{
-          headerTitle: "Select Home Screen",
-          headerTitleAlign: "center",
-          headerTitleStyle: TYPOGRAPHY.headline
+          headerTitle: "Select Home Screen"
         }}
       />
       <Stack.Screen
         name="TermsAndPrivacy"
         component={TermsAndPrivacyScreen}
         options={{
-          headerTitle: "Terms and Privacy",
-          headerTitleAlign: "center",
-          headerTitleStyle: TYPOGRAPHY.headline
+          headerTitle: "Terms and Privacy"
         }}
       />
       <Stack.Screen
         name="AssetDetail"
         component={AssetDetailScreen}
-        options={{ headerTitle: "Asset Detail", headerTitleAlign: "center", headerTitleStyle: TYPOGRAPHY.headline }}
-      />
-      <Stack.Screen
-        name="SelectEventFilters"
-        component={SelectEventFiltersScreen}
-        options={({ navigation }) => ({
-          headerTitle: "Select Filters",
-          headerTitleAlign: "center",
-          headerLeft: null,
-          headerRight: () => <CloseIconButton style={{ marginRight: 10 }} onPress={() => navigation.goBack()} />,
-          headerTitleStyle: TYPOGRAPHY.headline
+        options={({ route }) => ({
+          headerTitle: () => <AssetDetailHeaderTitle {...route} />,
+          headerRight: () => <AssetDetailFavorite {...route} />
         })}
       />
       <Stack.Screen
-        name="EventDetails"
-        component={EventDetailScreen}
-        options={{ headerTitle: "Event Details", headerTitleAlign: "center", headerTitleStyle: TYPOGRAPHY.headline }}
+        name="DiscoverEventFilters"
+        component={DiscoverEventFiltersScreen}
+        options={({ navigation }) => ({
+          headerTitle: "Select Filters",
+          headerLeft: null,
+          headerRight: () => (
+            <CloseIconButton style={{ marginRight: GLOBAL_CONSTANTS.MD_MARGIN }} onPress={() => navigation.goBack()} />
+          )
+        })}
       />
+      <Stack.Screen
+        name="AssetDetailEventFilters"
+        component={AssetDetailEventFiltersScreen}
+        options={({ navigation }) => ({
+          headerTitle: "Select Filters",
+          headerLeft: null,
+          headerRight: () => (
+            <CloseIconButton style={{ marginRight: GLOBAL_CONSTANTS.MD_MARGIN }} onPress={() => navigation.goBack()} />
+          )
+        })}
+      />
+      <Stack.Screen name="EventDetails" component={EventDetailScreen} options={{ headerTitle: "Event Details" }} />
       <Stack.Screen name="SearchCrypto" component={SearchCryptoScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );

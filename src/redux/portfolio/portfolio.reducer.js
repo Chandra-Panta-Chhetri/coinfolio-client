@@ -5,28 +5,23 @@ const values = dummydata.data.prices;
 const historicValue = [
   {
     label: "1h",
-    data: values.hour,
-    defaultTimeLabel: "Past Hour"
+    data: values.hour
   },
   {
     label: "1d",
-    data: values.day,
-    defaultTimeLabel: "Past Day"
+    data: values.day
   },
   {
     label: "1m",
-    data: values.month,
-    defaultTimeLabel: "Past Month"
+    data: values.month
   },
   {
     label: "1y",
-    data: values.year,
-    defaultTimeLabel: "Past Year"
+    data: values.year
   },
   {
     label: "All",
-    data: values.all,
-    defaultTimeLabel: "All Time"
+    data: values.all
   }
 ];
 
@@ -101,10 +96,7 @@ const userReducer = (prevState = INITIAL_STATE, action) => {
     case PORTFOLIO_ACTION_TYPES.ADDING_NEW_TRANSACTION_SUCCESS:
       return {
         ...prevState,
-        transactions: [
-          ...prevState.transactions,
-          action.payload.newTransaction
-        ],
+        transactions: [...prevState.transactions, action.payload.newTransaction],
         numLoadingReq: prevState.numLoadingReq - 1
       };
     case PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_BY_ID_SUCCESS:

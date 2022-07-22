@@ -11,6 +11,7 @@ import {
 } from "../../core/navigators/BottomTab/TabIcons";
 import { Text, RadioButton, useTheme } from "react-native-paper";
 import { TouchableNativeFeedback } from "../../shared-components";
+import { GLOBAL_CONSTANTS } from "../../constants";
 
 const HOME_SCREEN_OPTIONS = [
   { label: "Home", value: "Home", icon: <HomeTabIcon /> },
@@ -56,7 +57,7 @@ const SelectHomeScreen = ({ currentHomeScreen, changeHomeScreen }) => {
 };
 
 const STYLES = StyleSheet.create({
-  touchableNativeContainer: { ...GLOBAL_STYLES.mdMarginBottom },
+  touchableNativeContainer: { marginBottom: GLOBAL_CONSTANTS.MD_MARGIN },
   radioButtonGroup: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -65,7 +66,7 @@ const STYLES = StyleSheet.create({
   },
   iconAndLabel: { flexDirection: "row", alignItems: "center" },
   radioButtonLabel: {
-    marginLeft: 10,
+    marginLeft: GLOBAL_CONSTANTS.MD_MARGIN,
     ...TYPOGRAPHY.subheading,
     ...TYPOGRAPHY.capitalize
   }

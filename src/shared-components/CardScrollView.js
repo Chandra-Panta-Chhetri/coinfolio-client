@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { ScrollView, View, StyleSheet, Text } from "react-native";
 import { Card, useTheme } from "react-native-paper";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../styles";
+import { GLOBAL_CONSTANTS } from "../constants";
+import { TYPOGRAPHY } from "../styles";
 
 const PagingDots = ({ numOfDots = 0, activeDot, containerWidth = 0 }) => {
   const dots = Array(numOfDots).fill("1");
@@ -18,13 +19,7 @@ const PagingDots = ({ numOfDots = 0, activeDot, containerWidth = 0 }) => {
   return (
     <View style={[STYLES.pagingDots, { right: containerWidth / 2 }]}>
       {dots.map((_, i) => (
-        <Text
-          key={i}
-          style={[
-            activeDot === i ? activeDotStyles : nonActiveDotStyles,
-            TYPOGRAPHY.display1
-          ]}
-        >
+        <Text key={i} style={[activeDot === i ? activeDotStyles : nonActiveDotStyles, TYPOGRAPHY.display1]}>
           &bull;
         </Text>
       ))}
@@ -63,15 +58,9 @@ const CardScrollView = ({ children, containerStyle = {} }) => {
           onLayout={onLayout}
           onMomentumScrollEnd={onScroll}
         >
-          {React.Children.map(children, (child) =>
-            React.cloneElement(child, { width: visibleWidth })
-          )}
+          {React.Children.map(children, (child) => React.cloneElement(child, { width: visibleWidth }))}
         </ScrollView>
-        <PagingDots
-          numOfDots={children.length}
-          activeDot={activeInterval}
-          containerWidth={visibleWidth}
-        />
+        <PagingDots numOfDots={children.length} activeDot={activeInterval} containerWidth={visibleWidth} />
       </Card.Content>
     </Card>
   );
@@ -80,7 +69,7 @@ const CardScrollView = ({ children, containerStyle = {} }) => {
 const STYLES = StyleSheet.create({
   container: {
     position: "relative",
-    ...GLOBAL_STYLES.borderRadius
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   },
   pagingDots: {
     position: "absolute",

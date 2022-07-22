@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { StyleSheet, ScrollView, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { connect } from "react-redux";
+import { GLOBAL_CONSTANTS } from "../../../constants";
 import { selectGlobalSummary, selectIsLoadingGlobal, startGlobalSummaryFetch } from "../../../redux/summary";
 import { Skeleton } from "../../../shared-components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
@@ -41,11 +42,11 @@ const GlobalMarketSummary = ({ globalSummary, fetchGlobalSummary, isLoading }) =
 
 const STYLES = StyleSheet.create({
   summaryItem: {
-    marginRight: 10,
+    marginRight: GLOBAL_CONSTANTS.MD_MARGIN,
     flexDirection: "row"
   },
   globalSkeleton: {
-    ...GLOBAL_STYLES.borderRadius,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
     height: 20,
     flex: 1
   },
@@ -53,8 +54,8 @@ const STYLES = StyleSheet.create({
     flexDirection: "row"
   },
   container: {
-    ...GLOBAL_STYLES.borderRadius,
-    ...GLOBAL_STYLES.lgMarginBottom
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
+    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN
   }
 });
 

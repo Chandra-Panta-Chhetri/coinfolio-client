@@ -1,8 +1,9 @@
 import React from "react";
 import { useTheme, Text } from "react-native-paper";
 import PressableView from "./PressableView";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../styles";
-import { COLORS } from "../constants";
+import { StyleSheet } from "react-native";
+import { TYPOGRAPHY } from "../styles";
+import { COLORS, GLOBAL_CONSTANTS } from "../constants";
 
 const Chip = ({
   isHighlighted = false,
@@ -15,29 +16,29 @@ const Chip = ({
 }) => {
   const { colors, dark: isDarkMode } = useTheme();
   const highlightedStyles = highlightedStyle || {
-    backgroundColor: isDarkMode ? colors.text : colors.primary,
-    color: isDarkMode ? colors.border : "white"
+    backgroundColor: colors.primary,
+    color: COLORS.WHITE
   };
 
   const defaultStyles = defaultStyle || {
     color: colors.text,
-    backgroundColor: isDarkMode ? colors.border : COLORS.LIGHT_GREY
+    backgroundColor: colors.border
   };
 
   const textColor = isHighlighted ? highlightedStyles.color : defaultStyles.color;
 
   return (
     <PressableView
-      viewStyle={[GLOBAL_STYLES.iconRoundness, isHighlighted ? highlightedStyles : defaultStyles, containerStyle]}
+      viewStyle={[STYLES.container, isHighlighted ? highlightedStyles : defaultStyles, containerStyle]}
       {...otherProps}
     >
       {Icon && <Icon color={textColor} />}
       <Text
         style={[
-          TYPOGRAPHY.subheading,
+          STYLES.label,
           {
             color: textColor,
-            marginLeft: Icon ? 5 : 0
+            marginLeft: Icon ? GLOBAL_CONSTANTS.SM_MARGIN : 0
           }
         ]}
       >
@@ -46,5 +47,18 @@ const Chip = ({
     </PressableView>
   );
 };
+
+const STYLES = StyleSheet.create({
+  container: {
+    borderRadius: GLOBAL_CONSTANTS.ICON_SIZE,
+    paddingHorizontal: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  label: {
+    ...TYPOGRAPHY.subheading
+  }
+});
 
 export default Chip;

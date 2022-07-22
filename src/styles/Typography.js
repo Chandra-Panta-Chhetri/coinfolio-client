@@ -28,7 +28,7 @@ export default StyleSheet.create({
   title: {
     fontSize: 20,
     lineHeight: 28,
-    fontWeight: "700"
+    fontWeight: "normal"
   },
   subheading: {
     fontSize: 17,

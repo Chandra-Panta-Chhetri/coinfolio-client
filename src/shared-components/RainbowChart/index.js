@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { formatData } from "../../utils";
@@ -18,6 +18,7 @@ import Label from "./Label";
 import RAINBOW_CHART_CONSTANTS from "./constants";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { Text, useTheme } from "react-native-paper";
+import { COLORS, GLOBAL_CONSTANTS } from "../../constants";
 
 const AnimatedPath = Reanimated.createAnimatedComponent(Path);
 
@@ -31,14 +32,14 @@ const LineChart = ({
   percentChangeAccessor = RAINBOW_CHART_CONSTANTS.DEFAULT_ACCESSOR_FUNC,
   dataPointsAccessor = RAINBOW_CHART_CONSTANTS.DEFAULT_ACCESSOR_FUNC
 }) => {
-  const { colors: themeColors } = useTheme();
+  const { colors: themeColors, dark: isDarkMode } = useTheme();
   const [chartDimensions, setChartDimensions] = useState({
     width: 0,
     height: 0,
     hasBeenCalculated: false
   });
-  const [modifiedData, setModifiedData] = useState(data);
-  const { width, height, hasBeenCalculated } = chartDimensions;
+  const [modifiedData, setModifiedData] = useState([]);
+  const { width, hasBeenCalculated, height } = chartDimensions;
 
   const onLayout = (event) => {
     if (hasBeenCalculated) return;
@@ -49,17 +50,22 @@ const LineChart = ({
       width: chartWidth,
       hasBeenCalculated: true
     });
-    const valueAccessors = {
-      xValueAccessor,
-      yValueAccessor,
-      percentChangeAccessor,
-      dataPointsAccessor
-    };
-    const formattedData = formatData(data, chartWidth, chartHeight, valueAccessors);
-    setModifiedData(formattedData);
   };
 
-  const buttonWidth = data.length && width / data.length;
+  useEffect(() => {
+    if (hasBeenCalculated && data.length > 0) {
+      const valueAccessors = {
+        xValueAccessor,
+        yValueAccessor,
+        percentChangeAccessor,
+        dataPointsAccessor
+      };
+      const formattedData = formatData(data, width, height, valueAccessors);
+      setModifiedData(formattedData);
+    }
+  }, [data, hasBeenCalculated]);
+
+  const buttonWidth = (modifiedData.length && width / modifiedData.length) || 0;
 
   const pathTransistion = useSharedValue(0);
   const previousSelected = useSharedValue(initialSelectedGraph);
@@ -68,9 +74,17 @@ const LineChart = ({
   const xPanGesturePos = useSharedValue(0);
   const isPanGestureActive = useSharedValue(false);
 
-  const selectedGraph = useDerivedValue(() => modifiedData[currentSelected.value].data || {}, [modifiedData]);
+  const hasPathsBeenCalculated = useDerivedValue(() => {
+    return (
+      modifiedData[currentSelected.value] &&
+      modifiedData[currentSelected.value].data &&
+      modifiedData[currentSelected.value].data.path
+    );
+  }, [modifiedData]);
 
-  const hasPathsBeenCalculated = useDerivedValue(() => !!selectedGraph.value.path);
+  const selectedGraph = useDerivedValue(() =>
+    hasPathsBeenCalculated.value ? modifiedData[currentSelected.value].data : {}
+  );
 
   const animatedLabelOverlay = useAnimatedStyle(
     () => ({
@@ -80,18 +94,18 @@ const LineChart = ({
   );
 
   const animatedTimeFilters = useAnimatedStyle(() => ({
-    opacity: withTiming(isPanGestureActive.value || !hasPathsBeenCalculated.value ? 0 : 1)
+    opacity: withTiming(!hasPathsBeenCalculated.value ? 0 : 1)
   }));
 
   const animatedPathProps = useAnimatedProps(() => {
-    const previousPath = modifiedData[previousSelected.value].data.path;
-    const currentPath = modifiedData[currentSelected.value].data.path;
+    const previousPath = hasPathsBeenCalculated.value ? modifiedData[previousSelected.value].data.path : "";
+    const currentPath = hasPathsBeenCalculated.value ? modifiedData[currentSelected.value].data.path : "";
 
     return {
       d: !previousPath ? "" : mixPath(pathTransistion.value, previousPath, currentPath),
       strokeWidth: withTiming(isPanGestureActive.value ? svgConfig.strokeWidth + 1 : svgConfig.strokeWidth)
     };
-  }, [modifiedData, svgConfig]);
+  }, [modifiedData]);
 
   const handleTimeFilterClick = (index) => {
     if (currentSelected.value === index) return;
@@ -101,7 +115,7 @@ const LineChart = ({
     pathTransistion.value = withTiming(1);
   };
 
-  if (width === 0 && height === 0) {
+  if (!hasBeenCalculated || data.length === 0) {
     return (
       <View onLayout={onLayout} style={chartStyle}>
         <Skeleton style={GLOBAL_STYLES.fullContainer} />
@@ -146,14 +160,20 @@ const LineChart = ({
           />
         ))}
       </View>
-      <Reanimated.View style={[STYLES.timeFilterContainer, animatedTimeFilters]}>
+      <Reanimated.View
+        style={[
+          STYLES.timeFilterContainer,
+          animatedTimeFilters,
+          { backgroundColor: isDarkMode ? themeColors.surface : themeColors.border }
+        ]}
+      >
         <View style={StyleSheet.absoluteFill}>
           <Reanimated.View
             style={[
               STYLES.timeFilterOverlay,
               {
                 width: buttonWidth,
-                backgroundColor: themeColors.backgroundSelection
+                backgroundColor: isDarkMode ? themeColors.border : themeColors.surface
               },
               animatedLabelOverlay
             ]}
@@ -161,7 +181,7 @@ const LineChart = ({
         </View>
         {data.map((d, i) => (
           <PressableView key={d.label} onPress={() => handleTimeFilterClick(i)} viewStyle={{ width: buttonWidth }}>
-            <Text style={[TYPOGRAPHY.subheading, TYPOGRAPHY.textAlignCenter]}>{d.label}</Text>
+            <Text style={STYLES.timeFilterLabel}>{d.label}</Text>
           </PressableView>
         ))}
       </Reanimated.View>
@@ -174,21 +194,25 @@ const STYLES = StyleSheet.create({
     justifyContent: "space-between",
     position: "relative"
   },
+  timeFilterLabel: {
+    ...TYPOGRAPHY.subheading,
+    ...TYPOGRAPHY.textAlignCenter
+  },
   timeFilterContainer: {
     flexDirection: "row",
     alignSelf: "center",
     width: "100%",
-    marginTop: 30
+    marginTop: 35,
+    position: "relative"
   },
   headerContainer: {
-    ...GLOBAL_STYLES.mdMarginBottom
+    marginBottom: GLOBAL_CONSTANTS.MD_MARGIN
   },
   relativePosition: {
     position: "relative"
   },
   timeFilterOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    ...GLOBAL_STYLES.borderRadius
+    ...StyleSheet.absoluteFillObject
   }
 });
 

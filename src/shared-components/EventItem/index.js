@@ -1,11 +1,14 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
+import { TYPOGRAPHY } from "../../styles";
 import { Card, Text, useTheme } from "react-native-paper";
-import { TouchableNativeFeedback, Chip, IconImage } from "../../../shared-components";
+import TouchableNativeFeedback from "../TouchableNativeFeedback";
+import Chip from "../Chip";
+import IconImage from "../IconImage";
 import { useNavigation } from "@react-navigation/native";
+import { GLOBAL_CONSTANTS } from "../../constants";
 
-const EventDetail = ({ event, index }) => {
+const EventItem = ({ event, index }) => {
   const { colors } = useTheme();
   const navigation = useNavigation();
 
@@ -14,7 +17,7 @@ const EventDetail = ({ event, index }) => {
       viewContainerStyle={index !== 0 ? STYLES.androidContainer : null}
       onPress={() => navigation.navigate("EventDetails", { eventName: event.title })}
     >
-      <Card style={GLOBAL_STYLES.borderRadius}>
+      <Card style={STYLES.cardContainer}>
         <Card.Content>
           <View style={STYLES.iconCoinLabel}>
             <IconImage
@@ -49,10 +52,13 @@ const EventDetail = ({ event, index }) => {
 
 const STYLES = StyleSheet.create({
   androidContainer: {
-    marginTop: 10
+    marginTop: GLOBAL_CONSTANTS.MD_MARGIN
+  },
+  cardContainer: {
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   },
   infoContainer: {
-    marginTop: 10
+    marginTop: GLOBAL_CONSTANTS.MD_MARGIN
   },
   iconCoinLabel: { flexDirection: "row", alignItems: "center" },
   coinLabel: {
@@ -63,7 +69,7 @@ const STYLES = StyleSheet.create({
   coinsInvolvedContainer: {
     flexDirection: "row",
     flex: 1,
-    marginLeft: 7,
+    marginLeft: GLOBAL_CONSTANTS.SM_MARGIN,
     flex: 1,
     alignItems: "center"
   },
@@ -76,4 +82,4 @@ const STYLES = StyleSheet.create({
   }
 });
 
-export default EventDetail;
+export default EventItem;

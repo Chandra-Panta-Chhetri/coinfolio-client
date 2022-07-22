@@ -1,5 +1,4 @@
 export default {
-  MAX_NUM_POINTS_TO_SHOW: 60,
   SVG_LINE_CONFIG: {
     fill: "transparent",
     strokeWidth: 2

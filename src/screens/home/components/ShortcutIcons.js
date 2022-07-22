@@ -2,7 +2,8 @@ import React from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { IconButton, Text, TouchableRipple, useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
+import { TYPOGRAPHY } from "../../../styles";
+import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const SHORTCUT_ICONS = [
   {
@@ -54,7 +55,7 @@ const ShortcutIcons = () => (
 
 const STYLES = StyleSheet.create({
   container: {
-    ...GLOBAL_STYLES.lgMarginBottom,
+    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN,
     justifyContent: "space-between",
     flex: 1
   },
@@ -63,7 +64,7 @@ const STYLES = StyleSheet.create({
     padding: 5
   },
   iconBtnContainer: {
-    ...GLOBAL_STYLES.iconRoundness,
+    borderRadius: GLOBAL_CONSTANTS.ICON_SIZE,
     borderWidth: 5
   }
 });

@@ -6,6 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import { TextInput, Button, Link, PasswordInput } from "../../../shared-components";
 import { connect } from "react-redux";
 import { selectIsChangingAuthState, startEmailLogin } from "../../../redux/user";
+import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const Form = ({ isLoggingIn, login }) => {
   const { colors } = useTheme();
@@ -64,7 +65,7 @@ const Form = ({ isLoggingIn, login }) => {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              style={GLOBAL_STYLES.smMarginBottom}
+              style={STYLES.passwordInput}
             />
           )}
           name="password"
@@ -78,7 +79,7 @@ const Form = ({ isLoggingIn, login }) => {
           loading={isLoggingIn}
           onPress={handleSubmit(onSubmit)}
           mode="contained"
-          style={[GLOBAL_STYLES.mdMarginBottom]}
+          style={STYLES.loginButton}
         />
         <Link navigateTo="SignUp" label="Don't have an account ?" containerStyle={STYLES.signUp} />
       </View>
@@ -91,8 +92,11 @@ const STYLES = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between"
   },
+  loginButton: {
+    marginBottom: GLOBAL_CONSTANTS.MD_MARGIN
+  },
   field: {
-    ...GLOBAL_STYLES.lgMarginBottom
+    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN
   },
   forgotPassword: {
     alignSelf: "flex-end"
@@ -102,6 +106,9 @@ const STYLES = StyleSheet.create({
   },
   flex: {
     flex: 1
+  },
+  passwordInput: {
+    marginBottom: GLOBAL_CONSTANTS.SM_MARGIN
   }
 });
 

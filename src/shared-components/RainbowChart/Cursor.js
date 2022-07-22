@@ -1,11 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
-import Reanimated, {
-  useAnimatedGestureHandler,
-  useAnimatedStyle,
-  withSpring
-} from "react-native-reanimated";
+import Reanimated, { useAnimatedGestureHandler, useAnimatedStyle, withSpring } from "react-native-reanimated";
 import { getYForX } from "react-native-redash";
 import RAINBOW_CHART_CONSTANTS from "./constants";
 
@@ -48,22 +44,7 @@ const Cursor = ({
       { translateX: xPanGesturePos.value - cursorSize / 2 },
       { translateY: yPanGesturePos.value - cursorSize / 2 },
       {
-        scale: withSpring(
-          isPanGestureActive.value ? 1 : 0,
-          RAINBOW_CHART_CONSTANTS.ACTIVE_GESTURE_ANIMATION_CONFIG
-        )
-      }
-    ]
-  }));
-
-  const animatedVerticalBar = useAnimatedStyle(() => ({
-    transform: [
-      { translateX: xPanGesturePos.value },
-      {
-        scale: withSpring(
-          isPanGestureActive.value ? 1 : 0,
-          RAINBOW_CHART_CONSTANTS.ACTIVE_GESTURE_ANIMATION_CONFIG
-        )
+        scale: withSpring(isPanGestureActive.value ? 1 : 0, RAINBOW_CHART_CONSTANTS.ACTIVE_GESTURE_ANIMATION_CONFIG)
       }
     ]
   }));
@@ -71,13 +52,6 @@ const Cursor = ({
   return (
     <PanGestureHandler onGestureEvent={onGestureEvent}>
       <Reanimated.View style={StyleSheet.absoluteFill}>
-        <Reanimated.View
-          style={[
-            STYLES.verticalBar,
-            animatedVerticalBar,
-            { borderLeftColor: themeColors.text }
-          ]}
-        />
         <Reanimated.View
           style={[
             {
@@ -93,14 +67,5 @@ const Cursor = ({
     </PanGestureHandler>
   );
 };
-
-const STYLES = StyleSheet.create({
-  verticalBar: {
-    borderLeftWidth: 2,
-    position: "absolute",
-    top: 0,
-    bottom: 0
-  }
-});
 
 export default Cursor;

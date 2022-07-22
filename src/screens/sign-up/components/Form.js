@@ -5,6 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import { TextInput, Button, Link, PasswordInput } from "../../../shared-components";
 import { connect } from "react-redux";
 import { selectIsChangingAuthState, startUserRegister } from "../../../redux/user";
+import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const Form = ({ isSigningUp, registerUser }) => {
   const {
@@ -82,7 +83,7 @@ const Form = ({ isSigningUp, registerUser }) => {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              style={GLOBAL_STYLES.smMarginBottom}
+              style={STYLES.passwordInput}
             />
           )}
           name="password"
@@ -95,7 +96,7 @@ const Form = ({ isSigningUp, registerUser }) => {
           loading={isSigningUp}
           onPress={handleSubmit(onSubmit)}
           mode="contained"
-          style={GLOBAL_STYLES.mdMarginBottom}
+          style={STYLES.createButton}
         />
         <Link navigateTo="Login" label="Have an account ?" containerStyle={STYLES.signUp} />
       </View>
@@ -108,8 +109,14 @@ const STYLES = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between"
   },
+  createButton: {
+    marginBottom: GLOBAL_CONSTANTS.MD_MARGIN
+  },
   field: {
-    ...GLOBAL_STYLES.lgMarginBottom
+    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN
+  },
+  passwordInput: {
+    marginBottom: GLOBAL_CONSTANTS.SM_MARGIN
   },
   forgotPassword: {
     alignSelf: "flex-end"

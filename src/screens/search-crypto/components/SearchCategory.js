@@ -4,7 +4,7 @@ import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 import { Text } from "react-native-paper";
 import SearchItem from "./SearchItem";
 import { Skeleton, Button } from "../../../shared-components";
-import { MARKET_OVERVIEW_CONSTANTS } from "../../../constants";
+import { GLOBAL_CONSTANTS, MARKET_OVERVIEW_CONSTANTS } from "../../../constants";
 
 const DUMMY_SKELETON_ARRAY = Array(MARKET_OVERVIEW_CONSTANTS.NUM_SEARCH_RESULT_SKELETONS).fill("1");
 
@@ -28,7 +28,7 @@ const SearchCategory = ({ label, searches, onHeadingClick, headingBtnLabel, isLo
                 style={[
                   STYLES.searchResultSkeleton,
                   {
-                    marginBottom: i !== DUMMY_SKELETON_ARRAY.length - 1 ? GLOBAL_STYLES.smMarginBottom.marginBottom : 0
+                    marginBottom: i !== DUMMY_SKELETON_ARRAY.length - 1 ? GLOBAL_CONSTANTS.SM_MARGIN : 0
                   }
                 ]}
               />
@@ -41,7 +41,7 @@ const SearchCategory = ({ label, searches, onHeadingClick, headingBtnLabel, isLo
 const STYLES = StyleSheet.create({
   container: {},
   header: {
-    ...GLOBAL_STYLES.lgMarginBottom,
+    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"

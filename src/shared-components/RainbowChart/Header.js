@@ -1,12 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { round, ReText } from "react-native-redash";
-import {
-  useDerivedValue,
-  interpolate,
-  useAnimatedStyle,
-  withTiming
-} from "react-native-reanimated";
+import { useDerivedValue, interpolate, useAnimatedStyle, withTiming } from "react-native-reanimated";
 import {
   formatNumBasedOnSignWorklet,
   getStylesBasedOnSignWorklet,
@@ -36,10 +31,7 @@ const Header = ({
   });
 
   const xVal = useDerivedValue(() => {
-    if (hasPathsBeenCalculated.value) {
-      if (!isPanGestureActive.value)
-        return selectedGraph.value.defaultTimeLabel;
-
+    if (hasPathsBeenCalculated.value && isPanGestureActive.value) {
       const xValForPos = interpolate(
         xPanGesturePos.value,
         selectedGraph.value.xAxis.range,
@@ -50,16 +42,12 @@ const Header = ({
     return "";
   });
 
-  const percentChange = useDerivedValue(
-    () => selectedGraph.value.percentChange || 0
-  );
+  const percentChange = useDerivedValue(() => (hasPathsBeenCalculated.value && selectedGraph.value.percentChange) || 0);
 
-  const percentChangeLabel = useDerivedValue(() =>
-    selectedGraph.value.percentChange
-      ? `${formatNumBasedOnSignWorklet(
-          roundPercentWorklet(percentChange.value)
-        )}%`
-      : ""
+  const percentChangeLabel = useDerivedValue(
+    () =>
+      (hasPathsBeenCalculated.value && `${formatNumBasedOnSignWorklet(roundPercentWorklet(percentChange.value))}%`) ||
+      ""
   );
 
   const animatedPercentChange = useAnimatedStyle(() => ({
@@ -73,10 +61,7 @@ const Header = ({
     <>
       <View style={STYLES.timeAndPercent}>
         <ReText style={textStyles} text={xVal} />
-        <ReText
-          style={{ ...TYPOGRAPHY.subheading, ...animatedPercentChange }}
-          text={percentChangeLabel}
-        />
+        <ReText style={{ ...TYPOGRAPHY.subheading, ...animatedPercentChange }} text={percentChangeLabel} />
       </View>
       <ReText style={textStyles} text={yVal} />
     </>

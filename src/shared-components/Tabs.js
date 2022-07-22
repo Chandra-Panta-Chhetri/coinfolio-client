@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { useTheme } from "react-native-paper";
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  Easing
-} from "react-native-reanimated";
+import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing } from "react-native-reanimated";
+import { GLOBAL_CONSTANTS } from "../constants";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../styles";
 import PressableView from "./PressableView";
 
@@ -22,11 +18,7 @@ const getBorderStyles = (tabIndex, totalTabs) =>
     ? STYLES.noLeftBorders
     : { ...STYLES.noRightBorders, ...STYLES.noLeftBorders };
 
-const Tabs = ({
-  children,
-  initialActiveTab = 0,
-  tabHeadingMarginBottom = 0
-}) => {
+const Tabs = ({ children, initialActiveTab = 0, tabHeadingMarginBottom = 0 }) => {
   const numTabs = children.length;
   const { dark: isDarkMode, colors } = useTheme();
 
@@ -52,10 +44,7 @@ const Tabs = ({
 
   const handleActiveTabSlide = (newTabIndex) => {
     translateX.value = tabHeadingContainerWidth;
-    leftPosition.value = withTiming(
-      newTabIndex * tabWidth,
-      SWITCH_ANIMATION_CONFIG
-    );
+    leftPosition.value = withTiming(newTabIndex * tabWidth, SWITCH_ANIMATION_CONFIG);
     translateX.value = withTiming(0, SWITCH_ANIMATION_CONFIG);
   };
 
@@ -70,15 +59,11 @@ const Tabs = ({
   return (
     <>
       <View
-        style={[
-          STYLES.tabHeadingContainer,
-          { marginBottom: tabHeadingMarginBottom }
-        ]}
+        style={[STYLES.tabHeadingContainer, { marginBottom: tabHeadingMarginBottom }]}
         onLayout={(e) => {
           if (tabHeadingContainerWidth === 0) {
             const containerWidth = e.nativeEvent.layout.width;
-            leftPosition.value =
-              numTabs === 0 ? 0 : initialActiveTab * (containerWidth / numTabs);
+            leftPosition.value = numTabs === 0 ? 0 : initialActiveTab * (containerWidth / numTabs);
             setTabHeadingContainerWidth(containerWidth);
           }
         }}
@@ -115,7 +100,6 @@ const Tabs = ({
         <Animated.View
           style={[
             STYLES.activeTabOverlay,
-            GLOBAL_STYLES.borderRadius,
             {
               width: `${numTabs === 0 ? 0 : 100 / numTabs}%`,
               backgroundColor: isDarkMode ? colors.border : colors.primary,
@@ -134,11 +118,7 @@ const Tabs = ({
             return null;
           }
 
-          return (
-            <View style={[isTabActive ? null : { display: "none" }]}>
-              {child}
-            </View>
-          );
+          return <View style={[isTabActive ? null : { display: "none" }]}>{child}</View>;
         })}
       </Animated.View>
     </>
@@ -157,10 +137,11 @@ const STYLES = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    ...GLOBAL_STYLES.borderRadius,
-    ...GLOBAL_STYLES.borderWidth
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
+    borderWidth: GLOBAL_CONSTANTS.BORDER_WIDTH
   },
   activeTabOverlay: {
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
     position: "absolute",
     height: "100%",
     top: 0,

@@ -4,14 +4,7 @@ import { EVENTS_CONSTANTS } from "../../constants";
 const INITIAL_STATE = {
   news: [],
   events: [],
-  eventFilters: {
-    dateRange: {
-      start: null,
-      end: null
-    },
-    showOnly: EVENTS_CONSTANTS.DEFAULT_SHOW_ONLY_FILTER_INDEX,
-    limit: EVENTS_CONSTANTS.NUM_TO_SHOW
-  },
+  eventFilters: EVENTS_CONSTANTS.DEFAULT_DISCOVER_FILTERS,
   isLoadingNews: true,
   isLoadingEvents: true,
   isLoadingMoreNews: false,

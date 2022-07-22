@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
-import { GLOBAL_STYLES } from "../../styles";
-import { NEWS_CONSTANTS } from "../../constants";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import {
   selectNews,
@@ -11,66 +8,15 @@ import {
   startNextNewsFetch,
   selectHasMoreNews
 } from "../../redux/discover";
-import { DropDown, InfiniteScroll, NewsItemSkeleton, NewsItem } from "../../shared-components";
+import { NewsList } from "../../shared-components";
 
-const renderNewsSkeleton = ({ index }) => (
-  <NewsItemSkeleton containerStyle={index !== 0 ? GLOBAL_STYLES.cardMargin : null} />
-);
-
-const renderNewsItem = ({ item, index }) => (
-  <NewsItem key={item.id.toString()} news={item} containerStyle={index !== 0 ? GLOBAL_STYLES.cardMargin : null} />
-);
-
-const NewsScreen = ({ isLoading, news, fetchInitialNews, fetchMoreNews, isLoadingMore, hasMoreToFetch }) => {
-  const [newsFilterIndex, setNewsFilterIndex] = useState(NEWS_CONSTANTS.DEFAULT_FILTER_INDEX);
-
+const NewsScreen = ({ fetchNews, fetchMoreNews, ...otherProps }) => {
   useEffect(() => {
-    //fetchInitialNews();
+    fetchNews();
   }, []);
 
-  const onFilterSelect = (selectedVal, selectedIndex) => {
-    setNewsFilterIndex(selectedIndex);
-    fetchInitialNews(selectedVal);
-  };
-
-  const onEndReached = () => {
-    const filter = NEWS_CONSTANTS.FILTERS[newsFilterIndex].value;
-    fetchMoreNews(filter);
-  };
-
-  return (
-    <>
-      <DropDown
-        onSelect={onFilterSelect}
-        selectedIndex={newsFilterIndex}
-        options={NEWS_CONSTANTS.FILTERS}
-        containerStyle={STYLES.dropDownContainer}
-      />
-      <InfiniteScroll
-        isLoading={isLoading}
-        data={news}
-        numSkeletons={NEWS_CONSTANTS.NUM_TO_SHOW}
-        contentContainerStyle={STYLES.newsList}
-        onEndReached={onEndReached}
-        isLoadingMore={isLoadingMore}
-        hasMoreToFetch={hasMoreToFetch}
-        renderDataItem={renderNewsItem}
-        renderSkeleton={renderNewsSkeleton}
-      />
-    </>
-  );
+  return <NewsList fetchMore={fetchMoreNews} onFilterChange={fetchNews} {...otherProps} />;
 };
-
-const STYLES = StyleSheet.create({
-  dropDownContainer: {
-    marginBottom: GLOBAL_STYLES.lgMarginBottom.marginBottom - 1,
-    marginHorizontal: GLOBAL_STYLES.screenContainer.paddingHorizontal
-  },
-  newsList: {
-    ...GLOBAL_STYLES.screenContainer,
-    paddingTop: 0
-  }
-});
 
 const mapStateToProps = (state) => ({
   isLoading: selectIsLoadingNews(state),
@@ -80,7 +26,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchInitialNews: (filter) => dispatch(startNewsFetch(filter)),
+  fetchNews: (filter) => dispatch(startNewsFetch(filter)),
   fetchMoreNews: (filter) => dispatch(startNextNewsFetch({ filter }))
 });
 

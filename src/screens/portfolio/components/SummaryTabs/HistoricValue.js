@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { GLOBAL_STYLES } from "../../../../styles";
 import { selectPortfolioHistoricValue } from "../../../../redux/portfolio";
 import { LineChart } from "../../../../shared-components";
+import { GLOBAL_CONSTANTS } from "../../../../constants";
 
 const xValueAccessor = (dataInstance) => dataInstance[1];
 const yValueAccessor = (dataInstance) => dataInstance[0];
@@ -17,7 +18,7 @@ const HistoricValue = ({ historicValue = [] }) => {
   }, []);
 
   return (
-    <Card style={GLOBAL_STYLES.borderRadius}>
+    <Card style={STYLES.cardContainer}>
       <Card.Content>
         <LineChart
           data={historicValue}
@@ -36,6 +37,9 @@ const STYLES = StyleSheet.create({
   lineChart: {
     width: "100%",
     height: 180
+  },
+  cardContainer: {
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   }
 });
 

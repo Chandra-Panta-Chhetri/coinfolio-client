@@ -4,12 +4,13 @@ import { TYPOGRAPHY } from "../../../styles";
 import { IconImage, TouchableNativeFeedback } from "../../../shared-components";
 import { Text } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const SearchItem = ({ search, containerStyles = {} }) => {
   const navigation = useNavigation();
-  const { image, name, symbol } = search;
+  const { image, name, symbol, id } = search;
 
-  const onClick = () => navigation.navigate("AssetDetail", {});
+  const onClick = () => navigation.navigate("AssetDetail", { image, name, symbol, id });
 
   return (
     <TouchableNativeFeedback onPress={onClick}>
@@ -30,7 +31,7 @@ const STYLES = StyleSheet.create({
     alignItems: "center"
   },
   nameSymbol: {
-    marginLeft: 10
+    marginLeft: GLOBAL_CONSTANTS.MD_MARGIN
   }
 });
 

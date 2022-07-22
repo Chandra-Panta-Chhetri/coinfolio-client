@@ -1,7 +1,7 @@
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import BottomSheetFilter from "./BottomSheetFilter";
-import { MARKET_OVERVIEW_CONSTANTS } from "../../../../constants";
+import { GLOBAL_CONSTANTS, MARKET_OVERVIEW_CONSTANTS } from "../../../../constants";
 import { connect } from "react-redux";
 import { selectMarketFilters, updateFilters } from "../../../../redux/market";
 import { GLOBAL_STYLES } from "../../../../styles";
@@ -37,10 +37,10 @@ const Filters = ({ activeFilters, updateMarketFilters }) => (
 
 const STYLES = StyleSheet.create({
   container: {
-    ...GLOBAL_STYLES.smMarginBottom,
+    marginBottom: GLOBAL_CONSTANTS.SM_MARGIN,
     flexGrow: 1
   },
-  filterContainer: { marginRight: 10, flexGrow: 1 },
+  filterContainer: { marginRight: GLOBAL_CONSTANTS.MD_MARGIN, flexGrow: 1 },
   flexGrow: {
     flexGrow: 1
   }
