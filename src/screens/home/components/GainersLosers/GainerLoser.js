@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { TYPOGRAPHY } from "../../../../styles";
-import { getStylesBasedOnSign, formatNumBasedOnSignWorklet } from "../../../../utils";
+import { getStylesBasedOnSign, formatPercentWorklet } from "../../../../utils";
 import { TouchableNativeFeedback, IconImage } from "../../../../shared-components";
 import { useNavigation } from "@react-navigation/native";
 import { GLOBAL_CONSTANTS } from "../../../../constants";
@@ -22,15 +22,19 @@ const GainerLoser = ({ coin, containerStyle = null }) => {
               uri: image
             }}
           />
-          <View style={STYLES.gainerLoserInfoContainer}>
-            <View>
-              <Text style={TYPOGRAPHY.subheading}>{name}</Text>
+          <View style={STYLES.infoContainer}>
+            <View style={STYLES.nameSymbol}>
+              <Text numberOfLines={1} style={TYPOGRAPHY.subheading}>
+                {name}
+              </Text>
               <Text style={TYPOGRAPHY.body1}>{symbol}</Text>
             </View>
-            <View style={STYLES.priceAndPercent}>
-              <Text style={TYPOGRAPHY.subheading}>${priceUsd}</Text>
-              <Text style={[TYPOGRAPHY.body1, getStylesBasedOnSign(changePercent24Hr)]}>
-                {formatNumBasedOnSignWorklet(changePercent24Hr)}%
+            <View style={[STYLES.priceAndPercent]}>
+              <Text numberOfLines={1} style={TYPOGRAPHY.subheading}>
+                {priceUsd}
+              </Text>
+              <Text numberOfLines={1} style={[TYPOGRAPHY.body1, getStylesBasedOnSign(changePercent24Hr)]}>
+                {formatPercentWorklet(changePercent24Hr)}
               </Text>
             </View>
           </View>
@@ -48,7 +52,7 @@ const STYLES = StyleSheet.create({
   cardContainer: {
     borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
   },
-  gainerLoserInfoContainer: {
+  infoContainer: {
     flexDirection: "row",
     flex: 1,
     justifyContent: "space-between",
@@ -56,6 +60,9 @@ const STYLES = StyleSheet.create({
   },
   priceAndPercent: {
     alignItems: "flex-end"
+  },
+  nameSymbol: {
+    flex: 0.8
   }
 });
 

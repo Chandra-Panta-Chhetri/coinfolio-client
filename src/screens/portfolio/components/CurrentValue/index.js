@@ -3,15 +3,9 @@ import { StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
 import { connect } from "react-redux";
 import { TYPOGRAPHY } from "../../../../styles";
-import {
-  selectIsLoadingPortfolio,
-  selectCurrentPortfolioValue
-} from "../../../../redux/portfolio";
+import { selectIsLoadingPortfolio, selectCurrentPortfolioValue } from "../../../../redux/portfolio";
 import CurrentValueSkeleton from "./Skeleton";
-import {
-  formatNumBasedOnSignWorklet,
-  getStylesBasedOnSign
-} from "../../../../utils";
+import { addNumSign, getStylesBasedOnSign } from "../../../../utils";
 
 const CurrentValue = ({ currentValue, isLoading, width = "100%" }) => {
   if (isLoading && currentValue === null) {
@@ -23,22 +17,12 @@ const CurrentValue = ({ currentValue, isLoading, width = "100%" }) => {
       <Text style={TYPOGRAPHY.subheading}>Current Value</Text>
       <View style={STYLES.valueAndPercent}>
         <Text style={TYPOGRAPHY.title}>${currentValue.value}</Text>
-        <Text
-          style={[
-            TYPOGRAPHY.subheading,
-            getStylesBasedOnSign(currentValue.percent)
-          ]}
-        >
-          {formatNumBasedOnSignWorklet(currentValue.percent)}%
+        <Text style={[TYPOGRAPHY.subheading, getStylesBasedOnSign(currentValue.percent)]}>
+          {addNumSign(currentValue.percent)}%
         </Text>
       </View>
-      <Text
-        style={[
-          TYPOGRAPHY.caption,
-          getStylesBasedOnSign(currentValue.plChange)
-        ]}
-      >
-        {formatNumBasedOnSignWorklet(currentValue.plChange, " $")} (24h)
+      <Text style={[TYPOGRAPHY.caption, getStylesBasedOnSign(currentValue.plChange)]}>
+        {addNumSign(currentValue.plChange, " $")} (24h)
       </Text>
     </View>
   );

@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { TouchableNativeFeedback, IconImage } from "../../../../shared-components";
 import { TYPOGRAPHY } from "../../../../styles";
-import { getStylesBasedOnSign, formatNumBasedOnSignWorklet } from "../../../../utils";
+import { formatPercentWorklet, getStylesBasedOnSign } from "../../../../utils";
 import { useNavigation } from "@react-navigation/native";
 import { GLOBAL_CONSTANTS } from "../../../../constants";
 
@@ -23,9 +23,11 @@ const TopCoin = ({ item: coin }) => {
             }}
           />
           <Text style={TYPOGRAPHY.body2}>{symbol}</Text>
-          <Text style={TYPOGRAPHY.body1}>${priceUsd}</Text>
-          <Text style={[TYPOGRAPHY.body1, getStylesBasedOnSign(changePercent24Hr)]}>
-            {formatNumBasedOnSignWorklet(changePercent24Hr)}%
+          <Text numberOfLines={1} style={TYPOGRAPHY.body1}>
+            {priceUsd}
+          </Text>
+          <Text numberOfLines={1} style={[TYPOGRAPHY.body1, getStylesBasedOnSign(changePercent24Hr)]}>
+            {formatPercentWorklet(changePercent24Hr)}
           </Text>
         </Card.Content>
       </Card>

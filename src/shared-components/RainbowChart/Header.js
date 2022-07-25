@@ -1,13 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { round, ReText } from "react-native-redash";
+import { ReText } from "react-native-redash";
 import { useDerivedValue, interpolate, useAnimatedStyle, withTiming } from "react-native-reanimated";
-import {
-  formatNumBasedOnSignWorklet,
-  getStylesBasedOnSignWorklet,
-  formatTimeWorklet,
-  roundPercentWorklet
-} from "../../utils";
+import { getStylesBasedOnSignWorklet, formatTimeWorklet, formatPercentWorklet, formatNumWorklet } from "../../utils";
 import { TYPOGRAPHY } from "../../styles";
 
 const Header = ({
@@ -25,7 +20,7 @@ const Header = ({
         selectedGraph.value.yAxis.range,
         selectedGraph.value.yAxis.domain
       );
-      return `$${round(yValForPos, 2)}`;
+      return `$${formatNumWorklet(yValForPos)}`;
     }
     return "";
   });
@@ -44,11 +39,7 @@ const Header = ({
 
   const percentChange = useDerivedValue(() => (hasPathsBeenCalculated.value && selectedGraph.value.percentChange) || 0);
 
-  const percentChangeLabel = useDerivedValue(
-    () =>
-      (hasPathsBeenCalculated.value && `${formatNumBasedOnSignWorklet(roundPercentWorklet(percentChange.value))}%`) ||
-      ""
-  );
+  const percentChangeLabel = useDerivedValue(() => formatPercentWorklet(percentChange.value));
 
   const animatedPercentChange = useAnimatedStyle(() => ({
     opacity: withTiming(hasPathsBeenCalculated.value ? 1 : 0),
