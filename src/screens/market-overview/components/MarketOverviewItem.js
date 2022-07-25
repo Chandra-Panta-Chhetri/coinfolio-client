@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { IconImage, OutlinedText, TouchableNativeFeedback } from "../../../shared-components";
-import { formatNumBasedOnSignWorklet, getStylesBasedOnSign } from "../../../utils";
+import { formatPercentWorklet, getStylesBasedOnSign } from "../../../utils";
 import { Text, useTheme } from "react-native-paper";
 import { TYPOGRAPHY } from "../../../styles";
 import { useNavigation } from "@react-navigation/native";
@@ -29,12 +29,14 @@ const MarketOverviewItem = ({ item }) => {
               {name}
             </Text>
           </View>
-          <Text style={[getStylesBasedOnSign(changePercent24Hr), TYPOGRAPHY.body1]}>
-            {formatNumBasedOnSignWorklet(changePercent24Hr)}%
+          <Text numberOfLines={1} style={[getStylesBasedOnSign(changePercent24Hr), TYPOGRAPHY.body1]}>
+            {formatPercentWorklet(changePercent24Hr)}
           </Text>
         </View>
         <View style={STYLES.priceMarketCap}>
-          <Text style={TYPOGRAPHY.body2}>${priceUsd}</Text>
+          <Text numberOfLines={1} style={TYPOGRAPHY.body2}>
+            {priceUsd}
+          </Text>
           <Text numberOfLines={1} style={TYPOGRAPHY.body1}>
             MCap {marketCap}
           </Text>

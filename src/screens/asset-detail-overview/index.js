@@ -48,7 +48,7 @@ const AssetDetailOverviewScreen = ({ overview, isLoading, fetchOverview, route }
           <Skeleton style={STYLES.textSkeleton} />
         ) : (
           <Text style={TYPOGRAPHY.display1} numberOfLines={1}>
-            ${overview.priceUsd}
+            {overview.priceUsd}
           </Text>
         )}
       </View>

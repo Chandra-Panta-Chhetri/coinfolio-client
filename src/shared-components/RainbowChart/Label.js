@@ -17,13 +17,7 @@ const ChartLabelItem = ({
   const onLayout = (event) => (labelWidth.value = event.nativeEvent.layout.width);
 
   const labelInfo = useDerivedValue(() =>
-    hasPathsBeenCalculated.value
-      ? selectedGraph.value.labelCoordinates[indexOfCoordinates]
-      : {
-          x: 0,
-          y: 0,
-          val: 0
-        }
+    hasPathsBeenCalculated.value ? selectedGraph.value.labelCoordinates[indexOfCoordinates] : {}
   );
 
   const animatedLabelContainer = useAnimatedStyle(
@@ -32,15 +26,15 @@ const ChartLabelItem = ({
       position: "absolute",
       transform: [
         {
-          translateX: boundXCoordinateWorklet(labelInfo.value.x, maxWidth, labelWidth.value)
+          translateX: boundXCoordinateWorklet(labelInfo.value.x || 0, maxWidth, labelWidth.value)
         },
-        { translateY: labelInfo.value.y }
+        { translateY: labelInfo.value.y || 0 }
       ]
     }),
     [maxWidth]
   );
 
-  const labelValue = useDerivedValue(() => `$${parseFloat(labelInfo.value.val).toFixed(4)}`);
+  const labelValue = useDerivedValue(() => `${labelInfo.value.val}`);
 
   const STYLES = {
     ...TYPOGRAPHY.textAlignCenter,

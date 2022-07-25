@@ -1,7 +1,7 @@
 import * as shape from "d3-shape";
 import { scaleLinear } from "d3-scale";
 import { parse } from "react-native-redash";
-import { MARKET_OVERVIEW_CONSTANTS } from "../constants";
+import { formatNumWorklet } from "./Worklets";
 
 const findMaxAndMinYX = (dataPoints) => {
   if (dataPoints.length === 0) {
@@ -128,18 +128,18 @@ export const buildLineChart = (
     maxPointsToShow
   );
   return {
-    percentChange: percentChangeAccessor(data) || 0,
+    percentChange: percentChangeAccessor(data),
     path: parse(path),
     labelCoordinates: [
       {
         x: scaleX(dataPoints[extremas.y.indexOfMaxYVal][0]),
         y: -25,
-        val: extremas.y.maxVal
+        val: `$${formatNumWorklet(extremas.y.maxVal)}`
       },
       {
         x: scaleX(dataPoints[extremas.y.indexOfMinYVal][0]),
         y: chartHeight - 4,
-        val: extremas.y.minVal
+        val: `$${formatNumWorklet(extremas.y.minVal)}`
       }
     ],
     xAxis,

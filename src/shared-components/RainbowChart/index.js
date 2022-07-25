@@ -18,7 +18,7 @@ import Label from "./Label";
 import RAINBOW_CHART_CONSTANTS from "./constants";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { Text, useTheme } from "react-native-paper";
-import { COLORS, GLOBAL_CONSTANTS } from "../../constants";
+import { GLOBAL_CONSTANTS } from "../../constants";
 
 const AnimatedPath = Reanimated.createAnimatedComponent(Path);
 

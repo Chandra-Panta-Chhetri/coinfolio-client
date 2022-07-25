@@ -9,6 +9,7 @@
     "orientation": "portrait",
     "android": {
       "softwareKeyboardLayoutMode": "pan"
-    }
+    },
+    "jsEngine": "hermes"
   }
 }

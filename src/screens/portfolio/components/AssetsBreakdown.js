@@ -6,7 +6,7 @@ import { selectIsLoadingPortfolio, selectPortfolioAssets } from "../../../redux/
 import { AntDesign } from "@expo/vector-icons";
 import { PressableView, IconImage } from "../../../shared-components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
-import { formatNumBasedOnSignWorklet, getStylesBasedOnSign } from "../../../utils";
+import { addNumSign, getStylesBasedOnSign } from "../../../utils";
 import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const STYLES = StyleSheet.create({
@@ -142,7 +142,7 @@ const AssetsBreakdown = ({ assets = [], isLoading }) => {
                 numberOfLines={1}
                 style={[TYPOGRAPHY.textAlignRight, getStylesBasedOnSign(asset.pricePercentChange), TYPOGRAPHY.caption]}
               >
-                {formatNumBasedOnSignWorklet(asset.pricePercentChange)}%
+                {addNumSign(asset.pricePercentChange)}%
               </Text>
             </View>
             <View style={STYLES.flex}>

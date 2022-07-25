@@ -4,7 +4,7 @@ import { Card, useTheme } from "react-native-paper";
 import { PieChart } from "../../../../../shared-components";
 import { connect } from "react-redux";
 import { selectPortfolioAssets } from "../../../../../redux/portfolio";
-import { roundPercentWorklet } from "../../../../../utils";
+import { formatNumWorklet } from "../../../../../utils";
 import { GLOBAL_STYLES } from "../../../../../styles";
 import Labels from "./Labels";
 import { GLOBAL_CONSTANTS } from "../../../../../constants";
@@ -33,7 +33,7 @@ const Allocations = ({ assets }) => {
     allocations.sort((a1, a2) => a1.holdingsVal - a2.holdingsVal);
     const formattedAllocations = allocations.slice(0, MAX_TO_SHOW).map((allocation, i) => ({
       key: `${allocation.ticker}`,
-      value: roundPercentWorklet((allocation.holdingsVal / totalPortfolioVal) * 100),
+      value: formatNumWorklet((allocation.holdingsVal / totalPortfolioVal) * 100),
       svg: {
         fill: SLICE_COLORS[i]
       }

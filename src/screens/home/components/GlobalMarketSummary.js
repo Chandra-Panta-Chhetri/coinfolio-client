@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { GLOBAL_CONSTANTS } from "../../../constants";
 import { selectGlobalSummary, selectIsLoadingGlobal, startGlobalSummaryFetch } from "../../../redux/summary";
 import { Skeleton } from "../../../shared-components";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
+import { TYPOGRAPHY } from "../../../styles";
 
 const MarketSummarySkeleton = () => (
   <Card style={STYLES.container}>
