@@ -77,6 +77,16 @@ const notificationReducer = (prevState = INITIAL_STATE, action) => {
         gainersLosers: action.payload,
         isLoadingGainersLosers: false
       };
+    case SUMMARY_ACTION_TYPES.UPDATE_GAINERS_LOSERS:
+      return {
+        ...prevState,
+        gainersLosers: action.payload
+      };
+    case SUMMARY_ACTION_TYPES.UPDATE_TOP_COINS:
+      return {
+        ...prevState,
+        topCoins: action.payload
+      };
     default:
       return prevState;
   }

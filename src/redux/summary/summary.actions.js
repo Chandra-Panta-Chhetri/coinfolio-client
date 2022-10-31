@@ -58,3 +58,13 @@ export const globalSummaryFetchFail = (errorMsg) => ({
   type: SUMMARY_ACTION_TYPES.GLOBAL_SUMMARY_FETCH_FAIL,
   payload: errorMsg
 });
+
+export const updateTopCoins = (coins) => ({
+  type: SUMMARY_ACTION_TYPES.UPDATE_TOP_COINS,
+  payload: coins
+});
+
+export const updateGainersLosers = (coins) => ({
+  type: SUMMARY_ACTION_TYPES.UPDATE_GAINERS_LOSERS,
+  payload: coins
+});
