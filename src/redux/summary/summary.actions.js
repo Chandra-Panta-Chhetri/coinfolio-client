@@ -59,12 +59,12 @@ export const globalSummaryFetchFail = (errorMsg) => ({
   payload: errorMsg
 });
 
-export const updateTopCoins = (coins) => ({
+export const updateTopCoins = (updatedCoins) => ({
   type: SUMMARY_ACTION_TYPES.UPDATE_TOP_COINS,
-  payload: coins
+  payload: updatedCoins
 });
 
-export const updateGainersLosers = (coins) => ({
+export const updateGainersLosers = (updatedCoins) => ({
   type: SUMMARY_ACTION_TYPES.UPDATE_GAINERS_LOSERS,
-  payload: coins
+  payload: updatedCoins
 });

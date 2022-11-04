@@ -1,7 +1,7 @@
 import { io as SocketClient } from "socket.io-client";
-import { GLOBAL_CONSTANTS } from "../constants";
+import { URLS } from "../constants";
 
-const convertCoinsToComma = (coins) => {
+const coinsToCommaSepIDs = (coins) => {
   let commaSepIds = "";
 
   for (let coin of coins) {
@@ -12,9 +12,9 @@ const convertCoinsToComma = (coins) => {
 };
 
 export const connectToLivePrices = (coinsToWatch = []) => {
-  const socket = SocketClient(`${GLOBAL_CONSTANTS.BACKEND_BASE_URL}/prices`, {
+  const socket = SocketClient(`${URLS.BACKEND_BASE_URL}/prices`, {
     query: {
-      assets: convertCoinsToComma(coinsToWatch)
+      assets: coinsToCommaSepIDs(coinsToWatch)
     }
   });
   return socket;
