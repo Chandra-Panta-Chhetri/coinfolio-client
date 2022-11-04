@@ -1,5 +1,9 @@
 import { useEffect, useRef } from "react";
 import { pricesSocket } from "../socket";
+import { formatNumWorklet } from "../utils";
+
+export const updatePrice = (coinID = "", coins = [], newPrice) =>
+  coins.map((coin) => (coin.id === coinID ? { ...coin, priceUsd: `$${formatNumWorklet(newPrice)}` } : coin));
 
 export const useLivePrices = (coinsToWatch = []) => {
   const socket = useRef(null);

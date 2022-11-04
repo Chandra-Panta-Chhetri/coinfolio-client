@@ -1,39 +1,28 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { ScrollView } from "react-native";
 import { GLOBAL_STYLES } from "../../styles";
 import { GlobalMarketSummary, ShortcutIcons, TopCoins, GainersLosers, NewsSummaries } from "./components";
 import { connect } from "react-redux";
 import { selectGainersLosers, selectTopCoins, updateGainersLosers, updateTopCoins } from "../../redux/summary";
-import { formatNumWorklet } from "../../utils";
-import { useLivePrices } from "../../hooks";
+import { useLivePrices, updatePrice } from "../../hooks";
 
 const HomeScreen = ({ topCoins, gainersLosers, updateTopCoins, updateGainersLosers }) => {
   const socket = useLivePrices([...topCoins, ...gainersLosers]);
 
+  const onNewPrices = (newPrices = {}) => {
+    let updatedTopCoins = [...topCoins];
+    let updatedGainersLosers = [...gainersLosers];
+    for (let id in newPrices) {
+      updatedTopCoins = updatePrice(id, updatedTopCoins, newPrices[id]);
+      updatedGainersLosers = updatePrice(id, updatedGainersLosers, newPrices[id]);
+    }
+    updateTopCoins(updatedTopCoins);
+    updateGainersLosers(updatedTopCoins);
+  };
+
   useEffect(() => {
     if (socket !== null) {
-      socket.on("new prices", (prices) => {
-        const updatedTopCoins = [...topCoins];
-        const updatedGainersLosers = [...gainersLosers];
-        for (let id in prices) {
-          if (prices.hasOwnProperty(id)) {
-            //sep function
-            for (let coin of updatedTopCoins) {
-              if (coin.id === id) {
-                coin.priceUsd = `$${formatNumWorklet(prices[id])}`;
-              }
-            }
-            for (let coin of updatedGainersLosers) {
-              if (coin.id === id) {
-                coin.priceUsd = `$${formatNumWorklet(prices[id])}`;
-                break;
-              }
-            }
-          }
-        }
-        updateTopCoins(updatedTopCoins);
-        updateGainersLosers(updatedTopCoins);
-      });
+      socket.on("new prices", onNewPrices);
     }
   }, [socket]);
 
