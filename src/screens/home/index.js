@@ -17,11 +17,12 @@ const HomeScreen = ({ topCoins, gainersLosers, updateTopCoins, updateGainersLose
       updatedGainersLosers = updatePrice(id, updatedGainersLosers, newPrices[id]);
     }
     updateTopCoins(updatedTopCoins);
-    updateGainersLosers(updatedTopCoins);
+    updateGainersLosers(updatedGainersLosers);
   };
 
   useEffect(() => {
     if (socket !== null) {
+      console.log("event handler init");
       socket.on("new prices", onNewPrices);
     }
   }, [socket]);

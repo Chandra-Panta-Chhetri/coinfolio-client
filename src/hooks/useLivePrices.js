@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { pricesSocket } from "../socket";
 import { formatNumWorklet } from "../utils";
 
@@ -6,23 +6,29 @@ export const updatePrice = (coinID = "", coins = [], newPrice) =>
   coins.map((coin) => (coin.id === coinID ? { ...coin, priceUsd: `$${formatNumWorklet(newPrice)}` } : coin));
 
 export const useLivePrices = (coinsToWatch = []) => {
-  const socket = useRef(null);
+  const [socket, setSocket] = useState(null);
+  const prevCoinsToWatch = useRef(coinsToWatch);
+
+  const disconnectSocket = () => {
+    if (socket !== null) {
+      socket.disconnect();
+    }
+  };
 
   useEffect(() => {
     //called each time coinsToWatch updates (even if only price updated)
-    if (coinsToWatch.length > 0 && socket.current === null) {
-      socket.current = pricesSocket.connectToLivePrices(coinsToWatch);
+    const initializeSocket = prevCoinsToWatch.current.length !== coinsToWatch.length;
+    if (initializeSocket) {
+      console.log("init socket");
+      disconnectSocket();
+      setSocket(pricesSocket.connectToLivePrices(coinsToWatch));
+      prevCoinsToWatch.current = coinsToWatch;
     }
   }, [coinsToWatch]);
 
   useEffect(() => {
-    return () => {
-      if (socket.current !== null) {
-        socket.current.disconnect();
-        socket.current = null;
-      }
-    };
+    return disconnectSocket;
   }, []);
 
-  return socket.current;
+  return socket;
 };
