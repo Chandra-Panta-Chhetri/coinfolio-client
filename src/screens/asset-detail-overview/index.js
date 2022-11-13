@@ -5,7 +5,14 @@ import { LineChart, MultiColumnView, OutlinedText, Skeleton } from "../../shared
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { GLOBAL_CONSTANTS } from "../../constants";
 import { connect } from "react-redux";
-import { selectAssetOverview, selectIsLoadingAssetOverview, startAssetOverviewFetch } from "../../redux/asset-detail";
+import {
+  selectAssetOverview,
+  selectIsLoadingAssetOverview,
+  startAssetOverviewFetch,
+  updateAssetOverview
+} from "../../redux/asset-detail";
+import { useLivePrices } from "../../hooks";
+import { formatNumWorklet } from "../../utils";
 
 const xValueAccessor = (dataInstance) => dataInstance.time;
 const yValueAccessor = (dataInstance) => dataInstance.priceUsd;
@@ -23,13 +30,31 @@ const Statistic = ({ label, value }) => (
   </View>
 );
 
-const AssetDetailOverviewScreen = ({ overview, isLoading, fetchOverview, route }) => {
+const AssetDetailOverviewScreen = ({ asset, isLoading, fetchOverview, route, updateAsset }) => {
   const { colors } = useTheme();
   const { params } = route;
+  const socket = useLivePrices([{ id: params.id }]);
+
+  const onNewPrices = (newPrices = {}) => {
+    const updatedAsset = {};
+    for (let id in newPrices) {
+      let newPrice = newPrices[id];
+      if (id === params.id) {
+        updatedAsset.priceUsd = `$${formatNumWorklet(newPrice)}`;
+      }
+    }
+    updateAsset(updatedAsset);
+  };
 
   useEffect(() => {
     fetchOverview(params.id);
   }, []);
+
+  useEffect(() => {
+    if (socket !== null) {
+      socket.on("new prices", onNewPrices);
+    }
+  }, [socket]);
 
   return (
     <ScrollView contentContainerStyle={STYLES.container}>
@@ -39,21 +64,21 @@ const AssetDetailOverviewScreen = ({ overview, isLoading, fetchOverview, route }
         ) : (
           <View style={STYLES.nameRank}>
             <Text style={STYLES.fullName} numberOfLines={1}>
-              {overview.name}
+              {asset.name}
             </Text>
-            <OutlinedText text={overview.rank} style={TYPOGRAPHY.caption} />
+            <OutlinedText text={asset.rank} style={TYPOGRAPHY.caption} />
           </View>
         )}
         {isLoading ? (
           <Skeleton style={STYLES.textSkeleton} />
         ) : (
           <Text style={TYPOGRAPHY.display1} numberOfLines={1}>
-            {overview.priceUsd}
+            {asset.priceUsd}
           </Text>
         )}
       </View>
       <LineChart
-        data={overview.priceHistory}
+        data={asset.priceHistory}
         chartStyle={STYLES.lineChart}
         xValueAccessor={xValueAccessor}
         yValueAccessor={yValueAccessor}
@@ -66,7 +91,7 @@ const AssetDetailOverviewScreen = ({ overview, isLoading, fetchOverview, route }
           <Skeleton style={STYLES.statsSkeleton} />
         ) : (
           <MultiColumnView
-            sections={overview.statistics}
+            sections={asset.statistics}
             renderItem={Statistic}
             SectionSeparator={() => <View style={[STYLES.statsSeparator, { borderColor: colors.text }]} />}
           />
@@ -106,12 +131,13 @@ const STYLES = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
-  overview: selectAssetOverview(state),
+  asset: selectAssetOverview(state),
   isLoading: selectIsLoadingAssetOverview(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchOverview: (id) => dispatch(startAssetOverviewFetch(id))
+  fetchOverview: (id) => dispatch(startAssetOverviewFetch(id)),
+  updateAsset: (updatedAsset) => dispatch(updateAssetOverview(updatedAsset))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AssetDetailOverviewScreen);

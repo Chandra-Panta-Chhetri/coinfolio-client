@@ -8,11 +8,12 @@ export const updatePrice = (coinID = "", coins = [], newPrice) =>
 
 export const useLivePrices = (coinsToWatch = []) => {
   const [socket, setSocket] = useState(null);
-  const prevCoinsToWatch = useRef(coinsToWatch);
+  const prevCoinsToWatch = useRef([]);
   const navigation = useNavigation();
 
   const disconnectSocket = () => {
     if (socket !== null) {
+      console.log("disconnecting socket");
       socket.disconnect();
     }
   };
@@ -36,6 +37,7 @@ export const useLivePrices = (coinsToWatch = []) => {
     const unsubBlur = navigation.addListener("blur", pausePrices);
 
     return () => {
+      console.log("removing navigation event listeners");
       unsubFocus();
       unsubBlur();
     };
@@ -52,7 +54,7 @@ export const useLivePrices = (coinsToWatch = []) => {
     }
   }, [coinsToWatch]);
 
-  useEffect(() => disconnectSocket, []);
+  useEffect(() => disconnectSocket, [socket]);
 
   return socket;
 };

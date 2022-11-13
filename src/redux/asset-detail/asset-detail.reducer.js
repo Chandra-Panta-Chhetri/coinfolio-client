@@ -29,11 +29,11 @@ const discoverReducer = (prevState = INITIAL_STATE, action) => {
         isLoadingOverview: true,
         overview: {}
       };
-    // case ASSET_DETAIL_ACTION_TYPES.ASSET_OVERVIEW_FAIL:
-    //   return {
-    //     ...prevState,
-    //     isLoadingOverview: false
-    //   };
+    case ASSET_DETAIL_ACTION_TYPES.ASSET_OVERVIEW_FAIL:
+      return {
+        ...prevState,
+        isLoadingOverview: false
+      };
     case ASSET_DETAIL_ACTION_TYPES.ASSET_OVERVIEW_SUCCESS:
       return {
         ...prevState,
@@ -46,11 +46,11 @@ const discoverReducer = (prevState = INITIAL_STATE, action) => {
         isLoadingMarkets: true,
         markets: []
       };
-    // case ASSET_DETAIL_ACTION_TYPES.ASSET_MARKETS_FAIL:
-    //   return {
-    //     ...prevState,
-    //     isLoadingMarkets: false
-    //   };
+    case ASSET_DETAIL_ACTION_TYPES.ASSET_MARKETS_FAIL:
+      return {
+        ...prevState,
+        isLoadingMarkets: false
+      };
     case ASSET_DETAIL_ACTION_TYPES.ASSET_MARKETS_SUCCESS:
       return {
         ...prevState,
@@ -63,11 +63,11 @@ const discoverReducer = (prevState = INITIAL_STATE, action) => {
         isLoadingAbout: true,
         about: {}
       };
-    // case ASSET_DETAIL_ACTION_TYPES.ASSET_ABOUT_FAIL:
-    //   return {
-    //     ...prevState,
-    //     isLoadingAbout: false
-    //   };
+    case ASSET_DETAIL_ACTION_TYPES.ASSET_ABOUT_FAIL:
+      return {
+        ...prevState,
+        isLoadingAbout: false
+      };
     case ASSET_DETAIL_ACTION_TYPES.ASSET_ABOUT_SUCCESS:
       return {
         ...prevState,
@@ -169,6 +169,14 @@ const discoverReducer = (prevState = INITIAL_STATE, action) => {
         isLoadingMoreEvents: false,
         hasMoreEvents: false,
         isLoadingEvents: false
+      };
+    case ASSET_DETAIL_ACTION_TYPES.UPDATE_ASSET_OVERVIEW:
+      return {
+        ...prevState,
+        overview: {
+          ...prevState.overview,
+          ...action.payload
+        }
       };
     default:
       return prevState;

@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 
 const MultiColumnView = ({ sections = [], renderItem, SectionSeparator, sectionStyle }) => {
+  useEffect(() => {
+    console.log("re-rendering sections changed");
+  }, [sections]);
+
   return (
     <View style={STYLES.container}>
       {sections.map(({ data }, index) => (
