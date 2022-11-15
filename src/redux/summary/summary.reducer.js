@@ -11,7 +11,7 @@ const INITIAL_STATE = {
   isLoadingNewsSummary: true
 };
 
-const notificationReducer = (prevState = INITIAL_STATE, action) => {
+const summaryReducer = (prevState = INITIAL_STATE, action) => {
   switch (action.type) {
     case SUMMARY_ACTION_TYPES.START_GLOBAL_SUMMARY_FETCH:
       return {
@@ -92,4 +92,4 @@ const notificationReducer = (prevState = INITIAL_STATE, action) => {
   }
 };
 
-export default notificationReducer;
+export default summaryReducer;

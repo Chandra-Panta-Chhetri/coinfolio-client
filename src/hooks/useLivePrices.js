@@ -13,14 +13,14 @@ export const useLivePrices = (coinsToWatch = []) => {
 
   const disconnectSocket = () => {
     if (socket !== null) {
-      console.log("disconnecting socket");
+      console.log("disconnect socket");
       socket.disconnect();
     }
   };
 
   const pausePrices = () => {
     if (socket !== null) {
-      console.log("pausing prices");
+      console.log("pause prices");
       socket.emit("pause prices");
     }
   };
@@ -33,28 +33,26 @@ export const useLivePrices = (coinsToWatch = []) => {
   };
 
   useEffect(() => {
-    const unsubFocus = navigation.addListener("focus", resumePrices);
-    const unsubBlur = navigation.addListener("blur", pausePrices);
-
-    return () => {
-      console.log("removing navigation event listeners");
-      unsubFocus();
-      unsubBlur();
-    };
-  }, [socket]);
-
-  useEffect(() => {
     //called each time coinsToWatch updates (even if only price updated)
     const initializeSocket = prevCoinsToWatch.current.length !== coinsToWatch.length;
     if (initializeSocket) {
       console.log("init socket");
-      disconnectSocket();
       setSocket(pricesSocket.connectToLivePrices(coinsToWatch));
       prevCoinsToWatch.current = coinsToWatch;
     }
   }, [coinsToWatch]);
 
-  useEffect(() => disconnectSocket, [socket]);
+  useEffect(() => {
+    const unsubFocus = navigation.addListener("focus", resumePrices);
+    const unsubBlur = navigation.addListener("blur", pausePrices);
+
+    return () => {
+      disconnectSocket();
+      console.log("removing navigation event listeners");
+      unsubFocus();
+      unsubBlur();
+    };
+  }, [socket]);
 
   return socket;
 };

@@ -36,19 +36,18 @@ const AssetDetailOverviewScreen = ({ asset, isLoading, fetchOverview, route, upd
   const socket = useLivePrices([{ id: params.id }]);
 
   const onNewPrices = (newPrices = {}) => {
-    const updatedAsset = {};
+    const assetUpdates = {};
     for (let id in newPrices) {
-      let newPrice = newPrices[id];
       if (id === params.id) {
-        updatedAsset.priceUsd = `$${formatNumWorklet(newPrice)}`;
+        assetUpdates.priceUsd = `$${formatNumWorklet(newPrices[id])}`;
       }
     }
-    updateAsset(updatedAsset);
+    updateAsset(assetUpdates);
   };
 
   useEffect(() => {
     fetchOverview(params.id);
-  }, []);
+  }, [params.id]);
 
   useEffect(() => {
     if (socket !== null) {
@@ -137,7 +136,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchOverview: (id) => dispatch(startAssetOverviewFetch(id)),
-  updateAsset: (updatedAsset) => dispatch(updateAssetOverview(updatedAsset))
+  updateAsset: (assetUpdates) => dispatch(updateAssetOverview(assetUpdates))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AssetDetailOverviewScreen);

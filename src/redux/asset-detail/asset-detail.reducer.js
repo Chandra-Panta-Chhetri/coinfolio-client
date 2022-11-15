@@ -21,7 +21,7 @@ const INITIAL_STATE = {
   isLoadingAbout: true
 };
 
-const discoverReducer = (prevState = INITIAL_STATE, action) => {
+const assetDetailReducer = (prevState = INITIAL_STATE, action) => {
   switch (action.type) {
     case ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_OVERVIEW:
       return {
@@ -183,4 +183,4 @@ const discoverReducer = (prevState = INITIAL_STATE, action) => {
   }
 };
 
-export default discoverReducer;
+export default assetDetailReducer;
