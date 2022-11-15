@@ -79,3 +79,8 @@ export const searchResultsSuccess = (searches) => ({
   type: MARKET_ACTION_TYPES.FETCH_SEARCH_RESULTS_SUCCESS,
   payload: searches
 });
+
+export const updateMarkets = (markets) => ({
+  type: MARKET_ACTION_TYPES.UPDATE_MARKETS,
+  payload: markets
+});

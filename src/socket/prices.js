@@ -1,7 +1,7 @@
 import { io as SocketClient } from "socket.io-client";
 import { URLS } from "../constants";
 
-const coinsToCommaSepIDs = (coins) => {
+export const coinsToCommaSepIDs = (coins) => {
   let commaSepIds = "";
 
   for (let coin of coins) {

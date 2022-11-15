@@ -11,10 +11,12 @@ import {
   selectMarketsPerPage,
   selectIsFetchingMoreMarkets,
   startNextMarketsFetch,
-  selectHasMoreMarkets
+  selectHasMoreMarkets,
+  updateMarkets
 } from "../../redux/market";
 import { Skeleton, InfiniteScroll } from "../../shared-components";
 import { GLOBAL_CONSTANTS } from "../../constants";
+import { useLivePrices, updatePrice } from "../../hooks";
 
 const ListHeader = () => (
   <>
@@ -25,12 +27,36 @@ const ListHeader = () => (
 
 const renderItem = ({ item, index }) => <OverviewItem item={item} key={item.id + index} />;
 
-const MarketOverviewScreen = ({ markets, getMarkets, isLoading, isLoadingMore, perPage, getMoreMarkets, hasMore }) => {
+const MarketOverviewScreen = ({
+  markets,
+  getMarkets,
+  isLoading,
+  isLoadingMore,
+  perPage,
+  getMoreMarkets,
+  hasMore,
+  updateMarkets
+}) => {
+  const { colors } = useTheme();
+  const socket = useLivePrices(markets);
+
+  const onNewPrices = (newPrices = {}) => {
+    let updatedMarkets = [...markets];
+    for (let id in newPrices) {
+      updatedMarkets = updatePrice(id, updatedMarkets, newPrices[id]);
+    }
+    updateMarkets(updatedMarkets);
+  };
+
   useEffect(() => {
     getMarkets();
   }, []);
 
-  const { colors } = useTheme();
+  useEffect(() => {
+    if (socket !== null) {
+      socket.on("new prices", onNewPrices);
+    }
+  }, [socket]);
 
   const renderSkeleton = ({ index }) => (
     <Skeleton style={[STYLES.itemSkeleton, { marginBottom: index !== perPage - 1 ? GLOBAL_CONSTANTS.SM_MARGIN : 0 }]} />
@@ -73,7 +99,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getMarkets: () => dispatch(startMarketsFetch()),
-  getMoreMarkets: () => dispatch(startNextMarketsFetch())
+  getMoreMarkets: () => dispatch(startNextMarketsFetch()),
+  updateMarkets: (markets) => dispatch(updateMarkets(markets))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MarketOverviewScreen);

@@ -34,6 +34,7 @@ export const useLivePrices = (coinsToWatch = []) => {
 
   useEffect(() => {
     //called each time coinsToWatch updates (even if only price updated)
+    //need to check if coinsToWatch is different than last time, if so reinit socket
     const initializeSocket = prevCoinsToWatch.current.length !== coinsToWatch.length;
     if (initializeSocket) {
       console.log("init socket");
