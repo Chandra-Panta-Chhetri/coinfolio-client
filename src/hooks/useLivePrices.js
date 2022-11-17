@@ -6,6 +6,15 @@ import { useNavigation } from "@react-navigation/native";
 export const updatePrice = (coinID = "", coins = [], newPrice) =>
   coins.map((coin) => (coin.id === coinID ? { ...coin, priceUsd: `$${formatNumWorklet(newPrice)}` } : coin));
 
+const areSame = (prevCoins = [], currCoins = []) => {
+  if (prevCoins.length !== currCoins.length) {
+    return false;
+  }
+  const prevCommaSepIDs = pricesSocket.coinsToCommaSepIDs(prevCoins);
+  const currCommaSepIDs = pricesSocket.coinsToCommaSepIDs(currCoins);
+  return prevCommaSepIDs === currCommaSepIDs;
+};
+
 export const useLivePrices = (coinsToWatch = []) => {
   const [socket, setSocket] = useState(null);
   const prevCoinsToWatch = useRef([]);
@@ -34,9 +43,8 @@ export const useLivePrices = (coinsToWatch = []) => {
 
   useEffect(() => {
     //called each time coinsToWatch updates (even if only price updated)
-    //need to check if coinsToWatch is different than last time, if so reinit socket
-    const initializeSocket = prevCoinsToWatch.current.length !== coinsToWatch.length;
-    if (initializeSocket) {
+    const shouldInitSocket = !areSame(prevCoinsToWatch.current, coinsToWatch);
+    if (shouldInitSocket) {
       console.log("init socket");
       setSocket(pricesSocket.connectToLivePrices(coinsToWatch));
       prevCoinsToWatch.current = coinsToWatch;

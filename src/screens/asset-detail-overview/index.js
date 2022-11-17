@@ -33,7 +33,7 @@ const Statistic = ({ label, value }) => (
 const AssetDetailOverviewScreen = ({ asset, isLoading, fetchOverview, route, updateAsset }) => {
   const { colors } = useTheme();
   const { params } = route;
-  const socket = useLivePrices([{ id: params.id }]);
+  const socket = useLivePrices(Object.keys(asset).length === 0 ? [] : [{ id: params.id }]);
 
   const onNewPrices = (newPrices = {}) => {
     const assetUpdates = {};

@@ -69,7 +69,7 @@ const MarketOverviewScreen = ({
       data={markets}
       numSkeletons={perPage}
       ListHeaderComponent={ListHeader}
-      onEndReached={getMoreMarkets}
+      onEndReached={() => console.log("end reached")}
       hasMoreToFetch={hasMore}
       ListHeaderComponentStyle={[STYLES.listHeader, { backgroundColor: colors.background }]}
       renderDataItem={renderItem}
