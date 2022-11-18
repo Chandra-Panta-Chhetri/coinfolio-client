@@ -4,25 +4,30 @@ import { GLOBAL_STYLES } from "../../styles";
 import { GlobalMarketSummary, ShortcutIcons, TopCoins, GainersLosers, NewsSummaries } from "./components";
 import { connect } from "react-redux";
 import { selectGainersLosers, selectTopCoins, updateGainersLosers, updateTopCoins } from "../../redux/summary";
-import { useLivePrices, updatePrice } from "../../hooks";
+import { useLivePrices, updatePriceOfCoins } from "../../hooks";
 
 const HomeScreen = ({ topCoins, gainersLosers, updateTopCoins, updateGainersLosers }) => {
   const socket = useLivePrices([...topCoins, ...gainersLosers]);
 
-  const onNewPrices = (newPrices = {}) => {
-    let updatedTopCoins = [...topCoins];
-    let updatedGainersLosers = [...gainersLosers];
-    for (let id in newPrices) {
-      updatedTopCoins = updatePrice(id, updatedTopCoins, newPrices[id]);
-      updatedGainersLosers = updatePrice(id, updatedGainersLosers, newPrices[id]);
+  const onNewPrices = (newPrices) => {
+    const { wasUpdated: wasTopCoinsUpdated, coins: updatedTopCoins } = updatePriceOfCoins(newPrices, topCoins);
+    const { wasUpdated: wasGainersLosersUpdated, coins: updatedGainersLosers } = updatePriceOfCoins(
+      newPrices,
+      gainersLosers
+    );
+    if (wasTopCoinsUpdated) {
+      // console.log("top coins updated", newPrices);
+      updateTopCoins(updatedTopCoins);
     }
-    updateTopCoins(updatedTopCoins);
-    updateGainersLosers(updatedGainersLosers);
+    if (wasGainersLosersUpdated) {
+      // console.log("gainers losers updated", newPrices);
+      updateGainersLosers(updatedGainersLosers);
+    }
   };
 
   useEffect(() => {
     if (socket !== null) {
-      console.log("event handler init");
+      console.log("home - new prices init");
       socket.on("new prices", onNewPrices);
     }
   }, [socket]);

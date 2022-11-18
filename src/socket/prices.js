@@ -22,7 +22,7 @@ export const connectToLivePrices = (coinsToWatch = []) => {
 
   const socket = SocketClient(`${URLS.BACKEND_BASE_URL}/prices`, {
     query: {
-      assets: coinsToCommaSepIDs(coinsToWatch)
+      coins: coinsToCommaSepIDs(coinsToWatch)
     }
   });
   return socket;

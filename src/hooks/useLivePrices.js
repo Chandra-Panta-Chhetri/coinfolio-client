@@ -3,8 +3,19 @@ import { pricesSocket } from "../socket";
 import { formatNumWorklet } from "../utils";
 import { useNavigation } from "@react-navigation/native";
 
-export const updatePrice = (coinID = "", coins = [], newPrice) =>
-  coins.map((coin) => (coin.id === coinID ? { ...coin, priceUsd: `$${formatNumWorklet(newPrice)}` } : coin));
+export const updatePriceOfCoins = (newPrices = {}, coins = []) => {
+  const updatedCoins = [...coins];
+  let wasUpdated = false;
+
+  for (let i = 0; i < updatedCoins.length - 1; i++) {
+    let coin = updatedCoins[i];
+    if (newPrices[coin.id] !== undefined) {
+      updatedCoins[i] = { ...coin, priceUsd: `$${formatNumWorklet(newPrices[coin.id])}` };
+      wasUpdated = true;
+    }
+  }
+  return { wasUpdated, coins: updatedCoins };
+};
 
 const areSame = (prevCoins = [], currCoins = []) => {
   if (prevCoins.length !== currCoins.length) {

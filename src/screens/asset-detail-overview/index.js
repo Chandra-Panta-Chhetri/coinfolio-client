@@ -36,13 +36,10 @@ const AssetDetailOverviewScreen = ({ asset, isLoading, fetchOverview, route, upd
   const socket = useLivePrices(Object.keys(asset).length === 0 ? [] : [{ id: params.id }]);
 
   const onNewPrices = (newPrices = {}) => {
-    const assetUpdates = {};
-    for (let id in newPrices) {
-      if (id === params.id) {
-        assetUpdates.priceUsd = `$${formatNumWorklet(newPrices[id])}`;
-      }
+    if (newPrices[params.id] !== undefined) {
+      // console.log(params.id, "updated");
+      updateAsset({ priceUsd: `$${formatNumWorklet(newPrices[params.id])}` });
     }
-    updateAsset(assetUpdates);
   };
 
   useEffect(() => {
@@ -51,6 +48,7 @@ const AssetDetailOverviewScreen = ({ asset, isLoading, fetchOverview, route, upd
 
   useEffect(() => {
     if (socket !== null) {
+      console.log("asset detail overview - new prices init");
       socket.on("new prices", onNewPrices);
     }
   }, [socket]);

@@ -16,7 +16,7 @@ import {
 } from "../../redux/market";
 import { Skeleton, InfiniteScroll } from "../../shared-components";
 import { GLOBAL_CONSTANTS } from "../../constants";
-import { useLivePrices, updatePrice } from "../../hooks";
+import { useLivePrices, updatePriceOfCoins } from "../../hooks";
 
 const ListHeader = () => (
   <>
@@ -40,12 +40,11 @@ const MarketOverviewScreen = ({
   const { colors } = useTheme();
   const socket = useLivePrices(markets);
 
-  const onNewPrices = (newPrices = {}) => {
-    let updatedMarkets = [...markets];
-    for (let id in newPrices) {
-      updatedMarkets = updatePrice(id, updatedMarkets, newPrices[id]);
+  const onNewPrices = (newPrices) => {
+    const { wasUpdated, coins: updatedMarkets } = updatePriceOfCoins(newPrices, markets);
+    if (wasUpdated) {
+      updateMarkets(updatedMarkets);
     }
-    updateMarkets(updatedMarkets);
   };
 
   useEffect(() => {
@@ -54,6 +53,7 @@ const MarketOverviewScreen = ({
 
   useEffect(() => {
     if (socket !== null) {
+      console.log("market overview - new prices init");
       socket.on("new prices", onNewPrices);
     }
   }, [socket]);
