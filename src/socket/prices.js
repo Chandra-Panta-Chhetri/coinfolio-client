@@ -15,14 +15,14 @@ export const coinsToCommaSepIDs = (coins = []) => {
   return commaSepIDs;
 };
 
-export const connectToLivePrices = (coinsToWatch = []) => {
-  if (coinsToWatch.length === 0) {
+export const connectToLivePrices = (commaSepCoins = "") => {
+  if (commaSepCoins === "") {
     return null;
   }
 
   const socket = SocketClient(`${URLS.BACKEND_BASE_URL}/prices`, {
     query: {
-      coins: coinsToCommaSepIDs(coinsToWatch)
+      coins: commaSepCoins
     }
   });
   return socket;

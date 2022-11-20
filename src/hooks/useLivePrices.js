@@ -17,26 +17,10 @@ export const updatePriceOfCoins = (newPrices = {}, coins = []) => {
   return { wasUpdated, coins: updatedCoins };
 };
 
-const areSame = (prevCoins = [], currCoins = []) => {
-  if (prevCoins.length !== currCoins.length) {
-    return false;
-  }
-  const prevCommaSepIDs = pricesSocket.coinsToCommaSepIDs(prevCoins);
-  const currCommaSepIDs = pricesSocket.coinsToCommaSepIDs(currCoins);
-  return prevCommaSepIDs === currCommaSepIDs;
-};
-
 export const useLivePrices = (coinsToWatch = []) => {
   const [socket, setSocket] = useState(null);
-  const prevCoinsToWatch = useRef([]);
+  const prevCommaSepCoins = useRef("");
   const navigation = useNavigation();
-
-  const disconnectSocket = () => {
-    if (socket !== null) {
-      console.log("disconnect socket");
-      socket.disconnect();
-    }
-  };
 
   const pausePrices = () => {
     if (socket !== null) {
@@ -53,24 +37,40 @@ export const useLivePrices = (coinsToWatch = []) => {
   };
 
   useEffect(() => {
-    //called each time coinsToWatch updates (even if only price updated)
-    const shouldInitSocket = !areSame(prevCoinsToWatch.current, coinsToWatch);
-    if (shouldInitSocket) {
-      console.log("init socket");
-      setSocket(pricesSocket.connectToLivePrices(coinsToWatch));
-      prevCoinsToWatch.current = coinsToWatch;
+    if (coinsToWatch.length > 0) {
+      if (socket === null) {
+        console.log("init socket");
+        const commaSepCoins = pricesSocket.coinsToCommaSepIDs(coinsToWatch);
+        setSocket(pricesSocket.connectToLivePrices(commaSepCoins));
+        prevCommaSepCoins.current = commaSepCoins;
+      } else {
+        const newCommaSepCoins = pricesSocket.coinsToCommaSepIDs(coinsToWatch);
+        if (prevCommaSepCoins.current !== newCommaSepCoins) {
+          console.log("update coins list");
+          socket.emit("update coins", newCommaSepCoins);
+          prevCommaSepCoins.current = newCommaSepCoins;
+        }
+      }
     }
   }, [coinsToWatch]);
 
   useEffect(() => {
-    const unsubFocus = navigation.addListener("focus", resumePrices);
-    const unsubBlur = navigation.addListener("blur", pausePrices);
+    let unsubFocus = () => {};
+    let unsubBlur = () => {};
+
+    if (socket !== null) {
+      unsubFocus = navigation.addListener("focus", resumePrices);
+      unsubBlur = navigation.addListener("blur", pausePrices);
+    }
 
     return () => {
-      disconnectSocket();
-      console.log("removing navigation event listeners");
-      unsubFocus();
-      unsubBlur();
+      if (socket !== null) {
+        console.log("disconnect socket");
+        socket.disconnect();
+        console.log("removing navigation event listeners");
+        unsubFocus();
+        unsubBlur();
+      }
     };
   }, [socket]);
 

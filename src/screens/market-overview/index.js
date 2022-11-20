@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { StyleSheet } from "react-native";
 import { Header, Filters, OverviewItem } from "./components";
 import { GLOBAL_STYLES } from "../../styles";
@@ -39,9 +39,14 @@ const MarketOverviewScreen = ({
 }) => {
   const { colors } = useTheme();
   const socket = useLivePrices(markets);
+  const marketsRef = useRef(markets);
+
+  useEffect(() => {
+    marketsRef.current = markets;
+  }, [markets]);
 
   const onNewPrices = (newPrices) => {
-    const { wasUpdated, coins: updatedMarkets } = updatePriceOfCoins(newPrices, markets);
+    const { wasUpdated, coins: updatedMarkets } = updatePriceOfCoins(newPrices, marketsRef.current);
     if (wasUpdated) {
       updateMarkets(updatedMarkets);
     }
@@ -53,9 +58,16 @@ const MarketOverviewScreen = ({
 
   useEffect(() => {
     if (socket !== null) {
-      console.log("market overview - new prices init");
+      console.log("markets - listener init");
       socket.on("new prices", onNewPrices);
     }
+
+    return () => {
+      if (socket !== null) {
+        console.log("markets - listener removed");
+        socket.off("new prices");
+      }
+    };
   }, [socket]);
 
   const renderSkeleton = ({ index }) => (
@@ -69,7 +81,7 @@ const MarketOverviewScreen = ({
       data={markets}
       numSkeletons={perPage}
       ListHeaderComponent={ListHeader}
-      onEndReached={() => console.log("end reached")}
+      onEndReached={getMoreMarkets}
       hasMoreToFetch={hasMore}
       ListHeaderComponentStyle={[STYLES.listHeader, { backgroundColor: colors.background }]}
       renderDataItem={renderItem}

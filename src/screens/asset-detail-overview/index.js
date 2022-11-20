@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 import { LineChart, MultiColumnView, OutlinedText, Skeleton } from "../../shared-components";
@@ -31,9 +31,11 @@ const Statistic = ({ label, value }) => (
 );
 
 const AssetDetailOverviewScreen = ({ asset, isLoading, fetchOverview, route, updateAsset }) => {
-  const { colors } = useTheme();
   const { params } = route;
-  const socket = useLivePrices(Object.keys(asset).length === 0 ? [] : [{ id: params.id }]);
+  const { colors } = useTheme();
+
+  const coinsToWatch = useMemo(() => (Object.keys(asset).length === 0 ? [] : [{ id: params.id }]), [asset]);
+  const socket = useLivePrices(coinsToWatch);
 
   const onNewPrices = (newPrices = {}) => {
     if (newPrices[params.id] !== undefined) {
@@ -48,9 +50,16 @@ const AssetDetailOverviewScreen = ({ asset, isLoading, fetchOverview, route, upd
 
   useEffect(() => {
     if (socket !== null) {
-      console.log("asset detail overview - new prices init");
+      console.log("asset detail - listener init");
       socket.on("new prices", onNewPrices);
     }
+
+    return () => {
+      if (socket !== null) {
+        console.log("asset detail - listener removed");
+        socket.off("new prices");
+      }
+    };
   }, [socket]);
 
   return (

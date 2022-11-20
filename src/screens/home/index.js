@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useMemo } from "react";
 import { ScrollView } from "react-native";
 import { GLOBAL_STYLES } from "../../styles";
 import { GlobalMarketSummary, ShortcutIcons, TopCoins, GainersLosers, NewsSummaries } from "./components";
@@ -7,13 +7,28 @@ import { selectGainersLosers, selectTopCoins, updateGainersLosers, updateTopCoin
 import { useLivePrices, updatePriceOfCoins } from "../../hooks";
 
 const HomeScreen = ({ topCoins, gainersLosers, updateTopCoins, updateGainersLosers }) => {
-  const socket = useLivePrices([...topCoins, ...gainersLosers]);
+  const combinedCoins = useMemo(() => [...topCoins, ...gainersLosers], [topCoins, gainersLosers]);
+  const socket = useLivePrices(combinedCoins);
+  const topCoinsRef = useRef(topCoins);
+  const gainersLosersRef = useRef(gainersLosers);
+
+  useEffect(() => {
+    topCoinsRef.current = topCoins;
+  }, [topCoins]);
+
+  useEffect(() => {
+    gainersLosersRef.current = gainersLosers;
+  }, [gainersLosers]);
 
   const onNewPrices = (newPrices) => {
-    const { wasUpdated: wasTopCoinsUpdated, coins: updatedTopCoins } = updatePriceOfCoins(newPrices, topCoins);
+    console.log(newPrices);
+    const { wasUpdated: wasTopCoinsUpdated, coins: updatedTopCoins } = updatePriceOfCoins(
+      newPrices,
+      topCoinsRef.current
+    );
     const { wasUpdated: wasGainersLosersUpdated, coins: updatedGainersLosers } = updatePriceOfCoins(
       newPrices,
-      gainersLosers
+      gainersLosersRef.current
     );
     if (wasTopCoinsUpdated) {
       // console.log("top coins updated", newPrices);
@@ -27,9 +42,16 @@ const HomeScreen = ({ topCoins, gainersLosers, updateTopCoins, updateGainersLose
 
   useEffect(() => {
     if (socket !== null) {
-      console.log("home - new prices init");
+      console.log("home - listener init");
       socket.on("new prices", onNewPrices);
     }
+
+    return () => {
+      if (socket !== null) {
+        console.log("home - listener removed");
+        socket.off("new prices");
+      }
+    };
   }, [socket]);
 
   return (
