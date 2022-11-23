@@ -48,6 +48,7 @@ const MarketOverviewScreen = ({
   const onNewPrices = (newPrices) => {
     const { wasUpdated, coins: updatedMarkets } = updatePriceOfCoins(newPrices, marketsRef.current);
     if (wasUpdated) {
+      console.log("UPDATING MARKET OVERVIEW SCREEN");
       updateMarkets(updatedMarkets);
     }
   };
@@ -58,13 +59,13 @@ const MarketOverviewScreen = ({
 
   useEffect(() => {
     if (socket !== null) {
-      console.log("markets - listener init");
+      // console.log("markets - listener init");
       socket.on("new prices", onNewPrices);
     }
 
     return () => {
       if (socket !== null) {
-        console.log("markets - listener removed");
+        // console.log("markets - listener removed");
         socket.off("new prices");
       }
     };

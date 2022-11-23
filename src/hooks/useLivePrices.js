@@ -7,7 +7,7 @@ export const updatePriceOfCoins = (newPrices = {}, coins = []) => {
   const updatedCoins = [...coins];
   let wasUpdated = false;
 
-  for (let i = 0; i < updatedCoins.length - 1; i++) {
+  for (let i = 0; i < updatedCoins.length; i++) {
     let coin = updatedCoins[i];
     if (newPrices[coin.id] !== undefined) {
       updatedCoins[i] = { ...coin, priceUsd: `$${formatNumWorklet(newPrices[coin.id])}` };
@@ -39,14 +39,14 @@ export const useLivePrices = (coinsToWatch = []) => {
   useEffect(() => {
     if (coinsToWatch.length > 0) {
       if (socket === null) {
-        console.log("init socket");
+        // console.log("init socket");
         const commaSepCoins = pricesSocket.coinsToCommaSepIDs(coinsToWatch);
         setSocket(pricesSocket.connectToLivePrices(commaSepCoins));
         prevCommaSepCoins.current = commaSepCoins;
       } else {
         const newCommaSepCoins = pricesSocket.coinsToCommaSepIDs(coinsToWatch);
         if (prevCommaSepCoins.current !== newCommaSepCoins) {
-          console.log("update coins list");
+          // console.log("update coins list");
           socket.emit("update coins", newCommaSepCoins);
           prevCommaSepCoins.current = newCommaSepCoins;
         }
@@ -65,9 +65,9 @@ export const useLivePrices = (coinsToWatch = []) => {
 
     return () => {
       if (socket !== null) {
-        console.log("disconnect socket");
+        // console.log("disconnect socket");
         socket.disconnect();
-        console.log("removing navigation event listeners");
+        // console.log("removing navigation event listeners");
         unsubFocus();
         unsubBlur();
       }

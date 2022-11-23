@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { TYPOGRAPHY } from "../../../../styles";
@@ -66,4 +66,4 @@ const STYLES = StyleSheet.create({
   }
 });
 
-export default GainerLoser;
+export default memo(GainerLoser);

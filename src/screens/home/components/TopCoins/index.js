@@ -12,6 +12,9 @@ import { GLOBAL_CONSTANTS } from "../../../../constants";
 const NUM_SKELETON = 5;
 const DUMMY_SKELETON_ARRAY = Array(NUM_SKELETON).fill("1");
 
+const renderItem = ({ item }) => <TopCoin coin={item} />;
+const keyExtractor = (c) => c.id;
+
 const TopCoins = ({ coins, isLoading, fetchTopCoins }) => {
   const navigation = useNavigation();
   const toMarketScreen = () => navigation.navigate("MarketOverview");
@@ -38,8 +41,8 @@ const TopCoins = ({ coins, isLoading, fetchTopCoins }) => {
           showsHorizontalScrollIndicator={false}
           data={coins}
           contentContainerStyle={GLOBAL_STYLES.flatListContentContainer}
-          keyExtractor={(c) => c.id}
-          renderItem={({ item }) => <TopCoin item={item} />}
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
         />
       )}
     </View>

@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet } from "react-native";
-import React from "react";
+import React, { useCallback } from "react";
 import { ActivityIndicator } from "react-native-paper";
 import { GLOBAL_STYLES } from "../styles";
 import Reanimated from "react-native-reanimated";
@@ -19,18 +19,19 @@ const InfiniteScroll = ({
   contentContainerStyle,
   ...otherProps
 }) => {
-  const dummySkeletonArray = Array(numSkeletons).fill("1");
-
   const onScrollToEnd = () => {
     if (!isLoadingMore && hasMoreToFetch) {
       onEndReached && onEndReached();
     }
   };
 
-  const renderFooter = () =>
-    hasMoreToFetch ? <ActivityIndicator style={STYLES.footer} animating={hasMoreToFetch} hidesWhenStopped /> : null;
+  const renderFooter = useCallback(
+    () => <ActivityIndicator style={STYLES.footer} animating={hasMoreToFetch} hidesWhenStopped />,
+    [hasMoreToFetch]
+  );
 
   if (isLoading) {
+    const dummySkeletonArray = Array(numSkeletons).fill("1");
     return (
       <AnimatedFlatList
         {...otherProps}

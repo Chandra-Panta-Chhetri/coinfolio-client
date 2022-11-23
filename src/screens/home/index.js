@@ -21,7 +21,6 @@ const HomeScreen = ({ topCoins, gainersLosers, updateTopCoins, updateGainersLose
   }, [gainersLosers]);
 
   const onNewPrices = (newPrices) => {
-    console.log(newPrices);
     const { wasUpdated: wasTopCoinsUpdated, coins: updatedTopCoins } = updatePriceOfCoins(
       newPrices,
       topCoinsRef.current
@@ -31,6 +30,7 @@ const HomeScreen = ({ topCoins, gainersLosers, updateTopCoins, updateGainersLose
       gainersLosersRef.current
     );
     if (wasTopCoinsUpdated) {
+      console.log(newPrices);
       // console.log("top coins updated", newPrices);
       updateTopCoins(updatedTopCoins);
     }
@@ -42,13 +42,13 @@ const HomeScreen = ({ topCoins, gainersLosers, updateTopCoins, updateGainersLose
 
   useEffect(() => {
     if (socket !== null) {
-      console.log("home - listener init");
+      // console.log("home - listener init");
       socket.on("new prices", onNewPrices);
     }
 
     return () => {
       if (socket !== null) {
-        console.log("home - listener removed");
+        // console.log("home - listener removed");
         socket.off("new prices");
       }
     };
