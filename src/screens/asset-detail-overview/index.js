@@ -1,11 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 import { LineChart, MultiColumnView, OutlinedText, Skeleton } from "../../shared-components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { GLOBAL_CONSTANTS } from "../../constants";
 import { connect } from "react-redux";
-import { selectAssetOverview, selectIsLoadingAssetOverview, startAssetOverviewFetch } from "../../redux/asset-detail";
+import {
+  selectAssetOverview,
+  selectIsLoadingAssetOverview,
+  startAssetOverviewFetch,
+  updateAssetOverview
+} from "../../redux/asset-detail";
+import { useLivePrices } from "../../hooks";
+import { formatNumWorklet } from "../../utils";
 
 const xValueAccessor = (dataInstance) => dataInstance.time;
 const yValueAccessor = (dataInstance) => dataInstance.priceUsd;
@@ -23,13 +30,37 @@ const Statistic = ({ label, value }) => (
   </View>
 );
 
-const AssetDetailOverviewScreen = ({ overview, isLoading, fetchOverview, route }) => {
-  const { colors } = useTheme();
+const AssetDetailOverviewScreen = ({ asset, isLoading, fetchOverview, route, updateAsset }) => {
   const { params } = route;
+  const { colors } = useTheme();
+
+  const coinsToWatch = useMemo(() => (Object.keys(asset).length === 0 ? [] : [{ id: params.id }]), [asset]);
+  const socket = useLivePrices(coinsToWatch);
+
+  const onNewPrices = (newPrices = {}) => {
+    if (newPrices[params.id] !== undefined) {
+      // console.log(params.id, "updated");
+      updateAsset({ priceUsd: `$${formatNumWorklet(newPrices[params.id])}` });
+    }
+  };
 
   useEffect(() => {
     fetchOverview(params.id);
-  }, []);
+  }, [params.id]);
+
+  useEffect(() => {
+    if (socket !== null) {
+      console.log("asset detail - listener init");
+      socket.on("new prices", onNewPrices);
+    }
+
+    return () => {
+      if (socket !== null) {
+        console.log("asset detail - listener removed");
+        socket.off("new prices");
+      }
+    };
+  }, [socket]);
 
   return (
     <ScrollView contentContainerStyle={STYLES.container}>
@@ -39,21 +70,21 @@ const AssetDetailOverviewScreen = ({ overview, isLoading, fetchOverview, route }
         ) : (
           <View style={STYLES.nameRank}>
             <Text style={STYLES.fullName} numberOfLines={1}>
-              {overview.name}
+              {asset.name}
             </Text>
-            <OutlinedText text={overview.rank} style={TYPOGRAPHY.caption} />
+            <OutlinedText text={asset.rank} style={TYPOGRAPHY.caption} />
           </View>
         )}
         {isLoading ? (
           <Skeleton style={STYLES.textSkeleton} />
         ) : (
           <Text style={TYPOGRAPHY.display1} numberOfLines={1}>
-            {overview.priceUsd}
+            {asset.priceUsd}
           </Text>
         )}
       </View>
       <LineChart
-        data={overview.priceHistory}
+        data={asset.priceHistory}
         chartStyle={STYLES.lineChart}
         xValueAccessor={xValueAccessor}
         yValueAccessor={yValueAccessor}
@@ -66,7 +97,7 @@ const AssetDetailOverviewScreen = ({ overview, isLoading, fetchOverview, route }
           <Skeleton style={STYLES.statsSkeleton} />
         ) : (
           <MultiColumnView
-            sections={overview.statistics}
+            sections={asset.statistics}
             renderItem={Statistic}
             SectionSeparator={() => <View style={[STYLES.statsSeparator, { borderColor: colors.text }]} />}
           />
@@ -106,12 +137,13 @@ const STYLES = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
-  overview: selectAssetOverview(state),
+  asset: selectAssetOverview(state),
   isLoading: selectIsLoadingAssetOverview(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchOverview: (id) => dispatch(startAssetOverviewFetch(id))
+  fetchOverview: (id) => dispatch(startAssetOverviewFetch(id)),
+  updateAsset: (assetUpdates) => dispatch(updateAssetOverview(assetUpdates))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AssetDetailOverviewScreen);

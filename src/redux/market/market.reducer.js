@@ -125,6 +125,11 @@ const marketReducer = (prevState = INITIAL_STATE, action) => {
         searchResults: action.payload,
         isLoadingSearchResults: false
       };
+    case MARKET_ACTION_TYPES.UPDATE_MARKETS:
+      return {
+        ...prevState,
+        markets: action.payload
+      };
     default:
       return prevState;
   }

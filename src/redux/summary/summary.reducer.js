@@ -11,7 +11,7 @@ const INITIAL_STATE = {
   isLoadingNewsSummary: true
 };
 
-const notificationReducer = (prevState = INITIAL_STATE, action) => {
+const summaryReducer = (prevState = INITIAL_STATE, action) => {
   switch (action.type) {
     case SUMMARY_ACTION_TYPES.START_GLOBAL_SUMMARY_FETCH:
       return {
@@ -77,9 +77,19 @@ const notificationReducer = (prevState = INITIAL_STATE, action) => {
         gainersLosers: action.payload,
         isLoadingGainersLosers: false
       };
+    case SUMMARY_ACTION_TYPES.UPDATE_GAINERS_LOSERS:
+      return {
+        ...prevState,
+        gainersLosers: action.payload
+      };
+    case SUMMARY_ACTION_TYPES.UPDATE_TOP_COINS:
+      return {
+        ...prevState,
+        topCoins: action.payload
+      };
     default:
       return prevState;
   }
 };
 
-export default notificationReducer;
+export default summaryReducer;

@@ -21,7 +21,7 @@ const INITIAL_STATE = {
   isLoadingAbout: true
 };
 
-const discoverReducer = (prevState = INITIAL_STATE, action) => {
+const assetDetailReducer = (prevState = INITIAL_STATE, action) => {
   switch (action.type) {
     case ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_OVERVIEW:
       return {
@@ -170,9 +170,17 @@ const discoverReducer = (prevState = INITIAL_STATE, action) => {
         hasMoreEvents: false,
         isLoadingEvents: false
       };
+    case ASSET_DETAIL_ACTION_TYPES.UPDATE_ASSET_OVERVIEW:
+      return {
+        ...prevState,
+        overview: {
+          ...prevState.overview,
+          ...action.payload
+        }
+      };
     default:
       return prevState;
   }
 };
 
-export default discoverReducer;
+export default assetDetailReducer;

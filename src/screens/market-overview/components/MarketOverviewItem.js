@@ -1,18 +1,19 @@
-import React from "react";
+import React, { memo } from "react";
 import { View, StyleSheet } from "react-native";
 import { IconImage, OutlinedText, TouchableNativeFeedback } from "../../../shared-components";
 import { formatPercentWorklet, getStylesBasedOnSign } from "../../../utils";
-import { Text, useTheme } from "react-native-paper";
+import { Text } from "react-native-paper";
 import { TYPOGRAPHY } from "../../../styles";
 import { useNavigation } from "@react-navigation/native";
 import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const MarketOverviewItem = ({ item }) => {
   const { changePercent24Hr, name, priceUsd, image, rank, marketCap, id, symbol } = item;
-  const { colors } = useTheme();
   const navigation = useNavigation();
 
   const onPress = () => navigation.navigate("AssetDetail", { image, symbol, id, name });
+
+  // console.log("MARKET OVERVIEW RENDERING", item.id);
 
   return (
     <TouchableNativeFeedback onPress={onPress}>
@@ -64,4 +65,4 @@ const STYLES = StyleSheet.create({
   }
 });
 
-export default MarketOverviewItem;
+export default memo(MarketOverviewItem);

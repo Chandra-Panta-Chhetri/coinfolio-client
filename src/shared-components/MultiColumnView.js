@@ -1,10 +1,10 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 
-const MultiColumnView = ({ sections = [], renderItem, SectionSeparator, sectionStyle }) => {
+const MultiColumnView = ({ sections, renderItem, SectionSeparator, sectionStyle }) => {
   return (
     <View style={STYLES.container}>
-      {sections.map(({ data }, index) => (
+      {(sections || []).map(({ data }, index) => (
         <React.Fragment key={index}>
           <View style={[STYLES.sectionItem, sectionStyle]}>{data.map(renderItem)}</View>
           {SectionSeparator && index !== sections.length - 1 && <SectionSeparator />}

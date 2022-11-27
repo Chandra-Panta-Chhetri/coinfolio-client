@@ -67,6 +67,7 @@ function* fetchMoreMarkets() {
     }
 
     const combinedMarkets = [...currentMarkets, ...newMarkets];
+    console.log("LOADED MORE MARKETS", currentMarkets[0] === combinedMarkets[0]);
     yield put(moreMarketsSuccess(combinedMarkets));
   } catch (err) {
     yield put(moreMarketsFail("Error while fetching more markets"));

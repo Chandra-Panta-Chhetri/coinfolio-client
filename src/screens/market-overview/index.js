@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { StyleSheet } from "react-native";
 import { Header, Filters, OverviewItem } from "./components";
 import { GLOBAL_STYLES } from "../../styles";
@@ -11,10 +11,12 @@ import {
   selectMarketsPerPage,
   selectIsFetchingMoreMarkets,
   startNextMarketsFetch,
-  selectHasMoreMarkets
+  selectHasMoreMarkets,
+  updateMarkets
 } from "../../redux/market";
 import { Skeleton, InfiniteScroll } from "../../shared-components";
 import { GLOBAL_CONSTANTS } from "../../constants";
+import { useLivePrices, updatePriceOfCoins } from "../../hooks";
 
 const ListHeader = () => (
   <>
@@ -25,12 +27,49 @@ const ListHeader = () => (
 
 const renderItem = ({ item, index }) => <OverviewItem item={item} key={item.id + index} />;
 
-const MarketOverviewScreen = ({ markets, getMarkets, isLoading, isLoadingMore, perPage, getMoreMarkets, hasMore }) => {
+const MarketOverviewScreen = ({
+  markets,
+  getMarkets,
+  isLoading,
+  isLoadingMore,
+  perPage,
+  getMoreMarkets,
+  hasMore,
+  updateMarkets
+}) => {
+  const { colors } = useTheme();
+  const socket = useLivePrices(markets);
+  const marketsRef = useRef(markets);
+
+  useEffect(() => {
+    marketsRef.current = markets;
+  }, [markets]);
+
+  const onNewPrices = (newPrices) => {
+    const { wasUpdated, coins: updatedMarkets } = updatePriceOfCoins(newPrices, marketsRef.current);
+    if (wasUpdated) {
+      console.log("UPDATING MARKET OVERVIEW SCREEN");
+      updateMarkets(updatedMarkets);
+    }
+  };
+
   useEffect(() => {
     getMarkets();
   }, []);
 
-  const { colors } = useTheme();
+  useEffect(() => {
+    if (socket !== null) {
+      // console.log("markets - listener init");
+      socket.on("new prices", onNewPrices);
+    }
+
+    return () => {
+      if (socket !== null) {
+        // console.log("markets - listener removed");
+        socket.off("new prices");
+      }
+    };
+  }, [socket]);
 
   const renderSkeleton = ({ index }) => (
     <Skeleton style={[STYLES.itemSkeleton, { marginBottom: index !== perPage - 1 ? GLOBAL_CONSTANTS.SM_MARGIN : 0 }]} />
@@ -73,7 +112,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getMarkets: () => dispatch(startMarketsFetch()),
-  getMoreMarkets: () => dispatch(startNextMarketsFetch())
+  getMoreMarkets: () => dispatch(startNextMarketsFetch()),
+  updateMarkets: (markets) => dispatch(updateMarkets(markets))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MarketOverviewScreen);

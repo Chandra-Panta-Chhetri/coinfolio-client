@@ -118,3 +118,8 @@ export const noMoreAssetNews = () => ({
 export const noMoreAssetEvents = () => ({
   type: ASSET_DETAIL_ACTION_TYPES.NO_MORE_ASSET_EVENTS
 });
+
+export const updateAssetOverview = (overviewUpdates = {}) => ({
+  type: ASSET_DETAIL_ACTION_TYPES.UPDATE_ASSET_OVERVIEW,
+  payload: overviewUpdates
+});
