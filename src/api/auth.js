@@ -22,7 +22,7 @@ export const registerUser = async (newUser) => {
 export const getUserFromToken = async (token) => {
   const res = await axios.get(`/auth/user`, {
     headers: {
-      "Auth-Token": token
+      "X-Auth-Token": token
     }
   });
   return res.data;

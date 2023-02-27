@@ -1,7 +1,10 @@
 import PORTFOLIO_ACTION_TYPES from "./portfolio.action.types";
 
-export const startPortfolioFetch = () => ({
-  type: PORTFOLIO_ACTION_TYPES.START_PORTFOLIO_FETCH
+export const startPortfolioFetch = (id) => ({
+  type: PORTFOLIO_ACTION_TYPES.START_PORTFOLIO_FETCH,
+  payload: {
+    id
+  }
 });
 
 export const portfolioFetchFail = (errorMsg) => ({
@@ -12,10 +15,8 @@ export const portfolioFetchFail = (errorMsg) => ({
 });
 
 export const portfolioFetchSuccess = (portfolio) => ({
-  type: PORTFOLIO_ACTION_TYPES.PORTFOLIO_FETCH_FAIL,
-  payload: {
-    portfolio
-  }
+  type: PORTFOLIO_ACTION_TYPES.PORTFOLIO_FETCH_SUCCESS,
+  payload: portfolio
 });
 
 export const startAddingNewTransaction = (transaction, assetId) => ({
@@ -50,10 +51,7 @@ export const deleteTransactionByIdFail = (errorMsg) => ({
   }
 });
 
-export const deleteTransactionByIdSuccess = (
-  updatedTransactions,
-  successMsg
-) => ({
+export const deleteTransactionByIdSuccess = (updatedTransactions, successMsg) => ({
   type: PORTFOLIO_ACTION_TYPES.DELETE_TRANSACTION_BY_ID_SUCCESS,
   payload: {
     updatedTransactions,
@@ -61,11 +59,7 @@ export const deleteTransactionByIdSuccess = (
   }
 });
 
-export const startUpdatingTransactionById = (
-  transactionId,
-  updatedTransaction,
-  index
-) => ({
+export const startUpdatingTransactionById = (transactionId, updatedTransaction, index) => ({
   type: PORTFOLIO_ACTION_TYPES.START_UPDATING_TRANSACTION_BY_ID,
   payload: { transactionId, updatedTransaction, index }
 });
@@ -77,10 +71,7 @@ export const updateTransactionByIdFail = (errorMsg) => ({
   }
 });
 
-export const updateTransactionByIdSuccess = (
-  updatedTransactions,
-  successMsg
-) => ({
+export const updateTransactionByIdSuccess = (updatedTransactions, successMsg) => ({
   type: PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_BY_ID_SUCCESS,
   payload: {
     updatedTransactions,

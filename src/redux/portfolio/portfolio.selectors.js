@@ -2,37 +2,16 @@ import { createSelector } from "reselect";
 
 const selectPortfolio = (state) => state.portfolio;
 
-export const selectCurrentPortfolioValue = createSelector(
-  [selectPortfolio],
-  (portfolio) => portfolio.currentPortfolio
-);
+export const selectCurrentPortfolioValue = createSelector([selectPortfolio], (portfolio) => portfolio.totalValue);
 
-export const selectTransactions = createSelector(
-  [selectPortfolio],
-  (portfolio) => portfolio.transactions
-);
+export const selectTransactions = createSelector([selectPortfolio], (portfolio) => portfolio.transactions);
 
-export const selectNumLoadingReq = createSelector(
-  [selectPortfolio],
-  (portfolio) => portfolio.numLoadingReq
-);
+export const selectIsLoadingPortfolio = createSelector([selectPortfolio], (portfolio) => portfolio.isLoading);
 
-export const selectIsLoadingPortfolio = createSelector(
-  [selectNumLoadingReq],
-  (numLoadingReq) => numLoadingReq > 0
-);
+export const selectPortfolioHoldings = createSelector([selectPortfolio], (portfolio) => portfolio.holdings);
 
-export const selectPortfolioAssets = createSelector(
-  [selectPortfolio],
-  (portfolio) => portfolio.assets
-);
+export const selectTotalProfitLoss = createSelector([selectPortfolio], (portfolio) => portfolio.totalProfitLoss);
 
-export const selectOverallProfit = createSelector(
-  [selectPortfolio],
-  (portfolio) => portfolio.overallProfit
-);
+export const selectTotalInvested = createSelector([selectPortfolio], (portfolio) => portfolio.totalCost);
 
-export const selectPortfolioHistoricValue = createSelector(
-  [selectPortfolio],
-  (portfolio) => portfolio.historicValue
-);
+export const selectPortfolioPieCharts = createSelector([selectPortfolio], (portfolio) => portfolio.pieCharts);

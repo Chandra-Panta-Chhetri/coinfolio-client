@@ -148,11 +148,10 @@ export const buildLineChart = (
 };
 
 export const formatData = (data, chartWidth, chartHeight, valueAccessors) => {
-  const numPointsPerData = data.map((d) => valueAccessors.dataPointsAccessor(d.history).length);
+  const numPointsPerData = data.map((d) => valueAccessors.dataPointsAccessor(d.data).length);
   const maxPointsToShow = Math.min(...numPointsPerData);
-
   return data.map((d) => ({
     label: d.label,
-    data: buildLineChart(d.history, chartWidth, chartHeight, valueAccessors, maxPointsToShow)
+    data: buildLineChart(d.data, chartWidth, chartHeight, valueAccessors, maxPointsToShow)
   }));
 };

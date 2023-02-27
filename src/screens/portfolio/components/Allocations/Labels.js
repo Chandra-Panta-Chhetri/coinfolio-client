@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { Text, useTheme } from "react-native-paper";
-import { GLOBAL_CONSTANTS } from "../../../../../constants";
-import { TouchableNativeFeedback } from "../../../../../shared-components";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../../styles";
+import { GLOBAL_CONSTANTS } from "../../../../constants";
+import { TouchableNativeFeedback } from "../../../../shared-components";
+import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../styles";
 
 const AllocationLabels = ({ data = [], selectedSlice = null, changeSelectedSlice }) => {
   const { colors } = useTheme();

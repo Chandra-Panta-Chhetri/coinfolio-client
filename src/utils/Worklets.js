@@ -8,7 +8,7 @@ export function roundToNDecimalsWorklet(num, numDecimals = 2) {
 
 export function formatNumWorklet(num) {
   "worklet";
-  if (num === "") return num;
+  if (num === "" || num === undefined || num === null) return null;
   if (Math.abs(+num) < 1) {
     let numOfOs = 0;
     let fractionalNum = String(num).split(".")[1] || "";
@@ -35,7 +35,7 @@ export function formatNumWorklet(num) {
 
 export function formatPercentWorklet(percent) {
   "worklet";
-  return +percent >= 0 ? `+${formatNumWorklet(percent)}%` : `${formatNumWorklet(percent)}%`;
+  return +percent >= 0 ? `+${formatNumWorklet(+percent)}%` : `${formatNumWorklet(+percent)}%`;
 }
 
 export function formatPriceWorklet(price) {
@@ -68,7 +68,7 @@ export function boundXCoordinateWorklet(val, upperBound, labelWidth) {
   return val - labelWidth / 2 < 0 ? 0 : val - labelWidth / 2;
 }
 
-export function addNumSign(num) {
+function addNumSign(num) {
   "worklet";
   return +num >= 0 ? `+${num}` : `-${num * -1}`;
 }

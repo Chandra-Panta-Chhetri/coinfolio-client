@@ -55,8 +55,8 @@ const SkeletonContainer = ({ count = 1, style }) => {
   }, []);
 
   const onLayout = (event) => {
-    if (translateX.value === null) {
-      const layoutWidth = event.nativeEvent.layout.width;
+    const layoutWidth = event.nativeEvent.layout.width;
+    if (translateX.value === null && layoutWidth !== 0) {
       translateX.value = layoutWidth * -1;
       translateX.value = withRepeat(
         withTiming(layoutWidth, {
