@@ -1,22 +1,36 @@
 import PORTFOLIO_ACTION_TYPES from "./portfolio.action.types";
 
-export const startPortfolioFetch = (id) => ({
-  type: PORTFOLIO_ACTION_TYPES.START_PORTFOLIO_FETCH,
+export const startPortfolioOverviewFetch = (id) => ({
+  type: PORTFOLIO_ACTION_TYPES.START_PORTFOLIO_OVERVIEW_FETCH,
   payload: {
     id
   }
 });
 
-export const portfolioFetchFail = (errorMsg) => ({
-  type: PORTFOLIO_ACTION_TYPES.PORTFOLIO_FETCH_FAIL,
+export const portfolioOverviewFetchFail = (errorMsg) => ({
+  type: PORTFOLIO_ACTION_TYPES.PORTFOLIO_OVERVIEW_FETCH_FAIL,
   payload: {
     errorMsg
   }
 });
 
-export const portfolioFetchSuccess = (portfolio) => ({
-  type: PORTFOLIO_ACTION_TYPES.PORTFOLIO_FETCH_SUCCESS,
+export const portfolioOverviewFetchSuccess = (portfolio) => ({
+  type: PORTFOLIO_ACTION_TYPES.PORTFOLIO_OVERVIEW_FETCH_SUCCESS,
   payload: portfolio
+});
+
+export const startUserPortfoliosFetch = () => ({
+  type: PORTFOLIO_ACTION_TYPES.START_USER_PORTFOLIOS_FETCH
+});
+
+export const userPortfoliosFetchFail = (errorMsg) => ({
+  type: PORTFOLIO_ACTION_TYPES.USER_PORTFOLIOS_FETCH_FAIL,
+  payload: errorMsg
+});
+
+export const userPortfoliosFetchSuccess = (portfolios) => ({
+  type: PORTFOLIO_ACTION_TYPES.USER_PORTFOLIOS_FETCH_SUCCESS,
+  payload: portfolios
 });
 
 export const startAddingNewTransaction = (transaction, assetId) => ({

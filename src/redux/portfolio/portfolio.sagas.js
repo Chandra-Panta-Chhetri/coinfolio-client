@@ -1,17 +1,19 @@
 import { takeLatest, put, call, all, select } from "redux-saga/effects";
 import {
-  portfolioFetchFail,
+  portfolioOverviewFetchFail,
   addNewTransactionFail,
   deleteTransactionByIdFail,
   updateTransactionByIdFail,
   transactionsForAssetFetchFail,
   removeAllTransactionsForAssetFail,
-  portfolioFetchSuccess,
+  portfolioOverviewFetchSuccess,
   addNewTransactionSuccess,
   deleteTransactionByIdSuccess,
   updateTransactionByIdSuccess,
   transactionsForAssetFetchSuccess,
-  removeAllTransactionsForAssetSuccess
+  removeAllTransactionsForAssetSuccess,
+  userPortfoliosFetchSuccess,
+  userPortfoliosFetchFail
 } from "./portfolio.actions";
 import PORTFOLIO_ACTION_TYPES from "./portfolio.action.types";
 import { selectTransactions } from "./portfolio.selectors";
@@ -22,9 +24,19 @@ function* fetchPortfolio({ payload: { id } }) {
   try {
     const authToken = yield select(selectUserToken);
     const portfolio = yield portfolioAPI.getOverview(id, authToken);
-    yield put(portfolioFetchSuccess(portfolio));
+    yield put(portfolioOverviewFetchSuccess(portfolio));
   } catch (err) {
-    yield put(portfolioFetchFail("There was a problem getting your portfolio details"));
+    yield put(portfolioOverviewFetchFail("There was a problem getting your portfolio details"));
+  }
+}
+
+function* fetchUserPortfolios() {
+  try {
+    const authToken = yield select(selectUserToken);
+    const portfolios = yield portfolioAPI.getUserPortfolios(authToken);
+    yield put(userPortfoliosFetchSuccess(portfolios));
+  } catch (err) {
+    yield put(userPortfoliosFetchFail("Failed to fetch all portfolios"));
   }
 }
 
@@ -77,7 +89,7 @@ function* removeAllTransactionsForAsset({ payload: { assetId } }) {
 }
 
 function* watchPortfolioFetchStart() {
-  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_PORTFOLIO_FETCH, fetchPortfolio);
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_PORTFOLIO_OVERVIEW_FETCH, fetchPortfolio);
 }
 
 function* watchAddingNewTransactionStart() {
@@ -100,6 +112,10 @@ function* watchRemoveAllTransactionsForAssetStart() {
   yield takeLatest(PORTFOLIO_ACTION_TYPES.START_REMOVING_ALL_TRANSACTIONS_FOR_ASSET, removeAllTransactionsForAsset);
 }
 
+function* watchUserPortfoliosFetchStart() {
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_USER_PORTFOLIOS_FETCH, fetchUserPortfolios);
+}
+
 export default function* portfolioSagas() {
   yield all([
     call(watchPortfolioFetchStart),
@@ -107,6 +123,7 @@ export default function* portfolioSagas() {
     call(watchDeleteTransactionByIdStart),
     call(watchUpdateTransactionByIdStart),
     call(watchTransactionsForAssetFetchStart),
-    call(watchRemoveAllTransactionsForAssetStart)
+    call(watchRemoveAllTransactionsForAssetStart),
+    call(watchUserPortfoliosFetchStart)
   ]);
 }

@@ -20,7 +20,7 @@ const HOME_SCREEN_OPTIONS = [
     value: "MarketOverview",
     icon: <MarketTabIcon />
   },
-  { label: "Portfolio", value: "Portfolio", icon: <PortfolioTabIcon /> },
+  { label: "Portfolio", value: "PortfolioDrawer", icon: <PortfolioTabIcon /> },
   { label: "Discover", value: "Discover", icon: <DiscoverTabIcon /> }
 ];
 

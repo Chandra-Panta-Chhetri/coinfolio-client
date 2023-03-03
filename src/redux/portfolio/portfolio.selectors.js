@@ -15,3 +15,10 @@ export const selectTotalProfitLoss = createSelector([selectPortfolio], (portfoli
 export const selectTotalInvested = createSelector([selectPortfolio], (portfolio) => portfolio.totalCost);
 
 export const selectPortfolioPieCharts = createSelector([selectPortfolio], (portfolio) => portfolio.pieCharts);
+
+export const selectIsLoadingUserPortfolios = createSelector(
+  [selectPortfolio],
+  (portfolio) => portfolio.isLoadingUserPortfolios
+);
+
+export const selectUserPortfolios = createSelector([selectPortfolio], (portfolio) => portfolio.userPortfolios);
