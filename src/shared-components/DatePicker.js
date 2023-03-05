@@ -90,7 +90,7 @@ const DatePicker = ({ isRangePicker = true, onConfirm, initialStartDate = null, 
             previousComponent={<MaterialIcons name="navigate-before" size={28} color={colors.text} />}
           />
           <View style={STYLES.modalActionButtons}>
-            <Button label="Cancel" onPress={closePicker} color={colors.notification} />
+            <Button label="Cancel" onPress={closePicker} buttonColor={colors.notification} />
             <Button label="Ok" onPress={confirmSelectedDates} disabled={!endDate} />
           </View>
         </Modal>

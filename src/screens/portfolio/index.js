@@ -7,11 +7,11 @@ import Reanimated from "react-native-reanimated";
 import { GLOBAL_STYLES } from "../../styles";
 import { useHiddenFABOnScroll } from "../../hooks";
 import { HoldingsOverview, Allocations, Unauthenticated, Statistics } from "./components";
-import { startPortfolioOverviewFetch } from "../../redux/portfolio";
+import { selectActivePortfolio, startPortfolioOverviewFetch } from "../../redux/portfolio";
 
 const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
-function PortfolioScreen({ navigation, isAuthenticated, fetchOverview }) {
+function PortfolioScreen({ navigation, isAuthenticated, fetchOverview, activePortfolio }) {
   const navigateToAddTransactionScreen = () => navigation.navigate("AddTransaction");
 
   const { scrollHandler, Fab: AddTransactionFab } = useHiddenFABOnScroll({
@@ -21,8 +21,10 @@ function PortfolioScreen({ navigation, isAuthenticated, fetchOverview }) {
   });
 
   useEffect(() => {
-    //fetchOverview(1);
-  }, []);
+    if (activePortfolio !== null && activePortfolio?.id !== null) {
+      fetchOverview(activePortfolio?.id);
+    }
+  }, [activePortfolio]);
 
   if (isAuthenticated) {
     return <Unauthenticated navigation={navigation} />;
@@ -49,7 +51,8 @@ function PortfolioScreen({ navigation, isAuthenticated, fetchOverview }) {
 }
 
 const mapStateToProps = createStructuredSelector({
-  isAuthenticated: selectCurrentUser
+  isAuthenticated: selectCurrentUser,
+  activePortfolio: selectActivePortfolio
 });
 
 const mapDispatchToProps = (dispatch) => ({

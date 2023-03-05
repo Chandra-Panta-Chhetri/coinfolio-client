@@ -79,56 +79,57 @@ const mockedPortfolios = [
 ];
 
 export const getOverview = async (portfolioId, token) => {
-  // const res = await axios.get(`/portfolios/${portfolioId}/overview`, {
-  //   headers: {
-  //     "X-Auth-Token": token
-  //   }
-  // });
-  // return res.data;
-  return mockedOverview;
+  const res = await axios.get(`/portfolios/${portfolioId}/overview`, {
+    headers: {
+      "X-Auth-Token": token
+    }
+  });
+  return res.data;
+  // return mockedOverview;
 };
 
 export const getUserPortfolios = async (token) => {
-  // const res = await axios.get(`/portfolios`, {
-  //   headers: {
-  //     "X-Auth-Token": token
-  //   }
-  // });
-  // return res?.data?.data;
-  return mockedPortfolios;
+  const res = await axios.get(`/portfolios`, {
+    headers: {
+      "X-Auth-Token": token
+    }
+  });
+  return res?.data?.data;
+  // return mockedPortfolios;
 };
 
 export const createPortfolio = async (token, newPortfolio) => {
-  // const res = await axios.post(`/portfolios`, newPortfolio, {
-  //   headers: {
-  //     "X-Auth-Token": token
-  //   }
-  // });
-  // return res?.data;
-  return {
-    ...newPortfolio,
-    id: Math.floor(Math.random() * 100)
-  };
+  const res = await axios.post(`/portfolios`, newPortfolio, {
+    headers: {
+      "X-Auth-Token": token
+    }
+  });
+  return res?.data;
+  // return {
+  //   ...newPortfolio,
+  //   id: Math.floor(Math.random() * 100)
+  // };
 };
 
 export const updatePortfolio = async (token, portfolio, portfolioId) => {
-  // const res = await axios.patch(`/portfolios/${portfolioId}`, portfolio, {
-  //   headers: {
-  //     "X-Auth-Token": token
-  //   }
-  // });
-  // return res?.data;
-  return {
-    ...portfolio,
-    id: portfolioId
-  };
+  console.log(portfolio);
+  const res = await axios.patch(`/portfolios/${portfolioId}`, portfolio, {
+    headers: {
+      "X-Auth-Token": token
+    }
+  });
+  return res?.data;
+  // return {
+  //   ...portfolio,
+  //   id: portfolioId
+  // };
 };
 
 export const deletePortfolio = async (token, portfolioId) => {
-  // const res = await axios.delete(`/portfolios/${portfolioId}`, {
-  //   headers: {
-  //     "X-Auth-Token": token
-  //   }
-  // });
-  // return res?.data;
+  const res = await axios.delete(`/portfolios/${portfolioId}`, {
+    headers: {
+      "X-Auth-Token": token
+    }
+  });
+  return res?.data;
 };

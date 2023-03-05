@@ -37,7 +37,7 @@ const ShortcutIcon = ({ iconInfo }) => {
     <TouchableRipple onPress={navigateToScreen} rippleColor={colors.touchableRipple}>
       <View style={STYLES.iconContainer}>
         <View style={[STYLES.iconBtnContainer, { borderColor: isDarkMode ? colors.border : colors.card }]}>
-          <IconButton icon={iconInfo.iconName} color={colors.primary} />
+          <IconButton icon={iconInfo.iconName} iconColor={colors.primary} />
         </View>
         <Text style={TYPOGRAPHY.body2}>{iconInfo.label}</Text>
       </View>

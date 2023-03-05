@@ -25,7 +25,7 @@ const ConfirmationDialog = ({
           <Button
             onPress={onConfirmCb}
             label="Yes"
-            color={colors.notification}
+            textColor={colors.notification}
             loading={isLoading}
             disabled={isLoading}
           />

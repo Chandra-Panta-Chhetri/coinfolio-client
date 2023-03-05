@@ -51,7 +51,7 @@ const AssetDetailEventFiltersScreen = ({ fetchEvents, updateEventFilters, naviga
       </View>
       <View style={STYLES.buttonContainer}>
         <Button mode="contained" onPress={applyFilters} style={[STYLES.applyButton, STYLES.flex]} label="Apply" />
-        <Button mode="contained" onPress={resetFilters} color={colors.card} style={STYLES.flex} label="Reset" />
+        <Button mode="contained" onPress={resetFilters} buttonColor={colors.card} style={STYLES.flex} label="Reset" />
       </View>
     </View>
   );

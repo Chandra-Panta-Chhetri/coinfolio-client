@@ -3,11 +3,12 @@ import { Button, TextInput } from "../../../../shared-components";
 import { GLOBAL_CONSTANTS } from "../../../../constants";
 import { KeyboardAvoidingView } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import { Keyboard } from "react-native";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../styles";
 import { useEffect } from "react";
+import { StyleSheet } from "react-native";
 
 function AddPortfolioModal({ isVisible, onDismiss, onSubmit, isLoading, portfolioToEdit }) {
+  const { colors } = useTheme();
   const isEditing = portfolioToEdit !== undefined && portfolioToEdit !== null;
   const submitLabel = isEditing ? (isLoading ? "Updating..." : "Update") : isLoading ? "Creating..." : "Create";
 
@@ -41,17 +42,10 @@ function AddPortfolioModal({ isVisible, onDismiss, onSubmit, isLoading, portfoli
       <Modal
         visible={isVisible}
         onDismiss={onDismiss}
-        contentContainerStyle={{
-          backgroundColor: "white",
-          ...GLOBAL_STYLES.screenContainer,
-          marginHorizontal: GLOBAL_CONSTANTS.MD_MARGIN,
-          borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
-        }}
+        contentContainerStyle={[STYLES.modalContainer, { backgroundColor: colors.card }]}
         dismissable={!isLoading}
       >
-        <Text style={[TYPOGRAPHY.title, { marginBottom: GLOBAL_CONSTANTS.MD_MARGIN }]}>
-          {isEditing ? "Update Portfolio" : "Create New Portfolio"}
-        </Text>
+        <Text style={STYLES.modalTitle}>{isEditing ? "Update Portfolio" : "Create Portfolio"}</Text>
         <KeyboardAvoidingView
           behavior={Platform.select({
             ios: "padding",
@@ -70,7 +64,7 @@ function AddPortfolioModal({ isVisible, onDismiss, onSubmit, isLoading, portfoli
                 onChangeText={onChange}
                 value={value}
                 label="Nickname"
-                style={{ marginBottom: GLOBAL_CONSTANTS.LG_MARGIN }}
+                style={STYLES.formField}
               />
             )}
             name="nickname"
@@ -87,5 +81,15 @@ function AddPortfolioModal({ isVisible, onDismiss, onSubmit, isLoading, portfoli
     </Portal>
   );
 }
+
+const STYLES = StyleSheet.create({
+  modalContainer: {
+    ...GLOBAL_STYLES.screenContainer,
+    marginHorizontal: GLOBAL_CONSTANTS.MD_MARGIN,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
+  },
+  modalTitle: { ...TYPOGRAPHY.title, marginBottom: GLOBAL_CONSTANTS.MD_MARGIN },
+  formField: { marginBottom: GLOBAL_CONSTANTS.LG_MARGIN }
+});
 
 export default AddPortfolioModal;

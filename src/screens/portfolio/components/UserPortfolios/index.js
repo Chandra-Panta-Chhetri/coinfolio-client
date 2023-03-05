@@ -20,6 +20,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { Keyboard } from "react-native";
 import ListOfPortfolios from "./ListOfPortfolios";
 import AddPortfolioModal from "./AddPortfolioModal";
+import { StyleSheet } from "react-native";
 
 const EditPortfolioModal = AddPortfolioModal;
 
@@ -103,9 +104,7 @@ const UserPortfolios = ({
   return (
     <>
       <DrawerContentScrollView>
-        <Text style={[Typography.title, { textAlign: "center", marginBottom: GLOBAL_CONSTANTS.LG_MARGIN }]}>
-          Select a Portfolio
-        </Text>
+        <Text style={STYLES.title}>Select a Portfolio</Text>
         <ListOfPortfolios
           portfolios={portfolios}
           onEdit={onEditPress}
@@ -116,9 +115,7 @@ const UserPortfolios = ({
       </DrawerContentScrollView>
       <Button
         mode="contained"
-        style={{
-          borderRadius: 0
-        }}
+        style={STYLES.addPortfolioButton}
         label={"Add New Portfolio"}
         onPress={openAddPortfolioModal}
       >
@@ -148,6 +145,17 @@ const UserPortfolios = ({
     </>
   );
 };
+
+const STYLES = StyleSheet.create({
+  addPortfolioButton: {
+    borderRadius: 0
+  },
+  title: {
+    ...Typography.title,
+    textAlign: "center",
+    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN
+  }
+});
 
 const mapStateToProps = (state) => ({
   portfolios: selectUserPortfolios(state),

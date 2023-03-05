@@ -27,7 +27,7 @@ const Unauthenticated = ({ navigation }) => {
       <Button
         onPress={() => navigation.navigate("Login")}
         mode="contained"
-        color={colors.card}
+        buttonColor={colors.card}
         labelStyle={{
           color: colors.text
         }}

@@ -79,8 +79,8 @@ function* deletePortfolio({ payload: portfolioId }) {
     yield portfolioAPI.deletePortfolio(authToken, portfolioId);
     const updatedPortfolios = portfolios.filter((p) => p?.id !== portfolioId);
     yield put(deletePortfolioSuccess(updatedPortfolios));
-    if (activePortfolio?.id === portfolioId && updatedPortfolios?.length > 0) {
-      yield put(changeActivePortfolio(updatedPortfolios[0]));
+    if (activePortfolio?.id === portfolioId) {
+      yield put(changeActivePortfolio(updatedPortfolios?.length > 0 ? updatedPortfolios[0] : null));
     }
   } catch (err) {
     yield put(deletePortfolioFail("Failed to delete portfolio"));

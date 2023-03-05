@@ -11,7 +11,7 @@ const PortfolioDrawer = () => {
         name="Portfolio"
         component={PortfolioScreen}
         options={{
-          header: Header
+          header: (props) => <Header {...props} />
         }}
       />
     </Drawer.Navigator>

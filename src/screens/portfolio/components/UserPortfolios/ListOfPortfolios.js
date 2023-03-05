@@ -20,24 +20,11 @@ const EditDeleteActions = ({ portfolio, onEdit, onDelete }) => {
   };
 
   return (
-    <View style={{ display: "flex", flexDirection: "row" }}>
-      <Button
-        mode="contained"
-        style={{
-          borderRadius: 0
-        }}
-        onPress={onEditPress}
-      >
+    <View style={STYLES.swipeableActions}>
+      <Button mode="contained" style={STYLES.editPortfolioButton} onPress={onEditPress}>
         <AntDesign name="edit" size={GLOBAL_CONSTANTS.ICON_SIZE} />
       </Button>
-      <Button
-        mode="contained"
-        style={{
-          borderRadius: 0
-        }}
-        buttonColor={COLORS.ERROR}
-        onPress={onDeletePress}
-      >
+      <Button mode="contained" style={STYLES.deletePortfolioButton} buttonColor={COLORS.ERROR} onPress={onDeletePress}>
         <AntDesign name="delete" size={GLOBAL_CONSTANTS.ICON_SIZE} />
       </Button>
     </View>
@@ -57,30 +44,23 @@ function ListOfPortfolios({ portfolios, onEdit, onDelete, onSelect, selectedPort
     <Swipeable
       key={p.id}
       renderRightActions={() => <EditDeleteActions portfolio={p} onEdit={onEdit} onDelete={onDelete} />}
+      renderLeftActions={() => <EditDeleteActions portfolio={p} onEdit={onEdit} onDelete={onDelete} />}
       overshootRight={false}
-      childrenContainerStyle={{
-        height: 45,
-        marginBottom: GLOBAL_CONSTANTS.SM_MARGIN,
-        backgroundColor: p?.id === selectedPortfolio?.id ? colors?.primary : "transparent"
-      }}
-      containerStyle={{
-        height: 45
-      }}
+      overshootLeft={false}
+      childrenContainerStyle={[
+        STYLES.swipeableChildrenContainer,
+        {
+          backgroundColor: p?.id === selectedPortfolio?.id ? colors?.primary : "transparent"
+        }
+      ]}
+      containerStyle={STYLES.swipeableContainer}
     >
       <TouchableNativeFeedback onPress={() => onPortfolioSelect(p)}>
-        <View
-          style={{
-            height: "100%",
-            flexDirection: "row",
-            display: "flex"
-          }}
-        >
+        <View style={STYLES.portfolioContainer}>
           <Text
             style={[
-              Typography.subheading,
+              STYLES.portfolioNickname,
               {
-                marginLeft: GLOBAL_CONSTANTS.MD_MARGIN,
-                alignSelf: "center",
                 color: p?.id === selectedPortfolio?.id ? (isDarkMode ? colors?.text : colors?.card) : colors?.text
               }
             ]}
@@ -93,6 +73,31 @@ function ListOfPortfolios({ portfolios, onEdit, onDelete, onSelect, selectedPort
   ));
 }
 
-const STYLES = StyleSheet.create({});
+const STYLES = StyleSheet.create({
+  swipeableChildrenContainer: {
+    height: 45,
+    marginBottom: GLOBAL_CONSTANTS.SM_MARGIN
+  },
+  swipeableContainer: {
+    height: 45
+  },
+  portfolioContainer: {
+    height: "100%",
+    flexDirection: "row",
+    display: "flex"
+  },
+  portfolioNickname: {
+    ...Typography.subheading,
+    marginLeft: GLOBAL_CONSTANTS.MD_MARGIN,
+    alignSelf: "center"
+  },
+  swipeableActions: { display: "flex", flexDirection: "row" },
+  editPortfolioButton: {
+    borderRadius: 0
+  },
+  deletePortfolioButton: {
+    borderRadius: 0
+  }
+});
 
 export default ListOfPortfolios;
