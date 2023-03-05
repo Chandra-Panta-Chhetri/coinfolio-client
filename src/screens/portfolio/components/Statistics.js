@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { GLOBAL_CONSTANTS } from "../../../constants";
 import {
   selectCurrentPortfolioValue,
-  selectIsLoadingPortfolio,
+  selectIsLoadingPortfolioOverview,
   selectTotalInvested,
   selectTotalProfitLoss
 } from "../../../redux/portfolio";
@@ -77,7 +77,7 @@ const STYLES = StyleSheet.create({
 const mapStateToProps = (state) => ({
   currentValue: selectCurrentPortfolioValue(state),
   totalProfitLoss: selectTotalProfitLoss(state),
-  isLoading: selectIsLoadingPortfolio(state),
+  isLoading: selectIsLoadingPortfolioOverview(state),
   totalInvested: selectTotalInvested(state)
 });
 

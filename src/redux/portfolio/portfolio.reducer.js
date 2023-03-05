@@ -7,9 +7,11 @@ const INITIAL_STATE = {
   pieCharts: [],
   transactions: [],
   holdings: [],
-  isLoading: true,
+  isLoadingOverview: true,
   userPortfolios: [],
-  isLoadingUserPortfolios: true
+  isLoadingUserPortfolios: true,
+  isUpdatingUserPortfolios: false,
+  activePortfolio: null
 };
 
 const userReducer = (prevState = INITIAL_STATE, action) => {
@@ -31,35 +33,53 @@ const userReducer = (prevState = INITIAL_STATE, action) => {
         userPortfolios: action.payload
       };
     case PORTFOLIO_ACTION_TYPES.START_PORTFOLIO_OVERVIEW_FETCH:
-      // case PORTFOLIO_ACTION_TYPES.START_ADDING_NEW_TRANSACTION:
-      // case PORTFOLIO_ACTION_TYPES.START_DELETING_TRANSACTION_BY_ID:
-      // case PORTFOLIO_ACTION_TYPES.START_UPDATING_TRANSACTION_BY_ID:
-      // case PORTFOLIO_ACTION_TYPES.START_REMOVING_ALL_TRANSACTIONS_FOR_ASSET:
       return {
         ...prevState,
-        isLoading: true
+        isLoadingOverview: true
+      };
+    case PORTFOLIO_ACTION_TYPES.START_ADDING_NEW_PORTFOLIO:
+    case PORTFOLIO_ACTION_TYPES.START_UPDATING_PORTFOLIO:
+    case PORTFOLIO_ACTION_TYPES.START_DELETING_PORTFOLIO:
+      return {
+        ...prevState,
+        isUpdatingUserPortfolios: true
+      };
+    case PORTFOLIO_ACTION_TYPES.ADDING_NEW_PORTFOLIO_FAIL:
+    case PORTFOLIO_ACTION_TYPES.UPDATING_PORTFOLIO_FAIL:
+    case PORTFOLIO_ACTION_TYPES.DELETING_PORTFOLIO_FAIL:
+      return {
+        ...prevState,
+        isUpdatingUserPortfolios: false
+      };
+    case PORTFOLIO_ACTION_TYPES.ADDING_NEW_PORTFOLIO_SUCCESS:
+    case PORTFOLIO_ACTION_TYPES.UPDATING_PORTFOLIO_SUCCESS:
+    case PORTFOLIO_ACTION_TYPES.DELETING_PORTFOLIO_SUCCESS:
+      return {
+        ...prevState,
+        isUpdatingUserPortfolios: false,
+        userPortfolios: action.payload
+      };
+    case PORTFOLIO_ACTION_TYPES.CHANGE_ACTIVE_PORTFOLIO:
+      return {
+        ...prevState,
+        activePortfolio: action.payload
       };
     // case PORTFOLIO_ACTION_TYPES.START_TRANSACTIONS_FOR_ASSET_FETCH:
     //   return {
     //     ...prevState,
-    //     isLoading: true,
+    //     isLoadingOverview: true,
     //     transactions: []
     //   };
     case PORTFOLIO_ACTION_TYPES.PORTFOLIO_OVERVIEW_FETCH_FAIL:
-      // case PORTFOLIO_ACTION_TYPES.ADDING_NEW_TRANSACTION_FAIL:
-      // case PORTFOLIO_ACTION_TYPES.DELETE_TRANSACTION_BY_ID_FAIL:
-      // case PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_BY_ID_FAIL:
-      // case PORTFOLIO_ACTION_TYPES.REMOVE_ALL_TRANSACTIONS_FOR_ASSET_FAIL:
-      // case PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTIONS_FOR_ASSET_FAIL:
       return {
         ...prevState,
-        isLoading: false
+        isLoadingOverview: false
       };
     case PORTFOLIO_ACTION_TYPES.PORTFOLIO_OVERVIEW_FETCH_SUCCESS:
       return {
         ...prevState,
         ...action.payload,
-        isLoading: false
+        isLoadingOverview: false
       };
     // case PORTFOLIO_ACTION_TYPES.ADDING_NEW_TRANSACTION_SUCCESS:
     //   return {

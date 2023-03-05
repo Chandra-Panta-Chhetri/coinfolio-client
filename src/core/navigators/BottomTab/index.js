@@ -7,7 +7,7 @@ import { useTheme } from "react-native-paper";
 import { connect } from "react-redux";
 import { selectHomeScreen } from "../../../redux/preferences";
 import { HomeTabIcon, SettingsTabIcon, DiscoverTabIcon, MarketTabIcon, PortfolioTabIcon } from "./TabIcons";
-import PortfolioDrawer from "./PortfolioDrawer";
+import PortfolioDrawer from "../PortfolioDrawer";
 
 const BottomTab = Platform.OS === "android" ? createMaterialBottomTabNavigator() : createBottomTabNavigator();
 

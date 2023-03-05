@@ -75,70 +75,6 @@ const mockedPortfolios = [
   {
     nickname: "Portfolio 3",
     id: 3
-  },
-  {
-    nickname: "Portfolio 4",
-    id: 4
-  },
-  {
-    nickname: "Portfolio 5",
-    id: 5
-  },
-  {
-    nickname: "Portfolio 6",
-    id: 6
-  },
-  {
-    nickname: "Portfolio 7",
-    id: 7
-  },
-  {
-    nickname: "Portfolio 8",
-    id: 8
-  },
-  {
-    nickname: "Portfolio 9",
-    id: 9
-  },
-  {
-    nickname: "Portfolio 10",
-    id: 10
-  },
-  {
-    nickname: "Portfolio 8",
-    id: 11
-  },
-  {
-    nickname: "Portfolio 9",
-    id: 12
-  },
-  {
-    nickname: "Portfolio 10",
-    id: 13
-  },
-  {
-    nickname: "Portfolio 8",
-    id: 14
-  },
-  {
-    nickname: "Portfolio 9",
-    id: 15
-  },
-  {
-    nickname: "Portfolio 10",
-    id: 16
-  },
-  {
-    nickname: "Portfolio 8",
-    id: 17
-  },
-  {
-    nickname: "Portfolio 9",
-    id: 18
-  },
-  {
-    nickname: "Portfolio 10",
-    id: 19
   }
 ];
 
@@ -160,4 +96,39 @@ export const getUserPortfolios = async (token) => {
   // });
   // return res?.data?.data;
   return mockedPortfolios;
+};
+
+export const createPortfolio = async (token, newPortfolio) => {
+  // const res = await axios.post(`/portfolios`, newPortfolio, {
+  //   headers: {
+  //     "X-Auth-Token": token
+  //   }
+  // });
+  // return res?.data;
+  return {
+    ...newPortfolio,
+    id: Math.floor(Math.random() * 100)
+  };
+};
+
+export const updatePortfolio = async (token, portfolio, portfolioId) => {
+  // const res = await axios.patch(`/portfolios/${portfolioId}`, portfolio, {
+  //   headers: {
+  //     "X-Auth-Token": token
+  //   }
+  // });
+  // return res?.data;
+  return {
+    ...portfolio,
+    id: portfolioId
+  };
+};
+
+export const deletePortfolio = async (token, portfolioId) => {
+  // const res = await axios.delete(`/portfolios/${portfolioId}`, {
+  //   headers: {
+  //     "X-Auth-Token": token
+  //   }
+  // });
+  // return res?.data;
 };

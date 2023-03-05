@@ -13,10 +13,17 @@ import {
   transactionsForAssetFetchSuccess,
   removeAllTransactionsForAssetSuccess,
   userPortfoliosFetchSuccess,
-  userPortfoliosFetchFail
+  userPortfoliosFetchFail,
+  addNewPortfolioSuccess,
+  addNewPortfolioFail,
+  updatePortfolioFail,
+  updatePortfolioSuccess,
+  deletePortfolioSuccess,
+  deletePortfolioFail,
+  changeActivePortfolio
 } from "./portfolio.actions";
 import PORTFOLIO_ACTION_TYPES from "./portfolio.action.types";
-import { selectTransactions } from "./portfolio.selectors";
+import { selectActivePortfolio, selectTransactions, selectUserPortfolios } from "./portfolio.selectors";
 import { selectUserToken } from "../user";
 import { portfolioAPI } from "../../api";
 
@@ -37,6 +44,46 @@ function* fetchUserPortfolios() {
     yield put(userPortfoliosFetchSuccess(portfolios));
   } catch (err) {
     yield put(userPortfoliosFetchFail("Failed to fetch all portfolios"));
+  }
+}
+
+function* addNewPortfolio({ payload: portfolio }) {
+  try {
+    const authToken = yield select(selectUserToken);
+    const prevPortfolios = yield select(selectUserPortfolios);
+    const newPortfolio = yield portfolioAPI.createPortfolio(authToken, portfolio);
+    const updatedPortfolios = [...prevPortfolios, newPortfolio];
+    yield put(addNewPortfolioSuccess(updatedPortfolios));
+  } catch (err) {
+    yield put(addNewPortfolioFail("Failed to create new portfolio"));
+  }
+}
+
+function* updatePortfolio({ payload: { portfolio, portfolioId } }) {
+  try {
+    const authToken = yield select(selectUserToken);
+    const portfolios = yield select(selectUserPortfolios);
+    const updatedPortfolio = yield portfolioAPI.updatePortfolio(authToken, portfolio, portfolioId);
+    const updatedPortfolios = portfolios.map((p) => (p?.id === portfolioId ? updatedPortfolio : p));
+    yield put(updatePortfolioSuccess(updatedPortfolios));
+  } catch (err) {
+    yield put(updatePortfolioFail("Failed to update portfolio"));
+  }
+}
+
+function* deletePortfolio({ payload: portfolioId }) {
+  try {
+    const authToken = yield select(selectUserToken);
+    const portfolios = yield select(selectUserPortfolios);
+    const activePortfolio = yield select(selectActivePortfolio);
+    yield portfolioAPI.deletePortfolio(authToken, portfolioId);
+    const updatedPortfolios = portfolios.filter((p) => p?.id !== portfolioId);
+    yield put(deletePortfolioSuccess(updatedPortfolios));
+    if (activePortfolio?.id === portfolioId && updatedPortfolios?.length > 0) {
+      yield put(changeActivePortfolio(updatedPortfolios[0]));
+    }
+  } catch (err) {
+    yield put(deletePortfolioFail("Failed to delete portfolio"));
   }
 }
 
@@ -116,6 +163,18 @@ function* watchUserPortfoliosFetchStart() {
   yield takeLatest(PORTFOLIO_ACTION_TYPES.START_USER_PORTFOLIOS_FETCH, fetchUserPortfolios);
 }
 
+function* watchAddNewPortfolio() {
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_ADDING_NEW_PORTFOLIO, addNewPortfolio);
+}
+
+function* watchUpdatePortfolio() {
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_UPDATING_PORTFOLIO, updatePortfolio);
+}
+
+function* watchDeletePortfolio() {
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_DELETING_PORTFOLIO, deletePortfolio);
+}
+
 export default function* portfolioSagas() {
   yield all([
     call(watchPortfolioFetchStart),
@@ -124,6 +183,9 @@ export default function* portfolioSagas() {
     call(watchUpdateTransactionByIdStart),
     call(watchTransactionsForAssetFetchStart),
     call(watchRemoveAllTransactionsForAssetStart),
-    call(watchUserPortfoliosFetchStart)
+    call(watchUserPortfoliosFetchStart),
+    call(watchAddNewPortfolio),
+    call(watchUpdatePortfolio),
+    call(watchDeletePortfolio)
   ]);
 }

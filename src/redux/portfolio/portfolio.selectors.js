@@ -6,7 +6,10 @@ export const selectCurrentPortfolioValue = createSelector([selectPortfolio], (po
 
 export const selectTransactions = createSelector([selectPortfolio], (portfolio) => portfolio.transactions);
 
-export const selectIsLoadingPortfolio = createSelector([selectPortfolio], (portfolio) => portfolio.isLoading);
+export const selectIsLoadingPortfolioOverview = createSelector(
+  [selectPortfolio],
+  (portfolio) => portfolio.isLoadingOverview
+);
 
 export const selectPortfolioHoldings = createSelector([selectPortfolio], (portfolio) => portfolio.holdings);
 
@@ -22,3 +25,10 @@ export const selectIsLoadingUserPortfolios = createSelector(
 );
 
 export const selectUserPortfolios = createSelector([selectPortfolio], (portfolio) => portfolio.userPortfolios);
+
+export const selectIsUpdatingUserPortfolios = createSelector(
+  [selectPortfolio],
+  (portfolio) => portfolio.isUpdatingUserPortfolios
+);
+
+export const selectActivePortfolio = createSelector([selectPortfolio], (portfolio) => portfolio.activePortfolio);

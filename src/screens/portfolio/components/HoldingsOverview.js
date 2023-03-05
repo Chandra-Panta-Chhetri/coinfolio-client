@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { DataTable, Text, useTheme } from "react-native-paper";
 import { connect } from "react-redux";
-import { selectIsLoadingPortfolio, selectPortfolioHoldings } from "../../../redux/portfolio";
+import { selectIsLoadingPortfolioOverview, selectPortfolioHoldings } from "../../../redux/portfolio";
 import { AntDesign } from "@expo/vector-icons";
 import { PressableView, IconImage, DropDown } from "../../../shared-components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
@@ -221,7 +221,7 @@ const HoldingsOverview = ({ holdings, isLoading }) => {
 
 const mapStateToProps = (state) => ({
   holdings: selectPortfolioHoldings(state),
-  isLoading: selectIsLoadingPortfolio(state)
+  isLoading: selectIsLoadingPortfolioOverview(state)
 });
 
 export default connect(mapStateToProps)(HoldingsOverview);

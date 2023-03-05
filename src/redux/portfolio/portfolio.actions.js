@@ -33,6 +33,56 @@ export const userPortfoliosFetchSuccess = (portfolios) => ({
   payload: portfolios
 });
 
+export const startAddingNewPortfolio = (portfolio) => ({
+  type: PORTFOLIO_ACTION_TYPES.START_ADDING_NEW_PORTFOLIO,
+  payload: portfolio
+});
+
+export const addNewPortfolioSuccess = (portfolios) => ({
+  type: PORTFOLIO_ACTION_TYPES.ADDING_NEW_PORTFOLIO_SUCCESS,
+  payload: portfolios
+});
+
+export const addNewPortfolioFail = (errorMsg) => ({
+  type: PORTFOLIO_ACTION_TYPES.ADDING_NEW_PORTFOLIO_FAIL,
+  payload: errorMsg
+});
+
+export const startUpdatingPortfolio = (portfolio, portfolioId) => ({
+  type: PORTFOLIO_ACTION_TYPES.START_UPDATING_PORTFOLIO,
+  payload: { portfolio, portfolioId }
+});
+
+export const updatePortfolioSuccess = (portfolios) => ({
+  type: PORTFOLIO_ACTION_TYPES.UPDATING_PORTFOLIO_SUCCESS,
+  payload: portfolios
+});
+
+export const updatePortfolioFail = (errorMsg) => ({
+  type: PORTFOLIO_ACTION_TYPES.UPDATING_PORTFOLIO_FAIL,
+  payload: errorMsg
+});
+
+export const startDeletingPortfolio = (portfolioId) => ({
+  type: PORTFOLIO_ACTION_TYPES.START_DELETING_PORTFOLIO,
+  payload: portfolioId
+});
+
+export const deletePortfolioSuccess = (portfolios) => ({
+  type: PORTFOLIO_ACTION_TYPES.DELETING_PORTFOLIO_SUCCESS,
+  payload: portfolios
+});
+
+export const deletePortfolioFail = (errorMsg) => ({
+  type: PORTFOLIO_ACTION_TYPES.DELETING_PORTFOLIO_FAIL,
+  payload: errorMsg
+});
+
+export const changeActivePortfolio = (portfolio) => ({
+  type: PORTFOLIO_ACTION_TYPES.CHANGE_ACTIVE_PORTFOLIO,
+  payload: portfolio
+});
+
 export const startAddingNewTransaction = (transaction, assetId) => ({
   type: PORTFOLIO_ACTION_TYPES.START_ADDING_NEW_TRANSACTION,
   payload: { transaction, assetId }

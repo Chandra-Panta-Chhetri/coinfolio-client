@@ -1,0 +1,167 @@
+import { DrawerContentScrollView } from "@react-navigation/drawer";
+import { Text, useTheme } from "react-native-paper";
+import { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import {
+  changeActivePortfolio,
+  selectActivePortfolio,
+  selectIsLoadingUserPortfolios,
+  selectIsUpdatingUserPortfolios,
+  selectUserPortfolios,
+  startAddingNewPortfolio,
+  startDeletingPortfolio,
+  startUpdatingPortfolio,
+  startUserPortfoliosFetch
+} from "../../../../redux/portfolio";
+import { Button, ConfirmationDialog } from "../../../../shared-components";
+import Typography from "../../../../styles/Typography";
+import { GLOBAL_CONSTANTS } from "../../../../constants";
+import { AntDesign } from "@expo/vector-icons";
+import { Keyboard } from "react-native";
+import ListOfPortfolios from "./ListOfPortfolios";
+import AddPortfolioModal from "./AddPortfolioModal";
+
+const EditPortfolioModal = AddPortfolioModal;
+
+const UserPortfolios = ({
+  portfolios,
+  isLoadingPortfolios,
+  fetchPortfolios,
+  activePortfolio,
+  isUpdatingPortfolios,
+  createPortfolio,
+  deletePortfolio,
+  updatePortfolio,
+  changeActivePortfolio
+}) => {
+  const { colors, dark: isDarkMode } = useTheme();
+  const [isAddPortfolioShown, setIsAddPortfolioShown] = useState(false);
+  const [isEditPortfolioShown, setIsEditPortfolioShown] = useState(false);
+  const [isDeletePortfolioShown, setIsDeletePortfolioShown] = useState(false);
+  const [portfolioToEditOrDelete, setPortfolioToEditOrDelete] = useState(undefined);
+
+  useEffect(() => {
+    fetchPortfolios();
+  }, []);
+
+  useEffect(() => {
+    if (portfolios?.length > 0 && activePortfolio === null) {
+      changeActivePortfolio(portfolios[0]);
+    }
+  }, [portfolios]);
+
+  const changeSelectedPortfolio = (selectedPortfolio) => {
+    console.log(selectedPortfolio);
+    changeActivePortfolio(selectedPortfolio);
+  };
+
+  const openAddPortfolioModal = () => setIsAddPortfolioShown(true);
+  const hideAddPortfolioModal = () => setIsAddPortfolioShown(false);
+  const openEditPortfolioModal = () => setIsEditPortfolioShown(true);
+  const hideEditPortfolioModal = () => setIsEditPortfolioShown(false);
+  const openDeletePortfolioModal = () => setIsDeletePortfolioShown(true);
+  const hideDeletePortfolioModal = () => setIsDeletePortfolioShown(false);
+
+  const onUpdateSubmit = (updatedPortfolio) => {
+    Keyboard.dismiss();
+    console.log(portfolioToEditOrDelete);
+    if (portfolioToEditOrDelete !== null) {
+      updatePortfolio(updatedPortfolio, portfolioToEditOrDelete?.id);
+    }
+    hideEditPortfolioModal();
+  };
+
+  const onDeleteConfirm = () => {
+    console.log(portfolioToEditOrDelete);
+    if (portfolioToEditOrDelete !== null) {
+      deletePortfolio(portfolioToEditOrDelete?.id);
+    }
+    hideDeletePortfolioModal();
+  };
+
+  const onAddSubmit = (portfolio) => {
+    Keyboard.dismiss();
+    createPortfolio(portfolio);
+    hideAddPortfolioModal();
+  };
+
+  const onEditPress = (portfolio) => {
+    console.log("EDIT ICON PRESSED", portfolio);
+    setPortfolioToEditOrDelete(portfolio);
+    openEditPortfolioModal();
+  };
+
+  const onDeletePress = (portfolio) => {
+    setPortfolioToEditOrDelete(portfolio);
+    openDeletePortfolioModal();
+  };
+
+  if (isLoadingPortfolios) {
+    return <Text>Loading...</Text>;
+  }
+
+  return (
+    <>
+      <DrawerContentScrollView>
+        <Text style={[Typography.title, { textAlign: "center", marginBottom: GLOBAL_CONSTANTS.LG_MARGIN }]}>
+          Select a Portfolio
+        </Text>
+        <ListOfPortfolios
+          portfolios={portfolios}
+          onEdit={onEditPress}
+          onDelete={onDeletePress}
+          onSelect={changeSelectedPortfolio}
+          selectedPortfolio={activePortfolio}
+        />
+      </DrawerContentScrollView>
+      <Button
+        mode="contained"
+        style={{
+          borderRadius: 0
+        }}
+        label={"Add New Portfolio"}
+        onPress={openAddPortfolioModal}
+      >
+        <AntDesign name="plus" size={GLOBAL_CONSTANTS.ICON_SIZE} />
+      </Button>
+      <AddPortfolioModal
+        isVisible={isAddPortfolioShown}
+        onDismiss={hideAddPortfolioModal}
+        onSubmit={onAddSubmit}
+        isLoading={isUpdatingPortfolios}
+      />
+      <EditPortfolioModal
+        isVisible={isEditPortfolioShown}
+        onDismiss={hideEditPortfolioModal}
+        onSubmit={onUpdateSubmit}
+        isLoading={isUpdatingPortfolios}
+        portfolioToEdit={portfolioToEditOrDelete}
+      />
+      <ConfirmationDialog
+        isVisible={isDeletePortfolioShown}
+        onConfirmCb={onDeleteConfirm}
+        confirmationTitle="Delete Portfolio"
+        confirmationText={`Are you sure you want to delete ${portfolioToEditOrDelete?.nickname}? All transactions will also be deleted.`}
+        hideDialog={hideDeletePortfolioModal}
+        isLoading={isUpdatingPortfolios}
+      />
+    </>
+  );
+};
+
+const mapStateToProps = (state) => ({
+  portfolios: selectUserPortfolios(state),
+  isLoadingPortfolios: selectIsLoadingUserPortfolios(state),
+  isUpdatingPortfolios: selectIsUpdatingUserPortfolios(state),
+  activePortfolio: selectActivePortfolio(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchPortfolios: () => dispatch(startUserPortfoliosFetch()),
+  createPortfolio: (portfolio) => dispatch(startAddingNewPortfolio(portfolio)),
+  updatePortfolio: (portfolio, portfolioId) => dispatch(startUpdatingPortfolio(portfolio, portfolioId)),
+  deletePortfolio: (portfolioId) => dispatch(startDeletingPortfolio(portfolioId)),
+  changeActivePortfolio: (portfolio) => dispatch(changeActivePortfolio(portfolio))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserPortfolios);
