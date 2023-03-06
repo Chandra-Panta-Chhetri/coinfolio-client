@@ -7,7 +7,7 @@ import { useTheme } from "react-native-paper";
 import { connect } from "react-redux";
 import { selectHomeScreen } from "../../../redux/preferences";
 import { HomeTabIcon, SettingsTabIcon, DiscoverTabIcon, MarketTabIcon, PortfolioTabIcon } from "./TabIcons";
-import PortfolioDrawer from "../PortfolioDrawer";
+import PortfolioNavigator from "../PortfolioNavigator";
 
 const BottomTab = Platform.OS === "android" ? createMaterialBottomTabNavigator() : createBottomTabNavigator();
 
@@ -49,8 +49,8 @@ const BottomTabNavigator = ({ homeScreen }) => {
         }}
       />
       <BottomTab.Screen
-        name="PortfolioDrawer"
-        component={PortfolioDrawer}
+        name="PortfolioHome"
+        component={PortfolioNavigator}
         options={{
           tabBarIcon: PortfolioTabIcon
         }}

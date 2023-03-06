@@ -1,10 +1,13 @@
 import { Text, useTheme } from "react-native-paper";
-import { TouchableNativeFeedback, Button } from "../../../../shared-components";
+import { TouchableNativeFeedback, Button, Skeleton } from "../../../../shared-components";
 import Typography from "../../../../styles/Typography";
 import { COLORS, GLOBAL_CONSTANTS } from "../../../../constants";
 import { View, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { Swipeable } from "react-native-gesture-handler";
+
+const NUM_SKELETONS = 3;
+const DUMMY_SKELETONS = Array(NUM_SKELETONS).fill("1");
 
 const EditDeleteActions = ({ portfolio, onEdit, onDelete }) => {
   const onEditPress = () => {
@@ -31,7 +34,7 @@ const EditDeleteActions = ({ portfolio, onEdit, onDelete }) => {
   );
 };
 
-function ListOfPortfolios({ portfolios, onEdit, onDelete, onSelect, selectedPortfolio }) {
+function ListOfPortfolios({ portfolios, onEdit, onDelete, onSelect, selectedPortfolio, isLoading }) {
   const { colors, dark: isDarkMode } = useTheme();
 
   const onPortfolioSelect = (selectedPortfolio) => {
@@ -40,13 +43,15 @@ function ListOfPortfolios({ portfolios, onEdit, onDelete, onSelect, selectedPort
     }
   };
 
+  if (isLoading) {
+    return <Skeleton count={NUM_SKELETONS} style={STYLES.skeleton} />;
+  }
+
   return portfolios.map((p) => (
     <Swipeable
       key={p.id}
       renderRightActions={() => <EditDeleteActions portfolio={p} onEdit={onEdit} onDelete={onDelete} />}
-      renderLeftActions={() => <EditDeleteActions portfolio={p} onEdit={onEdit} onDelete={onDelete} />}
       overshootRight={false}
-      overshootLeft={false}
       childrenContainerStyle={[
         STYLES.swipeableChildrenContainer,
         {
@@ -97,6 +102,10 @@ const STYLES = StyleSheet.create({
   },
   deletePortfolioButton: {
     borderRadius: 0
+  },
+  skeleton: {
+    height: 45,
+    marginBottom: GLOBAL_CONSTANTS.SM_MARGIN
   }
 });
 

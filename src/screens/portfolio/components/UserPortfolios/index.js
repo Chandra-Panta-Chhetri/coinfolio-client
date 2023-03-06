@@ -97,10 +97,6 @@ const UserPortfolios = ({
     openDeletePortfolioModal();
   };
 
-  if (isLoadingPortfolios) {
-    return <Text>Loading...</Text>;
-  }
-
   return (
     <>
       <DrawerContentScrollView>
@@ -111,6 +107,7 @@ const UserPortfolios = ({
           onDelete={onDeletePress}
           onSelect={changeSelectedPortfolio}
           selectedPortfolio={activePortfolio}
+          isLoading={isLoadingPortfolios}
         />
       </DrawerContentScrollView>
       <Button

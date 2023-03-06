@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { FlatList } from "react-native";
 import { connect } from "react-redux";
-import { selectCurrentUser } from "../../redux/user";
 import { createStructuredSelector } from "reselect";
 import Reanimated from "react-native-reanimated";
 import { GLOBAL_STYLES } from "../../styles";
@@ -11,7 +10,7 @@ import { selectActivePortfolio, startPortfolioOverviewFetch } from "../../redux/
 
 const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
-function PortfolioScreen({ navigation, isAuthenticated, fetchOverview, activePortfolio }) {
+function PortfolioScreen({ navigation, fetchOverview, activePortfolio }) {
   const navigateToAddTransactionScreen = () => navigation.navigate("AddTransaction");
 
   const { scrollHandler, Fab: AddTransactionFab } = useHiddenFABOnScroll({
@@ -25,10 +24,6 @@ function PortfolioScreen({ navigation, isAuthenticated, fetchOverview, activePor
       fetchOverview(activePortfolio?.id);
     }
   }, [activePortfolio]);
-
-  if (isAuthenticated) {
-    return <Unauthenticated navigation={navigation} />;
-  }
 
   return (
     <>
@@ -51,7 +46,6 @@ function PortfolioScreen({ navigation, isAuthenticated, fetchOverview, activePor
 }
 
 const mapStateToProps = createStructuredSelector({
-  isAuthenticated: selectCurrentUser,
   activePortfolio: selectActivePortfolio
 });
 
