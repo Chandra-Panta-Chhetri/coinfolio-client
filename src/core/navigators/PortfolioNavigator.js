@@ -10,7 +10,7 @@ const Stack = createStackNavigator();
 function PortfolioNavigator({ isAuthenticated }) {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {isAuthenticated ? (
+      {!isAuthenticated ? (
         <Stack.Screen name="PortfolioDrawer" component={PortfolioDrawer} />
       ) : (
         <Stack.Screen name="PortfolioUnauthenticated" component={PortfolioUnauthenticated} />
