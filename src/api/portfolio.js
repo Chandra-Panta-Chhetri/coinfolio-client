@@ -79,28 +79,28 @@ const mockedPortfolios = [
 ];
 
 export const getOverview = async (portfolioId, token) => {
-  // const res = await axios.get(`/portfolios/${portfolioId}/overview`, {
-  //   headers: {
-  //     "X-Auth-Token": token
-  //   }
-  // });
-  // return res.data;
-  return mockedOverview;
+  const res = await axios.get(`/portfolios/${portfolioId}/overview`, {
+    headers: {
+      "X-Auth-Token": token
+    }
+  });
+  return res.data;
+  // return mockedOverview;
 };
 
 export const getUserPortfolios = async (token) => {
-  // const res = await axios.get(`/portfolios`, {
-  //   headers: {
-  //     "X-Auth-Token": token
-  //   }
-  // });
-  // return res?.data?.data;
-  await new Promise((res, rej) => {
-    setTimeout(() => {
-      res(1);
-    }, 2000);
+  const res = await axios.get(`/portfolios`, {
+    headers: {
+      "X-Auth-Token": token
+    }
   });
-  return mockedPortfolios;
+  return res?.data?.data;
+  // await new Promise((res, rej) => {
+  //   setTimeout(() => {
+  //     res(1);
+  //   }, 2000);
+  // });
+  // return mockedPortfolios;
 };
 
 export const createPortfolio = async (token, newPortfolio) => {

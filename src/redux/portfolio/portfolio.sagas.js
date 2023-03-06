@@ -47,31 +47,37 @@ function* fetchUserPortfolios() {
   }
 }
 
-function* addNewPortfolio({ payload: portfolio }) {
+function* addNewPortfolio({ payload: { portfolio, onSuccess } }) {
   try {
     const authToken = yield select(selectUserToken);
     const prevPortfolios = yield select(selectUserPortfolios);
     const newPortfolio = yield portfolioAPI.createPortfolio(authToken, portfolio);
     const updatedPortfolios = [...prevPortfolios, newPortfolio];
     yield put(addNewPortfolioSuccess(updatedPortfolios));
+    if (onSuccess !== undefined) {
+      yield onSuccess();
+    }
   } catch (err) {
     yield put(addNewPortfolioFail("Failed to create new portfolio"));
   }
 }
 
-function* updatePortfolio({ payload: { portfolio, portfolioId } }) {
+function* updatePortfolio({ payload: { portfolio, portfolioId, onSuccess } }) {
   try {
     const authToken = yield select(selectUserToken);
     const portfolios = yield select(selectUserPortfolios);
     const updatedPortfolio = yield portfolioAPI.updatePortfolio(authToken, portfolio, portfolioId);
     const updatedPortfolios = portfolios.map((p) => (p?.id === portfolioId ? updatedPortfolio : p));
     yield put(updatePortfolioSuccess(updatedPortfolios));
+    if (onSuccess !== undefined) {
+      yield onSuccess();
+    }
   } catch (err) {
     yield put(updatePortfolioFail("Failed to update portfolio"));
   }
 }
 
-function* deletePortfolio({ payload: portfolioId }) {
+function* deletePortfolio({ payload: { portfolioId, onSuccess } }) {
   try {
     const authToken = yield select(selectUserToken);
     const portfolios = yield select(selectUserPortfolios);
@@ -81,6 +87,9 @@ function* deletePortfolio({ payload: portfolioId }) {
     yield put(deletePortfolioSuccess(updatedPortfolios));
     if (activePortfolio?.id === portfolioId) {
       yield put(changeActivePortfolio(updatedPortfolios?.length > 0 ? updatedPortfolios[0] : null));
+    }
+    if (onSuccess !== undefined) {
+      yield onSuccess();
     }
   } catch (err) {
     yield put(deletePortfolioFail("Failed to delete portfolio"));

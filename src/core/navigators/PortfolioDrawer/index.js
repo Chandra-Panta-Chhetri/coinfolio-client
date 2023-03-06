@@ -6,7 +6,7 @@ import Header from "./Header";
 const Drawer = createDrawerNavigator();
 const PortfolioDrawer = () => {
   return (
-    <Drawer.Navigator drawerContent={() => <UserPortfolios />} screenOptions={{ swipeEnabled: false }}>
+    <Drawer.Navigator drawerContent={(props) => <UserPortfolios {...props} />} screenOptions={{ swipeEnabled: false }}>
       <Drawer.Screen
         name="Portfolio"
         component={PortfolioScreen}

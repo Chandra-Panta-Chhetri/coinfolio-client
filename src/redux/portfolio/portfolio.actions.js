@@ -33,9 +33,9 @@ export const userPortfoliosFetchSuccess = (portfolios) => ({
   payload: portfolios
 });
 
-export const startAddingNewPortfolio = (portfolio) => ({
+export const startAddingNewPortfolio = (portfolio, onSuccess) => ({
   type: PORTFOLIO_ACTION_TYPES.START_ADDING_NEW_PORTFOLIO,
-  payload: portfolio
+  payload: { portfolio, onSuccess }
 });
 
 export const addNewPortfolioSuccess = (portfolios) => ({
@@ -48,9 +48,9 @@ export const addNewPortfolioFail = (errorMsg) => ({
   payload: errorMsg
 });
 
-export const startUpdatingPortfolio = (portfolio, portfolioId) => ({
+export const startUpdatingPortfolio = (portfolio, portfolioId, onSuccess) => ({
   type: PORTFOLIO_ACTION_TYPES.START_UPDATING_PORTFOLIO,
-  payload: { portfolio, portfolioId }
+  payload: { portfolio, portfolioId, onSuccess }
 });
 
 export const updatePortfolioSuccess = (portfolios) => ({
@@ -63,9 +63,9 @@ export const updatePortfolioFail = (errorMsg) => ({
   payload: errorMsg
 });
 
-export const startDeletingPortfolio = (portfolioId) => ({
+export const startDeletingPortfolio = (portfolioId, onSuccess) => ({
   type: PORTFOLIO_ACTION_TYPES.START_DELETING_PORTFOLIO,
-  payload: portfolioId
+  payload: { portfolioId, onSuccess }
 });
 
 export const deletePortfolioSuccess = (portfolios) => ({

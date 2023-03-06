@@ -33,7 +33,8 @@ const UserPortfolios = ({
   createPortfolio,
   deletePortfolio,
   updatePortfolio,
-  changeActivePortfolio
+  changeActivePortfolio,
+  navigation
 }) => {
   const { colors, dark: isDarkMode } = useTheme();
   const [isAddPortfolioShown, setIsAddPortfolioShown] = useState(false);
@@ -52,8 +53,10 @@ const UserPortfolios = ({
   }, [portfolios]);
 
   const changeSelectedPortfolio = (selectedPortfolio) => {
-    console.log(selectedPortfolio);
-    changeActivePortfolio(selectedPortfolio);
+    if (activePortfolio?.id !== selectedPortfolio?.id) {
+      changeActivePortfolio(selectedPortfolio);
+    }
+    navigation?.closeDrawer();
   };
 
   const openAddPortfolioModal = () => setIsAddPortfolioShown(true);
@@ -67,23 +70,20 @@ const UserPortfolios = ({
     Keyboard.dismiss();
     console.log(portfolioToEditOrDelete);
     if (portfolioToEditOrDelete !== null) {
-      updatePortfolio(updatedPortfolio, portfolioToEditOrDelete?.id);
+      updatePortfolio(updatedPortfolio, portfolioToEditOrDelete?.id, hideEditPortfolioModal);
     }
-    hideEditPortfolioModal();
   };
 
   const onDeleteConfirm = () => {
     console.log(portfolioToEditOrDelete);
     if (portfolioToEditOrDelete !== null) {
-      deletePortfolio(portfolioToEditOrDelete?.id);
+      deletePortfolio(portfolioToEditOrDelete?.id, hideDeletePortfolioModal);
     }
-    hideDeletePortfolioModal();
   };
 
   const onAddSubmit = (portfolio) => {
     Keyboard.dismiss();
-    createPortfolio(portfolio);
-    hideAddPortfolioModal();
+    createPortfolio(portfolio, hideAddPortfolioModal);
   };
 
   const onEditPress = (portfolio) => {
@@ -163,9 +163,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   fetchPortfolios: () => dispatch(startUserPortfoliosFetch()),
-  createPortfolio: (portfolio) => dispatch(startAddingNewPortfolio(portfolio)),
-  updatePortfolio: (portfolio, portfolioId) => dispatch(startUpdatingPortfolio(portfolio, portfolioId)),
-  deletePortfolio: (portfolioId) => dispatch(startDeletingPortfolio(portfolioId)),
+  createPortfolio: (portfolio, onSuccess) => dispatch(startAddingNewPortfolio(portfolio, onSuccess)),
+  updatePortfolio: (portfolio, portfolioId, onSuccess) =>
+    dispatch(startUpdatingPortfolio(portfolio, portfolioId, onSuccess)),
+  deletePortfolio: (portfolioId, onSuccess) => dispatch(startDeletingPortfolio(portfolioId, onSuccess)),
   changeActivePortfolio: (portfolio) => dispatch(changeActivePortfolio(portfolio))
 });
 
