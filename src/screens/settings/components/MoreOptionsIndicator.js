@@ -3,18 +3,17 @@ import { StyleSheet, View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
 import { TYPOGRAPHY } from "../../../styles";
+import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const MoreOptionsIndicator = ({ selectedOption }) => {
   const { colors } = useTheme();
 
   return (
     <View style={STYLES.container}>
-      {selectedOption ? (
-        <Text style={STYLES.label}>{selectedOption}</Text>
-      ) : null}
+      {selectedOption ? <Text style={STYLES.label}>{selectedOption}</Text> : null}
       <MaterialIcons
         name="keyboard-arrow-right"
-        size={25}
+        size={GLOBAL_CONSTANTS.ICON_SIZE}
         color={colors.primary}
         style={TYPOGRAPHY.textAlignCenter}
       />

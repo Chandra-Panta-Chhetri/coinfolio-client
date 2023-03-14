@@ -83,6 +83,21 @@ export const changeActivePortfolio = (portfolio) => ({
   payload: portfolio
 });
 
+export const startTransactionCoinsFetch = (query) => ({
+  type: PORTFOLIO_ACTION_TYPES.START_TRANSACTION_COINS_FETCH,
+  payload: query
+});
+
+export const transactionCoinsFail = (errorMsg) => ({
+  type: PORTFOLIO_ACTION_TYPES.TRANSACTION_COINS_FETCH_FAIL,
+  payload: errorMsg
+});
+
+export const transactionCoinsSuccess = (coins) => ({
+  type: PORTFOLIO_ACTION_TYPES.TRANSACTION_COINS_FETCH_SUCCESS,
+  payload: coins
+});
+
 export const startAddingNewTransaction = (transaction, assetId) => ({
   type: PORTFOLIO_ACTION_TYPES.START_ADDING_NEW_TRANSACTION,
   payload: { transaction, assetId }

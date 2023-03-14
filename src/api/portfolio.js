@@ -78,29 +78,56 @@ const mockedPortfolios = [
   }
 ];
 
+const mockedTransactionCoins = [
+  {
+    id: "bitcoin",
+    symbol: "BTC",
+    name: "Bitcoin",
+    image: "https://assets.coincap.io/assets/icons/btc@2x.png"
+  },
+  {
+    id: "ethereum",
+    symbol: "ETH",
+    name: "Ethereum",
+    image: "https://assets.coincap.io/assets/icons/eth@2x.png"
+  },
+  {
+    id: "solana",
+    symbol: "SOL",
+    name: "Solana",
+    image: "https://assets.coincap.io/assets/icons/sol@2x.png"
+  },
+  {
+    id: "chainlink",
+    symbol: "LINK",
+    name: "Chainlink",
+    image: "https://assets.coincap.io/assets/icons/link@2x.png"
+  }
+];
+
 export const getOverview = async (portfolioId, token) => {
-  const res = await axios.get(`/portfolios/${portfolioId}/overview`, {
-    headers: {
-      "X-Auth-Token": token
-    }
-  });
-  return res.data;
-  // return mockedOverview;
+  // const res = await axios.get(`/portfolios/${portfolioId}/overview`, {
+  //   headers: {
+  //     "X-Auth-Token": token
+  //   }
+  // });
+  // return res.data;
+  return mockedOverview;
 };
 
 export const getUserPortfolios = async (token) => {
-  const res = await axios.get(`/portfolios`, {
-    headers: {
-      "X-Auth-Token": token
-    }
-  });
-  return res?.data?.data;
-  // await new Promise((res, rej) => {
-  //   setTimeout(() => {
-  //     res(1);
-  //   }, 2000);
+  // const res = await axios.get(`/portfolios`, {
+  //   headers: {
+  //     "X-Auth-Token": token
+  //   }
   // });
-  // return mockedPortfolios;
+  // return res?.data?.data;
+  await new Promise((res, rej) => {
+    setTimeout(() => {
+      res(1);
+    }, 2000);
+  });
+  return mockedPortfolios;
 };
 
 export const createPortfolio = async (token, newPortfolio) => {
@@ -117,7 +144,6 @@ export const createPortfolio = async (token, newPortfolio) => {
 };
 
 export const updatePortfolio = async (token, portfolio, portfolioId) => {
-  console.log(portfolio);
   const res = await axios.patch(`/portfolios/${portfolioId}`, portfolio, {
     headers: {
       "X-Auth-Token": token
@@ -137,4 +163,20 @@ export const deletePortfolio = async (token, portfolioId) => {
     }
   });
   return res?.data;
+};
+
+export const getTransactionCoins = async (token, query) => {
+  const res = await axios.get(`/portfolios/supported-coins`, {
+    headers: {
+      "X-Auth-Token": token
+    },
+    params: query
+  });
+  return res?.data?.data;
+  // await new Promise((res, rej) => {
+  //   setTimeout(() => {
+  //     res(1);
+  //   }, 2000);
+  // });
+  // return mockedTransactionCoins;
 };

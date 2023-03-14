@@ -2,7 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { connect } from "react-redux";
 import { selectIsUserAuthenticated } from "../../redux/user";
-import { PortfolioUnauthenticated } from "../../screens";
+import { PortfolioUnauthenticatedScreen } from "../../screens";
 import PortfolioDrawer from "./PortfolioDrawer";
 
 const Stack = createStackNavigator();
@@ -13,7 +13,7 @@ function PortfolioNavigator({ isAuthenticated }) {
       {!isAuthenticated ? (
         <Stack.Screen name="PortfolioDrawer" component={PortfolioDrawer} />
       ) : (
-        <Stack.Screen name="PortfolioUnauthenticated" component={PortfolioUnauthenticated} />
+        <Stack.Screen name="PortfolioUnauthenticatedScreen" component={PortfolioUnauthenticatedScreen} />
       )}
     </Stack.Navigator>
   );

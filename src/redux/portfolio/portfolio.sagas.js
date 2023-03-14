@@ -20,7 +20,9 @@ import {
   updatePortfolioSuccess,
   deletePortfolioSuccess,
   deletePortfolioFail,
-  changeActivePortfolio
+  changeActivePortfolio,
+  transactionCoinsFail,
+  transactionCoinsSuccess
 } from "./portfolio.actions";
 import PORTFOLIO_ACTION_TYPES from "./portfolio.action.types";
 import { selectActivePortfolio, selectTransactions, selectUserPortfolios } from "./portfolio.selectors";
@@ -93,6 +95,16 @@ function* deletePortfolio({ payload: { portfolioId, onSuccess } }) {
     }
   } catch (err) {
     yield put(deletePortfolioFail("Failed to delete portfolio"));
+  }
+}
+
+function* fetchTransactionCoins({ payload: query }) {
+  try {
+    const authToken = yield select(selectUserToken);
+    const coins = yield portfolioAPI.getTransactionCoins(authToken, query);
+    yield put(transactionCoinsSuccess(coins));
+  } catch (err) {
+    yield put(transactionCoinsFail("Failed to load transaction coins"));
   }
 }
 
@@ -184,6 +196,10 @@ function* watchDeletePortfolio() {
   yield takeLatest(PORTFOLIO_ACTION_TYPES.START_DELETING_PORTFOLIO, deletePortfolio);
 }
 
+function* watchTransactionCoinsFetch() {
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_TRANSACTION_COINS_FETCH, fetchTransactionCoins);
+}
+
 export default function* portfolioSagas() {
   yield all([
     call(watchPortfolioFetchStart),
@@ -195,6 +211,7 @@ export default function* portfolioSagas() {
     call(watchUserPortfoliosFetchStart),
     call(watchAddNewPortfolio),
     call(watchUpdatePortfolio),
-    call(watchDeletePortfolio)
+    call(watchDeletePortfolio),
+    call(watchTransactionCoinsFetch)
   ]);
 }

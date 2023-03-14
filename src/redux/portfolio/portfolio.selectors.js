@@ -32,3 +32,10 @@ export const selectIsUpdatingUserPortfolios = createSelector(
 );
 
 export const selectActivePortfolio = createSelector([selectPortfolio], (portfolio) => portfolio.activePortfolio);
+
+export const selectIsLoadingTransactionCoins = createSelector(
+  [selectPortfolio],
+  (portfolio) => portfolio.isLoadingTransactionCoins
+);
+
+export const selectTransactionCoins = createSelector([selectPortfolio], (portfolio) => portfolio.transactionCoins);

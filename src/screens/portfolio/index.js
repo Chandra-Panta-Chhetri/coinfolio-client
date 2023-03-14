@@ -15,11 +15,11 @@ const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
 function PortfolioScreen({ navigation, fetchOverview, activePortfolio }) {
   const { colors } = useTheme();
-  const navigateToAddTransactionScreen = () => navigation.navigate("AddTransaction");
+  const goToSelectTransactionCoin = () => navigation.navigate("SelectTransactionCoin");
 
   const { scrollHandler, Fab: AddTransactionFab } = useHiddenFABOnScroll({
     icon: "plus",
-    onFABClick: navigateToAddTransactionScreen,
+    onFABClick: goToSelectTransactionCoin,
     accessibilityLabel: "Add Transaction"
   });
 
@@ -35,7 +35,7 @@ function PortfolioScreen({ navigation, fetchOverview, activePortfolio }) {
     </View>
   ) : (
     <>
-      <AnimatedFlatList
+      {/* <AnimatedFlatList
         contentContainerStyle={GLOBAL_STYLES.screenContainer}
         showsVerticalScrollIndicator={false}
         onScroll={scrollHandler}
@@ -47,7 +47,7 @@ function PortfolioScreen({ navigation, fetchOverview, activePortfolio }) {
           </>
         }
         listKey="PortfolioScreenList"
-      />
+      /> */}
       <AddTransactionFab />
     </>
   );

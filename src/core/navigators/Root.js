@@ -18,7 +18,8 @@ import {
   EventDetailScreen,
   SearchCryptoScreen,
   AssetDetailScreen,
-  AssetDetailEventFiltersScreen
+  AssetDetailEventFiltersScreen,
+  SelectTransactionCoinScreen
 } from "../../screens";
 import { CloseIconButton } from "../../shared-components";
 import { TYPOGRAPHY } from "../../styles";
@@ -33,7 +34,7 @@ const RootNavigator = ({ isAuthenticated }) => {
   return (
     <Stack.Navigator screenOptions={{ headerTitleStyle: TYPOGRAPHY.title, headerTitleAlign: "center" }}>
       <Stack.Screen name="BottomTabsHome" component={BottomTabNavigator} options={{ headerShown: false }} />
-      {isAuthenticated ? (
+      {!isAuthenticated ? (
         <>
           <Stack.Screen
             name="ChangePassword"
@@ -47,6 +48,13 @@ const RootNavigator = ({ isAuthenticated }) => {
             component={ChangeEmailOrNameScreen}
             options={{
               headerTitle: "Change Email or Name"
+            }}
+          />
+          <Stack.Screen
+            name="SelectTransactionCoin"
+            component={SelectTransactionCoinScreen}
+            options={{
+              headerTitle: "Select a Coin"
             }}
           />
           <Stack.Screen

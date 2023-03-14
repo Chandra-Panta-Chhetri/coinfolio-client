@@ -22,4 +22,5 @@ export { default as TermsAndPrivacyScreen } from "./terms-and-privacy";
 export { default as SearchCryptoScreen } from "./search-crypto";
 export { default as AssetDetailScreen } from "./asset-detail";
 export { default as AssetDetailEventFiltersScreen } from "./asset-detail-event-filters";
-export { default as PortfolioUnauthenticated } from "./portfolio-unauthenticated";
+export { default as PortfolioUnauthenticatedScreen } from "./portfolio-unauthenticated";
+export { default as SelectTransactionCoinScreen } from "./select-transaction-coin";

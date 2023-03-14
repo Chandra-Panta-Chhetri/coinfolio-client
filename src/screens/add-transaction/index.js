@@ -1,7 +1,11 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 
-function AddTransactionScreen() {
+function AddTransactionScreen({ route, navigation }) {
+  const { selectedCoin } = route.params;
+
+  console.log(selectedCoin, "ADD TRANSACTION SCREEN");
+
   return (
     <View style={STYLES.container}>
       <Text style={STYLES.text}>Add Transaction Screen</Text>

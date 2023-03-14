@@ -11,7 +11,9 @@ const INITIAL_STATE = {
   userPortfolios: [],
   isLoadingUserPortfolios: true,
   isUpdatingUserPortfolios: false,
-  activePortfolio: null
+  activePortfolio: null,
+  isLoadingTransactionCoins: true,
+  transactionCoins: []
 };
 
 const userReducer = (prevState = INITIAL_STATE, action) => {
@@ -63,6 +65,22 @@ const userReducer = (prevState = INITIAL_STATE, action) => {
       return {
         ...prevState,
         activePortfolio: action.payload
+      };
+    case PORTFOLIO_ACTION_TYPES.START_TRANSACTION_COINS_FETCH:
+      return {
+        ...prevState,
+        isLoadingTransactionCoins: true
+      };
+    case PORTFOLIO_ACTION_TYPES.TRANSACTION_COINS_FETCH_FAIL:
+      return {
+        ...prevState,
+        isLoadingTransactionCoins: false
+      };
+    case PORTFOLIO_ACTION_TYPES.TRANSACTION_COINS_FETCH_SUCCESS:
+      return {
+        ...prevState,
+        isLoadingTransactionCoins: false,
+        transactionCoins: action.payload
       };
     // case PORTFOLIO_ACTION_TYPES.START_TRANSACTIONS_FOR_ASSET_FETCH:
     //   return {
