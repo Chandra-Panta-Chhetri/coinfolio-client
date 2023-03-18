@@ -27,10 +27,11 @@ import { connect } from "react-redux";
 import { selectIsUserAuthenticated } from "../../redux/user";
 import { GLOBAL_CONSTANTS } from "../../constants";
 import { AssetDetailFavorite, AssetDetailHeaderTitle } from "../../screens/asset-detail/components";
+import { selectIsAddingTransaction } from "../../redux/portfolio";
 
 const Stack = createStackNavigator();
 
-const RootNavigator = ({ isAuthenticated }) => {
+const RootNavigator = ({ isAuthenticated, isAddingTransaction }) => {
   return (
     <Stack.Navigator screenOptions={{ headerTitleStyle: TYPOGRAPHY.title, headerTitleAlign: "center" }}>
       <Stack.Screen name="BottomTabsHome" component={BottomTabNavigator} options={{ headerShown: false }} />
@@ -61,7 +62,9 @@ const RootNavigator = ({ isAuthenticated }) => {
             name="AddTransaction"
             component={AddTransactionScreen}
             options={{
-              headerTitle: "Add Transaction"
+              headerTitle: "Add Transaction",
+              gestureEnabled: !isAddingTransaction,
+              headerLeft: isAddingTransaction ? () => undefined : undefined
             }}
           />
         </>
@@ -142,7 +145,8 @@ const RootNavigator = ({ isAuthenticated }) => {
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: selectIsUserAuthenticated(state)
+  isAuthenticated: selectIsUserAuthenticated(state),
+  isAddingTransaction: selectIsAddingTransaction(state)
 });
 
 export default connect(mapStateToProps)(RootNavigator);

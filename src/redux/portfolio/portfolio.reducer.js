@@ -83,12 +83,6 @@ const userReducer = (prevState = INITIAL_STATE, action) => {
         isLoadingTransactionCoins: false,
         transactionCoins: action.payload
       };
-    // case PORTFOLIO_ACTION_TYPES.START_TRANSACTIONS_FOR_ASSET_FETCH:
-    //   return {
-    //     ...prevState,
-    //     isLoadingOverview: true,
-    //     transactions: []
-    //   };
     case PORTFOLIO_ACTION_TYPES.PORTFOLIO_OVERVIEW_FETCH_FAIL:
       return {
         ...prevState,
@@ -110,37 +104,12 @@ const userReducer = (prevState = INITIAL_STATE, action) => {
         ...prevState,
         isAddingTransaction: false
       };
-    case PORTFOLIO_ACTION_TYPES.ADDING_NEW_PORTFOLIO_SUCCESS:
+    case PORTFOLIO_ACTION_TYPES.ADDING_NEW_TRANSACTION_SUCCESS:
       return {
         ...prevState,
         isAddingTransaction: false,
         transactions: action.payload
       };
-    // case PORTFOLIO_ACTION_TYPES.ADDING_NEW_TRANSACTION_SUCCESS:
-    //   return {
-    //     ...prevState,
-    //     transactions: [...prevState.transactions, action.payload.newTransaction],
-    //     numLoadingReq: prevState.numLoadingReq - 1
-    //   };
-    // case PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_BY_ID_SUCCESS:
-    // case PORTFOLIO_ACTION_TYPES.DELETE_TRANSACTION_BY_ID_SUCCESS:
-    //   return {
-    //     ...prevState,
-    //     numLoadingReq: prevState.numLoadingReq - 1,
-    //     transactions: action.payload.updatedTransactions
-    //   };
-    // case PORTFOLIO_ACTION_TYPES.REMOVE_ALL_TRANSACTIONS_FOR_ASSET_SUCCESS:
-    //   return {
-    //     ...prevState,
-    //     transactions: [],
-    //     numLoadingReq: prevState.numLoadingReq - 1
-    //   };
-    // case PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTIONS_FOR_ASSET_SUCCESS:
-    //   return {
-    //     ...prevState,
-    //     transactions: action.payload.transactions,
-    //     numLoadingReq: prevState.numLoadingReq - 1
-    //   };
     default:
       return prevState;
   }

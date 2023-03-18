@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { StyleSheet, View, Text, KeyboardAvoidingView, ScrollView } from "react-native";
 import { connect } from "react-redux";
@@ -9,6 +9,8 @@ import { TextInput, DatePicker, DropDown, Button } from "../../shared-components
 import { GLOBAL_STYLES } from "../../styles";
 import { TextInput as RNPTextInput } from "react-native-paper";
 import { AntDesign } from "@expo/vector-icons";
+import { BackHandler } from "react-native";
+import { useHandleNativeBack } from "../../hooks";
 
 const TRANSACTION_TYPES = [
   { label: "Buy", value: "buy" },
@@ -34,6 +36,8 @@ function AddTransactionScreen({ route, navigation, isAddingTransaction, addTrans
   });
   const quantityInputRef = useRef();
   const notesInputRef = useRef();
+  const backAction = useCallback(() => isAddingTransaction, [isAddingTransaction]);
+  useHandleNativeBack(backAction);
 
   const goBack = () => {
     if (startingScreen === "SelectTransactionCoin") {
@@ -44,15 +48,17 @@ function AddTransactionScreen({ route, navigation, isAddingTransaction, addTrans
   };
 
   const onSubmit = (data) => {
-    console.log(data, "SUBMITTED FORM");
     if (selectedCoin !== undefined || selectedCoin !== null) {
+      delete data["date"];
+      if (data["notes"] === "") {
+        delete data["notes"];
+      }
       const transactionToAdd = {
         ...data,
         coinId: selectedCoin?.id,
         type: TRANSACTION_TYPES[data?.type]?.value
       };
-      console.log(transactionToAdd);
-      // addTransaction(transactionToAdd, goBack);
+      addTransaction(transactionToAdd, goBack);
     }
   };
 
@@ -123,9 +129,6 @@ function AddTransactionScreen({ route, navigation, isAddingTransaction, addTrans
         />
         <Controller
           control={control}
-          rules={{
-            required: true
-          }}
           render={({ field: { onChange, value } }) => (
             <DatePicker
               isRangePicker={false}

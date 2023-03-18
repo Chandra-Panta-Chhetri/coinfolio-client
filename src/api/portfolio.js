@@ -116,29 +116,28 @@ const mockedNewTransaction = {
 };
 
 export const getOverview = async (portfolioId, token) => {
-  console.log("PORTFOLIO OVERVIEW API", portfolioId);
-  // const res = await axios.get(`/portfolios/${portfolioId}/overview`, {
-  //   headers: {
-  //     "X-Auth-Token": token
-  //   }
-  // });
-  // return res.data;
-  return mockedOverview;
+  const res = await axios.get(`/portfolios/${portfolioId}/overview`, {
+    headers: {
+      "X-Auth-Token": token
+    }
+  });
+  return res.data;
+  // return mockedOverview;
 };
 
 export const getUserPortfolios = async (token) => {
-  // const res = await axios.get(`/portfolios`, {
-  //   headers: {
-  //     "X-Auth-Token": token
-  //   }
-  // });
-  // return res?.data?.data;
-  await new Promise((res, rej) => {
-    setTimeout(() => {
-      res(1);
-    }, 2000);
+  const res = await axios.get(`/portfolios`, {
+    headers: {
+      "X-Auth-Token": token
+    }
   });
-  return mockedPortfolios;
+  return res?.data?.data;
+  // await new Promise((res, rej) => {
+  //   setTimeout(() => {
+  //     res(1);
+  //   }, 2000);
+  // });
+  // return mockedPortfolios;
 };
 
 export const createPortfolio = async (token, newPortfolio) => {
@@ -193,15 +192,15 @@ export const getTransactionCoins = async (token, query) => {
 };
 
 export const addTransaction = async (token, transaction, portfolioId) => {
-  console.log("ADD TRANSACTION API", transaction, portfolioId);
-  if (portfolioId != null) {
-    // const res = await axios.post(`/portfolios/${portfolioId}/transactions`, transaction, {
-    //   headers: {
-    //     "X-Auth-Token": token
-    //   }
-    // });
-    // return res?.data;
+  if (portfolioId !== null || portfolioId !== undefined) {
+    console.log(transaction, portfolioId, "ADD TRANSACTION");
+    const res = await axios.post(`/portfolios/${portfolioId}/transactions`, transaction, {
+      headers: {
+        "X-Auth-Token": token
+      }
+    });
+    return res?.data;
   }
-
-  return mockedNewTransaction;
+  return null;
+  // return mockedNewTransaction;
 };

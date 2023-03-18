@@ -43,15 +43,7 @@ function* watchErrorNotifications() {
 }
 
 function* watchSuccessNotifications() {
-  yield takeEvery(
-    [
-      PORTFOLIO_ACTION_TYPES.ADDING_NEW_TRANSACTION_SUCCESS,
-      PORTFOLIO_ACTION_TYPES.DELETE_TRANSACTION_BY_ID_SUCCESS,
-      PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_BY_ID_SUCCESS,
-      PORTFOLIO_ACTION_TYPES.REMOVE_ALL_TRANSACTIONS_FOR_ASSET_SUCCESS
-    ],
-    showSuccessNotification
-  );
+  yield takeEvery([], showSuccessNotification);
 }
 
 export default function* notificationSagas() {
