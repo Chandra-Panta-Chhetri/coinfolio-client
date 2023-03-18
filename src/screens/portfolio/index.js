@@ -15,7 +15,15 @@ const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
 function PortfolioScreen({ navigation, fetchOverview, activePortfolio }) {
   const { colors } = useTheme();
-  const goToSelectTransactionCoin = () => navigation.navigate("SelectTransactionCoin");
+  const goToSelectTransactionCoin = () =>
+    navigation.navigate("AddTransaction", {
+      selectedCoin: {
+        id: "bitcoin",
+        symbol: "BTC",
+        name: "Bitcoin",
+        image: "https://assets.coincap.io/assets/icons/btc@2x.png"
+      }
+    });
 
   const { scrollHandler, Fab: AddTransactionFab } = useHiddenFABOnScroll({
     icon: "plus",

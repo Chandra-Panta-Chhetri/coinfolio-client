@@ -10,7 +10,8 @@ function SelectableCoin({ coin }) {
   const { colors } = useTheme();
   const navigation = useNavigation();
 
-  const onPress = () => navigation.navigate("AddTransaction", { selectedCoin: coin });
+  const onPress = () =>
+    navigation.navigate("AddTransaction", { selectedCoin: coin, startingScreen: "SelectTransactionCoin" });
 
   return (
     <ShortCoinDetails coin={coin} onPress={onPress}>

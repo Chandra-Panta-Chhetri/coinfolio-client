@@ -98,24 +98,19 @@ export const transactionCoinsSuccess = (coins) => ({
   payload: coins
 });
 
-export const startAddingNewTransaction = (transaction, assetId) => ({
+export const startAddingNewTransaction = (transaction, onSuccess) => ({
   type: PORTFOLIO_ACTION_TYPES.START_ADDING_NEW_TRANSACTION,
-  payload: { transaction, assetId }
+  payload: { transaction, onSuccess }
 });
 
 export const addNewTransactionFail = (errorMsg) => ({
   type: PORTFOLIO_ACTION_TYPES.ADDING_NEW_TRANSACTION_FAIL,
-  payload: {
-    errorMsg
-  }
+  payload: errorMsg
 });
 
-export const addNewTransactionSuccess = (newTransaction, successMsg) => ({
+export const addNewTransactionSuccess = (transactions) => ({
   type: PORTFOLIO_ACTION_TYPES.ADDING_NEW_TRANSACTION_SUCCESS,
-  payload: {
-    newTransaction,
-    successMsg
-  }
+  payload: transactions
 });
 
 export const startDeletingTransactionById = (transactionId, index) => ({

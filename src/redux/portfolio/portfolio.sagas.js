@@ -22,7 +22,8 @@ import {
   deletePortfolioFail,
   changeActivePortfolio,
   transactionCoinsFail,
-  transactionCoinsSuccess
+  transactionCoinsSuccess,
+  startPortfolioOverviewFetch
 } from "./portfolio.actions";
 import PORTFOLIO_ACTION_TYPES from "./portfolio.action.types";
 import { selectActivePortfolio, selectTransactions, selectUserPortfolios } from "./portfolio.selectors";
@@ -108,10 +109,18 @@ function* fetchTransactionCoins({ payload: query }) {
   }
 }
 
-function* addNewTransaction({ payload: { transaction, assetId } }) {
+function* addNewTransaction({ payload: { transaction, onSuccess } }) {
   try {
-    const newTransaction = yield {};
-    yield put(addNewTransactionSuccess(newTransaction, `New transaction added!`));
+    const authToken = yield select(selectUserToken);
+    const activePortfolio = yield select(selectActivePortfolio);
+    const oldTransactions = yield select(selectTransactions);
+    const newTransaction = yield portfolioAPI.addTransaction(authToken, transaction, activePortfolio?.id);
+    const updatedTransactions = yield [...oldTransactions, newTransaction];
+    yield put(addNewTransactionSuccess(updatedTransactions));
+    yield put(startPortfolioOverviewFetch(activePortfolio?.id));
+    if (onSuccess !== undefined) {
+      yield onSuccess();
+    }
   } catch (err) {
     yield put(addNewTransactionFail("There was a problem adding a new transaction"));
   }
@@ -160,7 +169,7 @@ function* watchPortfolioFetchStart() {
   yield takeLatest(PORTFOLIO_ACTION_TYPES.START_PORTFOLIO_OVERVIEW_FETCH, fetchPortfolio);
 }
 
-function* watchAddingNewTransactionStart() {
+function* watchAddingNewTransaction() {
   yield takeLatest(PORTFOLIO_ACTION_TYPES.START_ADDING_NEW_TRANSACTION, addNewTransaction);
 }
 
@@ -203,7 +212,7 @@ function* watchTransactionCoinsFetch() {
 export default function* portfolioSagas() {
   yield all([
     call(watchPortfolioFetchStart),
-    call(watchAddingNewTransactionStart),
+    call(watchAddingNewTransaction),
     call(watchDeleteTransactionByIdStart),
     call(watchUpdateTransactionByIdStart),
     call(watchTransactionsForAssetFetchStart),

@@ -13,7 +13,8 @@ const INITIAL_STATE = {
   isUpdatingUserPortfolios: false,
   activePortfolio: null,
   isLoadingTransactionCoins: true,
-  transactionCoins: []
+  transactionCoins: [],
+  isAddingTransaction: false
 };
 
 const userReducer = (prevState = INITIAL_STATE, action) => {
@@ -98,6 +99,22 @@ const userReducer = (prevState = INITIAL_STATE, action) => {
         ...prevState,
         ...action.payload,
         isLoadingOverview: false
+      };
+    case PORTFOLIO_ACTION_TYPES.START_ADDING_NEW_TRANSACTION:
+      return {
+        ...prevState,
+        isAddingTransaction: true
+      };
+    case PORTFOLIO_ACTION_TYPES.ADDING_NEW_TRANSACTION_FAIL:
+      return {
+        ...prevState,
+        isAddingTransaction: false
+      };
+    case PORTFOLIO_ACTION_TYPES.ADDING_NEW_PORTFOLIO_SUCCESS:
+      return {
+        ...prevState,
+        isAddingTransaction: false,
+        transactions: action.payload
       };
     // case PORTFOLIO_ACTION_TYPES.ADDING_NEW_TRANSACTION_SUCCESS:
     //   return {

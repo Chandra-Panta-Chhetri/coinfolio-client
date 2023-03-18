@@ -7,8 +7,9 @@ import { MaterialIcons } from "@expo/vector-icons";
 import TouchableNativeFeedback from "./TouchableNativeFeedback";
 import Button from "./Button";
 import { GLOBAL_CONSTANTS } from "../constants";
+import { AntDesign } from "@expo/vector-icons";
 
-const DatePicker = ({ isRangePicker = true, onConfirm, initialStartDate = null, initialEndDate = null }) => {
+const DatePicker = ({ isRangePicker = true, onConfirm, initialStartDate, initialEndDate, style }) => {
   const { colors } = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [startDate, setStartDate] = useState(initialStartDate);
@@ -35,8 +36,6 @@ const DatePicker = ({ isRangePicker = true, onConfirm, initialStartDate = null, 
   };
 
   const closePicker = () => {
-    setEndDate(initialEndDate);
-    setStartDate(initialStartDate);
     hideModal();
   };
 
@@ -53,11 +52,14 @@ const DatePicker = ({ isRangePicker = true, onConfirm, initialStartDate = null, 
     <>
       <TouchableNativeFeedback
         onPress={showModal}
-        viewContainerStyle={[STYLES.nativeFeedbackContainer, { borderColor: colors.text }]}
+        viewContainerStyle={[STYLES.nativeFeedbackContainer, { borderColor: colors.text }, style]}
       >
         <View style={STYLES.dateOutputContainer}>
-          <Text style={TYPOGRAPHY.body1}>{startDate ? new Date(startDate).toDateString() : "..."}</Text>
-          {isRangePicker && endDate && <Text style={TYPOGRAPHY.body1}> - {new Date(endDate).toDateString()}</Text>}
+          <View style={STYLES.selectedDates}>
+            <Text style={TYPOGRAPHY.body1}>{startDate ? new Date(startDate).toDateString() : "Date"}</Text>
+            {isRangePicker && endDate && <Text style={TYPOGRAPHY.body1}> - {new Date(endDate).toDateString()}</Text>}
+          </View>
+          <AntDesign name="calendar" size={GLOBAL_CONSTANTS.ICON_SIZE} color={colors?.text} />
         </View>
       </TouchableNativeFeedback>
       <Portal>
@@ -90,8 +92,12 @@ const DatePicker = ({ isRangePicker = true, onConfirm, initialStartDate = null, 
             previousComponent={<MaterialIcons name="navigate-before" size={28} color={colors.text} />}
           />
           <View style={STYLES.modalActionButtons}>
-            <Button label="Cancel" onPress={closePicker} buttonColor={colors.notification} />
-            <Button label="Ok" onPress={confirmSelectedDates} disabled={!endDate} />
+            <Button label="Cancel" onPress={closePicker} buttonColor={colors.notification} textColor={colors?.text} />
+            <Button
+              label="Ok"
+              onPress={confirmSelectedDates}
+              disabled={isRangePicker ? !endDate || !startDate : !startDate}
+            />
           </View>
         </Modal>
       </Portal>
@@ -118,7 +124,11 @@ const STYLES = StyleSheet.create({
   dateOutputContainer: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     padding: 10
+  },
+  selectedDates: {
+    flexDirection: "row"
   }
 });
 

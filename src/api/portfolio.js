@@ -105,7 +105,18 @@ const mockedTransactionCoins = [
   }
 ];
 
+const mockedNewTransaction = {
+  notes: "test notes",
+  id: 273233,
+  type: "buy",
+  quantity: "1.32",
+  date: "string",
+  pricePerUSD: "15032.5378888",
+  coinId: "bitcoin"
+};
+
 export const getOverview = async (portfolioId, token) => {
+  console.log("PORTFOLIO OVERVIEW API", portfolioId);
   // const res = await axios.get(`/portfolios/${portfolioId}/overview`, {
   //   headers: {
   //     "X-Auth-Token": token
@@ -179,4 +190,18 @@ export const getTransactionCoins = async (token, query) => {
   //   }, 2000);
   // });
   // return mockedTransactionCoins;
+};
+
+export const addTransaction = async (token, transaction, portfolioId) => {
+  console.log("ADD TRANSACTION API", transaction, portfolioId);
+  if (portfolioId != null) {
+    // const res = await axios.post(`/portfolios/${portfolioId}/transactions`, transaction, {
+    //   headers: {
+    //     "X-Auth-Token": token
+    //   }
+    // });
+    // return res?.data;
+  }
+
+  return mockedNewTransaction;
 };

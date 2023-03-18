@@ -39,3 +39,8 @@ export const selectIsLoadingTransactionCoins = createSelector(
 );
 
 export const selectTransactionCoins = createSelector([selectPortfolio], (portfolio) => portfolio.transactionCoins);
+
+export const selectIsAddingTransaction = createSelector(
+  [selectPortfolio],
+  (portfolio) => portfolio.isAddingTransaction
+);
