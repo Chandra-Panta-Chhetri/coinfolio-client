@@ -193,7 +193,6 @@ export const getTransactionCoins = async (token, query) => {
 
 export const addTransaction = async (token, transaction, portfolioId) => {
   if (portfolioId !== null || portfolioId !== undefined) {
-    console.log(transaction, portfolioId, "ADD TRANSACTION");
     const res = await axios.post(`/portfolios/${portfolioId}/transactions`, transaction, {
       headers: {
         "X-Auth-Token": token
@@ -203,4 +202,19 @@ export const addTransaction = async (token, transaction, portfolioId) => {
   }
   return null;
   // return mockedNewTransaction;
+};
+
+export const removeHolding = async (coinId, portfolioId, token) => {
+  if (portfolioId !== undefined || portfolioId !== null) {
+    const res = await axios.delete(`/portfolios/${portfolioId}/transactions`, {
+      headers: {
+        "X-Auth-Token": token
+      },
+      params: {
+        coinId
+      }
+    });
+    return res?.data;
+  }
+  return null;
 };

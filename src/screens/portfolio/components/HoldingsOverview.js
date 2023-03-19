@@ -2,12 +2,35 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { DataTable, Text, useTheme } from "react-native-paper";
 import { connect } from "react-redux";
-import { selectIsLoadingPortfolioOverview, selectPortfolioHoldings } from "../../../redux/portfolio";
+import {
+  selectIsDeletingHolding,
+  selectIsLoadingPortfolioOverview,
+  selectPortfolioHoldings,
+  startDeletingHolding
+} from "../../../redux/portfolio";
 import { AntDesign } from "@expo/vector-icons";
-import { PressableView, IconImage, DropDown } from "../../../shared-components";
+import { PressableView, IconImage, DropDown, Button } from "../../../shared-components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 import { formatNumWorklet, formatPercentWorklet, getStylesBasedOnSign } from "../../../utils";
-import { GLOBAL_CONSTANTS } from "../../../constants";
+import { COLORS, GLOBAL_CONSTANTS } from "../../../constants";
+import { useConfirmationDialog } from "../../../hooks";
+import { Swipeable } from "react-native-gesture-handler";
+
+const SwipeableActions = ({ holding, onDelete }) => {
+  const onDeletePress = () => {
+    if (onDelete !== undefined) {
+      onDelete(holding);
+    }
+  };
+
+  return (
+    <View style={STYLES.swipeableActions}>
+      <Button mode="contained" style={STYLES.deleteHoldingButton} buttonColor={COLORS.ERROR} onPress={onDeletePress}>
+        <AntDesign name="delete" size={GLOBAL_CONSTANTS.ICON_SIZE} />
+      </Button>
+    </View>
+  );
+};
 
 const STYLES = StyleSheet.create({
   dataHeader: { borderBottomWidth: 0 },
@@ -17,6 +40,11 @@ const STYLES = StyleSheet.create({
     borderBottomColor: "black",
     borderTopWidth: GLOBAL_CONSTANTS.TABLE_BORDER_WIDTH
   },
+  deleteHoldingButton: {
+    borderRadius: 0,
+    justifyContent: "center"
+  },
+  swipeableActions: { display: "flex", flexDirection: "row" },
   flex: {
     flex: 1
   },
@@ -79,7 +107,7 @@ const VISIBLE_COLUMNS = [
   }
 ];
 
-const HoldingsOverview = ({ holdings, isLoading }) => {
+const HoldingsOverview = ({ holdings, isLoading, deleteHolding, isDeletingHolding }) => {
   const { colors } = useTheme();
   const [sortCriteria, setSortCriteria] = useState({
     columnToSortBy: "totalValue",
@@ -88,7 +116,24 @@ const HoldingsOverview = ({ holdings, isLoading }) => {
   const [sortedHoldings, setSortedHoldings] = useState([]);
   const [showPL, setShowPL] = useState(false);
   const [selectedColumn, setSelectedColumn] = useState(0);
+  const [holdingToDelete, setHoldingToDelete] = useState(null);
   const { columnToSortBy, sortAscending } = sortCriteria;
+  const onDeleteHoldingConfirm = () => {
+    if (holdingToDelete !== undefined || holdingToDelete !== null) {
+      deleteHolding(holdingToDelete?.coinId, closeDialog);
+    }
+  };
+  const { openDialog, closeDialog, ConfirmationDialog } = useConfirmationDialog(
+    "Delete Holding",
+    `Are you sure you want to remove ${holdingToDelete?.coinName} from this portfolio? All transactions will also be deleted.`,
+    onDeleteHoldingConfirm,
+    isDeletingHolding
+  );
+
+  const onDeletePress = (holding) => {
+    setHoldingToDelete(holding);
+    openDialog();
+  };
 
   const sortTable = (sortByField) => {
     const sortInAscending = columnToSortBy === sortByField ? !sortAscending : true;
@@ -155,73 +200,85 @@ const HoldingsOverview = ({ holdings, isLoading }) => {
           })}
         </DataTable.Header>
         {sortedHoldings.map((holding, i) => (
-          <DataTable.Row key={holding.coinId} style={[STYLES.dataRow]}>
-            <View style={[STYLES.assetTableCell, STYLES.marginRight]}>
-              <IconImage
-                source={{
-                  uri: holding.coinURL
-                }}
-              />
-              <View style={STYLES.assetNameAndTicker}>
-                <Text numberOfLines={1} style={TYPOGRAPHY.body1}>
-                  {holding.coinName}
-                </Text>
-                <Text numberOfLines={1} style={TYPOGRAPHY.caption}>
-                  {holding.coinSymbol}
-                </Text>
+          <Swipeable
+            key={holding.coinId}
+            renderRightActions={() => <SwipeableActions holding={holding} onDelete={onDeletePress} />}
+            overshootRight={false}
+          >
+            <DataTable.Row style={[STYLES.dataRow]}>
+              <View style={[STYLES.assetTableCell, STYLES.marginRight]}>
+                <IconImage
+                  source={{
+                    uri: holding.coinURL
+                  }}
+                />
+                <View style={STYLES.assetNameAndTicker}>
+                  <Text numberOfLines={1} style={TYPOGRAPHY.body1}>
+                    {holding.coinName}
+                  </Text>
+                  <Text numberOfLines={1} style={TYPOGRAPHY.caption}>
+                    {holding.coinSymbol}
+                  </Text>
+                </View>
               </View>
-            </View>
-            <View style={[STYLES.flex, STYLES.marginRight]}>
-              <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}>
-                ${formatNumWorklet(holding?.priceUSD?.value)}
-              </Text>
-              <Text
-                numberOfLines={1}
-                style={[
-                  TYPOGRAPHY.textAlignRight,
-                  getStylesBasedOnSign(holding?.priceUSD?.percentChange),
-                  TYPOGRAPHY.caption
-                ]}
-              >
-                {formatPercentWorklet(holding?.priceUSD?.percentChange)}
-              </Text>
-            </View>
-            {showPL ? (
-              <View style={STYLES.flex}>
+              <View style={[STYLES.flex, STYLES.marginRight]}>
                 <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}>
-                  ${formatNumWorklet(holding?.profitLoss?.value)}
+                  ${formatNumWorklet(holding?.priceUSD?.value)}
                 </Text>
                 <Text
                   numberOfLines={1}
                   style={[
                     TYPOGRAPHY.textAlignRight,
-                    getStylesBasedOnSign(holding?.profitLoss?.percentChange),
+                    getStylesBasedOnSign(holding?.priceUSD?.percentChange),
                     TYPOGRAPHY.caption
                   ]}
                 >
-                  {formatPercentWorklet(holding?.profitLoss?.percentChange)}
+                  {formatPercentWorklet(holding?.priceUSD?.percentChange)}
                 </Text>
               </View>
-            ) : (
-              <View style={STYLES.flex}>
-                <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}>
-                  ${formatNumWorklet(holding.totalValue)}
-                </Text>
-                <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.caption]}>
-                  {formatNumWorklet(holding.amount)}
-                </Text>
-              </View>
-            )}
-          </DataTable.Row>
+              {showPL ? (
+                <View style={STYLES.flex}>
+                  <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}>
+                    ${formatNumWorklet(holding?.profitLoss?.value)}
+                  </Text>
+                  <Text
+                    numberOfLines={1}
+                    style={[
+                      TYPOGRAPHY.textAlignRight,
+                      getStylesBasedOnSign(holding?.profitLoss?.percentChange),
+                      TYPOGRAPHY.caption
+                    ]}
+                  >
+                    {formatPercentWorklet(holding?.profitLoss?.percentChange)}
+                  </Text>
+                </View>
+              ) : (
+                <View style={STYLES.flex}>
+                  <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}>
+                    ${formatNumWorklet(holding.totalValue)}
+                  </Text>
+                  <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.caption]}>
+                    {formatNumWorklet(holding.amount)}
+                  </Text>
+                </View>
+              )}
+            </DataTable.Row>
+          </Swipeable>
         ))}
       </DataTable>
+      <ConfirmationDialog />
     </View>
   );
 };
 
 const mapStateToProps = (state) => ({
   holdings: selectPortfolioHoldings(state),
-  isLoading: selectIsLoadingPortfolioOverview(state)
+  isLoading: selectIsLoadingPortfolioOverview(state),
+  isDeletingHolding: selectIsDeletingHolding(state)
 });
 
-export default connect(mapStateToProps)(HoldingsOverview);
+const mapDispatchToProps = (dispatch) => ({
+  deleteHolding: (coinId, onSuccess) => dispatch(startDeletingHolding(coinId, onSuccess))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HoldingsOverview);

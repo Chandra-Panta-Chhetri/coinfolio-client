@@ -23,7 +23,9 @@ import {
   changeActivePortfolio,
   transactionCoinsFail,
   transactionCoinsSuccess,
-  startPortfolioOverviewFetch
+  startPortfolioOverviewFetch,
+  deletingHoldingSuccess,
+  deletingHoldingFail
 } from "./portfolio.actions";
 import PORTFOLIO_ACTION_TYPES from "./portfolio.action.types";
 import { selectActivePortfolio, selectTransactions, selectUserPortfolios } from "./portfolio.selectors";
@@ -157,11 +159,18 @@ function* fetchTransactionsForAsset({ payload: { assetId } }) {
   }
 }
 
-function* removeAllTransactionsForAsset({ payload: { assetId } }) {
+function* deleteHolding({ payload: { coinId, onSuccess } }) {
   try {
-    yield put(removeAllTransactionsForAssetSuccess(`All transactions have been removed`));
+    const authToken = yield select(selectUserToken);
+    const activePortfolio = yield select(selectActivePortfolio);
+    yield portfolioAPI.removeHolding(coinId, activePortfolio?.id, authToken);
+    yield put(deletingHoldingSuccess());
+    if (onSuccess !== undefined) {
+      yield onSuccess();
+    }
+    yield put(startPortfolioOverviewFetch(activePortfolio?.id));
   } catch (err) {
-    yield put(removeAllTransactionsForAssetFail("There was a problem removing all the transactions"));
+    yield put(deletingHoldingFail("There was a problem removing holding"));
   }
 }
 
@@ -185,8 +194,8 @@ function* watchTransactionsForAssetFetchStart() {
   yield takeLatest(PORTFOLIO_ACTION_TYPES.START_TRANSACTIONS_FOR_ASSET_FETCH, fetchTransactionsForAsset);
 }
 
-function* watchRemoveAllTransactionsForAssetStart() {
-  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_REMOVING_ALL_TRANSACTIONS_FOR_ASSET, removeAllTransactionsForAsset);
+function* watchDeleteHolding() {
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_DELETING_HOLDING, deleteHolding);
 }
 
 function* watchUserPortfoliosFetchStart() {
@@ -213,14 +222,11 @@ export default function* portfolioSagas() {
   yield all([
     call(watchPortfolioFetchStart),
     call(watchAddingNewTransaction),
-    call(watchDeleteTransactionByIdStart),
-    call(watchUpdateTransactionByIdStart),
-    call(watchTransactionsForAssetFetchStart),
-    call(watchRemoveAllTransactionsForAssetStart),
     call(watchUserPortfoliosFetchStart),
     call(watchAddNewPortfolio),
     call(watchUpdatePortfolio),
     call(watchDeletePortfolio),
-    call(watchTransactionCoinsFetch)
+    call(watchTransactionCoinsFetch),
+    call(watchDeleteHolding)
   ]);
 }

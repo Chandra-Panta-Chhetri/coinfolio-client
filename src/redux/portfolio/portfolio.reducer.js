@@ -14,7 +14,8 @@ const INITIAL_STATE = {
   activePortfolio: null,
   isLoadingTransactionCoins: true,
   transactionCoins: [],
-  isAddingTransaction: false
+  isAddingTransaction: false,
+  isDeletingHolding: false
 };
 
 const userReducer = (prevState = INITIAL_STATE, action) => {
@@ -109,6 +110,22 @@ const userReducer = (prevState = INITIAL_STATE, action) => {
         ...prevState,
         isAddingTransaction: false,
         transactions: action.payload
+      };
+    case PORTFOLIO_ACTION_TYPES.START_DELETING_HOLDING:
+      return {
+        ...prevState,
+        isDeletingHolding: true
+      };
+    case PORTFOLIO_ACTION_TYPES.DELETING_HOLDING_FAIL:
+      return {
+        ...prevState,
+        isDeletingHolding: false
+      };
+    case PORTFOLIO_ACTION_TYPES.DELETING_HOLDING_SUCCESS:
+      return {
+        ...prevState,
+        isDeletingHolding: false,
+        transactions: []
       };
     default:
       return prevState;

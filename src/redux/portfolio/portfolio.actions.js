@@ -172,21 +172,16 @@ export const transactionsForAssetFetchSuccess = (transactions) => ({
   }
 });
 
-export const startRemovingAllTransactionsForAsset = (assetId) => ({
-  type: PORTFOLIO_ACTION_TYPES.START_REMOVING_ALL_TRANSACTIONS_FOR_ASSET,
-  payload: { assetId }
+export const startDeletingHolding = (coinId, onSuccess) => ({
+  type: PORTFOLIO_ACTION_TYPES.START_DELETING_HOLDING,
+  payload: { coinId, onSuccess }
 });
 
-export const removeAllTransactionsForAssetFail = (errorMsg) => ({
-  type: PORTFOLIO_ACTION_TYPES.REMOVE_ALL_TRANSACTIONS_FOR_ASSET_FAIL,
-  payload: {
-    errorMsg
-  }
+export const deletingHoldingFail = (errorMsg) => ({
+  type: PORTFOLIO_ACTION_TYPES.DELETING_HOLDING_FAIL,
+  payload: errorMsg
 });
 
-export const removeAllTransactionsForAssetSuccess = (successMsg) => ({
-  type: PORTFOLIO_ACTION_TYPES.REMOVE_ALL_TRANSACTIONS_FOR_ASSET_SUCCESS,
-  payload: {
-    successMsg
-  }
+export const deletingHoldingSuccess = () => ({
+  type: PORTFOLIO_ACTION_TYPES.DELETING_HOLDING_SUCCESS
 });

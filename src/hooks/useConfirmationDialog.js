@@ -17,6 +17,7 @@ export const useConfirmationDialog = (confirmationTitle, confirmationText, onCon
         confirmationTitle={confirmationTitle}
         isLoading={isLoading}
       />
-    )
+    ),
+    closeDialog
   };
 };

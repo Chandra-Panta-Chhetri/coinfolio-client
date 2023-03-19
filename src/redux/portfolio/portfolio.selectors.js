@@ -44,3 +44,5 @@ export const selectIsAddingTransaction = createSelector(
   [selectPortfolio],
   (portfolio) => portfolio.isAddingTransaction
 );
+
+export const selectIsDeletingHolding = createSelector([selectPortfolio], (portfolio) => portfolio.isDeletingHolding);
