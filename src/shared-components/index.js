@@ -35,3 +35,4 @@ export { default as ExternalLink } from "./ExternalLink";
 export { default as AsyncFlatList } from "./AsyncFlatList";
 export { default as SearchInput } from "./SearchInput";
 export { default as ShortCoinDetails } from "./ShortCoinDetails";
+export { default as Modal } from "./Modal";

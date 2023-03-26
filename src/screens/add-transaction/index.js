@@ -1,15 +1,13 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { StyleSheet, View, Text, KeyboardAvoidingView, ScrollView } from "react-native";
 import { connect } from "react-redux";
-import { COLORS, GLOBAL_CONSTANTS } from "../../constants";
+import { GLOBAL_CONSTANTS } from "../../constants";
 import { startAddingNewTransaction } from "../../redux/portfolio/portfolio.actions";
 import { selectIsAddingTransaction } from "../../redux/portfolio/portfolio.selectors";
 import { TextInput, DatePicker, DropDown, Button } from "../../shared-components";
 import { GLOBAL_STYLES } from "../../styles";
 import { TextInput as RNPTextInput } from "react-native-paper";
-import { AntDesign } from "@expo/vector-icons";
-import { BackHandler } from "react-native";
 import { useHandleNativeBack } from "../../hooks";
 
 const TRANSACTION_TYPES = [

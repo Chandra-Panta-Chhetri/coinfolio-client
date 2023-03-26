@@ -185,3 +185,18 @@ export const deletingHoldingFail = (errorMsg) => ({
 export const deletingHoldingSuccess = () => ({
   type: PORTFOLIO_ACTION_TYPES.DELETING_HOLDING_SUCCESS
 });
+
+export const startHoldingOverviewFetch = (coinId) => ({
+  type: PORTFOLIO_ACTION_TYPES.START_HOLDING_OVERVIEW_FETCH,
+  payload: coinId
+});
+
+export const holdingOverviewFetchFail = (errorMsg) => ({
+  type: PORTFOLIO_ACTION_TYPES.HOLDING_OVERVIEW_FETCH_FAIL,
+  payload: errorMsg
+});
+
+export const holdingOverviewFetchSuccess = (holdingOverview) => ({
+  type: PORTFOLIO_ACTION_TYPES.HOLDING_OVERVIEW_FETCH_SUCCESS,
+  payload: holdingOverview
+});

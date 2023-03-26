@@ -46,3 +46,10 @@ export const selectIsAddingTransaction = createSelector(
 );
 
 export const selectIsDeletingHolding = createSelector([selectPortfolio], (portfolio) => portfolio.isDeletingHolding);
+
+export const selectIsLoadingHoldingOverview = createSelector(
+  [selectPortfolio],
+  (portfolio) => portfolio.isLoadingHoldingOverview
+);
+
+export const selectHoldingOverview = createSelector([selectPortfolio], (portfolio) => portfolio.holdingOverview);

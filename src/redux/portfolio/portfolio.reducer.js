@@ -15,7 +15,9 @@ const INITIAL_STATE = {
   isLoadingTransactionCoins: true,
   transactionCoins: [],
   isAddingTransaction: false,
-  isDeletingHolding: false
+  isDeletingHolding: false,
+  holdingOverview: null,
+  isLoadingHoldingOverview: false
 };
 
 const userReducer = (prevState = INITIAL_STATE, action) => {
@@ -126,6 +128,23 @@ const userReducer = (prevState = INITIAL_STATE, action) => {
         ...prevState,
         isDeletingHolding: false,
         transactions: []
+      };
+    case PORTFOLIO_ACTION_TYPES.START_HOLDING_OVERVIEW_FETCH:
+      return {
+        ...prevState,
+        isLoadingHoldingOverview: true
+      };
+    case PORTFOLIO_ACTION_TYPES.HOLDING_OVERVIEW_FETCH_FAIL:
+      return {
+        ...prevState,
+        isLoadingHoldingOverview: false
+      };
+    case PORTFOLIO_ACTION_TYPES.HOLDING_OVERVIEW_FETCH_SUCCESS:
+      return {
+        ...prevState,
+        isLoadingHoldingOverview: false,
+        transactions: action.payload.transactions,
+        holdingOverview: action.payload.summary
       };
     default:
       return prevState;

@@ -115,6 +115,101 @@ const mockedNewTransaction = {
   coinId: "bitcoin"
 };
 
+const mockedHoldingOverview = {
+  summary: {
+    totalCost: "14.00000000000000000000000",
+    coinId: "bitcoin",
+    amount: "10.00000000",
+    priceUSD: {
+      value: "27596.2040217413631765",
+      percentChange: "-0.0916358111605964"
+    },
+    profitLoss: {
+      value: "275948.0402174136",
+      percentChange: "1971057.430124383"
+    },
+    totalValue: "275962.0402174136",
+    avgCost: "1.40000000000000000000000",
+    coinSymbol: "BTC",
+    coinName: "Bitcoin",
+    coinURL: "https://assets.coincap.io/assets/icons/btc@2x.png"
+  },
+  transactions: [
+    {
+      coinId: "bitcoin",
+      date: "2023-03-18T23:06:19.843Z",
+      id: 1,
+      notes: "transaction 1bitcoin",
+      pricePerUSD: "1.000000000000000",
+      quantity: "10.00000000",
+      type: "buy"
+    },
+    {
+      coinId: "bitcoin",
+      date: "2023-03-18T23:06:19.864Z",
+      id: 2,
+      notes: "transaction 2bitcoin",
+      pricePerUSD: "1.000000000000000",
+      quantity: "3.00000000",
+      type: "sell"
+    },
+    {
+      coinId: "bitcoin",
+      date: "2023-03-18T23:06:19.880Z",
+      id: 3,
+      notes: "transaction 3bitcoin",
+      pricePerUSD: "0.000000000000000",
+      quantity: "1.00000000",
+      type: "transfer_in"
+    },
+    {
+      coinId: "bitcoin",
+      date: "2023-03-18T23:06:19.881Z",
+      id: 4,
+      notes: "transaction 4bitcoin",
+      pricePerUSD: "0.000000000000000",
+      quantity: "2.00000000",
+      type: "transfer_out"
+    },
+    {
+      coinId: "bitcoin",
+      date: "2023-03-18T23:42:23.691Z",
+      id: 85,
+      notes: "",
+      pricePerUSD: "1.000000000000000",
+      quantity: "1.00000000",
+      type: "buy"
+    },
+    {
+      coinId: "bitcoin",
+      date: "2023-03-18T23:43:43.152Z",
+      id: 86,
+      notes: "",
+      pricePerUSD: "1.000000000000000",
+      quantity: "1.00000000",
+      type: "buy"
+    },
+    {
+      coinId: "bitcoin",
+      date: "2023-03-18T23:46:17.652Z",
+      id: 87,
+      notes: "",
+      pricePerUSD: "1.000000000000000",
+      quantity: "1.00000000",
+      type: "buy"
+    },
+    {
+      coinId: "bitcoin",
+      date: "2023-03-18T23:48:40.039Z",
+      id: 88,
+      notes: "",
+      pricePerUSD: "1.000000000000000",
+      quantity: "1.00000000",
+      type: "buy"
+    }
+  ]
+};
+
 export const getOverview = async (portfolioId, token) => {
   const res = await axios.get(`/portfolios/${portfolioId}/overview`, {
     headers: {
@@ -212,6 +307,18 @@ export const removeHolding = async (coinId, portfolioId, token) => {
       },
       params: {
         coinId
+      }
+    });
+    return res?.data;
+  }
+  return null;
+};
+
+export const getHoldingOverview = async (coinId, portfolioId, token) => {
+  if (portfolioId !== undefined || portfolioId !== null) {
+    const res = await axios.get(`/portfolios/${portfolioId}/holdings/${coinId}/overview`, {
+      headers: {
+        "X-Auth-Token": token
       }
     });
     return res?.data;

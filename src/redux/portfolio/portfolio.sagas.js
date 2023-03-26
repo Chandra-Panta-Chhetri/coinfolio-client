@@ -25,7 +25,9 @@ import {
   transactionCoinsSuccess,
   startPortfolioOverviewFetch,
   deletingHoldingSuccess,
-  deletingHoldingFail
+  deletingHoldingFail,
+  holdingOverviewFetchFail,
+  holdingOverviewFetchSuccess
 } from "./portfolio.actions";
 import PORTFOLIO_ACTION_TYPES from "./portfolio.action.types";
 import { selectActivePortfolio, selectTransactions, selectUserPortfolios } from "./portfolio.selectors";
@@ -174,6 +176,17 @@ function* deleteHolding({ payload: { coinId, onSuccess } }) {
   }
 }
 
+function* fetchHoldingOverview({ payload: coinId }) {
+  try {
+    const authToken = yield select(selectUserToken);
+    const activePortfolio = yield select(selectActivePortfolio);
+    const holdingOverview = yield portfolioAPI.getHoldingOverview(coinId, activePortfolio?.id, authToken);
+    yield put(holdingOverviewFetchSuccess(holdingOverview));
+  } catch (err) {
+    yield put(holdingOverviewFetchFail("Failed to get holding overview"));
+  }
+}
+
 function* watchPortfolioFetchStart() {
   yield takeLatest(PORTFOLIO_ACTION_TYPES.START_PORTFOLIO_OVERVIEW_FETCH, fetchPortfolio);
 }
@@ -218,6 +231,10 @@ function* watchTransactionCoinsFetch() {
   yield takeLatest(PORTFOLIO_ACTION_TYPES.START_TRANSACTION_COINS_FETCH, fetchTransactionCoins);
 }
 
+function* watchHoldingOverviewFetch() {
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_HOLDING_OVERVIEW_FETCH, fetchHoldingOverview);
+}
+
 export default function* portfolioSagas() {
   yield all([
     call(watchPortfolioFetchStart),
@@ -227,6 +244,7 @@ export default function* portfolioSagas() {
     call(watchUpdatePortfolio),
     call(watchDeletePortfolio),
     call(watchTransactionCoinsFetch),
-    call(watchDeleteHolding)
+    call(watchDeleteHolding),
+    call(watchHoldingOverviewFetch)
   ]);
 }

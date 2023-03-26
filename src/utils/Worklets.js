@@ -9,7 +9,7 @@ export function roundToNDecimalsWorklet(num, numDecimals = 2) {
 export function formatNumWorklet(num) {
   "worklet";
   if (num === "" || num === undefined || num === null) return null;
-  if (Math.abs(+num) < 1) {
+  if (Math.abs(+num) < 1 && +num !== 0) {
     let numOfOs = 0;
     let fractionalNum = String(num).split(".")[1] || "";
     for (let char of fractionalNum) {
@@ -35,12 +35,18 @@ export function formatNumWorklet(num) {
 
 export function formatPercentWorklet(percent) {
   "worklet";
+  if (percent === undefined || percent === null) {
+    return "";
+  }
   return +percent >= 0 ? `+${formatNumWorklet(+percent)}%` : `${formatNumWorklet(+percent)}%`;
 }
 
 export function formatPriceWorklet(price) {
   "worklet";
-  return +price >= 0 ? `+${formatNumWorklet(price)}` : `-$${formatNumWorklet(+price * -1)}`;
+  if (price === undefined || price === null) {
+    return "";
+  }
+  return +price >= 0 ? `+$${formatNumWorklet(price)}` : `-$${formatNumWorklet(+price * -1)}`;
 }
 
 export function dateToTimeStrWorklet(date) {

@@ -19,7 +19,8 @@ import {
   SearchCryptoScreen,
   AssetDetailScreen,
   AssetDetailEventFiltersScreen,
-  SelectTransactionCoinScreen
+  SelectTransactionCoinScreen,
+  HoldingOverviewScreen
 } from "../../screens";
 import { CloseIconButton } from "../../shared-components";
 import { TYPOGRAPHY } from "../../styles";
@@ -65,6 +66,13 @@ const RootNavigator = ({ isAuthenticated, isAddingTransaction }) => {
               headerTitle: "Add Transaction",
               gestureEnabled: !isAddingTransaction,
               headerLeft: isAddingTransaction ? () => undefined : undefined
+            }}
+          />
+          <Stack.Screen
+            name="HoldingOverview"
+            component={HoldingOverviewScreen}
+            options={{
+              headerTitle: ""
             }}
           />
         </>

@@ -24,3 +24,4 @@ export { default as AssetDetailScreen } from "./asset-detail";
 export { default as AssetDetailEventFiltersScreen } from "./asset-detail-event-filters";
 export { default as PortfolioUnauthenticatedScreen } from "./portfolio-unauthenticated";
 export { default as SelectTransactionCoinScreen } from "./select-transaction-coin";
+export { default as HoldingOverviewScreen } from "./holding-overview";

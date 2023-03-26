@@ -9,12 +9,13 @@ import {
   startDeletingHolding
 } from "../../../redux/portfolio";
 import { AntDesign } from "@expo/vector-icons";
-import { PressableView, IconImage, DropDown, Button } from "../../../shared-components";
+import { PressableView, IconImage, DropDown, Button, TouchableNativeFeedback } from "../../../shared-components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../styles";
 import { formatNumWorklet, formatPercentWorklet, getStylesBasedOnSign } from "../../../utils";
 import { COLORS, GLOBAL_CONSTANTS } from "../../../constants";
 import { useConfirmationDialog } from "../../../hooks";
 import { Swipeable } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
 const SwipeableActions = ({ holding, onDelete }) => {
   const onDeletePress = () => {
@@ -129,6 +130,7 @@ const HoldingsOverview = ({ holdings, isLoading, deleteHolding, isDeletingHoldin
     onDeleteHoldingConfirm,
     isDeletingHolding
   );
+  const navigation = useNavigation();
 
   const onDeletePress = (holding) => {
     setHoldingToDelete(holding);
@@ -156,6 +158,11 @@ const HoldingsOverview = ({ holdings, isLoading, deleteHolding, isDeletingHoldin
       columnToSortBy: sortByField,
       sortAscending: sortInAscending
     });
+  };
+
+  const toHoldingOverview = (coinId) => {
+    console.log("here");
+    navigation?.navigate("HoldingOverview", { coinId });
   };
 
   useEffect(() => {
@@ -205,64 +212,68 @@ const HoldingsOverview = ({ holdings, isLoading, deleteHolding, isDeletingHoldin
             renderRightActions={() => <SwipeableActions holding={holding} onDelete={onDeletePress} />}
             overshootRight={false}
           >
-            <DataTable.Row style={[STYLES.dataRow]}>
-              <View style={[STYLES.assetTableCell, STYLES.marginRight]}>
-                <IconImage
-                  source={{
-                    uri: holding.coinURL
-                  }}
-                />
-                <View style={STYLES.assetNameAndTicker}>
-                  <Text numberOfLines={1} style={TYPOGRAPHY.body1}>
-                    {holding.coinName}
-                  </Text>
-                  <Text numberOfLines={1} style={TYPOGRAPHY.caption}>
-                    {holding.coinSymbol}
-                  </Text>
-                </View>
+            <TouchableNativeFeedback onPress={() => toHoldingOverview(holding.coinId)}>
+              <View>
+                <DataTable.Row style={[STYLES.dataRow]}>
+                  <View style={[STYLES.assetTableCell, STYLES.marginRight]}>
+                    <IconImage
+                      source={{
+                        uri: holding.coinURL
+                      }}
+                    />
+                    <View style={STYLES.assetNameAndTicker}>
+                      <Text numberOfLines={1} style={TYPOGRAPHY.body1}>
+                        {holding.coinName}
+                      </Text>
+                      <Text numberOfLines={1} style={TYPOGRAPHY.caption}>
+                        {holding.coinSymbol}
+                      </Text>
+                    </View>
+                  </View>
+                  <View style={[STYLES.flex, STYLES.marginRight]}>
+                    <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}>
+                      ${formatNumWorklet(holding?.priceUSD?.value)}
+                    </Text>
+                    <Text
+                      numberOfLines={1}
+                      style={[
+                        TYPOGRAPHY.textAlignRight,
+                        getStylesBasedOnSign(holding?.priceUSD?.percentChange),
+                        TYPOGRAPHY.caption
+                      ]}
+                    >
+                      {formatPercentWorklet(holding?.priceUSD?.percentChange)}
+                    </Text>
+                  </View>
+                  {showPL ? (
+                    <View style={STYLES.flex}>
+                      <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}>
+                        ${formatNumWorklet(holding?.profitLoss?.value)}
+                      </Text>
+                      <Text
+                        numberOfLines={1}
+                        style={[
+                          TYPOGRAPHY.textAlignRight,
+                          getStylesBasedOnSign(holding?.profitLoss?.percentChange),
+                          TYPOGRAPHY.caption
+                        ]}
+                      >
+                        {formatPercentWorklet(holding?.profitLoss?.percentChange)}
+                      </Text>
+                    </View>
+                  ) : (
+                    <View style={STYLES.flex}>
+                      <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}>
+                        ${formatNumWorklet(holding.totalValue)}
+                      </Text>
+                      <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.caption]}>
+                        {formatNumWorklet(holding.amount)}
+                      </Text>
+                    </View>
+                  )}
+                </DataTable.Row>
               </View>
-              <View style={[STYLES.flex, STYLES.marginRight]}>
-                <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}>
-                  ${formatNumWorklet(holding?.priceUSD?.value)}
-                </Text>
-                <Text
-                  numberOfLines={1}
-                  style={[
-                    TYPOGRAPHY.textAlignRight,
-                    getStylesBasedOnSign(holding?.priceUSD?.percentChange),
-                    TYPOGRAPHY.caption
-                  ]}
-                >
-                  {formatPercentWorklet(holding?.priceUSD?.percentChange)}
-                </Text>
-              </View>
-              {showPL ? (
-                <View style={STYLES.flex}>
-                  <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}>
-                    ${formatNumWorklet(holding?.profitLoss?.value)}
-                  </Text>
-                  <Text
-                    numberOfLines={1}
-                    style={[
-                      TYPOGRAPHY.textAlignRight,
-                      getStylesBasedOnSign(holding?.profitLoss?.percentChange),
-                      TYPOGRAPHY.caption
-                    ]}
-                  >
-                    {formatPercentWorklet(holding?.profitLoss?.percentChange)}
-                  </Text>
-                </View>
-              ) : (
-                <View style={STYLES.flex}>
-                  <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}>
-                    ${formatNumWorklet(holding.totalValue)}
-                  </Text>
-                  <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.caption]}>
-                    {formatNumWorklet(holding.amount)}
-                  </Text>
-                </View>
-              )}
-            </DataTable.Row>
+            </TouchableNativeFeedback>
           </Swipeable>
         ))}
       </DataTable>
