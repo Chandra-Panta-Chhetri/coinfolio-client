@@ -2,16 +2,11 @@ import { takeLatest, put, call, all, select } from "redux-saga/effects";
 import {
   portfolioOverviewFetchFail,
   addNewTransactionFail,
-  deleteTransactionByIdFail,
+  deleteTransactionFail,
   updateTransactionByIdFail,
-  transactionsForAssetFetchFail,
-  removeAllTransactionsForAssetFail,
   portfolioOverviewFetchSuccess,
   addNewTransactionSuccess,
-  deleteTransactionByIdSuccess,
   updateTransactionByIdSuccess,
-  transactionsForAssetFetchSuccess,
-  removeAllTransactionsForAssetSuccess,
   userPortfoliosFetchSuccess,
   userPortfoliosFetchFail,
   addNewPortfolioSuccess,
@@ -27,10 +22,17 @@ import {
   deletingHoldingSuccess,
   deletingHoldingFail,
   holdingOverviewFetchFail,
-  holdingOverviewFetchSuccess
+  holdingOverviewFetchSuccess,
+  deleteTransactionSuccess,
+  startHoldingOverviewFetch
 } from "./portfolio.actions";
 import PORTFOLIO_ACTION_TYPES from "./portfolio.action.types";
-import { selectActivePortfolio, selectTransactions, selectUserPortfolios } from "./portfolio.selectors";
+import {
+  selectActivePortfolio,
+  selectHoldingOverview,
+  selectTransactions,
+  selectUserPortfolios
+} from "./portfolio.selectors";
 import { selectUserToken } from "../user";
 import { portfolioAPI } from "../../api";
 
@@ -130,14 +132,22 @@ function* addNewTransaction({ payload: { transaction, onSuccess } }) {
   }
 }
 
-function* deleteTransactionById({ payload: { transactionId, index } }) {
+function* deleteTransaction({ payload: { transaction, onSuccess } }) {
   try {
-    const transactions = yield select(selectTransactions);
-    yield transactions.splice(index, 1);
-    const updatedTransactions = yield [...transactions];
-    yield put(deleteTransactionByIdSuccess(updatedTransactions, `Transaction has been deleted`));
+    const authToken = yield select(selectUserToken);
+    const activePortfolio = yield select(selectActivePortfolio);
+    const holdingOverview = yield select(selectHoldingOverview);
+    yield portfolioAPI.deleteTransaction(transaction, activePortfolio?.id, authToken);
+    yield put(deleteTransactionSuccess());
+    if (holdingOverview !== null) {
+      yield put(startHoldingOverviewFetch(holdingOverview?.coinId));
+      yield put(startPortfolioOverviewFetch(activePortfolio?.id));
+    }
+    if (onSuccess !== undefined) {
+      yield onSuccess();
+    }
   } catch (err) {
-    yield put(deleteTransactionByIdFail("There was a problem deleting the transaction"));
+    yield put(deleteTransactionFail("Deleting transaction failed"));
   }
 }
 
@@ -149,15 +159,6 @@ function* updateTransactionById({ payload: { transactionId, updatedTransaction, 
     yield put(updateTransactionByIdSuccess(updatedTransactions, `Transaction details have been updated`));
   } catch (err) {
     yield put(updateTransactionByIdFail("There was a problem updating the transaction details"));
-  }
-}
-
-function* fetchTransactionsForAsset({ payload: { assetId } }) {
-  try {
-    const transactions = yield [];
-    yield put(transactionsForAssetFetchSuccess(transactions));
-  } catch (err) {
-    yield put(transactionsForAssetFetchFail("There was a problem getting the transactions"));
   }
 }
 
@@ -195,16 +196,12 @@ function* watchAddingNewTransaction() {
   yield takeLatest(PORTFOLIO_ACTION_TYPES.START_ADDING_NEW_TRANSACTION, addNewTransaction);
 }
 
-function* watchDeleteTransactionByIdStart() {
-  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_DELETING_TRANSACTION_BY_ID, deleteTransactionById);
+function* watchDeleteTransaction() {
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_DELETING_TRANSACTION, deleteTransaction);
 }
 
 function* watchUpdateTransactionByIdStart() {
   yield takeLatest(PORTFOLIO_ACTION_TYPES.START_UPDATING_TRANSACTION_BY_ID, updateTransactionById);
-}
-
-function* watchTransactionsForAssetFetchStart() {
-  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_TRANSACTIONS_FOR_ASSET_FETCH, fetchTransactionsForAsset);
 }
 
 function* watchDeleteHolding() {
@@ -245,6 +242,7 @@ export default function* portfolioSagas() {
     call(watchDeletePortfolio),
     call(watchTransactionCoinsFetch),
     call(watchDeleteHolding),
-    call(watchHoldingOverviewFetch)
+    call(watchHoldingOverviewFetch),
+    call(watchDeleteTransaction)
   ]);
 }

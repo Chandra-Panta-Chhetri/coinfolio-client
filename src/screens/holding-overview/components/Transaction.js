@@ -3,7 +3,6 @@ import { Text } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import { Skeleton, TouchableNativeFeedback } from "../../../shared-components";
 import { GLOBAL_CONSTANTS } from "../../../constants";
-import { connect } from "react-redux";
 import { formatNumWorklet, toISOSubstring } from "../../../utils";
 import { TYPOGRAPHY } from "../../../styles";
 
@@ -62,6 +61,4 @@ const STYLES = StyleSheet.create({
   }
 });
 
-const mapDispatchToProps = (dispatch) => ({});
-
-export default connect(null, mapDispatchToProps)(Transaction);
+export default Transaction;

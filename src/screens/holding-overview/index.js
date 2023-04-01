@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { Text } from "react-native-paper";
 import { connect } from "react-redux";
 import { GLOBAL_CONSTANTS } from "../../constants";
-import { startHoldingOverviewFetch } from "../../redux/portfolio/portfolio.actions";
+import { startDeletingTransaction, startHoldingOverviewFetch } from "../../redux/portfolio/portfolio.actions";
 import {
   selectHoldingOverview,
+  selectIsDeletingTransaction,
   selectIsLoadingHoldingOverview,
   selectTransactions
 } from "../../redux/portfolio/portfolio.selectors";
-import { AsyncFlatList } from "../../shared-components";
+import { AsyncFlatList, ConfirmationDialog } from "../../shared-components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { Header, Transaction, TransactionDetail } from "./components";
 
@@ -22,8 +23,18 @@ const renderSkeleton = ({ index }) => (
   />
 );
 
-const HoldingOverviewScreen = ({ navigation, route, fetchOverview, isLoadingOverview, transactions, summary }) => {
+const HoldingOverviewScreen = ({
+  navigation,
+  route,
+  fetchOverview,
+  isLoadingOverview,
+  transactions,
+  summary,
+  deleteTransaction,
+  isDeletingTransaction
+}) => {
   const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const [isDeleteTransactionShown, setIsDeleteTransactionShown] = useState(false);
   const { coinId } = route.params;
   useEffect(() => {
     fetchOverview(coinId);
@@ -41,6 +52,20 @@ const HoldingOverviewScreen = ({ navigation, route, fetchOverview, isLoadingOver
     <Transaction transaction={item} key={item?.id + index} onSelect={onTransactionSelect} summary={summary} />
   );
 
+  const onDeleteTransactionSuccess = () => {
+    hideTransactionDeleteModal();
+    setSelectedTransaction(null);
+  };
+
+  const onDeleteConfirm = () => {
+    if (selectedTransaction !== null) {
+      deleteTransaction(selectedTransaction, onDeleteTransactionSuccess);
+    }
+  };
+
+  const hideTransactionDeleteModal = () => setIsDeleteTransactionShown(false);
+  const openTransactionDeleteModal = () => setIsDeleteTransactionShown(true);
+
   return (
     <AsyncFlatList
       data={transactions}
@@ -54,6 +79,16 @@ const HoldingOverviewScreen = ({ navigation, route, fetchOverview, isLoadingOver
             transaction={selectedTransaction}
             hideDetails={() => setSelectedTransaction(null)}
             summary={summary}
+            onDelete={openTransactionDeleteModal}
+          />
+          <ConfirmationDialog
+            isVisible={isDeleteTransactionShown}
+            onConfirmCb={onDeleteConfirm}
+            confirmationTitle="Delete Transaction"
+            confirmationText={`Are you sure you want to delete this transaction?`}
+            hideDialog={hideTransactionDeleteModal}
+            isLoading={isDeletingTransaction}
+            isDismissable={false}
           />
         </>
       }
@@ -67,11 +102,13 @@ const HoldingOverviewScreen = ({ navigation, route, fetchOverview, isLoadingOver
 const mapStateToProps = (state) => ({
   isLoadingOverview: selectIsLoadingHoldingOverview(state),
   summary: selectHoldingOverview(state),
-  transactions: selectTransactions(state)
+  transactions: selectTransactions(state),
+  isDeletingTransaction: selectIsDeletingTransaction(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchOverview: (coinId) => dispatch(startHoldingOverviewFetch(coinId))
+  fetchOverview: (coinId) => dispatch(startHoldingOverviewFetch(coinId)),
+  deleteTransaction: (transaction, onSuccess) => dispatch(startDeletingTransaction(transaction, onSuccess))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HoldingOverviewScreen);

@@ -36,7 +36,7 @@ export function formatNumWorklet(num) {
 export function formatPercentWorklet(percent) {
   "worklet";
   if (percent === undefined || percent === null) {
-    return "";
+    return "N/A";
   }
   return +percent >= 0 ? `+${formatNumWorklet(+percent)}%` : `${formatNumWorklet(+percent)}%`;
 }
@@ -44,7 +44,7 @@ export function formatPercentWorklet(percent) {
 export function formatPriceWorklet(price) {
   "worklet";
   if (price === undefined || price === null) {
-    return "";
+    return "N/A";
   }
   return +price >= 0 ? `+$${formatNumWorklet(price)}` : `-$${formatNumWorklet(+price * -1)}`;
 }

@@ -325,3 +325,15 @@ export const getHoldingOverview = async (coinId, portfolioId, token) => {
   }
   return null;
 };
+
+export const deleteTransaction = async (transaction, portfolioId, token) => {
+  if (portfolioId !== undefined && transaction !== undefined) {
+    const res = await axios.delete(`/portfolios/${portfolioId}/transactions/${transaction?.id}`, {
+      headers: {
+        "X-Auth-Token": token
+      }
+    });
+    return res?.data;
+  }
+  return null;
+};

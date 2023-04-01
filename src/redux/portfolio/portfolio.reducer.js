@@ -17,7 +17,8 @@ const INITIAL_STATE = {
   isAddingTransaction: false,
   isDeletingHolding: false,
   holdingOverview: null,
-  isLoadingHoldingOverview: false
+  isLoadingHoldingOverview: false,
+  isDeletingTransaction: false
 };
 
 const userReducer = (prevState = INITIAL_STATE, action) => {
@@ -145,6 +146,21 @@ const userReducer = (prevState = INITIAL_STATE, action) => {
         isLoadingHoldingOverview: false,
         transactions: action.payload.transactions,
         holdingOverview: action.payload.summary
+      };
+    case PORTFOLIO_ACTION_TYPES.START_DELETING_TRANSACTION:
+      return {
+        ...prevState,
+        isDeletingTransaction: true
+      };
+    case PORTFOLIO_ACTION_TYPES.DELETE_TRANSACTION_FAIL:
+      return {
+        ...prevState,
+        isDeletingTransaction: false
+      };
+    case PORTFOLIO_ACTION_TYPES.DELETE_TRANSACTION_SUCCESS:
+      return {
+        ...prevState,
+        isDeletingTransaction: true
       };
     default:
       return prevState;

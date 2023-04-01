@@ -9,13 +9,14 @@ const ConfirmationDialog = ({
   confirmationTitle = "",
   isVisible = false,
   hideDialog,
-  isLoading = false
+  isLoading = false,
+  isDismissable = true
 }) => {
   const { colors } = useTheme();
 
   return (
     <Portal>
-      <Dialog visible={isVisible} dismissable={!isLoading} onDismiss={hideDialog}>
+      <Dialog visible={isVisible} dismissable={!isLoading && isDismissable} onDismiss={hideDialog}>
         <Dialog.Title style={TYPOGRAPHY.capitalize}>{confirmationTitle}</Dialog.Title>
         <Dialog.Content>
           <Text style={TYPOGRAPHY.subheading}>{confirmationText}</Text>

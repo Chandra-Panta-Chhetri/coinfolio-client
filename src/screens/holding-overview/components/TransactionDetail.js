@@ -1,16 +1,14 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
-import { GLOBAL_CONSTANTS } from "../../../constants";
+import { COLORS, GLOBAL_CONSTANTS } from "../../../constants";
 import { Button, Modal } from "../../../shared-components";
 import { TYPOGRAPHY } from "../../../styles";
 import { formatNumWorklet, toISOSubstring } from "../../../utils";
 import { TYPE_NAME_MAP } from "./Transaction";
 
-function TransactionDetail({ transaction, hideDetails, summary }) {
+function TransactionDetail({ transaction, hideDetails, summary, onDelete }) {
   const isShown = transaction !== null && transaction !== undefined;
-
-  const onDeletePress = () => {};
 
   const onEditPress = () => {};
 
@@ -43,15 +41,18 @@ function TransactionDetail({ transaction, hideDetails, summary }) {
           <Text style={{ ...TYPOGRAPHY.body1 }}>{transaction?.notes}</Text>
         </View>
       </View>
-      <View style={{ flexDirection: "row", justifyContent: "center", marginTop: GLOBAL_CONSTANTS.MD_MARGIN }}>
+      <View
+        renderToHardwareTextureAndroid
+        style={{ flexDirection: "row", justifyContent: "center", marginTop: GLOBAL_CONSTANTS.MD_MARGIN }}
+      >
         <Button
           label="Delete"
-          disabled={true}
-          onPress={onDeletePress}
+          onPress={onDelete}
           mode="contained"
           style={[STYLES.flex, { marginRight: GLOBAL_CONSTANTS.LG_MARGIN }]}
+          buttonColor={COLORS.ERROR}
         />
-        <Button label={"Edit"} disabled={true} onPress={onEditPress} mode="contained" style={STYLES.flex} />
+        <Button label={"Edit"} onPress={onEditPress} mode="contained" style={STYLES.flex} />
       </View>
     </Modal>
   );

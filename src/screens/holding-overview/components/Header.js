@@ -15,19 +15,13 @@ function Header({ summary, isLoading }) {
   return (
     <Card style={{ marginBottom: GLOBAL_CONSTANTS.MD_MARGIN }}>
       <Card.Content>
-        {isLoading ? (
+        {isLoading || summary === null ? (
           <View>
             <Skeleton count={2} style={{ width: "100%", height: 20, marginBottom: GLOBAL_CONSTANTS.MD_MARGIN }} />
             <Skeleton style={{ width: "100%", height: 20 }} />
           </View>
         ) : (
           <View>
-            {/* <View style={{ flexDirection: "row", marginBottom: GLOBAL_CONSTANTS.MD_MARGIN, alignItems: "center" }}>
-            <IconImage source={{ uri: summary?.coinURL }} />
-            <Text style={{ marginLeft: GLOBAL_CONSTANTS.MD_MARGIN, ...TYPOGRAPHY.title }}>
-              {summary?.coinName} ({summary?.coinSymbol})
-            </Text>
-          </View> */}
             <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
               <View style={{ width: "50%", marginBottom: GLOBAL_CONSTANTS.SM_MARGIN }}>
                 <Text style={{ ...TYPOGRAPHY.body2 }}>Total Cost</Text>
@@ -35,7 +29,9 @@ function Header({ summary, isLoading }) {
               </View>
               <View style={{ width: "50%", marginBottom: GLOBAL_CONSTANTS.SM_MARGIN }}>
                 <Text style={{ ...TYPOGRAPHY.body2 }}>Average Cost</Text>
-                <Text style={{ ...TYPOGRAPHY.body1 }}>${formatNumWorklet(summary?.avgCost)}</Text>
+                <Text style={{ ...TYPOGRAPHY.body1 }}>
+                  {summary?.avgCost === null ? "N/A" : `$${formatNumWorklet(summary?.avgCost)}`}
+                </Text>
               </View>
               <View style={{ width: "50%", marginBottom: GLOBAL_CONSTANTS.SM_MARGIN }}>
                 <Text style={{ ...TYPOGRAPHY.body2 }}>Holdings Value</Text>
