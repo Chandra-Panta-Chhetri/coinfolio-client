@@ -98,9 +98,9 @@ export const transactionCoinsSuccess = (coins) => ({
   payload: coins
 });
 
-export const startAddingNewTransaction = (transaction, onSuccess) => ({
+export const startAddingNewTransaction = (transaction, onSuccess, startingScreen) => ({
   type: PORTFOLIO_ACTION_TYPES.START_ADDING_NEW_TRANSACTION,
-  payload: { transaction, onSuccess }
+  payload: { transaction, onSuccess, startingScreen }
 });
 
 export const addNewTransactionFail = (errorMsg) => ({

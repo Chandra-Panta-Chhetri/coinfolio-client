@@ -56,7 +56,7 @@ function AddTransactionScreen({ route, navigation, isAddingTransaction, addTrans
         coinId: selectedCoin?.id,
         type: TRANSACTION_TYPES[data?.type]?.value
       };
-      addTransaction(transactionToAdd, goBack);
+      addTransaction(transactionToAdd, goBack, startingScreen);
     }
   };
 
@@ -193,7 +193,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addTransaction: (transaction, onSuccess) => dispatch(startAddingNewTransaction(transaction, onSuccess))
+  addTransaction: (transaction, onSuccess, startingScreen) =>
+    dispatch(startAddingNewTransaction(transaction, onSuccess, startingScreen))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddTransactionScreen);

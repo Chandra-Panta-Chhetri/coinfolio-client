@@ -115,20 +115,24 @@ function* fetchTransactionCoins({ payload: query }) {
   }
 }
 
-function* addNewTransaction({ payload: { transaction, onSuccess } }) {
+function* addNewTransaction({ payload: { transaction, onSuccess, startingScreen } }) {
   try {
     const authToken = yield select(selectUserToken);
     const activePortfolio = yield select(selectActivePortfolio);
     const oldTransactions = yield select(selectTransactions);
+    const holdingOverview = yield select(selectHoldingOverview);
     const newTransaction = yield portfolioAPI.addTransaction(authToken, transaction, activePortfolio?.id);
     const updatedTransactions = yield [...oldTransactions, newTransaction];
     yield put(addNewTransactionSuccess(updatedTransactions));
+    if (startingScreen === "HoldingOverview" && holdingOverview !== null) {
+      yield put(startHoldingOverviewFetch(holdingOverview?.coinId));
+    }
     yield put(startPortfolioOverviewFetch(activePortfolio?.id));
     if (onSuccess !== undefined) {
       yield onSuccess();
     }
   } catch (err) {
-    yield put(addNewTransactionFail("There was a problem adding a new transaction"));
+    yield put(addNewTransactionFail("Failed to add new transaction"));
   }
 }
 

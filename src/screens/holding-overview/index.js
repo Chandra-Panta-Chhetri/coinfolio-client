@@ -12,6 +12,7 @@ import {
 import { AsyncFlatList, ConfirmationDialog } from "../../shared-components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { Header, Transaction, TransactionDetail } from "./components";
+import { useHiddenFABOnScroll } from "../../hooks";
 
 const NUM_SKELETON = 5;
 
@@ -33,8 +34,23 @@ const HoldingOverviewScreen = ({
   deleteTransaction,
   isDeletingTransaction
 }) => {
+  const goToAddTransaction = () =>
+    navigation.navigate("AddTransaction", {
+      selectedCoin: {
+        id: summary?.coinId,
+        symbol: summary?.coinSymbol,
+        name: summary?.coinName,
+        image: summary?.coinURL
+      },
+      startingScreen: "HoldingOverview"
+    });
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const [isDeleteTransactionShown, setIsDeleteTransactionShown] = useState(false);
+  const { scrollHandler, Fab: AddTransactionFab } = useHiddenFABOnScroll({
+    icon: "plus",
+    onFABClick: goToAddTransaction,
+    accessibilityLabel: "Add Transaction"
+  });
   const { coinId } = route.params;
   useEffect(() => {
     fetchOverview(coinId);
@@ -67,35 +83,39 @@ const HoldingOverviewScreen = ({
   const openTransactionDeleteModal = () => setIsDeleteTransactionShown(true);
 
   return (
-    <AsyncFlatList
-      data={transactions}
-      isLoading={isLoadingOverview}
-      numSkeletons={NUM_SKELETON}
-      ListHeaderComponent={
-        <>
-          <Header summary={summary} isLoading={isLoadingOverview} />
-          <Text style={TYPOGRAPHY.headline}>Transactions</Text>
-          <TransactionDetail
-            transaction={selectedTransaction}
-            hideDetails={() => setSelectedTransaction(null)}
-            summary={summary}
-            onDelete={openTransactionDeleteModal}
-          />
-          <ConfirmationDialog
-            isVisible={isDeleteTransactionShown}
-            onConfirmCb={onDeleteConfirm}
-            confirmationTitle="Delete Transaction"
-            confirmationText={`Are you sure you want to delete this transaction?`}
-            hideDialog={hideTransactionDeleteModal}
-            isLoading={isDeletingTransaction}
-            isDismissable={false}
-          />
-        </>
-      }
-      renderSkeleton={renderSkeleton}
-      renderDataItem={renderTransaction}
-      contentContainerStyle={GLOBAL_STYLES.screenContainer}
-    />
+    <>
+      <AsyncFlatList
+        data={transactions}
+        isLoading={isLoadingOverview}
+        numSkeletons={NUM_SKELETON}
+        onScroll={scrollHandler}
+        ListHeaderComponent={
+          <>
+            <Header summary={summary} isLoading={isLoadingOverview} />
+            <Text style={TYPOGRAPHY.headline}>Transactions</Text>
+            <TransactionDetail
+              transaction={selectedTransaction}
+              hideDetails={() => setSelectedTransaction(null)}
+              summary={summary}
+              onDelete={openTransactionDeleteModal}
+            />
+            <ConfirmationDialog
+              isVisible={isDeleteTransactionShown}
+              onConfirmCb={onDeleteConfirm}
+              confirmationTitle="Delete Transaction"
+              confirmationText={`Are you sure you want to delete this transaction?`}
+              hideDialog={hideTransactionDeleteModal}
+              isLoading={isDeletingTransaction}
+              isDismissable={false}
+            />
+          </>
+        }
+        renderSkeleton={renderSkeleton}
+        renderDataItem={renderTransaction}
+        contentContainerStyle={GLOBAL_STYLES.screenContainer}
+      />
+      {summary !== null ? <AddTransactionFab /> : null}
+    </>
   );
 };
 
