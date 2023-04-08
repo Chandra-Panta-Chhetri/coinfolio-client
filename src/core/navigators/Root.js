@@ -8,7 +8,7 @@ import {
   CompareCurrencyScreen,
   PriceAlertScreen,
   ConvertCurrencyScreen,
-  AddTransactionScreen,
+  AddEditTransactionScreen,
   SelectCurrencyScreen,
   SelectHomeScreen,
   TermsAndPrivacyScreen,
@@ -59,15 +59,7 @@ const RootNavigator = ({ isAuthenticated, isAddingTransaction }) => {
               headerTitle: "Select a Coin"
             }}
           />
-          <Stack.Screen
-            name="AddTransaction"
-            component={AddTransactionScreen}
-            options={{
-              headerTitle: "Add Transaction",
-              gestureEnabled: !isAddingTransaction,
-              headerLeft: isAddingTransaction ? () => undefined : undefined
-            }}
-          />
+          <Stack.Screen name="AddEditTransaction" component={AddEditTransactionScreen} />
           <Stack.Screen
             name="HoldingOverview"
             component={HoldingOverviewScreen}

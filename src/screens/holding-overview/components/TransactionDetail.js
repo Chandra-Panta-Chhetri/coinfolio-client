@@ -7,10 +7,12 @@ import { TYPOGRAPHY } from "../../../styles";
 import { formatNumWorklet, toISOSubstring } from "../../../utils";
 import { TYPE_NAME_MAP } from "./Transaction";
 
-function TransactionDetail({ transaction, hideDetails, summary, onDelete }) {
+function TransactionDetail({ transaction, hideDetails, summary, onDelete, onEdit }) {
   const isShown = transaction !== null && transaction !== undefined;
 
-  const onEditPress = () => {};
+  const onEditPress = () => {
+    onEdit(transaction);
+  };
 
   return (
     <Modal visible={isShown} onDismiss={hideDetails}>

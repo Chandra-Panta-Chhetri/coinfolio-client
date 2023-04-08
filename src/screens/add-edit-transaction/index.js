@@ -1,10 +1,10 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { StyleSheet, View, Text, KeyboardAvoidingView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { GLOBAL_CONSTANTS } from "../../constants";
-import { startAddingNewTransaction } from "../../redux/portfolio/portfolio.actions";
-import { selectIsAddingTransaction } from "../../redux/portfolio/portfolio.selectors";
+import { startAddingNewTransaction, startUpdatingTransaction } from "../../redux/portfolio/portfolio.actions";
+import { selectIsAddingTransaction, selectIsUpdatingTransaction } from "../../redux/portfolio/portfolio.selectors";
 import { TextInput, DatePicker, DropDown, Button } from "../../shared-components";
 import { GLOBAL_STYLES } from "../../styles";
 import { TextInput as RNPTextInput } from "react-native-paper";
@@ -17,25 +17,44 @@ const TRANSACTION_TYPES = [
   { label: "Transfer Out", value: "transfer_out" }
 ];
 
-function AddTransactionScreen({ route, navigation, isAddingTransaction, addTransaction }) {
-  const { selectedCoin, startingScreen } = route.params;
+function AddEditTransactionScreen({
+  route,
+  navigation,
+  isAddingTransaction,
+  addTransaction,
+  updateTransaction,
+  isUpdatingTransaction
+}) {
+  const { selectedCoin, startingScreen, transactionToUpdate } = route.params;
+  const isInEditMode = transactionToUpdate !== undefined;
   const {
     control,
     handleSubmit,
     formState: { errors, isValid, isDirty }
   } = useForm({
     defaultValues: {
-      type: 0,
-      quantity: "",
-      pricePer: "",
-      date: null,
-      notes: ""
+      type: isInEditMode ? TRANSACTION_TYPES.findIndex((type) => type.value === transactionToUpdate?.type) : 0,
+      quantity: isInEditMode ? transactionToUpdate?.quantity : "",
+      pricePer: isInEditMode ? transactionToUpdate?.pricePerUSD : "",
+      date: isInEditMode ? transactionToUpdate?.date : null,
+      notes: isInEditMode ? transactionToUpdate?.notes : ""
     }
   });
   const quantityInputRef = useRef();
   const notesInputRef = useRef();
-  const backAction = useCallback(() => isAddingTransaction, [isAddingTransaction]);
+  const backAction = useCallback(
+    () => (isInEditMode ? isUpdatingTransaction : isAddingTransaction),
+    [isUpdatingTransaction, isInEditMode, isAddingTransaction]
+  );
   useHandleNativeBack(backAction);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: isInEditMode ? "Edit Transaction" : "Add Transaction",
+      gestureEnabled: !isUpdatingTransaction && !isAddingTransaction,
+      headerLeft: (isInEditMode ? isUpdatingTransaction : isAddingTransaction) ? () => undefined : undefined
+    });
+  }, [isInEditMode, isAddingTransaction, isUpdatingTransaction]);
 
   const goBack = () => {
     if (startingScreen === "SelectTransactionCoin") {
@@ -51,12 +70,20 @@ function AddTransactionScreen({ route, navigation, isAddingTransaction, addTrans
       if (data["notes"] === "") {
         delete data["notes"];
       }
-      const transactionToAdd = {
-        ...data,
-        coinId: selectedCoin?.id,
-        type: TRANSACTION_TYPES[data?.type]?.value
-      };
-      addTransaction(transactionToAdd, goBack, startingScreen);
+      if (isInEditMode) {
+        const updates = {
+          ...data,
+          type: TRANSACTION_TYPES[data?.type]?.value
+        };
+        updateTransaction(transactionToUpdate?.id, updates, goBack);
+      } else {
+        const transactionToAdd = {
+          ...data,
+          coinId: selectedCoin?.id,
+          type: TRANSACTION_TYPES[data?.type]?.value
+        };
+        addTransaction(transactionToAdd, goBack, startingScreen);
+      }
     }
   };
 
@@ -159,11 +186,25 @@ function AddTransactionScreen({ route, navigation, isAddingTransaction, addTrans
         />
       </KeyboardAvoidingView>
       <View style={STYLES.formActions}>
-        <Button label={"Cancel"} disabled={isAddingTransaction} onPress={goBack} mode="contained" style={STYLES.flex} />
         <Button
-          label={isAddingTransaction ? "Creating..." : "Create"}
-          disabled={isAddingTransaction || !isValid || !isDirty}
-          loading={isAddingTransaction}
+          label={"Cancel"}
+          disabled={isInEditMode ? isUpdatingTransaction : isAddingTransaction}
+          onPress={goBack}
+          mode="contained"
+          style={STYLES.flex}
+        />
+        <Button
+          label={
+            isInEditMode
+              ? isUpdatingTransaction
+                ? "Updating..."
+                : "Update"
+              : isAddingTransaction
+              ? "Creating..."
+              : "Create"
+          }
+          disabled={(isInEditMode ? isUpdatingTransaction : isAddingTransaction) || !isValid || !isDirty}
+          loading={isInEditMode ? isUpdatingTransaction : isAddingTransaction}
           onPress={handleSubmit(onSubmit)}
           mode="contained"
           style={STYLES.submitFormBtn}
@@ -189,12 +230,15 @@ const STYLES = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
-  isAddingTransaction: selectIsAddingTransaction(state)
+  isAddingTransaction: selectIsAddingTransaction(state),
+  isUpdatingTransaction: selectIsUpdatingTransaction(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addTransaction: (transaction, onSuccess, startingScreen) =>
-    dispatch(startAddingNewTransaction(transaction, onSuccess, startingScreen))
+    dispatch(startAddingNewTransaction(transaction, onSuccess, startingScreen)),
+  updateTransaction: (transactionId, updates, onSuccess) =>
+    dispatch(startUpdatingTransaction(transactionId, updates, onSuccess))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddTransactionScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(AddEditTransactionScreen);

@@ -337,3 +337,15 @@ export const deleteTransaction = async (transaction, portfolioId, token) => {
   }
   return null;
 };
+
+export const updateTransaction = async (transactionUpdates, portfolioId, token, transactionId) => {
+  if (portfolioId !== undefined && transactionUpdates !== undefined) {
+    const res = await axios.patch(`/portfolios/${portfolioId}/transactions/${transactionId}`, transactionUpdates, {
+      headers: {
+        "X-Auth-Token": token
+      }
+    });
+    return res?.data;
+  }
+  return null;
+};

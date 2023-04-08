@@ -18,7 +18,8 @@ const INITIAL_STATE = {
   isDeletingHolding: false,
   holdingOverview: null,
   isLoadingHoldingOverview: false,
-  isDeletingTransaction: false
+  isDeletingTransaction: false,
+  isUpdatingTransaction: false
 };
 
 const userReducer = (prevState = INITIAL_STATE, action) => {
@@ -161,6 +162,21 @@ const userReducer = (prevState = INITIAL_STATE, action) => {
       return {
         ...prevState,
         isDeletingTransaction: true
+      };
+    case PORTFOLIO_ACTION_TYPES.START_UPDATING_TRANSACTION:
+      return {
+        ...prevState,
+        isUpdatingTransaction: true
+      };
+    case PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_FAIL:
+      return {
+        ...prevState,
+        isUpdatingTransaction: false
+      };
+    case PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_SUCCESS:
+      return {
+        ...prevState,
+        isUpdatingTransaction: false
       };
     default:
       return prevState;

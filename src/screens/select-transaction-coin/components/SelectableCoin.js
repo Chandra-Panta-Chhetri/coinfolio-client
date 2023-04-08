@@ -11,7 +11,7 @@ function SelectableCoin({ coin }) {
   const navigation = useNavigation();
 
   const onPress = () =>
-    navigation.navigate("AddTransaction", { selectedCoin: coin, startingScreen: "SelectTransactionCoin" });
+    navigation.navigate("AddEditTransaction", { selectedCoin: coin, startingScreen: "SelectTransactionCoin" });
 
   return (
     <ShortCoinDetails coin={coin} onPress={onPress}>

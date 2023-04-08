@@ -58,3 +58,8 @@ export const selectIsDeletingTransaction = createSelector(
   [selectPortfolio],
   (portfolio) => portfolio.isDeletingTransaction
 );
+
+export const selectIsUpdatingTransaction = createSelector(
+  [selectPortfolio],
+  (portfolio) => portfolio.isUpdatingTransaction
+);

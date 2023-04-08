@@ -127,24 +127,18 @@ export const deleteTransactionSuccess = () => ({
   type: PORTFOLIO_ACTION_TYPES.DELETE_TRANSACTION_SUCCESS
 });
 
-export const startUpdatingTransactionById = (transactionId, updatedTransaction, index) => ({
-  type: PORTFOLIO_ACTION_TYPES.START_UPDATING_TRANSACTION_BY_ID,
-  payload: { transactionId, updatedTransaction, index }
+export const startUpdatingTransaction = (transactionId, transactionUpdates, onSuccess) => ({
+  type: PORTFOLIO_ACTION_TYPES.START_UPDATING_TRANSACTION,
+  payload: { transactionId, transactionUpdates, onSuccess }
 });
 
-export const updateTransactionByIdFail = (errorMsg) => ({
-  type: PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_BY_ID_FAIL,
-  payload: {
-    errorMsg
-  }
+export const updateTransactionFail = (errorMsg) => ({
+  type: PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_FAIL,
+  payload: errorMsg
 });
 
-export const updateTransactionByIdSuccess = (updatedTransactions, successMsg) => ({
-  type: PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_BY_ID_SUCCESS,
-  payload: {
-    updatedTransactions,
-    successMsg
-  }
+export const updateTransactionSuccess = () => ({
+  type: PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_SUCCESS
 });
 
 export const startDeletingHolding = (coinId, onSuccess) => ({

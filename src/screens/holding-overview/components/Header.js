@@ -43,12 +43,16 @@ function Header({ summary, isLoading }) {
                   {formatNumWorklet(summary?.amount)} {summary?.coinSymbol}
                 </Text>
               </View>
-              <View>
+              <View style={{ width: "50%" }}>
                 <Text style={{ ...TYPOGRAPHY.body2 }}>Profit/Loss</Text>
                 <Text style={[getStylesBasedOnSignWorklet(summary?.profitLoss?.percentChange), TYPOGRAPHY.body1]}>
                   {formatPriceWorklet(summary?.profitLoss?.value)} (
                   {formatPercentWorklet(summary?.profitLoss?.percentChange)})
                 </Text>
+              </View>
+              <View style={{ width: "50%" }}>
+                <Text style={{ ...TYPOGRAPHY.body2 }}>Current Price</Text>
+                <Text style={{ ...TYPOGRAPHY.body1 }}>{`$${formatNumWorklet(summary?.priceUSD?.value)}`}</Text>
               </View>
             </View>
           </View>

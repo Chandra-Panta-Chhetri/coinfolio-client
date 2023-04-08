@@ -3,10 +3,8 @@ import {
   portfolioOverviewFetchFail,
   addNewTransactionFail,
   deleteTransactionFail,
-  updateTransactionByIdFail,
   portfolioOverviewFetchSuccess,
   addNewTransactionSuccess,
-  updateTransactionByIdSuccess,
   userPortfoliosFetchSuccess,
   userPortfoliosFetchFail,
   addNewPortfolioSuccess,
@@ -24,7 +22,9 @@ import {
   holdingOverviewFetchFail,
   holdingOverviewFetchSuccess,
   deleteTransactionSuccess,
-  startHoldingOverviewFetch
+  startHoldingOverviewFetch,
+  updateTransactionSuccess,
+  updateTransactionFail
 } from "./portfolio.actions";
 import PORTFOLIO_ACTION_TYPES from "./portfolio.action.types";
 import {
@@ -155,14 +155,22 @@ function* deleteTransaction({ payload: { transaction, onSuccess } }) {
   }
 }
 
-function* updateTransactionById({ payload: { transactionId, updatedTransaction, index } }) {
+function* updateTransaction({ payload: { transactionId, transactionUpdates, onSuccess } }) {
   try {
-    const transactions = yield select(selectTransactions);
-    transactions[index] = yield updatedTransaction;
-    const updatedTransactions = yield [...transactions];
-    yield put(updateTransactionByIdSuccess(updatedTransactions, `Transaction details have been updated`));
+    const authToken = yield select(selectUserToken);
+    const activePortfolio = yield select(selectActivePortfolio);
+    const holdingOverview = yield select(selectHoldingOverview);
+    yield portfolioAPI.updateTransaction(transactionUpdates, activePortfolio?.id, authToken, transactionId);
+    yield put(updateTransactionSuccess());
+    if (holdingOverview !== null) {
+      yield put(startHoldingOverviewFetch(holdingOverview?.coinId));
+      yield put(startPortfolioOverviewFetch(activePortfolio?.id));
+    }
+    if (onSuccess !== undefined) {
+      yield onSuccess();
+    }
   } catch (err) {
-    yield put(updateTransactionByIdFail("There was a problem updating the transaction details"));
+    yield put(updateTransactionFail("Failed update transaction"));
   }
 }
 
@@ -204,8 +212,8 @@ function* watchDeleteTransaction() {
   yield takeLatest(PORTFOLIO_ACTION_TYPES.START_DELETING_TRANSACTION, deleteTransaction);
 }
 
-function* watchUpdateTransactionByIdStart() {
-  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_UPDATING_TRANSACTION_BY_ID, updateTransactionById);
+function* watchUpdateTransactionStart() {
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_UPDATING_TRANSACTION, updateTransaction);
 }
 
 function* watchDeleteHolding() {
@@ -247,6 +255,7 @@ export default function* portfolioSagas() {
     call(watchTransactionCoinsFetch),
     call(watchDeleteHolding),
     call(watchHoldingOverviewFetch),
-    call(watchDeleteTransaction)
+    call(watchDeleteTransaction),
+    call(watchUpdateTransactionStart)
   ]);
 }

@@ -35,7 +35,7 @@ const HoldingOverviewScreen = ({
   isDeletingTransaction
 }) => {
   const goToAddTransaction = () =>
-    navigation.navigate("AddTransaction", {
+    navigation.navigate("AddEditTransaction", {
       selectedCoin: {
         id: summary?.coinId,
         symbol: summary?.coinSymbol,
@@ -44,6 +44,21 @@ const HoldingOverviewScreen = ({
       },
       startingScreen: "HoldingOverview"
     });
+
+  const onEditTransaction = (transactionToUpdate) => {
+    setSelectedTransaction(null);
+    navigation.navigate("AddEditTransaction", {
+      selectedCoin: {
+        id: summary?.coinId,
+        symbol: summary?.coinSymbol,
+        name: summary?.coinName,
+        image: summary?.coinURL
+      },
+      startingScreen: "HoldingOverview",
+      transactionToUpdate
+    });
+  };
+
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const [isDeleteTransactionShown, setIsDeleteTransactionShown] = useState(false);
   const { scrollHandler, Fab: AddTransactionFab } = useHiddenFABOnScroll({
@@ -98,6 +113,7 @@ const HoldingOverviewScreen = ({
               hideDetails={() => setSelectedTransaction(null)}
               summary={summary}
               onDelete={openTransactionDeleteModal}
+              onEdit={onEditTransaction}
             />
             <ConfirmationDialog
               isVisible={isDeleteTransactionShown}

@@ -1,4 +1,4 @@
-export { default as AddTransactionScreen } from "./add-transaction";
+export { default as AddEditTransactionScreen } from "./add-edit-transaction";
 export { default as ChangeEmailOrNameScreen } from "./change-email-or-name";
 export { default as ChangePasswordScreen } from "./change-password";
 export { default as CompareCurrencyScreen } from "./compare-currency";
