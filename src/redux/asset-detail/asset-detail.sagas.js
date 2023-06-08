@@ -8,83 +8,99 @@ import {
   selectAssetNews
 } from "./asset-detail.selectors";
 import {
-  initialAssetEventsFail,
-  moreAssetEventsSuccess,
-  initialAssetEventsSuccess,
-  moreAssetEventsFail,
-  assetAboutFail,
-  assetMarketsFail,
-  assetOverviewFail,
-  moreAssetNewsFail,
-  initialAssetNewsFail,
-  assetAboutSuccess,
-  assetMarketsSuccess,
-  assetOverviewSuccess,
-  moreAssetNewsSuccess,
-  initialAssetNewsSuccess,
+  fetchAssetEventsFail,
+  fetchMoreAssetEventsSuccess,
+  fetchAssetEventsSuccess,
+  fetchMoreAssetEventsFail,
+  fetchAssetAboutFail,
+  fetchAssetMarketsFail,
+  fetchAssetOverviewFail,
+  fetchMoreAssetNewsFail,
+  fetchAssetNewsFail,
+  fetchAssetAboutSuccess,
+  fetchAssetMarketsSuccess,
+  fetchAssetOverviewSuccess,
+  fetchMoreAssetNewsSuccess,
+  fetchAssetNewsSuccess,
   noMoreAssetNews,
   noMoreAssetEvents
 } from "./asset-detail.actions";
 import { newsAPI, eventsAPI, marketsAPI } from "../../api";
-import { EVENTS_CONSTANTS, NEWS_CONSTANTS } from "../../constants";
-import { toISOSubstring } from "../../utils";
+import { isNullOrUndefined, toISOSubstring } from "../../utils";
+import NEWS_FILTERS from "../../components/News/filters";
+import EVENTS_FILTERS from "../../components/Events/filters";
 
 function* getAssetOverview({ payload: id }) {
   try {
     const overview = yield marketsAPI.getAssetOverview(id);
-    yield put(assetOverviewSuccess(overview));
+    if (!isNullOrUndefined(overview)) {
+      yield put(fetchAssetOverviewSuccess(overview));
+    } else {
+      throw new Error("Failed to get overview");
+    }
   } catch (err) {
-    yield put(assetOverviewFail("Server error while fetching the overview"));
+    yield put(fetchAssetOverviewFail("Server error while fetching the overview"));
   }
 }
 
 function* getAssetMarkets({ payload: { id, query } }) {
   try {
     const markets = yield marketsAPI.getAssetExchanges(id, query);
-    yield put(assetMarketsSuccess(markets));
+    if (!isNullOrUndefined(markets)) {
+      yield put(fetchAssetMarketsSuccess(markets));
+    } else {
+      throw new Error("Failed to get markets");
+    }
   } catch (err) {
-    yield put(assetMarketsFail("Server error while fetching the markets"));
+    yield put(fetchAssetMarketsFail("Server error while fetching the markets"));
   }
 }
 
 function* getAssetAbout({ payload: id }) {
   try {
     const about = yield marketsAPI.getAssetAbout(id);
-    yield put(assetAboutSuccess(about));
+    if (!isNullOrUndefined(about)) {
+      yield put(fetchAssetAboutSuccess(about));
+    } else {
+      throw new Error("Failed to get about");
+    }
   } catch (err) {
-    yield put(assetAboutFail("Server error while fetching the about"));
+    yield put(fetchAssetAboutFail("Server error while fetching the about"));
   }
 }
 
 function* getNews({ payload: query }) {
   try {
-    const response = yield newsAPI.getNews({
+    const news = yield newsAPI.getNews({
       ...query,
-      filter: query.filter || NEWS_CONSTANTS.DEFAULT_FILTER
+      filter: query.filter ?? NEWS_FILTERS.SHOW_ONLY.DEFAULT_OPTION
     });
-    const news = yield response.results;
-    if (news.length === 0) {
+    if (news?.length === 0) {
       return yield put(noMoreAssetNews());
     }
-    yield put(initialAssetNewsSuccess(news));
+    yield put(fetchAssetNewsSuccess(news));
   } catch (err) {
-    yield put(initialAssetNewsFail("There was an error while fetching the news"));
+    yield put(fetchAssetNewsFail("Failed to get the news"));
   }
 }
 
 function* getMoreNews({ payload: query }) {
   try {
     const page = yield select(selectAssetNewsPage);
-    const res = yield newsAPI.getNews({ ...query, filter: query.filter || NEWS_CONSTANTS.DEFAULT_FILTER, page });
-    const news = yield res.results;
+    const response = yield newsAPI.getNews({
+      ...query,
+      filter: query.filter ?? NEWS_FILTERS.SHOW_ONLY.DEFAULT_OPTION,
+      page
+    });
+    const news = yield response?.results;
     const currentNews = yield select(selectAssetNews);
     const combinedNews = yield [...currentNews, ...news];
-    if (news.length === 0 || combinedNews.length >= res.totalResults) {
+    if (news?.length === 0 || combinedNews.length >= response?.totalResults) {
       return yield put(noMoreAssetNews());
     }
-    yield put(moreAssetNewsSuccess(combinedNews));
+    yield put(fetchMoreAssetNewsSuccess(combinedNews));
   } catch (err) {
-    yield put(moreAssetNewsFail("There was an error while fetching more news"));
+    yield put(fetchMoreAssetNewsFail("Failed to get more news"));
   }
 }
 
@@ -92,20 +108,20 @@ function* getEvents({ payload: query }) {
   try {
     const filters = yield select(selectAssetEventFilters);
     const filtersDTO = {
-      max: filters.limit,
-      ...(filters.dateRange.start && { dateRangeStart: toISOSubstring(filters.dateRange.start) }),
-      ...(filters.dateRange.end && { dateRangeEnd: toISOSubstring(filters.dateRange.end) }),
+      max: filters?.limit,
+      ...(filters?.dateRange?.start && { dateRangeStart: toISOSubstring(filters?.dateRange?.start) }),
+      ...(filters?.dateRange?.end && { dateRangeEnd: toISOSubstring(filters?.dateRange?.end) }),
       ...query,
-      sortBy: EVENTS_CONSTANTS.SHOW_ONLY_FILTERS[filters.sortBy].value
+      sortBy: EVENTS_FILTERS.TYPES[filters.sortBy]?.value
     };
-    const res = yield eventsAPI.getEvents(filtersDTO);
-    const events = yield res.results;
-    if (events.length === 0) {
+    const response = yield eventsAPI.getEvents(filtersDTO);
+    const events = yield response?.response;
+    if (events?.length === 0) {
       return yield put(noMoreAssetEvents());
     }
-    yield put(initialAssetEventsSuccess(events));
+    yield put(fetchAssetEventsSuccess(events));
   } catch (err) {
-    yield put(initialAssetEventsFail("There was an error while fetching the events"));
+    yield put(fetchAssetEventsFail("Failed to get the events"));
   }
 }
 
@@ -114,63 +130,62 @@ function* getMoreEvents({ payload: query }) {
     const page = yield select(selectAssetEventsPage);
     const filters = yield select(selectAssetEventFilters);
     const filtersDTO = {
-      max: filters.limit,
+      max: filters?.limit,
       page,
-      ...(filters.dateRange.start && { dateRangeStart: toISOSubstring(filters.dateRange.start) }),
-      ...(filters.dateRange.end && { dateRangeEnd: toISOSubstring(filters.dateRange.end) }),
+      ...(filters?.dateRange?.start && { dateRangeStart: toISOSubstring(filters?.dateRange?.start) }),
+      ...(filters?.dateRange?.end && { dateRangeEnd: toISOSubstring(filters?.dateRange?.end) }),
       ...query,
-      sortBy: EVENTS_CONSTANTS.SHOW_ONLY_FILTERS[filters.sortBy].value
+      sortBy: EVENTS_FILTERS.TYPES[filters?.sortBy]?.value
     };
-    const res = yield eventsAPI.getEvents(filtersDTO);
-    const events = yield res.results;
+    const response = yield eventsAPI.getEvents(filtersDTO);
+    const events = yield response?.results;
     const currentEvents = yield select(selectAssetEvents);
     const combinedEvents = yield [...currentEvents, ...events];
-    if (events.length === 0 || combinedEvents.length >= res.metadata.total_count) {
+    if (events?.length === 0 || combinedEvents.length >= response?.metadata?.total_count) {
       return yield put(noMoreAssetEvents());
     }
-    yield put(moreAssetEventsSuccess(combinedEvents));
+    yield put(fetchMoreAssetEventsSuccess(combinedEvents));
   } catch (err) {
-    console.log(err.message);
-    yield put(moreAssetEventsFail("There was an error while fetching more events"));
+    yield put(fetchMoreAssetEventsFail("Failed to get more events"));
   }
 }
 
-function* watchInitialNewsFetch() {
-  yield takeLatest(ASSET_DETAIL_ACTION_TYPES.INITIAL_ASSET_NEWS_FETCH, getNews);
+function* watchFetchNews() {
+  yield takeLatest(ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_NEWS, getNews);
 }
 
-function* watchMoreNewsFetch() {
+function* watchFetchMoreNews() {
   yield takeLatest(ASSET_DETAIL_ACTION_TYPES.FETCH_MORE_ASSET_NEWS, getMoreNews);
 }
 
-function* watchInitialEventsFetch() {
-  yield takeLatest(ASSET_DETAIL_ACTION_TYPES.INITIAL_ASSET_EVENTS_FETCH, getEvents);
+function* watchFetchEvents() {
+  yield takeLatest(ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_EVENTS, getEvents);
 }
 
-function* watchMoreEventsFetch() {
+function* watchFetchMoreEvents() {
   yield takeLatest(ASSET_DETAIL_ACTION_TYPES.FETCH_MORE_ASSET_EVENTS, getMoreEvents);
 }
 
-function* watchOverviewFetch() {
+function* watchFetchOverview() {
   yield takeLatest(ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_OVERVIEW, getAssetOverview);
 }
 
-function* watchMarketsFetch() {
+function* watchFetchMarkets() {
   yield takeLatest(ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_MARKETS, getAssetMarkets);
 }
 
-function* watchAboutFetch() {
+function* watchFetchAbout() {
   yield takeLatest(ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_ABOUT, getAssetAbout);
 }
 
 export default function* discoverSagas() {
   yield all([
-    call(watchInitialEventsFetch),
-    call(watchInitialNewsFetch),
-    call(watchMoreNewsFetch),
-    call(watchMoreEventsFetch),
-    call(watchOverviewFetch),
-    call(watchMarketsFetch),
-    call(watchAboutFetch)
+    call(watchFetchEvents),
+    call(watchFetchNews),
+    call(watchFetchMoreNews),
+    call(watchFetchMoreEvents),
+    call(watchFetchOverview),
+    call(watchFetchMarkets),
+    call(watchFetchAbout)
   ]);
 }

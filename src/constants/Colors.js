@@ -4,5 +4,6 @@ export default {
   INFO: "#1a87ff",
   WARNING: "#f0ad4e",
   LIGHT_GREY: "#e5e5e5",
-  WHITE: "#FFFFFF"
+  WHITE: "#FFFFFF",
+  TRANSPARENT: "transparent"
 };

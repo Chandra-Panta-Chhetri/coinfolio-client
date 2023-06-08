@@ -1,33 +1,35 @@
 import React, { useEffect } from "react";
 import { View } from "react-native";
-import HeadingWithSeeAll from "./HeadingWithSeeAll";
+import SeeAllHeading from "./SeeAllHeading";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
-import { selectNewsSummary, startNewsSummaryFetch, selectIsLoadingNewsSummary } from "../../../redux/summary";
-import { NewsItemSkeleton, NewsItem } from "../../../shared-components";
+import { selectNewsSummary, fetchNewsSummary, selectIsLoadingNewsSummary } from "../../../redux/summary";
+import NewsItem from "../../../components/News/NewsItem";
 import { GLOBAL_STYLES } from "../../../styles";
+import SCREEN_NAMES from "../../../navigators/screen-names";
+import { isNullOrUndefined } from "../../../utils";
 
-const MAX_NEWS_SUMMARIES = 4;
-const DUMMY_SKELETON_ARRAY = Array(MAX_NEWS_SUMMARIES).fill("1");
+const NUM_SKELETON_LOADERS = 4;
+const DUMMY_SKELETON_LOADERS_ARRAY = Array(NUM_SKELETON_LOADERS).fill("1");
 
-const NewsSummaries = ({ news, isLoading, fetchNewsSummary }) => {
+const NewsSummaries = ({ news, isLoadingNewsSummaries, fetchNewsSummary }) => {
   const navigation = useNavigation();
-  const toNewsScreen = () => navigation.navigate("Discover", { screen: "News" });
+  const goToNewsScreen = () => navigation?.navigate(SCREEN_NAMES.DISCOVER, { screen: SCREEN_NAMES.NEWS });
 
   useEffect(() => {
-    fetchNewsSummary(MAX_NEWS_SUMMARIES);
+    fetchNewsSummary(NUM_SKELETON_LOADERS);
   }, []);
 
   return (
     <View>
-      <HeadingWithSeeAll title="News" onSeeAllPress={toNewsScreen} />
+      <SeeAllHeading title="News" onSeeAllPress={goToNewsScreen} />
       <View>
-        {isLoading || news.length === 0
-          ? DUMMY_SKELETON_ARRAY.map((_, i) => (
-              <NewsItemSkeleton key={i} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
+        {isLoadingNewsSummaries || isNullOrUndefined(news) || news?.length === 0
+          ? DUMMY_SKELETON_LOADERS_ARRAY.map((_, i) => (
+              <NewsItem.Skeleton key={i} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
             ))
           : news.map((n, i) => (
-              <NewsItem news={n} key={n.title} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
+              <NewsItem news={n} key={n?.title} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
             ))}
       </View>
     </View>
@@ -36,11 +38,11 @@ const NewsSummaries = ({ news, isLoading, fetchNewsSummary }) => {
 
 const mapStateToProps = (state) => ({
   news: selectNewsSummary(state),
-  isLoading: selectIsLoadingNewsSummary(state)
+  isLoadingNewsSummaries: selectIsLoadingNewsSummary(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchNewsSummary: (limit) => dispatch(startNewsSummaryFetch(limit))
+  fetchNewsSummary: (limit) => dispatch(fetchNewsSummary(limit))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewsSummaries);

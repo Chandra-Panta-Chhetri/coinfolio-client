@@ -1,12 +1,12 @@
 import { takeLatest, put, call, all, select } from "redux-saga/effects";
 import {
-  portfolioOverviewFetchFail,
+  fetchPortfolioOverviewFail,
   addNewTransactionFail,
   deleteTransactionFail,
-  portfolioOverviewFetchSuccess,
+  fetchPortfolioOverviewSuccess,
   addNewTransactionSuccess,
-  userPortfoliosFetchSuccess,
-  userPortfoliosFetchFail,
+  fetchUserPortfoliosSuccess,
+  fetchUserPortfoliosFail,
   addNewPortfolioSuccess,
   addNewPortfolioFail,
   updatePortfolioFail,
@@ -14,15 +14,15 @@ import {
   deletePortfolioSuccess,
   deletePortfolioFail,
   changeActivePortfolio,
-  transactionCoinsFail,
-  transactionCoinsSuccess,
-  startPortfolioOverviewFetch,
-  deletingHoldingSuccess,
-  deletingHoldingFail,
-  holdingOverviewFetchFail,
-  holdingOverviewFetchSuccess,
+  fetchTransactionCoinsFail,
+  fetchTransactionCoinsSuccess,
+  fetchPortfolioOverview,
+  deleteHoldingSuccess,
+  deleteHoldingFail,
+  fetchHoldingOverviewFail,
+  fetchHoldingOverviewSuccess,
   deleteTransactionSuccess,
-  startHoldingOverviewFetch,
+  fetchHoldingOverview,
   updateTransactionSuccess,
   updateTransactionFail
 } from "./portfolio.actions";
@@ -33,38 +33,52 @@ import {
   selectTransactions,
   selectUserPortfolios
 } from "./portfolio.selectors";
-import { selectUserToken } from "../user";
+import { selectAuthToken } from "../user";
 import { portfolioAPI } from "../../api";
+import { isNullOrUndefined } from "../../utils";
+import SCREEN_NAMES from "../../navigators/screen-names";
 
 function* fetchPortfolio({ payload: { id } }) {
   try {
-    const authToken = yield select(selectUserToken);
+    const authToken = yield select(selectAuthToken);
     const portfolio = yield portfolioAPI.getOverview(id, authToken);
-    yield put(portfolioOverviewFetchSuccess(portfolio));
+    if (!isNullOrUndefined(portfolio)) {
+      yield put(fetchPortfolioOverviewSuccess(portfolio));
+    } else {
+      throw new Error("Failed to get portfolio");
+    }
   } catch (err) {
-    yield put(portfolioOverviewFetchFail("There was a problem getting your portfolio details"));
+    yield put(fetchPortfolioOverviewFail("Failed to get portfolio"));
   }
 }
 
 function* fetchUserPortfolios() {
   try {
-    const authToken = yield select(selectUserToken);
+    const authToken = yield select(selectAuthToken);
     const portfolios = yield portfolioAPI.getUserPortfolios(authToken);
-    yield put(userPortfoliosFetchSuccess(portfolios));
+    if (!isNullOrUndefined(portfolios)) {
+      yield put(fetchUserPortfoliosSuccess(portfolios));
+    } else {
+      throw new Error("Failed to get portfolios");
+    }
   } catch (err) {
-    yield put(userPortfoliosFetchFail("Failed to fetch all portfolios"));
+    yield put(fetchUserPortfoliosFail("Failed to get portfolios"));
   }
 }
 
 function* addNewPortfolio({ payload: { portfolio, onSuccess } }) {
   try {
-    const authToken = yield select(selectUserToken);
+    const authToken = yield select(selectAuthToken);
     const prevPortfolios = yield select(selectUserPortfolios);
     const newPortfolio = yield portfolioAPI.createPortfolio(authToken, portfolio);
-    const updatedPortfolios = [...prevPortfolios, newPortfolio];
-    yield put(addNewPortfolioSuccess(updatedPortfolios));
-    if (onSuccess !== undefined) {
-      yield onSuccess();
+    if (!isNullOrUndefined(newPortfolio)) {
+      const updatedPortfolios = yield [...prevPortfolios, newPortfolio];
+      yield put(addNewPortfolioSuccess(updatedPortfolios));
+      if (!isNullOrUndefined(onSuccess)) {
+        yield onSuccess();
+      }
+    } else {
+      throw new Error("Failed to create new portfolio");
     }
   } catch (err) {
     yield put(addNewPortfolioFail("Failed to create new portfolio"));
@@ -73,13 +87,17 @@ function* addNewPortfolio({ payload: { portfolio, onSuccess } }) {
 
 function* updatePortfolio({ payload: { portfolio, portfolioId, onSuccess } }) {
   try {
-    const authToken = yield select(selectUserToken);
+    const authToken = yield select(selectAuthToken);
     const portfolios = yield select(selectUserPortfolios);
     const updatedPortfolio = yield portfolioAPI.updatePortfolio(authToken, portfolio, portfolioId);
-    const updatedPortfolios = portfolios.map((p) => (p?.id === portfolioId ? updatedPortfolio : p));
-    yield put(updatePortfolioSuccess(updatedPortfolios));
-    if (onSuccess !== undefined) {
-      yield onSuccess();
+    if (!isNullOrUndefined(updatedPortfolio)) {
+      const updatedPortfolios = portfolios.map((p) => (p?.id === portfolioId ? updatedPortfolio : p));
+      yield put(updatePortfolioSuccess(updatedPortfolios));
+      if (!isNullOrUndefined(onSuccess)) {
+        yield onSuccess();
+      }
+    } else {
+      throw new Error("Failed to update portfolio");
     }
   } catch (err) {
     yield put(updatePortfolioFail("Failed to update portfolio"));
@@ -88,17 +106,21 @@ function* updatePortfolio({ payload: { portfolio, portfolioId, onSuccess } }) {
 
 function* deletePortfolio({ payload: { portfolioId, onSuccess } }) {
   try {
-    const authToken = yield select(selectUserToken);
+    const authToken = yield select(selectAuthToken);
     const portfolios = yield select(selectUserPortfolios);
     const activePortfolio = yield select(selectActivePortfolio);
-    yield portfolioAPI.deletePortfolio(authToken, portfolioId);
-    const updatedPortfolios = portfolios.filter((p) => p?.id !== portfolioId);
-    yield put(deletePortfolioSuccess(updatedPortfolios));
-    if (activePortfolio?.id === portfolioId) {
-      yield put(changeActivePortfolio(updatedPortfolios?.length > 0 ? updatedPortfolios[0] : null));
-    }
-    if (onSuccess !== undefined) {
-      yield onSuccess();
+    const deletedPortfolio = yield portfolioAPI.deletePortfolio(authToken, portfolioId);
+    if (!isNullOrUndefined(deletedPortfolio)) {
+      const updatedPortfolios = portfolios.filter((p) => p?.id !== portfolioId);
+      yield put(deletePortfolioSuccess(updatedPortfolios));
+      if (activePortfolio?.id === portfolioId) {
+        yield put(changeActivePortfolio(updatedPortfolios?.length > 0 ? updatedPortfolios[0] : null));
+      }
+      if (!isNullOrUndefined(onSuccess)) {
+        yield onSuccess();
+      }
+    } else {
+      throw new Error("Failed to delete portfolio");
     }
   } catch (err) {
     yield put(deletePortfolioFail("Failed to delete portfolio"));
@@ -107,155 +129,184 @@ function* deletePortfolio({ payload: { portfolioId, onSuccess } }) {
 
 function* fetchTransactionCoins({ payload: query }) {
   try {
-    const authToken = yield select(selectUserToken);
+    const authToken = yield select(selectAuthToken);
     const coins = yield portfolioAPI.getTransactionCoins(authToken, query);
-    yield put(transactionCoinsSuccess(coins));
+    if (!isNullOrUndefined(coins)) {
+      yield put(fetchTransactionCoinsSuccess(coins));
+    } else {
+      throw new Error("Failed to get transaction coins");
+    }
   } catch (err) {
-    yield put(transactionCoinsFail("Failed to load transaction coins"));
+    yield put(fetchTransactionCoinsFail("Failed to get transaction coins"));
   }
 }
 
 function* addNewTransaction({ payload: { transaction, onSuccess, startingScreen } }) {
   try {
-    const authToken = yield select(selectUserToken);
+    const authToken = yield select(selectAuthToken);
     const activePortfolio = yield select(selectActivePortfolio);
     const oldTransactions = yield select(selectTransactions);
     const holdingOverview = yield select(selectHoldingOverview);
     const newTransaction = yield portfolioAPI.addTransaction(authToken, transaction, activePortfolio?.id);
-    const updatedTransactions = yield [...oldTransactions, newTransaction];
-    yield put(addNewTransactionSuccess(updatedTransactions));
-    if (startingScreen === "HoldingOverview" && holdingOverview !== null) {
-      yield put(startHoldingOverviewFetch(holdingOverview?.coinId));
-    }
-    yield put(startPortfolioOverviewFetch(activePortfolio?.id));
-    if (onSuccess !== undefined) {
-      yield onSuccess();
+    if (!isNullOrUndefined(newTransaction)) {
+      const updatedTransactions = yield [...oldTransactions, newTransaction];
+      yield put(addNewTransactionSuccess(updatedTransactions));
+      if (startingScreen === SCREEN_NAMES.HOLDING_OVERVIEW && !isNullOrUndefined(holdingOverview)) {
+        yield put(fetchHoldingOverview(holdingOverview?.coinId));
+      }
+      yield put(fetchPortfolioOverview(activePortfolio?.id));
+      if (!isNullOrUndefined(onSuccess)) {
+        yield onSuccess();
+      }
+    } else {
+      throw new Error("Failed to create new transaction");
     }
   } catch (err) {
-    yield put(addNewTransactionFail("Failed to add new transaction"));
+    yield put(addNewTransactionFail("Failed to create new transaction"));
   }
 }
 
 function* deleteTransaction({ payload: { transaction, onSuccess } }) {
   try {
-    const authToken = yield select(selectUserToken);
+    const authToken = yield select(selectAuthToken);
     const activePortfolio = yield select(selectActivePortfolio);
     const holdingOverview = yield select(selectHoldingOverview);
-    yield portfolioAPI.deleteTransaction(transaction, activePortfolio?.id, authToken);
-    yield put(deleteTransactionSuccess());
-    if (holdingOverview !== null) {
-      yield put(startHoldingOverviewFetch(holdingOverview?.coinId));
-      yield put(startPortfolioOverviewFetch(activePortfolio?.id));
-    }
-    if (onSuccess !== undefined) {
-      yield onSuccess();
+    const deletedTransaction = yield portfolioAPI.deleteTransaction(transaction, activePortfolio?.id, authToken);
+    if (!isNullOrUndefined(deletedTransaction)) {
+      yield put(deleteTransactionSuccess());
+      if (!isNullOrUndefined(holdingOverview)) {
+        yield put(fetchHoldingOverview(holdingOverview?.coinId));
+        yield put(fetchPortfolioOverview(activePortfolio?.id));
+      }
+      if (!isNullOrUndefined(onSuccess)) {
+        yield onSuccess();
+      }
+    } else {
+      throw new Error("Failed to delete transaction");
     }
   } catch (err) {
-    yield put(deleteTransactionFail("Deleting transaction failed"));
+    yield put(deleteTransactionFail("Failed to delete transaction"));
   }
 }
 
 function* updateTransaction({ payload: { transactionId, transactionUpdates, onSuccess } }) {
   try {
-    const authToken = yield select(selectUserToken);
+    const authToken = yield select(selectAuthToken);
     const activePortfolio = yield select(selectActivePortfolio);
     const holdingOverview = yield select(selectHoldingOverview);
-    yield portfolioAPI.updateTransaction(transactionUpdates, activePortfolio?.id, authToken, transactionId);
-    yield put(updateTransactionSuccess());
-    if (holdingOverview !== null) {
-      yield put(startHoldingOverviewFetch(holdingOverview?.coinId));
-      yield put(startPortfolioOverviewFetch(activePortfolio?.id));
-    }
-    if (onSuccess !== undefined) {
-      yield onSuccess();
+    const updatedTransaction = yield portfolioAPI.updateTransaction(
+      transactionUpdates,
+      activePortfolio?.id,
+      authToken,
+      transactionId
+    );
+    if (!isNullOrUndefined(updatedTransaction)) {
+      yield put(updateTransactionSuccess());
+      if (!isNullOrUndefined(holdingOverview)) {
+        yield put(fetchHoldingOverview(holdingOverview?.coinId));
+        yield put(fetchPortfolioOverview(activePortfolio?.id));
+      }
+      if (!isNullOrUndefined(onSuccess)) {
+        yield onSuccess();
+      }
+    } else {
+      throw new Error("Failed to update transaction");
     }
   } catch (err) {
-    yield put(updateTransactionFail("Failed update transaction"));
+    yield put(updateTransactionFail("Failed to update transaction"));
   }
 }
 
 function* deleteHolding({ payload: { coinId, onSuccess } }) {
   try {
-    const authToken = yield select(selectUserToken);
+    const authToken = yield select(selectAuthToken);
     const activePortfolio = yield select(selectActivePortfolio);
-    yield portfolioAPI.removeHolding(coinId, activePortfolio?.id, authToken);
-    yield put(deletingHoldingSuccess());
-    if (onSuccess !== undefined) {
-      yield onSuccess();
+    const removedHolding = yield portfolioAPI.removeHolding(coinId, activePortfolio?.id, authToken);
+    if (!isNullOrUndefined(removedHolding)) {
+      yield put(deleteHoldingSuccess());
+      if (!isNullOrUndefined(onSuccess)) {
+        yield onSuccess();
+      }
+      yield put(fetchPortfolioOverview(activePortfolio?.id));
+    } else {
+      throw new Error("Failed to remove holding");
     }
-    yield put(startPortfolioOverviewFetch(activePortfolio?.id));
   } catch (err) {
-    yield put(deletingHoldingFail("There was a problem removing holding"));
+    yield put(deleteHoldingFail("Failed to remove holding"));
   }
 }
 
-function* fetchHoldingOverview({ payload: coinId }) {
+function* getHoldingOverview({ payload: coinId }) {
   try {
-    const authToken = yield select(selectUserToken);
+    const authToken = yield select(selectAuthToken);
     const activePortfolio = yield select(selectActivePortfolio);
     const holdingOverview = yield portfolioAPI.getHoldingOverview(coinId, activePortfolio?.id, authToken);
-    yield put(holdingOverviewFetchSuccess(holdingOverview));
+    if (!isNullOrUndefined(holdingOverview)) {
+      yield put(fetchHoldingOverviewSuccess(holdingOverview));
+    } else {
+      throw new Error("Failed to get holding overview");
+    }
   } catch (err) {
-    yield put(holdingOverviewFetchFail("Failed to get holding overview"));
+    yield put(fetchHoldingOverviewFail("Failed to get holding overview"));
   }
 }
 
-function* watchPortfolioFetchStart() {
-  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_PORTFOLIO_OVERVIEW_FETCH, fetchPortfolio);
+function* watchFetchPortfolioOverview() {
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.FETCH_PORTFOLIO_OVERVIEW, fetchPortfolio);
 }
 
-function* watchAddingNewTransaction() {
-  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_ADDING_NEW_TRANSACTION, addNewTransaction);
+function* watchAddNewTransaction() {
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.ADD_NEW_TRANSACTION, addNewTransaction);
 }
 
 function* watchDeleteTransaction() {
-  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_DELETING_TRANSACTION, deleteTransaction);
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.DELETE_TRANSACTION, deleteTransaction);
 }
 
-function* watchUpdateTransactionStart() {
-  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_UPDATING_TRANSACTION, updateTransaction);
+function* watchUpdateTransaction() {
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION, updateTransaction);
 }
 
 function* watchDeleteHolding() {
-  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_DELETING_HOLDING, deleteHolding);
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.DELETE_HOLDING, deleteHolding);
 }
 
-function* watchUserPortfoliosFetchStart() {
-  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_USER_PORTFOLIOS_FETCH, fetchUserPortfolios);
+function* watchFetchUserPortfolios() {
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.FETCH_USER_PORTFOLIOS, fetchUserPortfolios);
 }
 
 function* watchAddNewPortfolio() {
-  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_ADDING_NEW_PORTFOLIO, addNewPortfolio);
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.ADD_NEW_PORTFOLIO, addNewPortfolio);
 }
 
 function* watchUpdatePortfolio() {
-  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_UPDATING_PORTFOLIO, updatePortfolio);
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.UPDATE_PORTFOLIO, updatePortfolio);
 }
 
 function* watchDeletePortfolio() {
-  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_DELETING_PORTFOLIO, deletePortfolio);
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.DELETE_PORTFOLIO, deletePortfolio);
 }
 
-function* watchTransactionCoinsFetch() {
-  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_TRANSACTION_COINS_FETCH, fetchTransactionCoins);
+function* watchFetchTransactionCoins() {
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTION_COINS, fetchTransactionCoins);
 }
 
-function* watchHoldingOverviewFetch() {
-  yield takeLatest(PORTFOLIO_ACTION_TYPES.START_HOLDING_OVERVIEW_FETCH, fetchHoldingOverview);
+function* watchFetchHoldingOverview() {
+  yield takeLatest(PORTFOLIO_ACTION_TYPES.FETCH_HOLDING_OVERVIEW, getHoldingOverview);
 }
 
 export default function* portfolioSagas() {
   yield all([
-    call(watchPortfolioFetchStart),
-    call(watchAddingNewTransaction),
-    call(watchUserPortfoliosFetchStart),
+    call(watchFetchPortfolioOverview),
+    call(watchAddNewTransaction),
+    call(watchFetchUserPortfolios),
     call(watchAddNewPortfolio),
     call(watchUpdatePortfolio),
     call(watchDeletePortfolio),
-    call(watchTransactionCoinsFetch),
+    call(watchFetchTransactionCoins),
     call(watchDeleteHolding),
-    call(watchHoldingOverviewFetch),
+    call(watchFetchHoldingOverview),
     call(watchDeleteTransaction),
-    call(watchUpdateTransactionStart)
+    call(watchUpdateTransaction)
   ]);
 }

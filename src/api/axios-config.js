@@ -1,6 +1,5 @@
 import axios from "axios";
-import { URLS } from "../constants";
 
 export default axios.create({
-  baseURL: `${URLS.BACKEND_BASE_URL}`
+  baseURL: `http://192.168.1.106:5000/api/v1`
 });

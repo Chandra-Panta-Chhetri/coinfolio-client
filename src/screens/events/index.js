@@ -1,37 +1,38 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import {
-  startEventsFetch,
+  fetchEvents,
   selectEvents,
   selectIsLoadingEvents,
   selectIsLoadingMoreEvents,
   selectHasMoreEvents,
-  startNextEventsFetch
+  fetchMoreEvents
 } from "../../redux/discover";
-import { EventsList } from "../../shared-components";
+import { Events } from "../../components";
+import SCREEN_NAMES from "../../navigators/screen-names";
 
 const EventsScreen = ({
   navigation,
   fetchEvents,
   events,
-  isLoading,
+  isLoadingEvents,
   fetchMoreEvents,
-  isLoadingMore,
-  hasMoreToFetch
+  isLoadingMoreEvents,
+  hasMoreEventsToFetch
 }) => {
-  const navigateToFiltersScreen = () => navigation.navigate("DiscoverEventFilters");
+  const navigateToFiltersScreen = () => navigation?.navigate(SCREEN_NAMES.DISCOVER_EVENT_FILTERS);
 
   useEffect(() => {
     fetchEvents();
   }, []);
 
   return (
-    <EventsList
+    <Events
       onFABClick={navigateToFiltersScreen}
       fetchMore={fetchMoreEvents}
-      hasMoreToFetch={hasMoreToFetch}
-      isLoading={isLoading}
-      isLoadingMore={isLoadingMore}
+      hasMoreToFetch={hasMoreEventsToFetch}
+      isLoading={isLoadingEvents}
+      isLoadingMore={isLoadingMoreEvents}
       events={events}
     />
   );
@@ -39,14 +40,14 @@ const EventsScreen = ({
 
 const mapStateToProps = (state) => ({
   events: selectEvents(state),
-  isLoading: selectIsLoadingEvents(state),
-  isLoadingMore: selectIsLoadingMoreEvents(state),
-  hasMoreToFetch: selectHasMoreEvents(state)
+  isLoadingEvents: selectIsLoadingEvents(state),
+  isLoadingMoreEvents: selectIsLoadingMoreEvents(state),
+  hasMoreEventsToFetch: selectHasMoreEvents(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchEvents: () => dispatch(startEventsFetch()),
-  fetchMoreEvents: () => dispatch(startNextEventsFetch())
+  fetchEvents: () => dispatch(fetchEvents()),
+  fetchMoreEvents: () => dispatch(fetchMoreEvents())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventsScreen);

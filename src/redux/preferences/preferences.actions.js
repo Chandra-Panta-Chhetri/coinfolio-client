@@ -18,8 +18,8 @@ export const changeHomeScreen = (screenNameVal) => ({
   payload: screenNameVal
 });
 
-export const toggleBiometricAuth = () => ({
-  type: PREFERENCES_ACTION_TYPES.TOGGLE_BIOMETRIC_AUTH
+export const toggleAuth = () => ({
+  type: PREFERENCES_ACTION_TYPES.TOGGLE_AUTH
 });
 
 export const togglePrivacyMode = () => ({

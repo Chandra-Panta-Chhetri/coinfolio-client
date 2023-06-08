@@ -1,16 +1,16 @@
 import { takeLatest, put, call, all, select } from "redux-saga/effects";
 import {
   noMoreMarkets,
-  marketsFetchSuccess,
-  marketsFetchFail,
-  moreMarketsSuccess,
-  moreMarketsFail,
-  trendingSearchesSuccess,
-  trendingSearchesFail,
-  recentSearchesFail,
-  recentSearchesSuccess,
-  searchResultsFail,
-  searchResultsSuccess
+  fetchMarketsSuccess,
+  fetchMarketsFail,
+  fetchMoreMarketsSuccess,
+  fetchMoreMarketsFail,
+  fetchTrendingSearchesSuccess,
+  fetchTrendingSearchesFail,
+  fetchRecentSearchesFail,
+  fetchRecentSearchesSuccess,
+  fetchSearchResultsFail,
+  fetchSearchResultsSuccess
 } from "./market.actions";
 import MARKET_ACTION_TYPES from "./market.action.types";
 import {
@@ -27,19 +27,17 @@ function* fetchMarkets() {
     const filters = yield select(selectMarketFilters);
     const perPage = yield select(selectMarketsPerPage);
     const markets = yield marketsAPI.getMarkets({
-      sortBy: filters.sortBy.value,
-      sortOrder: filters.sortOrder.value,
+      sortBy: filters?.sortBy?.value,
+      sortOrder: filters?.sortOrder?.value,
       perPage,
       page: 1
     });
-
-    if (markets.length === 0) {
+    if (markets?.length === 0) {
       return yield put(noMoreMarkets());
     }
-
-    yield put(marketsFetchSuccess(markets));
+    yield put(fetchMarketsSuccess(markets));
   } catch (err) {
-    yield put(marketsFetchFail("Error while fetching the markets"));
+    yield put(fetchMarketsFail("Failed to get the markets"));
   }
 }
 
@@ -49,120 +47,79 @@ function* fetchMoreMarkets() {
     if (!hasMore) {
       return yield;
     }
-
     const filters = yield select(selectMarketFilters);
     const pageNum = yield select(selectCurrentPage);
     const perPage = yield select(selectMarketsPerPage);
     const currentMarkets = yield select(selectMarkets);
-
     const newMarkets = yield marketsAPI.getMarkets({
-      sortBy: filters.sortBy.value,
-      sortOrder: filters.sortOrder.value,
+      sortBy: filters?.sortBy?.value,
+      sortOrder: filters?.sortOrder?.value,
       perPage,
       page: pageNum
     });
-
-    if (newMarkets.length === 0) {
+    if (newMarkets?.length === 0) {
       return yield put(noMoreMarkets());
     }
-
     const combinedMarkets = [...currentMarkets, ...newMarkets];
-    console.log("LOADED MORE MARKETS", currentMarkets[0] === combinedMarkets[0]);
-    yield put(moreMarketsSuccess(combinedMarkets));
+    yield put(fetchMoreMarketsSuccess(combinedMarkets));
   } catch (err) {
-    yield put(moreMarketsFail("Error while fetching more markets"));
+    yield put(fetchMoreMarketsFail("Failed to get more markets"));
   }
 }
 
 function* fetchTrendingSearches() {
   try {
-    const searches = [
-      {
-        image: "https://coincap.io/static/logo_mark.png",
-        name: "Bitcoin",
-        id: "bitcoin",
-        symbol: "BTC"
-      },
-      {
-        image: "https://coincap.io/static/logo_mark.png",
-        name: "Ethereum",
-        id: "ethereum",
-        symbol: "ETH"
-      }
-    ];
-    yield new Promise((res, rej) =>
-      setTimeout(() => {
-        res();
-      }, 5000)
-    );
-    yield put(trendingSearchesSuccess(searches));
+    const searches = [];
+    yield put(fetchTrendingSearchesSuccess(searches));
   } catch (err) {
-    yield put(trendingSearchesFail("Error while fetching trending searches"));
+    yield put(fetchTrendingSearchesFail("Failed to get trending searches"));
   }
 }
 
 function* fetchRecentSearches() {
   try {
-    const searches = [
-      {
-        image: "https://coincap.io/static/logo_mark.png",
-        name: "Bitcoin",
-        id: "bitcoin",
-        symbol: "BTC"
-      },
-      {
-        image: "https://coincap.io/static/logo_mark.png",
-        name: "Ethereum",
-        id: "ethereum",
-        symbol: "ETH"
-      }
-    ];
-    yield new Promise((res, rej) =>
-      setTimeout(() => {
-        res();
-      }, 5000)
-    );
-    yield put(recentSearchesSuccess(searches));
+    const searches = [];
+    yield put(fetchRecentSearchesSuccess(searches));
   } catch (err) {
-    yield put(recentSearchesFail("Error while fetching recent searches"));
+    yield put(fetchRecentSearchesFail("Failed to get recent searches"));
   }
 }
 
 function* fetchSearchResults({ payload: keyword }) {
   try {
     const searches = yield marketsAPI.getCoinsByKeyword(keyword);
-    yield put(searchResultsSuccess(searches));
+    yield put(fetchSearchResultsSuccess(searches));
   } catch (err) {
-    yield put(searchResultsFail("Error while fetching search results"));
+    yield put(fetchSearchResultsFail("Failed to get search results"));
   }
 }
 
-function* watchMarketsFetch() {
-  yield takeLatest([MARKET_ACTION_TYPES.UPDATE_FILTERS, MARKET_ACTION_TYPES.INITIAL_MARKETS_FETCH], fetchMarkets);
+function* watchFetchMarkets() {
+  yield takeLatest([MARKET_ACTION_TYPES.UPDATE_FILTERS, MARKET_ACTION_TYPES.FETCH_MARKETS], fetchMarkets);
 }
 
-function* watchMoreMarketsFetch() {
+function* watchFetchMoreMarkets() {
   yield takeLatest(MARKET_ACTION_TYPES.FETCH_MORE_MARKETS, fetchMoreMarkets);
 }
 
-function* watchTrendingSearchesFetch() {
+function* watchFetchTrendingSearches() {
   yield takeLatest(MARKET_ACTION_TYPES.FETCH_TRENDING_SEARCHES, fetchTrendingSearches);
 }
 
-function* watchRecentSearchesFetch() {
+function* watchFetchRecentSearches() {
   yield takeLatest(MARKET_ACTION_TYPES.FETCH_RECENT_SEARCHES, fetchRecentSearches);
 }
 
-function* watchSearchResultsFetch() {
+function* watchFetchSearchResults() {
   yield takeLatest(MARKET_ACTION_TYPES.FETCH_SEARCH_RESULTS, fetchSearchResults);
 }
 
 export default function* marketSagas() {
   yield all([
-    call(watchMarketsFetch),
-    call(watchMoreMarketsFetch),
-    call(watchTrendingSearchesFetch),
-    call(watchRecentSearchesFetch),
-    call(watchSearchResultsFetch)
+    call(watchFetchMarkets),
+    call(watchFetchMoreMarkets),
+    call(watchFetchTrendingSearches),
+    call(watchFetchRecentSearches),
+    call(watchFetchSearchResults)
   ]);
 }

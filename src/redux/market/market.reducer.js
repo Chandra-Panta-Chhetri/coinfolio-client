@@ -1,5 +1,5 @@
 import MARKET_ACTION_TYPES from "./market.action.types";
-import { MARKET_OVERVIEW_CONSTANTS } from "../../constants";
+import MARKET_OVERVIEW_FILTERS from "../../screens/MarketOverview/filters";
 
 const INITIAL_STATE = {
   markets: [],
@@ -9,9 +9,9 @@ const INITIAL_STATE = {
   hasMoreMarkets: true,
   pageNum: 1,
   filters: {
-    sortBy: MARKET_OVERVIEW_CONSTANTS.SORT_BY.DEFAULT_FILTER,
-    sortOrder: MARKET_OVERVIEW_CONSTANTS.SORT_ORDER.DEFAULT_FILTER,
-    showOnly: MARKET_OVERVIEW_CONSTANTS.SHOW_ONLY.DEFAULT_FILTER
+    sortBy: MARKET_OVERVIEW_FILTERS.SORT_BY.DEFAULT_OPTION,
+    sortOrder: MARKET_OVERVIEW_FILTERS.SORT_ORDER.DEFAULT_OPTION,
+    showOnly: MARKET_OVERVIEW_FILTERS.SHOW_ONLY.DEFAULT_OPTION
   },
   trendingSearches: [],
   recentSearches: [],
@@ -22,8 +22,8 @@ const INITIAL_STATE = {
 };
 
 const marketReducer = (prevState = INITIAL_STATE, action) => {
-  switch (action.type) {
-    case MARKET_ACTION_TYPES.INITIAL_MARKETS_FETCH:
+  switch (action?.type) {
+    case MARKET_ACTION_TYPES.FETCH_MARKETS:
       return {
         ...prevState,
         isLoadingMarkets: true,
@@ -32,7 +32,7 @@ const marketReducer = (prevState = INITIAL_STATE, action) => {
         pageNum: 1,
         isLoadingMoreMarkets: false
       };
-    case MARKET_ACTION_TYPES.INITIAL_MARKETS_FAIL:
+    case MARKET_ACTION_TYPES.FETCH_MARKETS_FAIL:
       return {
         ...prevState,
         isLoadingMarkets: false
@@ -44,17 +44,17 @@ const marketReducer = (prevState = INITIAL_STATE, action) => {
         hasMoreMarkets: false,
         isLoadingMoreMarkets: false
       };
-    case MARKET_ACTION_TYPES.INITIAL_MARKETS_SUCCESS:
+    case MARKET_ACTION_TYPES.FETCH_MARKETS_SUCCESS:
       return {
         ...prevState,
-        markets: action.payload,
+        markets: action?.payload,
         isLoadingMarkets: false,
         pageNum: prevState.pageNum + 1
       };
     case MARKET_ACTION_TYPES.UPDATE_FILTERS:
       return {
         ...prevState,
-        filters: { ...prevState.filters, ...action.payload },
+        filters: { ...prevState.filters, ...action?.payload },
         pageNum: 1,
         hasMoreMarkets: true,
         isLoadingMarkets: true,
@@ -74,7 +74,7 @@ const marketReducer = (prevState = INITIAL_STATE, action) => {
       return {
         ...prevState,
         isLoadingMoreMarkets: false,
-        markets: action.payload,
+        markets: action?.payload,
         pageNum: prevState.pageNum + 1
       };
     case MARKET_ACTION_TYPES.FETCH_TRENDING_SEARCHES:
@@ -82,13 +82,13 @@ const marketReducer = (prevState = INITIAL_STATE, action) => {
         ...prevState,
         isLoadingTrendingSearches: true
       };
-    case MARKET_ACTION_TYPES.FETCH_TRENDING_SUCCESS:
+    case MARKET_ACTION_TYPES.FETCH_TRENDING_SEARCHES_SUCCESS:
       return {
         ...prevState,
-        trendingSearches: action.payload,
+        trendingSearches: action?.payload,
         isLoadingTrendingSearches: false
       };
-    case MARKET_ACTION_TYPES.FETCH_TRENDING_FAIL:
+    case MARKET_ACTION_TYPES.FETCH_TRENDING_SEARCHES_FAIL:
       return {
         ...prevState,
         isLoadingTrendingSearches: false
@@ -106,7 +106,7 @@ const marketReducer = (prevState = INITIAL_STATE, action) => {
     case MARKET_ACTION_TYPES.FETCH_RECENT_SEARCHES_SUCCESS:
       return {
         ...prevState,
-        recentSearches: action.payload,
+        recentSearches: action?.payload,
         isLoadingRecentSearches: false
       };
     case MARKET_ACTION_TYPES.FETCH_SEARCH_RESULTS:
@@ -122,13 +122,13 @@ const marketReducer = (prevState = INITIAL_STATE, action) => {
     case MARKET_ACTION_TYPES.FETCH_SEARCH_RESULTS_SUCCESS:
       return {
         ...prevState,
-        searchResults: action.payload,
+        searchResults: action?.payload,
         isLoadingSearchResults: false
       };
     case MARKET_ACTION_TYPES.UPDATE_MARKETS:
       return {
         ...prevState,
-        markets: action.payload
+        markets: action?.payload
       };
     default:
       return prevState;

@@ -1,24 +1,18 @@
-import React, { useEffect, useRef, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { ScrollView } from "react-native";
 import { GLOBAL_STYLES } from "../../styles";
 import { GlobalMarketSummary, ShortcutIcons, TopCoins, GainersLosers, NewsSummaries } from "./components";
 import { connect } from "react-redux";
 import { selectGainersLosers, selectTopCoins, updateGainersLosers, updateTopCoins } from "../../redux/summary";
-import { useLivePrices, updatePriceOfCoins } from "../../hooks";
+import { useLivePrices, updatePriceOfCoins, useRefAsState } from "../../hooks";
+import SOCKET_EVENT_NAMES from "../../socket/event-names";
+import { isNullOrUndefined } from "../../utils";
 
 const HomeScreen = ({ topCoins, gainersLosers, updateTopCoins, updateGainersLosers }) => {
   const combinedCoins = useMemo(() => [...topCoins, ...gainersLosers], [topCoins, gainersLosers]);
   const socket = useLivePrices(combinedCoins);
-  const topCoinsRef = useRef(topCoins);
-  const gainersLosersRef = useRef(gainersLosers);
-
-  useEffect(() => {
-    topCoinsRef.current = topCoins;
-  }, [topCoins]);
-
-  useEffect(() => {
-    gainersLosersRef.current = gainersLosers;
-  }, [gainersLosers]);
+  const topCoinsRef = useRefAsState(topCoins);
+  const gainersLosersRef = useRefAsState(gainersLosers);
 
   const onNewPrices = (newPrices) => {
     const { wasUpdated: wasTopCoinsUpdated, coins: updatedTopCoins } = updatePriceOfCoins(
@@ -30,26 +24,25 @@ const HomeScreen = ({ topCoins, gainersLosers, updateTopCoins, updateGainersLose
       gainersLosersRef.current
     );
     if (wasTopCoinsUpdated) {
-      console.log(newPrices);
-      // console.log("top coins updated", newPrices);
+      // console.log("top coins updated", updatedTopCoins);
       updateTopCoins(updatedTopCoins);
     }
     if (wasGainersLosersUpdated) {
-      // console.log("gainers losers updated", newPrices);
+      // console.log("gainers losers updated", updatedGainersLosers);
       updateGainersLosers(updatedGainersLosers);
     }
   };
 
   useEffect(() => {
-    if (socket !== null) {
+    if (!isNullOrUndefined(socket)) {
       // console.log("home - listener init");
-      socket.on("new prices", onNewPrices);
+      socket.on(SOCKET_EVENT_NAMES.NEW_PRICES, onNewPrices);
     }
 
     return () => {
-      if (socket !== null) {
+      if (!isNullOrUndefined(socket)) {
         // console.log("home - listener removed");
-        socket.off("new prices");
+        socket.off(SOCKET_EVENT_NAMES.NEW_PRICES);
       }
     };
   }, [socket]);

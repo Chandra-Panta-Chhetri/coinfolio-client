@@ -1,14 +1,5 @@
-import {
-  MD2DarkTheme as PaperDarkTheme,
-  MD2LightTheme as PaperLightTheme,
-  adaptNavigationTheme
-} from "react-native-paper";
+import { MD2DarkTheme as PaperDarkTheme, MD2LightTheme as PaperLightTheme } from "react-native-paper";
 import { DefaultTheme as NavigationLightTheme, DarkTheme as NavigationDarkTheme } from "@react-navigation/native";
-
-// const { LightTheme: NavigationLightTheme, DarkTheme: NavigationDarkTheme } = adaptNavigationTheme({
-//   reactNavigationLight: DefaultTheme,
-//   reactNavigationDark: DarkTheme
-// });
 
 export const LIGHT = {
   ...PaperLightTheme,

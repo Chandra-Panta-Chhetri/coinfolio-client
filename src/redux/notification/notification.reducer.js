@@ -1,4 +1,3 @@
-import { COLORS } from "../../constants";
 import NOTIFICATION_ACTION_TYPES from "./notification.action.types";
 
 const INITIAL_STATE = {
@@ -6,14 +5,14 @@ const INITIAL_STATE = {
 };
 
 const notificationReducer = (prevState = INITIAL_STATE, action) => {
-  switch (action.type) {
+  switch (action?.type) {
     case NOTIFICATION_ACTION_TYPES.SUCCESS_NOTIFICATION:
     case NOTIFICATION_ACTION_TYPES.ERROR_NOTIFICATION:
     case NOTIFICATION_ACTION_TYPES.INFO_NOTIFICATION:
     case NOTIFICATION_ACTION_TYPES.WARNING_NOTIFICATION:
       return {
         ...prevState,
-        notification: action.payload
+        notification: action?.payload
       };
     case NOTIFICATION_ACTION_TYPES.CLEAR_RECENT_NOTIFICATION:
       return {

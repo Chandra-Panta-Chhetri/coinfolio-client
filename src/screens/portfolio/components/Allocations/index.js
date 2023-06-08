@@ -3,16 +3,16 @@ import { StyleSheet } from "react-native";
 import { Card, useTheme } from "react-native-paper";
 import { connect } from "react-redux";
 import { selectPortfolioPieCharts } from "../../../../redux/portfolio";
-import { formatNumWorklet } from "../../../../utils";
+import { formatNum, isNullOrUndefined } from "../../../../utils";
 import Labels from "./Labels";
 import { GLOBAL_CONSTANTS } from "../../../../constants";
-import { PieChart } from "../../../../shared-components";
+import { PieChart } from "../../../../components";
 
 const SLICE_COLORS = ["#ced6e5", "#7b75b8", "#5bb28a", "#d41923", "#30a5be"];
 
 const Allocations = ({ pieCharts }) => {
   const { colors } = useTheme();
-  const [data, setData] = useState([]);
+  const [dataPoints, setDataPoints] = useState([]);
   const [selectedSlice, setSelectedSlice] = useState(null);
 
   const changeSelectedSlice = (index, allowToggle = true) => {
@@ -26,15 +26,15 @@ const Allocations = ({ pieCharts }) => {
   };
 
   useEffect(() => {
-    if (pieCharts?.length > 0) {
-      const formattedAllocations = pieCharts.map((pc, i) => ({
-        key: `${pc.coinSymbol}`,
-        value: formatNumWorklet(+pc.percent * 100),
+    if (!isNullOrUndefined(pieCharts) && pieCharts?.length > 0) {
+      const formattedAllocations = pieCharts?.map((pc, i) => ({
+        key: `${pc?.coinSymbol}`,
+        value: formatNum(+pc?.percent * 100),
         svg: {
           fill: SLICE_COLORS[i]
         }
       }));
-      setData(formattedAllocations);
+      setDataPoints(formattedAllocations);
     }
   }, [pieCharts]);
 
@@ -42,14 +42,14 @@ const Allocations = ({ pieCharts }) => {
     <Card style={STYLES.cardContainer}>
       <Card.Content>
         <PieChart
-          pieChartStyle={STYLES.pieChart}
-          data={data}
+          style={STYLES.pieChart}
+          dataPoints={dataPoints}
           innerRadius="75%"
           selectedSlice={selectedSlice}
           changeSelectedSlice={changeSelectedSlice}
-          innerLabelStyle={{ fill: colors.text }}
+          innerLabelStyle={{ fill: colors?.text }}
         />
-        <Labels data={data} selectedSlice={selectedSlice} changeSelectedSlice={changeSelectedSlice} />
+        <Labels dataPoints={dataPoints} selectedSlice={selectedSlice} changeSelectedSlice={changeSelectedSlice} />
       </Card.Content>
     </Card>
   );

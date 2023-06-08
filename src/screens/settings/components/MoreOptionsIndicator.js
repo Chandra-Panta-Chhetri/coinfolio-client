@@ -4,17 +4,18 @@ import { Text, useTheme } from "react-native-paper";
 import { MaterialIcons } from "@expo/vector-icons";
 import { TYPOGRAPHY } from "../../../styles";
 import { GLOBAL_CONSTANTS } from "../../../constants";
+import { isNullOrUndefined } from "../../../utils";
 
-const MoreOptionsIndicator = ({ selectedOption }) => {
+const MoreOptionsIndicator = ({ selectedOptionLabel }) => {
   const { colors } = useTheme();
 
   return (
     <View style={STYLES.container}>
-      {selectedOption ? <Text style={STYLES.label}>{selectedOption}</Text> : null}
+      {!isNullOrUndefined(selectedOptionLabel) ? <Text style={STYLES.label}>{selectedOptionLabel}</Text> : null}
       <MaterialIcons
         name="keyboard-arrow-right"
         size={GLOBAL_CONSTANTS.ICON_SIZE}
-        color={colors.primary}
+        color={colors?.primary}
         style={TYPOGRAPHY.textAlignCenter}
       />
     </View>

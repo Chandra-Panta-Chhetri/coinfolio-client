@@ -1,13 +1,14 @@
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import EventsScreen from "../events";
-import NewsScreen from "../news";
+import EventsScreen from "../Events";
+import NewsScreen from "../News";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { GLOBAL_CONSTANTS } from "../../constants";
 import { Text } from "react-native-paper";
-import { BadgeTabBar } from "../../shared-components";
+import { BadgeTabBar } from "../../components";
+import SCREEN_NAMES from "../../navigators/screen-names";
 
 const NewsTabIcon = ({ color, size = GLOBAL_CONSTANTS.TAB_ICON_SIZE }) => (
   <Ionicons name="newspaper-outline" size={size} color={color} />
@@ -32,7 +33,7 @@ const DiscoverScreen = () => (
       backBehavior="none"
     >
       <Tab.Screen
-        name="News"
+        name={SCREEN_NAMES.NEWS}
         component={NewsScreen}
         options={{
           title: "News",
@@ -40,7 +41,7 @@ const DiscoverScreen = () => (
         }}
       />
       <Tab.Screen
-        name="Events"
+        name={SCREEN_NAMES.EVENTS}
         component={EventsScreen}
         options={{
           title: "Events",

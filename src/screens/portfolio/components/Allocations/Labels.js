@@ -2,12 +2,39 @@ import React from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 import { GLOBAL_CONSTANTS } from "../../../../constants";
-import { TouchableNativeFeedback } from "../../../../shared-components";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../styles";
+import { TouchableNativeFeedback } from "../../../../components";
+import { TYPOGRAPHY } from "../../../../styles";
+import { isNullOrUndefined } from "../../../../utils";
 
-const AllocationLabels = ({ data = [], selectedSlice = null, changeSelectedSlice }) => {
+const Label = ({ label, changeSelectedSlice, isSelected }) => {
   const { colors } = useTheme();
+  const onPress = () => {
+    if (!isNullOrUndefined(changeSelectedSlice)) {
+      changeSelectedSlice(i, false);
+    }
+  };
 
+  return (
+    <TouchableNativeFeedback onPress={onPress} viewContainerStyle={STYLES.touchableOpacityContainer}>
+      <View
+        style={[
+          STYLES.labelContainer,
+          isSelected
+            ? {
+                borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
+                backgroundColor: colors?.backgroundSelection
+              }
+            : null
+        ]}
+      >
+        <View style={[STYLES.pieSliceDot, { backgroundColor: label?.svg?.fill }]} />
+        <Text style={TYPOGRAPHY.subheading}>{label?.key}</Text>
+      </View>
+    </TouchableNativeFeedback>
+  );
+};
+
+const Labels = ({ data, selectedSlice, changeSelectedSlice }) => {
   return (
     <ScrollView
       contentContainerStyle={STYLES.contentContainer}
@@ -15,27 +42,8 @@ const AllocationLabels = ({ data = [], selectedSlice = null, changeSelectedSlice
       showsHorizontalScrollIndicator={false}
       style={STYLES.container}
     >
-      {data.map((d, i) => (
-        <TouchableNativeFeedback
-          key={d.key}
-          onPress={() => changeSelectedSlice && changeSelectedSlice(i, false)}
-          viewContainerStyle={STYLES.touchableOpacityContainer}
-        >
-          <View
-            style={[
-              STYLES.labelContainer,
-              i === selectedSlice
-                ? {
-                    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
-                    backgroundColor: colors.backgroundSelection
-                  }
-                : null
-            ]}
-          >
-            <View style={[STYLES.pieSliceDot, { backgroundColor: d.svg.fill }]} />
-            <Text style={TYPOGRAPHY.subheading}>{d.key}</Text>
-          </View>
-        </TouchableNativeFeedback>
+      {(data ?? []).map((d, i) => (
+        <Label label={d} key={d?.key} isSelected={i === selectedSlice} changeSelectedSlice={changeSelectedSlice} />
       ))}
     </ScrollView>
   );
@@ -64,4 +72,4 @@ const STYLES = StyleSheet.create({
   touchableOpacityContainer: { marginRight: 0, flexGrow: 1 }
 });
 
-export default AllocationLabels;
+export default Labels;

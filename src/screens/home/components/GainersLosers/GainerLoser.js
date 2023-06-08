@@ -2,19 +2,22 @@ import React, { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { TYPOGRAPHY } from "../../../../styles";
-import { getStylesBasedOnSign, formatPercentWorklet } from "../../../../utils";
-import { TouchableNativeFeedback, IconImage } from "../../../../shared-components";
+import { getStylesBasedOnSign, formatPercent } from "../../../../utils";
+import { TouchableNativeFeedback, IconImage } from "../../../../components";
 import { useNavigation } from "@react-navigation/native";
 import { GLOBAL_CONSTANTS } from "../../../../constants";
+import SCREEN_NAMES from "../../../../navigators/screen-names";
+import { GLOBAL_STYLES } from "../../../../styles";
+import { Skeleton } from "../../../../components";
 
-const GainerLoser = ({ coin, containerStyle = null }) => {
+const GainerLoser = ({ coin, containerStyle }) => {
   const navigation = useNavigation();
   const { image, name, symbol, priceUsd, changePercent24Hr, id } = coin;
 
-  const onPress = () => navigation.navigate("AssetDetail", { image, name, symbol, id });
+  const goToAssetDetail = () => navigation?.navigate(SCREEN_NAMES.ASSET_DETAIL, { image, name, symbol, id });
 
   return (
-    <TouchableNativeFeedback viewContainerStyle={containerStyle} onPress={onPress}>
+    <TouchableNativeFeedback viewContainerStyle={containerStyle} onPress={goToAssetDetail}>
       <Card style={STYLES.cardContainer}>
         <Card.Content style={STYLES.gainerLoserCardBody}>
           <IconImage
@@ -34,7 +37,7 @@ const GainerLoser = ({ coin, containerStyle = null }) => {
                 {priceUsd}
               </Text>
               <Text numberOfLines={1} style={[TYPOGRAPHY.body1, getStylesBasedOnSign(changePercent24Hr)]}>
-                {formatPercentWorklet(changePercent24Hr)}
+                {formatPercent(changePercent24Hr)}
               </Text>
             </View>
           </View>
@@ -43,6 +46,19 @@ const GainerLoser = ({ coin, containerStyle = null }) => {
     </TouchableNativeFeedback>
   );
 };
+
+export const GainerLoserSkeleton = ({ containerStyle }) => (
+  <Card style={[containerStyle, STYLES.cardContainer]}>
+    <Card.Content style={STYLES.cardBody}>
+      <Skeleton style={STYLES.icon} />
+      <View style={STYLES.infoContainer}>
+        <View style={STYLES.rowFlexbox}>
+          <Skeleton style={STYLES.fullNamePrice} />
+        </View>
+      </View>
+    </Card.Content>
+  </Card>
+);
 
 const STYLES = StyleSheet.create({
   gainerLoserCardBody: {
@@ -63,6 +79,22 @@ const STYLES = StyleSheet.create({
   },
   nameSymbol: {
     flex: 0.8
+  },
+  cardBody: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  fullNamePrice: {
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS,
+    height: 15,
+    flex: 1
+  },
+  rowFlexbox: {
+    flexDirection: "row"
+  },
+  icon: {
+    ...GLOBAL_STYLES.iconSize,
+    borderRadius: GLOBAL_CONSTANTS.ICON_SIZE
   }
 });
 

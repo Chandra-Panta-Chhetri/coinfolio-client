@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { pricesSocket } from "../socket";
-import { formatNumWorklet } from "../utils";
+import { isNullOrUndefined } from "../utils";
 import { useNavigation } from "@react-navigation/native";
+import SOCKET_EVENT_NAMES from "../socket/event-names";
 
 export const updatePriceOfCoins = (newPrices = {}, coins = []) => {
   const updatedCoins = [...coins];
@@ -10,7 +11,7 @@ export const updatePriceOfCoins = (newPrices = {}, coins = []) => {
   for (let i = 0; i < updatedCoins.length; i++) {
     let coin = updatedCoins[i];
     if (newPrices[coin.id] !== undefined) {
-      updatedCoins[i] = { ...coin, priceUsd: `$${formatNumWorklet(newPrices[coin.id])}` };
+      updatedCoins[i] = { ...coin, priceUsd: `${newPrices[coin.id]}` };
       wasUpdated = true;
     }
   }
@@ -23,22 +24,22 @@ export const useLivePrices = (coinsToWatch = []) => {
   const navigation = useNavigation();
 
   const pausePrices = () => {
-    if (socket !== null) {
+    if (!isNullOrUndefined(socket)) {
       console.log("pause prices");
-      socket.emit("pause prices");
+      socket.emit(SOCKET_EVENT_NAMES.PAUSE_PRICES);
     }
   };
 
   const resumePrices = () => {
-    if (socket !== null) {
+    if (!isNullOrUndefined(socket)) {
       console.log("resume prices");
-      socket.emit("resume prices");
+      socket.emit(SOCKET_EVENT_NAMES.RESUME_PRICES);
     }
   };
 
   useEffect(() => {
     if (coinsToWatch.length > 0) {
-      if (socket === null) {
+      if (isNullOrUndefined(socket)) {
         // console.log("init socket");
         const commaSepCoins = pricesSocket.coinsToCommaSepIDs(coinsToWatch);
         setSocket(pricesSocket.connectToLivePrices(commaSepCoins));
@@ -47,7 +48,7 @@ export const useLivePrices = (coinsToWatch = []) => {
         const newCommaSepCoins = pricesSocket.coinsToCommaSepIDs(coinsToWatch);
         if (prevCommaSepCoins.current !== newCommaSepCoins) {
           // console.log("update coins list");
-          socket.emit("update coins", newCommaSepCoins);
+          socket.emit(SOCKET_EVENT_NAMES.UPDATE_WATCHED_COINS, newCommaSepCoins);
           prevCommaSepCoins.current = newCommaSepCoins;
         }
       }
@@ -58,13 +59,13 @@ export const useLivePrices = (coinsToWatch = []) => {
     let unsubFocus = () => {};
     let unsubBlur = () => {};
 
-    if (socket !== null) {
+    if (!isNullOrUndefined(socket)) {
       unsubFocus = navigation.addListener("focus", resumePrices);
       unsubBlur = navigation.addListener("blur", pausePrices);
     }
 
     return () => {
-      if (socket !== null) {
+      if (!isNullOrUndefined(socket)) {
         // console.log("disconnect socket");
         socket.disconnect();
         // console.log("removing navigation event listeners");

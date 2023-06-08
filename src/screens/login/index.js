@@ -3,7 +3,7 @@ import { StyleSheet, Keyboard } from "react-native";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { Text } from "react-native-paper";
 import { Form } from "./components";
-import { PressableView } from "../../shared-components";
+import { PressableView } from "../../components";
 import { GLOBAL_CONSTANTS } from "../../constants";
 
 const LoginScreen = () => {

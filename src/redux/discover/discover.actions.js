@@ -1,61 +1,61 @@
+import NEWS_FILTERS from "../../components/News/filters";
 import DISCOVER_ACTION_TYPES from "./discover.action.types";
-import { NEWS_CONSTANTS } from "../../constants";
 
-export const startNewsFetch = (filter = NEWS_CONSTANTS.DEFAULT_FILTER) => ({
-  type: DISCOVER_ACTION_TYPES.INITIAL_NEWS_FETCH,
+export const fetchNews = (filter = NEWS_FILTERS.SHOW_ONLY.DEFAULT_OPTION) => ({
+  type: DISCOVER_ACTION_TYPES.FETCH_NEWS,
   payload: { filter }
 });
 
-export const initialNewsSuccess = (news) => ({
-  type: DISCOVER_ACTION_TYPES.INITIAL_NEWS_SUCCESS,
+export const fetchNewsSuccess = (news) => ({
+  type: DISCOVER_ACTION_TYPES.FETCH_NEWS_SUCCESS,
   payload: news
 });
 
-export const initialNewsFail = (errorMsg) => ({
-  type: DISCOVER_ACTION_TYPES.INITIAL_NEWS_FAIL,
+export const fetchNewsFail = (errorMsg) => ({
+  type: DISCOVER_ACTION_TYPES.FETCH_NEWS_FAIL,
   payload: errorMsg
 });
 
-export const startNextNewsFetch = (query) => ({
+export const fetchMoreNews = (query) => ({
   type: DISCOVER_ACTION_TYPES.FETCH_MORE_NEWS,
   payload: query
 });
 
-export const moreNewsSuccess = (news) => ({
+export const fetchMoreNewsSuccess = (news) => ({
   type: DISCOVER_ACTION_TYPES.FETCH_MORE_NEWS_SUCCESS,
   payload: news
 });
 
-export const moreNewsFail = (errorMsg) => ({
+export const fetchMoreNewsFail = (errorMsg) => ({
   type: DISCOVER_ACTION_TYPES.FETCH_MORE_NEWS_FAIL,
   payload: errorMsg
 });
 
-export const startEventsFetch = () => ({
-  type: DISCOVER_ACTION_TYPES.INITIAL_EVENTS_FETCH
+export const fetchEvents = () => ({
+  type: DISCOVER_ACTION_TYPES.FETCH_EVENTS
 });
 
-export const initialEventsSuccess = (events) => ({
-  type: DISCOVER_ACTION_TYPES.INITIAL_EVENTS_SUCCESS,
+export const fetchEventsSuccess = (events) => ({
+  type: DISCOVER_ACTION_TYPES.FETCH_EVENTS_SUCCESS,
   payload: events
 });
 
-export const initialEventsFail = (errorMsg) => ({
-  type: DISCOVER_ACTION_TYPES.INITIAL_EVENTS_FAIL,
+export const fetchEventsFail = (errorMsg) => ({
+  type: DISCOVER_ACTION_TYPES.FETCH_EVENTS_FAIL,
   payload: errorMsg
 });
 
-export const startNextEventsFetch = (query) => ({
+export const fetchMoreEvents = (query) => ({
   type: DISCOVER_ACTION_TYPES.FETCH_MORE_EVENTS,
   payload: query
 });
 
-export const moreEventsSuccess = (events) => ({
+export const fetchMoreEventsSuccess = (events) => ({
   type: DISCOVER_ACTION_TYPES.FETCH_MORE_EVENTS_SUCCESS,
   payload: events
 });
 
-export const moreEventsFail = (errorMsg) => ({
+export const fetchMoreEventsFail = (errorMsg) => ({
   type: DISCOVER_ACTION_TYPES.FETCH_MORE_EVENTS_FAIL,
   payload: errorMsg
 });

@@ -12,5 +12,7 @@ export default {
   BIOMETRIC_BACKGROUND_COLOR: "#f85a27",
   TERMS_AND_PRIVACY_BACKGROUND_COLOR: "#44484b",
   SHARE_BACKGROUND_COLOR: "#8c32fb",
-  VERSION_BACKGROUND_COLOR: "#1a87ff"
+  VERSION_BACKGROUND_COLOR: "#1a87ff",
+  IOS_SHARE_LINK: "https://play.google.com/store/apps/details?id=com.coinmarketcap.android",
+  ANDROID_SHARE_LINK: "https://play.google.com/store/apps/details?id=com.coinmarketcap.android"
 };

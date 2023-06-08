@@ -1,5 +1,6 @@
-export { useConfirmationDialog } from "./useConfirmationDialog";
+export { useConfirmationModal } from "./useConfirmationModal";
 export { useHiddenFABOnScroll } from "./useHiddenFABOnScroll";
 export { useBottomSheet } from "./useBottomSheet";
 export { useLivePrices, updatePriceOfCoins } from "./useLivePrices";
-export { useHandleNativeBack } from "./useHandleNativeBack";
+export { usePreventNativeBackWhenLoading } from "./usePreventNativeBackWhenLoading";
+export { useRefAsState } from "./useRefAsState";

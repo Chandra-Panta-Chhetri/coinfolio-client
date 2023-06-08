@@ -1,6 +1,6 @@
 import USER_ACTION_TYPES from "./user.action.types";
 
-export const startEmailLogin = (credentials) => ({
+export const loginWithEmail = (credentials) => ({
   type: USER_ACTION_TYPES.EMAIL_LOGIN,
   payload: credentials
 });
@@ -15,30 +15,30 @@ export const loginFail = (errorMsg) => ({
   payload: errorMsg
 });
 
-export const startUserRegister = (newUser) => ({
+export const registerUser = (newUser) => ({
   type: USER_ACTION_TYPES.REGISTER,
   payload: newUser
 });
 
-export const userRegisterFail = (errorMsg) => ({
+export const registerFail = (errorMsg) => ({
   type: USER_ACTION_TYPES.REGISTER_FAIL,
   payload: errorMsg
 });
 
-export const userRegisterSuccess = (user, token) => ({
+export const registerSuccess = (user, token) => ({
   type: USER_ACTION_TYPES.REGISTER_SUCCESS,
   payload: { user, token }
 });
 
-export const startLogOut = () => ({
+export const logout = () => ({
   type: USER_ACTION_TYPES.LOG_OUT
 });
 
-export const logOutSuccess = () => ({
+export const logoutSuccess = () => ({
   type: USER_ACTION_TYPES.LOG_OUT_SUCCESS
 });
 
-export const logOutFail = (errorMsg) => ({
+export const logoutFail = (errorMsg) => ({
   type: USER_ACTION_TYPES.LOG_OUT_FAIL,
   payload: errorMsg
 });

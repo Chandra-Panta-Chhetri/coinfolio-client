@@ -3,19 +3,17 @@ import { FlatList } from "react-native";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import Reanimated from "react-native-reanimated";
-import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
+import { GLOBAL_STYLES } from "../../styles";
 import { useHiddenFABOnScroll } from "../../hooks";
-import { HoldingsOverview, Allocations, Statistics } from "./components";
-import { selectActivePortfolio, startPortfolioOverviewFetch } from "../../redux/portfolio";
-import { View } from "react-native";
-import { Text, useTheme } from "react-native-paper";
-import { StyleSheet } from "react-native";
+import { HoldingsOverview, Allocations, Statistics, NoActivePortfolio } from "./components";
+import { selectActivePortfolio, fetchPortfolioOverview } from "../../redux/portfolio";
+import SCREEN_NAMES from "../../navigators/screen-names";
+import { isNullOrUndefined } from "../../utils";
 
 const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
 function PortfolioScreen({ navigation, fetchOverview, activePortfolio }) {
-  const { colors } = useTheme();
-  const goToSelectTransactionCoin = () => navigation.navigate("SelectTransactionCoin");
+  const goToSelectTransactionCoin = () => navigation?.navigate(SCREEN_NAMES.SELECT_TRANSACTION_COIN);
 
   const { scrollHandler, Fab: AddTransactionFab } = useHiddenFABOnScroll({
     icon: "plus",
@@ -24,15 +22,13 @@ function PortfolioScreen({ navigation, fetchOverview, activePortfolio }) {
   });
 
   useEffect(() => {
-    if (activePortfolio !== null && activePortfolio?.id !== undefined) {
+    if (!isNullOrUndefined(activePortfolio) && !isNullOrUndefined(activePortfolio?.id)) {
       fetchOverview(activePortfolio?.id);
     }
   }, [activePortfolio]);
 
-  return activePortfolio === null ? (
-    <View style={STYLES.noActivePortfolioContainer}>
-      <Text style={[TYPOGRAPHY.headline, { textAlign: "center" }]}>Please select a portfolio from the menu</Text>
-    </View>
+  return isNullOrUndefined(activePortfolio) ? (
+    <NoActivePortfolio />
   ) : (
     <>
       <AnimatedFlatList
@@ -46,29 +42,18 @@ function PortfolioScreen({ navigation, fetchOverview, activePortfolio }) {
             <HoldingsOverview />
           </>
         }
-        listKey="PortfolioScreenList"
       />
       <AddTransactionFab />
     </>
   );
 }
 
-const STYLES = StyleSheet.create({
-  noActivePortfolioContainer: {
-    ...GLOBAL_STYLES.screenContainer,
-    flex: 1,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
-  }
-});
-
 const mapStateToProps = createStructuredSelector({
   activePortfolio: selectActivePortfolio
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchOverview: (id) => dispatch(startPortfolioOverviewFetch(id))
+  fetchOverview: (id) => dispatch(fetchPortfolioOverview(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PortfolioScreen);

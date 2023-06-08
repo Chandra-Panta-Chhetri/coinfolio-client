@@ -26,7 +26,7 @@ export const useHiddenFABOnScroll = ({ icon, onFABClick, ...otherProps }) => {
     Fab: () => (
       <Reanimated.View style={[STYLES.fabPosition, fabContainer]}>
         <FAB
-          style={[STYLES.fab, { backgroundColor: colors.primary }]}
+          style={[STYLES.fab, { backgroundColor: colors?.primary }]}
           {...otherProps}
           icon={icon}
           color="white"

@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import BottomSheet from "../shared-components/BottomSheet";
+import BottomSheet from "../components/BottomSheet";
 
 export const useBottomSheet = ({ name }) => {
   const bottomSheetRef = useRef(null);

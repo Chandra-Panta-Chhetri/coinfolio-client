@@ -1,80 +1,78 @@
 import PORTFOLIO_ACTION_TYPES from "./portfolio.action.types";
 
-export const startPortfolioOverviewFetch = (id) => ({
-  type: PORTFOLIO_ACTION_TYPES.START_PORTFOLIO_OVERVIEW_FETCH,
+export const fetchPortfolioOverview = (id) => ({
+  type: PORTFOLIO_ACTION_TYPES.FETCH_PORTFOLIO_OVERVIEW,
   payload: {
     id
   }
 });
 
-export const portfolioOverviewFetchFail = (errorMsg) => ({
-  type: PORTFOLIO_ACTION_TYPES.PORTFOLIO_OVERVIEW_FETCH_FAIL,
-  payload: {
-    errorMsg
-  }
-});
-
-export const portfolioOverviewFetchSuccess = (portfolio) => ({
-  type: PORTFOLIO_ACTION_TYPES.PORTFOLIO_OVERVIEW_FETCH_SUCCESS,
-  payload: portfolio
-});
-
-export const startUserPortfoliosFetch = () => ({
-  type: PORTFOLIO_ACTION_TYPES.START_USER_PORTFOLIOS_FETCH
-});
-
-export const userPortfoliosFetchFail = (errorMsg) => ({
-  type: PORTFOLIO_ACTION_TYPES.USER_PORTFOLIOS_FETCH_FAIL,
+export const fetchPortfolioOverviewFail = (errorMsg) => ({
+  type: PORTFOLIO_ACTION_TYPES.FETCH_PORTFOLIO_OVERVIEW_FAIL,
   payload: errorMsg
 });
 
-export const userPortfoliosFetchSuccess = (portfolios) => ({
-  type: PORTFOLIO_ACTION_TYPES.USER_PORTFOLIOS_FETCH_SUCCESS,
+export const fetchPortfolioOverviewSuccess = (portfolio) => ({
+  type: PORTFOLIO_ACTION_TYPES.FETCH_PORTFOLIO_OVERVIEW_SUCCESS,
+  payload: portfolio
+});
+
+export const fetchUserPortfolios = () => ({
+  type: PORTFOLIO_ACTION_TYPES.FETCH_USER_PORTFOLIOS
+});
+
+export const fetchUserPortfoliosFail = (errorMsg) => ({
+  type: PORTFOLIO_ACTION_TYPES.FETCH_USER_PORTFOLIOS_FAIL,
+  payload: errorMsg
+});
+
+export const fetchUserPortfoliosSuccess = (portfolios) => ({
+  type: PORTFOLIO_ACTION_TYPES.FETCH_USER_PORTFOLIOS_SUCCESS,
   payload: portfolios
 });
 
-export const startAddingNewPortfolio = (portfolio, onSuccess) => ({
-  type: PORTFOLIO_ACTION_TYPES.START_ADDING_NEW_PORTFOLIO,
+export const addNewPortfolio = (portfolio, onSuccess) => ({
+  type: PORTFOLIO_ACTION_TYPES.ADD_NEW_PORTFOLIO,
   payload: { portfolio, onSuccess }
 });
 
 export const addNewPortfolioSuccess = (portfolios) => ({
-  type: PORTFOLIO_ACTION_TYPES.ADDING_NEW_PORTFOLIO_SUCCESS,
+  type: PORTFOLIO_ACTION_TYPES.ADD_NEW_PORTFOLIO_SUCCESS,
   payload: portfolios
 });
 
 export const addNewPortfolioFail = (errorMsg) => ({
-  type: PORTFOLIO_ACTION_TYPES.ADDING_NEW_PORTFOLIO_FAIL,
+  type: PORTFOLIO_ACTION_TYPES.ADD_NEW_PORTFOLIO_FAIL,
   payload: errorMsg
 });
 
-export const startUpdatingPortfolio = (portfolio, portfolioId, onSuccess) => ({
-  type: PORTFOLIO_ACTION_TYPES.START_UPDATING_PORTFOLIO,
+export const updatePortfolio = (portfolio, portfolioId, onSuccess) => ({
+  type: PORTFOLIO_ACTION_TYPES.UPDATE_PORTFOLIO,
   payload: { portfolio, portfolioId, onSuccess }
 });
 
 export const updatePortfolioSuccess = (portfolios) => ({
-  type: PORTFOLIO_ACTION_TYPES.UPDATING_PORTFOLIO_SUCCESS,
+  type: PORTFOLIO_ACTION_TYPES.UPDATE_PORTFOLIO_SUCCESS,
   payload: portfolios
 });
 
 export const updatePortfolioFail = (errorMsg) => ({
-  type: PORTFOLIO_ACTION_TYPES.UPDATING_PORTFOLIO_FAIL,
+  type: PORTFOLIO_ACTION_TYPES.UPDATE_PORTFOLIO_FAIL,
   payload: errorMsg
 });
 
-export const startDeletingPortfolio = (portfolioId, onSuccess) => ({
-  type: PORTFOLIO_ACTION_TYPES.START_DELETING_PORTFOLIO,
+export const deletePortfolio = (portfolioId, onSuccess) => ({
+  type: PORTFOLIO_ACTION_TYPES.DELETE_PORTFOLIO,
   payload: { portfolioId, onSuccess }
 });
 
 export const deletePortfolioSuccess = (portfolios) => ({
-  type: PORTFOLIO_ACTION_TYPES.DELETING_PORTFOLIO_SUCCESS,
+  type: PORTFOLIO_ACTION_TYPES.DELETE_PORTFOLIO_SUCCESS,
   payload: portfolios
 });
 
 export const deletePortfolioFail = (errorMsg) => ({
-  type: PORTFOLIO_ACTION_TYPES.DELETING_PORTFOLIO_FAIL,
+  type: PORTFOLIO_ACTION_TYPES.DELETE_PORTFOLIO_FAIL,
   payload: errorMsg
 });
 
@@ -83,38 +81,38 @@ export const changeActivePortfolio = (portfolio) => ({
   payload: portfolio
 });
 
-export const startTransactionCoinsFetch = (query) => ({
-  type: PORTFOLIO_ACTION_TYPES.START_TRANSACTION_COINS_FETCH,
+export const fetchTransactionCoins = (query) => ({
+  type: PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTION_COINS,
   payload: query
 });
 
-export const transactionCoinsFail = (errorMsg) => ({
-  type: PORTFOLIO_ACTION_TYPES.TRANSACTION_COINS_FETCH_FAIL,
+export const fetchTransactionCoinsFail = (errorMsg) => ({
+  type: PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTION_COINS_FAIL,
   payload: errorMsg
 });
 
-export const transactionCoinsSuccess = (coins) => ({
-  type: PORTFOLIO_ACTION_TYPES.TRANSACTION_COINS_FETCH_SUCCESS,
+export const fetchTransactionCoinsSuccess = (coins) => ({
+  type: PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTION_COINS_SUCCESS,
   payload: coins
 });
 
-export const startAddingNewTransaction = (transaction, onSuccess, startingScreen) => ({
-  type: PORTFOLIO_ACTION_TYPES.START_ADDING_NEW_TRANSACTION,
+export const addNewTransaction = (transaction, onSuccess, startingScreen) => ({
+  type: PORTFOLIO_ACTION_TYPES.ADD_NEW_TRANSACTION,
   payload: { transaction, onSuccess, startingScreen }
 });
 
 export const addNewTransactionFail = (errorMsg) => ({
-  type: PORTFOLIO_ACTION_TYPES.ADDING_NEW_TRANSACTION_FAIL,
+  type: PORTFOLIO_ACTION_TYPES.ADD_NEW_TRANSACTION_FAIL,
   payload: errorMsg
 });
 
 export const addNewTransactionSuccess = (transactions) => ({
-  type: PORTFOLIO_ACTION_TYPES.ADDING_NEW_TRANSACTION_SUCCESS,
+  type: PORTFOLIO_ACTION_TYPES.ADD_NEW_TRANSACTION_SUCCESS,
   payload: transactions
 });
 
-export const startDeletingTransaction = (transaction, onSuccess) => ({
-  type: PORTFOLIO_ACTION_TYPES.START_DELETING_TRANSACTION,
+export const deleteTransaction = (transaction, onSuccess) => ({
+  type: PORTFOLIO_ACTION_TYPES.DELETE_TRANSACTION,
   payload: { transaction, onSuccess }
 });
 
@@ -127,8 +125,8 @@ export const deleteTransactionSuccess = () => ({
   type: PORTFOLIO_ACTION_TYPES.DELETE_TRANSACTION_SUCCESS
 });
 
-export const startUpdatingTransaction = (transactionId, transactionUpdates, onSuccess) => ({
-  type: PORTFOLIO_ACTION_TYPES.START_UPDATING_TRANSACTION,
+export const updateTransaction = (transactionId, transactionUpdates, onSuccess) => ({
+  type: PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION,
   payload: { transactionId, transactionUpdates, onSuccess }
 });
 
@@ -141,31 +139,31 @@ export const updateTransactionSuccess = () => ({
   type: PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_SUCCESS
 });
 
-export const startDeletingHolding = (coinId, onSuccess) => ({
-  type: PORTFOLIO_ACTION_TYPES.START_DELETING_HOLDING,
+export const deleteHolding = (coinId, onSuccess) => ({
+  type: PORTFOLIO_ACTION_TYPES.DELETE_HOLDING,
   payload: { coinId, onSuccess }
 });
 
-export const deletingHoldingFail = (errorMsg) => ({
-  type: PORTFOLIO_ACTION_TYPES.DELETING_HOLDING_FAIL,
+export const deleteHoldingFail = (errorMsg) => ({
+  type: PORTFOLIO_ACTION_TYPES.DELETE_HOLDING_FAIL,
   payload: errorMsg
 });
 
-export const deletingHoldingSuccess = () => ({
-  type: PORTFOLIO_ACTION_TYPES.DELETING_HOLDING_SUCCESS
+export const deleteHoldingSuccess = () => ({
+  type: PORTFOLIO_ACTION_TYPES.DELETE_HOLDING_SUCCESS
 });
 
-export const startHoldingOverviewFetch = (coinId) => ({
-  type: PORTFOLIO_ACTION_TYPES.START_HOLDING_OVERVIEW_FETCH,
+export const fetchHoldingOverview = (coinId) => ({
+  type: PORTFOLIO_ACTION_TYPES.FETCH_HOLDING_OVERVIEW,
   payload: coinId
 });
 
-export const holdingOverviewFetchFail = (errorMsg) => ({
-  type: PORTFOLIO_ACTION_TYPES.HOLDING_OVERVIEW_FETCH_FAIL,
+export const fetchHoldingOverviewFail = (errorMsg) => ({
+  type: PORTFOLIO_ACTION_TYPES.FETCH_HOLDING_OVERVIEW_FAIL,
   payload: errorMsg
 });
 
-export const holdingOverviewFetchSuccess = (holdingOverview) => ({
-  type: PORTFOLIO_ACTION_TYPES.HOLDING_OVERVIEW_FETCH_SUCCESS,
+export const fetchHoldingOverviewSuccess = (holdingOverview) => ({
+  type: PORTFOLIO_ACTION_TYPES.FETCH_HOLDING_OVERVIEW_SUCCESS,
   payload: holdingOverview
 });

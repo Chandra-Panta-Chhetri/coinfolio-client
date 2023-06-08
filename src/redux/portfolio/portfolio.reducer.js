@@ -23,132 +23,132 @@ const INITIAL_STATE = {
 };
 
 const userReducer = (prevState = INITIAL_STATE, action) => {
-  switch (action.type) {
-    case PORTFOLIO_ACTION_TYPES.START_USER_PORTFOLIOS_FETCH:
+  switch (action?.type) {
+    case PORTFOLIO_ACTION_TYPES.FETCH_USER_PORTFOLIOS:
       return {
         ...prevState,
         isLoadingUserPortfolios: true
       };
-    case PORTFOLIO_ACTION_TYPES.USER_PORTFOLIOS_FETCH_FAIL:
+    case PORTFOLIO_ACTION_TYPES.FETCH_USER_PORTFOLIOS_FAIL:
       return {
         ...prevState,
         isLoadingUserPortfolios: false
       };
-    case PORTFOLIO_ACTION_TYPES.USER_PORTFOLIOS_FETCH_SUCCESS:
+    case PORTFOLIO_ACTION_TYPES.FETCH_USER_PORTFOLIOS_SUCCESS:
       return {
         ...prevState,
         isLoadingUserPortfolios: false,
-        userPortfolios: action.payload
+        userPortfolios: action?.payload
       };
-    case PORTFOLIO_ACTION_TYPES.START_PORTFOLIO_OVERVIEW_FETCH:
+    case PORTFOLIO_ACTION_TYPES.FETCH_PORTFOLIO_OVERVIEW:
       return {
         ...prevState,
         isLoadingOverview: true
       };
-    case PORTFOLIO_ACTION_TYPES.START_ADDING_NEW_PORTFOLIO:
-    case PORTFOLIO_ACTION_TYPES.START_UPDATING_PORTFOLIO:
-    case PORTFOLIO_ACTION_TYPES.START_DELETING_PORTFOLIO:
+    case PORTFOLIO_ACTION_TYPES.ADD_NEW_PORTFOLIO:
+    case PORTFOLIO_ACTION_TYPES.UPDATE_PORTFOLIO:
+    case PORTFOLIO_ACTION_TYPES.DELETE_PORTFOLIO:
       return {
         ...prevState,
         isUpdatingUserPortfolios: true
       };
-    case PORTFOLIO_ACTION_TYPES.ADDING_NEW_PORTFOLIO_FAIL:
-    case PORTFOLIO_ACTION_TYPES.UPDATING_PORTFOLIO_FAIL:
-    case PORTFOLIO_ACTION_TYPES.DELETING_PORTFOLIO_FAIL:
+    case PORTFOLIO_ACTION_TYPES.ADD_NEW_PORTFOLIO_FAIL:
+    case PORTFOLIO_ACTION_TYPES.UPDATE_PORTFOLIO_FAIL:
+    case PORTFOLIO_ACTION_TYPES.DELETE_PORTFOLIO_FAIL:
       return {
         ...prevState,
         isUpdatingUserPortfolios: false
       };
-    case PORTFOLIO_ACTION_TYPES.ADDING_NEW_PORTFOLIO_SUCCESS:
-    case PORTFOLIO_ACTION_TYPES.UPDATING_PORTFOLIO_SUCCESS:
-    case PORTFOLIO_ACTION_TYPES.DELETING_PORTFOLIO_SUCCESS:
+    case PORTFOLIO_ACTION_TYPES.ADD_NEW_PORTFOLIO_SUCCESS:
+    case PORTFOLIO_ACTION_TYPES.UPDATE_PORTFOLIO_SUCCESS:
+    case PORTFOLIO_ACTION_TYPES.DELETE_PORTFOLIO_SUCCESS:
       return {
         ...prevState,
         isUpdatingUserPortfolios: false,
-        userPortfolios: action.payload
+        userPortfolios: action?.payload
       };
     case PORTFOLIO_ACTION_TYPES.CHANGE_ACTIVE_PORTFOLIO:
       return {
         ...prevState,
-        activePortfolio: action.payload
+        activePortfolio: action?.payload
       };
-    case PORTFOLIO_ACTION_TYPES.START_TRANSACTION_COINS_FETCH:
+    case PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTION_COINS:
       return {
         ...prevState,
         isLoadingTransactionCoins: true
       };
-    case PORTFOLIO_ACTION_TYPES.TRANSACTION_COINS_FETCH_FAIL:
+    case PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTION_COINS_FAIL:
       return {
         ...prevState,
         isLoadingTransactionCoins: false
       };
-    case PORTFOLIO_ACTION_TYPES.TRANSACTION_COINS_FETCH_SUCCESS:
+    case PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTION_COINS_SUCCESS:
       return {
         ...prevState,
         isLoadingTransactionCoins: false,
-        transactionCoins: action.payload
+        transactionCoins: action?.payload
       };
-    case PORTFOLIO_ACTION_TYPES.PORTFOLIO_OVERVIEW_FETCH_FAIL:
+    case PORTFOLIO_ACTION_TYPES.FETCH_PORTFOLIO_OVERVIEW_FAIL:
       return {
         ...prevState,
         isLoadingOverview: false
       };
-    case PORTFOLIO_ACTION_TYPES.PORTFOLIO_OVERVIEW_FETCH_SUCCESS:
+    case PORTFOLIO_ACTION_TYPES.FETCH_PORTFOLIO_OVERVIEW_SUCCESS:
       return {
         ...prevState,
-        ...action.payload,
+        ...action?.payload,
         isLoadingOverview: false
       };
-    case PORTFOLIO_ACTION_TYPES.START_ADDING_NEW_TRANSACTION:
+    case PORTFOLIO_ACTION_TYPES.ADD_NEW_TRANSACTION:
       return {
         ...prevState,
         isAddingTransaction: true
       };
-    case PORTFOLIO_ACTION_TYPES.ADDING_NEW_TRANSACTION_FAIL:
+    case PORTFOLIO_ACTION_TYPES.ADD_NEW_TRANSACTION_FAIL:
       return {
         ...prevState,
         isAddingTransaction: false
       };
-    case PORTFOLIO_ACTION_TYPES.ADDING_NEW_TRANSACTION_SUCCESS:
+    case PORTFOLIO_ACTION_TYPES.ADD_NEW_TRANSACTION_SUCCESS:
       return {
         ...prevState,
         isAddingTransaction: false,
-        transactions: action.payload
+        transactions: action?.payload
       };
-    case PORTFOLIO_ACTION_TYPES.START_DELETING_HOLDING:
+    case PORTFOLIO_ACTION_TYPES.DELETE_HOLDING:
       return {
         ...prevState,
         isDeletingHolding: true
       };
-    case PORTFOLIO_ACTION_TYPES.DELETING_HOLDING_FAIL:
+    case PORTFOLIO_ACTION_TYPES.DELETE_HOLDING_FAIL:
       return {
         ...prevState,
         isDeletingHolding: false
       };
-    case PORTFOLIO_ACTION_TYPES.DELETING_HOLDING_SUCCESS:
+    case PORTFOLIO_ACTION_TYPES.DELETE_HOLDING_SUCCESS:
       return {
         ...prevState,
         isDeletingHolding: false,
         transactions: []
       };
-    case PORTFOLIO_ACTION_TYPES.START_HOLDING_OVERVIEW_FETCH:
+    case PORTFOLIO_ACTION_TYPES.FETCH_HOLDING_OVERVIEW:
       return {
         ...prevState,
         isLoadingHoldingOverview: true
       };
-    case PORTFOLIO_ACTION_TYPES.HOLDING_OVERVIEW_FETCH_FAIL:
+    case PORTFOLIO_ACTION_TYPES.FETCH_HOLDING_OVERVIEW_FAIL:
       return {
         ...prevState,
         isLoadingHoldingOverview: false
       };
-    case PORTFOLIO_ACTION_TYPES.HOLDING_OVERVIEW_FETCH_SUCCESS:
+    case PORTFOLIO_ACTION_TYPES.FETCH_HOLDING_OVERVIEW_SUCCESS:
       return {
         ...prevState,
         isLoadingHoldingOverview: false,
-        transactions: action.payload.transactions,
-        holdingOverview: action.payload.summary
+        transactions: action?.payload?.transactions,
+        holdingOverview: action?.payload?.summary
       };
-    case PORTFOLIO_ACTION_TYPES.START_DELETING_TRANSACTION:
+    case PORTFOLIO_ACTION_TYPES.DELETE_TRANSACTION:
       return {
         ...prevState,
         isDeletingTransaction: true
@@ -163,7 +163,7 @@ const userReducer = (prevState = INITIAL_STATE, action) => {
         ...prevState,
         isDeletingTransaction: true
       };
-    case PORTFOLIO_ACTION_TYPES.START_UPDATING_TRANSACTION:
+    case PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION:
       return {
         ...prevState,
         isUpdatingTransaction: true

@@ -1,10 +1,10 @@
+import EVENTS_FILTERS from "../../components/Events/filters";
 import DISCOVER_ACTION_TYPES from "./discover.action.types";
-import { EVENTS_CONSTANTS } from "../../constants";
 
 const INITIAL_STATE = {
   news: [],
   events: [],
-  eventFilters: EVENTS_CONSTANTS.DEFAULT_DISCOVER_FILTERS,
+  eventFilters: EVENTS_FILTERS.DEFAULT_DISCOVER_FILTERS,
   isLoadingNews: true,
   isLoadingEvents: true,
   isLoadingMoreNews: false,
@@ -16,8 +16,8 @@ const INITIAL_STATE = {
 };
 
 const discoverReducer = (prevState = INITIAL_STATE, action) => {
-  switch (action.type) {
-    case DISCOVER_ACTION_TYPES.INITIAL_NEWS_FETCH:
+  switch (action?.type) {
+    case DISCOVER_ACTION_TYPES.FETCH_NEWS:
       return {
         ...prevState,
         news: [],
@@ -25,7 +25,7 @@ const discoverReducer = (prevState = INITIAL_STATE, action) => {
         hasMoreNews: true,
         newsPage: 1
       };
-    case DISCOVER_ACTION_TYPES.INITIAL_EVENTS_FETCH:
+    case DISCOVER_ACTION_TYPES.FETCH_EVENTS:
       return {
         ...prevState,
         events: [],
@@ -33,27 +33,27 @@ const discoverReducer = (prevState = INITIAL_STATE, action) => {
         hasMoreEvents: true,
         eventsPage: 1
       };
-    case DISCOVER_ACTION_TYPES.INITIAL_NEWS_FAIL:
+    case DISCOVER_ACTION_TYPES.FETCH_NEWS_FAIL:
       return {
         ...prevState,
         isLoadingNews: false
       };
-    case DISCOVER_ACTION_TYPES.INITIAL_NEWS_SUCCESS:
+    case DISCOVER_ACTION_TYPES.FETCH_NEWS_SUCCESS:
       return {
         ...prevState,
-        news: action.payload,
+        news: action?.payload,
         isLoadingNews: false,
         newsPage: prevState.newsPage + 1
       };
-    case DISCOVER_ACTION_TYPES.INITIAL_EVENTS_FAIL:
+    case DISCOVER_ACTION_TYPES.FETCH_EVENTS_FAIL:
       return {
         ...prevState,
         isLoadingEvents: false
       };
-    case DISCOVER_ACTION_TYPES.INITIAL_EVENTS_SUCCESS:
+    case DISCOVER_ACTION_TYPES.FETCH_EVENTS_SUCCESS:
       return {
         ...prevState,
-        events: action.payload,
+        events: action?.payload,
         isLoadingEvents: false,
         eventsPage: prevState.eventsPage + 1
       };
@@ -62,7 +62,7 @@ const discoverReducer = (prevState = INITIAL_STATE, action) => {
         ...prevState,
         eventFilters: {
           ...prevState.eventFilters,
-          ...action.payload
+          ...action?.payload
         }
       };
     case DISCOVER_ACTION_TYPES.FETCH_MORE_NEWS:
@@ -79,7 +79,7 @@ const discoverReducer = (prevState = INITIAL_STATE, action) => {
       return {
         ...prevState,
         isLoadingMoreNews: false,
-        news: action.payload,
+        news: action?.payload,
         newsPage: prevState.newsPage + 1
       };
     case DISCOVER_ACTION_TYPES.FETCH_MORE_EVENTS:
@@ -96,7 +96,7 @@ const discoverReducer = (prevState = INITIAL_STATE, action) => {
       return {
         ...prevState,
         isLoadingMoreEvents: false,
-        events: action.payload,
+        events: action?.payload,
         eventsPage: prevState.eventsPage + 1
       };
     case DISCOVER_ACTION_TYPES.NO_MORE_NEWS:

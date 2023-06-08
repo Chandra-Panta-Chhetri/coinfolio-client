@@ -1,7 +1,9 @@
 import axios from "./axios-config";
 
 export const getNews = async (queryParams = {}) => {
-  const params = { ...queryParams, kind: "news" };
-  const news = await axios.get("/news", { params });
-  return news.data;
+  const defaultParams = { kind: "news" };
+  const params = { ...defaultParams, ...queryParams };
+  const res = await axios.get("/news", { params });
+  const news = res?.data;
+  return news;
 };
