@@ -3,8 +3,7 @@ import USER_ACTION_TYPES from "./user.action.types";
 const INITIAL_STATE = {
   currentUser: null,
   isChangingAuthState: false,
-  token:
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJlbWFpbCI6ImNoYW5kcmFAaG90bWFpbC5jb20iLCJpYXQiOjE2NzYyNDI0MjB9.NKcvz0WBUJcc13Pudrd1d0B_C-6_eLRUEAs4S7h-9uE"
+  token: null
 };
 
 const userReducer = (prevState = INITIAL_STATE, action) => {

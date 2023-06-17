@@ -40,7 +40,6 @@ export const useLivePrices = (coinsToWatch = []) => {
   useEffect(() => {
     if (coinsToWatch.length > 0) {
       if (isNullOrUndefined(socket)) {
-        // console.log("init socket");
         const commaSepCoins = pricesSocket.coinsToCommaSepIDs(coinsToWatch);
         setSocket(pricesSocket.connectToLivePrices(commaSepCoins));
         prevCommaSepCoins.current = commaSepCoins;

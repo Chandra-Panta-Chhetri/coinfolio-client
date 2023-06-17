@@ -4,14 +4,7 @@ import { Card, Text } from "react-native-paper";
 import { GLOBAL_CONSTANTS } from "../../../constants";
 import { Skeleton } from "../../../components";
 import { TYPOGRAPHY } from "../../../styles";
-import {
-  formatNum,
-  formatPercent,
-  formatPrice,
-  formatPriceWithSign,
-  getStylesBasedOnSignWorklet,
-  isNullOrUndefined
-} from "../../../utils";
+import { formatNum, formatPercent, formatPrice, getStylesBasedOnSignWorklet, isNullOrUndefined } from "../../../utils";
 
 const StatisticsSkeleton = () => (
   <View>
@@ -44,7 +37,7 @@ const Statistics = () => (
       <View style={STYLES.statisticWithNoMargin}>
         <Text style={TYPOGRAPHY.body2}>Profit/Loss</Text>
         <Text style={[getStylesBasedOnSignWorklet(holdingOverview?.profitLoss?.percentChange), TYPOGRAPHY.body1]}>
-          {formatPriceWithSign(holdingOverview?.profitLoss?.value)} (
+          {formatPrice(holdingOverview?.profitLoss?.value, true)} (
           {formatPercent(holdingOverview?.profitLoss?.percentChange)})
         </Text>
       </View>

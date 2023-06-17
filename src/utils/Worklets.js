@@ -31,31 +31,25 @@ export function formatNum(num, numOfSigDigs = 2) {
 
   const formattedWholeNum = (+wholeNum).toLocaleString("en-US");
 
-  return `${formattedWholeNum}.${decimalNum.substring(0, numOfSigDigs).padEnd(numOfSigDigs, "0")}`;
+  return `${formattedWholeNum}${numOfSigDigs === 0 ? "" : "."}${decimalNum
+    .substring(0, numOfSigDigs)
+    .padEnd(numOfSigDigs, "0")}`;
 }
 
-export function formatPercent(percent) {
+export function formatPercent(percent, includeSign = true) {
   "worklet";
   if (isNullOrUndefined(percent) || isNaN(+percent)) {
     return "N/A";
   }
-  return +percent >= 0 ? `+${formatNum(+percent)}%` : `${formatNum(+percent)}%`;
+  return +percent >= 0 ? `${includeSign === true ? "+" : ""}${formatNum(+percent)}%` : `${formatNum(+percent)}%`;
 }
 
-export function formatPriceWithSign(price) {
+export function formatPrice(price, includeSign = false) {
   "worklet";
   if (isNullOrUndefined(price) || isNaN(+price)) {
     return "N/A";
   }
-  return +price >= 0 ? `+$${formatNum(price)}` : `-$${formatNum(+price * -1)}`;
-}
-
-export function formatPrice(price) {
-  "worklet";
-  if (isNullOrUndefined(price) || isNaN(+price)) {
-    return "N/A";
-  }
-  return +price >= 0 ? `$${formatNum(price)}` : `-$${formatNum(+price * -1)}`;
+  return +price >= 0 ? `${includeSign === true ? "+" : ""}$${formatNum(price)}` : `-$${formatNum(+price * -1)}`;
 }
 
 export function toTimeString(date) {

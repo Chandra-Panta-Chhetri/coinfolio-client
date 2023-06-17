@@ -6,7 +6,23 @@ import { GLOBAL_CONSTANTS } from "../../../constants";
 import { selectGlobalSummary, selectIsLoadingGlobalSummary, fetchGlobalSummary } from "../../../redux/summary";
 import { Skeleton } from "../../../components";
 import { TYPOGRAPHY } from "../../../styles";
-import { isNullOrUndefined } from "../../../utils";
+import { formatNum, formatPercent, isNullOrUndefined } from "../../../utils";
+
+const formatValue = (labelKey, rawValue) => {
+  switch (labelKey) {
+    case "totalMarketCap":
+    case "volume24hr":
+      return `$${formatNum(rawValue, 0)}`;
+    case "numAssets":
+    case "numExchanges":
+      return `${formatNum(rawValue, 0)}`;
+    case "btcDom":
+    case "ethDom":
+      return `${formatPercent(rawValue, false)}`;
+    default:
+      return null;
+  }
+};
 
 const GlobalMarketSummary = ({ globalSummary, fetchGlobalSummary, isLoadingGlobalSummary }) => {
   useEffect(() => {
@@ -29,8 +45,8 @@ const GlobalMarketSummary = ({ globalSummary, fetchGlobalSummary, isLoadingGloba
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {Object.keys(globalSummary ?? {}).map((key) => (
             <View style={STYLES.summaryItem} key={globalSummary[key]?.label}>
-              <Text style={TYPOGRAPHY.body2}>{globalSummary[key]?.label}: </Text>
-              <Text style={TYPOGRAPHY.body2}>{globalSummary[key]?.value}</Text>
+              <Text style={TYPOGRAPHY.body1}>{globalSummary[key]?.label}: </Text>
+              <Text style={TYPOGRAPHY.body1}>{formatValue(key, globalSummary[key]?.value)}</Text>
             </View>
           ))}
         </ScrollView>

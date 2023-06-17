@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import RootNavigator from "./navigators/Root";
 import { Provider as PaperProvider } from "react-native-paper";
 import { THEME } from "./styles";
-import { Platform, SafeAreaView } from "react-native";
+import { Platform, SafeAreaView, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { connect } from "react-redux";
 import { selectIsThemeDark } from "./redux/preferences";
@@ -15,7 +15,6 @@ import { DEVICE_TYPES } from "./constants";
 
 const Main = ({ isThemeDark }) => {
   const theme = isThemeDark ? THEME.DARK : THEME.LIGHT;
-  const containerStyles = { flex: 1, backgroundColor: theme.colors.card, marginTop: 40 };
   const statusBarStyle = isThemeDark ? "light" : "dark";
 
   useEffect(() => {
@@ -26,9 +25,9 @@ const Main = ({ isThemeDark }) => {
 
   return (
     <PaperProvider theme={theme}>
-      <SafeAreaView style={containerStyles}>
+      <SafeAreaView style={[STYLES.safeAreaView, { backgroundColor: theme?.colors?.card }]}>
         <StatusBar backgroundColor={theme?.colors?.card} style={statusBarStyle} />
-        <GestureHandlerRootView style={containerStyles}>
+        <GestureHandlerRootView style={[STYLES.gestureHandlerRoot, { backgroundColor: theme?.colors?.card }]}>
           <NavigationContainer theme={theme}>
             <BottomSheetModalProvider>
               <RootNavigator />
@@ -40,6 +39,16 @@ const Main = ({ isThemeDark }) => {
     </PaperProvider>
   );
 };
+
+const STYLES = StyleSheet.create({
+  safeAreaView: {
+    flex: 1
+  },
+  gestureHandlerRoot: {
+    marginTop: 40,
+    flex: 1
+  }
+});
 
 const mapStateToProps = (state) => ({
   isThemeDark: selectIsThemeDark(state)

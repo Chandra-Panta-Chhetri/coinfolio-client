@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, TouchableHighlight } from "react-native";
 import { Card, Text } from "react-native-paper";
 import SETTINGS_CONSTANTS from "../constants";
 import { TYPOGRAPHY } from "../../../styles";
@@ -7,8 +7,15 @@ import { TouchableNativeFeedback } from "../../../components";
 import { GLOBAL_CONSTANTS } from "../../../constants";
 import { isNullOrUndefined } from "../../../utils";
 
-const Setting = ({ label, subheading, iconComponent, iconBackgroundColor, endComponent }) => (
-  <Card style={STYLES.container}>
+const Setting = ({
+  label,
+  subheading,
+  iconComponent,
+  iconBackgroundColor,
+  endComponent,
+  ...touchableNativeFeedbackProps
+}) => (
+  <Card style={STYLES.container} {...touchableNativeFeedbackProps}>
     <Card.Content style={STYLES.cardContent}>
       <View style={STYLES.iconAndLabel}>
         <View
@@ -39,15 +46,13 @@ const SettingContainer = ({ label, subheading, iconComponent, iconBackgroundColo
   if (!isNullOrUndefined(onPress)) {
     return (
       <TouchableNativeFeedback onPress={onPress}>
-        <>
-          <Setting
-            label={label}
-            subheading={subheading}
-            iconComponent={iconComponent}
-            iconBackgroundColor={iconBackgroundColor}
-            endComponent={endComponent}
-          />
-        </>
+        <Setting
+          label={label}
+          subheading={subheading}
+          iconComponent={iconComponent}
+          iconBackgroundColor={iconBackgroundColor}
+          endComponent={endComponent}
+        />
       </TouchableNativeFeedback>
     );
   }

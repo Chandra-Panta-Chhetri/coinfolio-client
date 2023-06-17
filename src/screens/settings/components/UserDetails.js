@@ -15,10 +15,10 @@ const UserDetails = ({ currentUser }) => {
 
 const STYLES = StyleSheet.create({
   container: {
-    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN,
+    marginBottom: GLOBAL_CONSTANTS.SM_MARGIN,
     justifyContent: "center",
     alignItems: "center",
-    minHeight: 130
+    minHeight: 100
   }
 });
 

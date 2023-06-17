@@ -9,7 +9,7 @@ import { GLOBAL_CONSTANTS } from "../../../../constants";
 import SCREEN_NAMES from "../../../../navigators/screen-names";
 import { Skeleton } from "../../../../components";
 
-const TopCoin = ({ item: coin }) => {
+const TopCoin = ({ coin }) => {
   const navigation = useNavigation();
   const { symbol, priceUsd, changePercent24Hr, image, name, id } = coin;
 

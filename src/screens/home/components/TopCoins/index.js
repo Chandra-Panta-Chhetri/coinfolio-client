@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, FlatList, StyleSheet } from "react-native";
+import { View, FlatList, StyleSheet, Text } from "react-native";
 import SeeAllHeading from "../SeeAllHeading";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -42,7 +42,7 @@ const TopCoins = ({ topCoins, isLoadingTopCoins, fetchTopCoins }) => {
           data={topCoins}
           contentContainerStyle={GLOBAL_STYLES.flatListContentContainer}
           keyExtractor={keyExtractor}
-          renderItem={TopCoin}
+          renderItem={({ item }) => <TopCoin coin={item} />}
         />
       )}
     </View>

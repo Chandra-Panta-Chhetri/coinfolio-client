@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { TYPOGRAPHY } from "../../../../styles";
-import { getStylesBasedOnSign, formatPercent } from "../../../../utils";
+import { getStylesBasedOnSign, formatPercent, formatPrice } from "../../../../utils";
 import { TouchableNativeFeedback, IconImage } from "../../../../components";
 import { useNavigation } from "@react-navigation/native";
 import { GLOBAL_CONSTANTS } from "../../../../constants";
@@ -34,7 +34,7 @@ const GainerLoser = ({ coin, containerStyle }) => {
             </View>
             <View style={[STYLES.priceAndPercent]}>
               <Text numberOfLines={1} style={TYPOGRAPHY.subheading}>
-                {priceUsd}
+                {formatPrice(priceUsd)}
               </Text>
               <Text numberOfLines={1} style={[TYPOGRAPHY.body1, getStylesBasedOnSign(changePercent24Hr)]}>
                 {formatPercent(changePercent24Hr)}

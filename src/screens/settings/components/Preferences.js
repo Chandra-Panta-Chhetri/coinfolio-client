@@ -51,14 +51,14 @@ const Preferences = ({
       label: "Currency",
       iconComponent: <FontAwesome5 name="money-bill-alt" size={SETTINGS_CONSTANTS.ICON_SIZE} />,
       iconBackgroundColor: SETTINGS_CONSTANTS.CURRENCY_BACKGROUND_COLOR,
-      endComponent: <MoreOptionsIndicator selectedOption={currencyCode} />,
+      endComponent: <MoreOptionsIndicator selectedOptionLabel={currencyCode} />,
       onPress: () => navigation?.navigate(SCREEN_NAMES.SELECT_CURRENCY)
     },
     {
       label: "Home screen",
       iconComponent: <AntDesign name="home" size={SETTINGS_CONSTANTS.ICON_SIZE} />,
       iconBackgroundColor: SETTINGS_CONSTANTS.HOME_SCREEN_BACKGROUND_COLOR,
-      endComponent: <MoreOptionsIndicator selectedOption={initialScreen?.label} />,
+      endComponent: <MoreOptionsIndicator selectedOptionLabel={initialScreen?.label} />,
       subheading: "Change the screen that initially shows up once app starts",
       onPress: () => navigation?.navigate(SCREEN_NAMES.SELECT_HOME_SCREEN)
     },
