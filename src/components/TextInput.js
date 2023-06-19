@@ -1,21 +1,23 @@
 import React, { forwardRef } from "react";
-import { TextInput as RNPTextInput, useTheme } from "react-native-paper";
+import { TextInput, useTheme } from "react-native-paper";
 
-const TextInput = forwardRef((props, ref) => {
+const CustomTextInput = forwardRef((props, ref) => {
   const { colors } = useTheme();
 
   return (
-    <RNPTextInput
+    <TextInput
       {...props}
       ref={ref}
       mode="outlined"
       placeholder={props?.placeholder ?? props?.label}
       activeOutlineColor={colors?.text}
       label={undefined}
+      selectionColor={colors?.primary}
+      cursorColor={colors?.primary}
     />
   );
 });
 
-TextInput.Icon = RNPTextInput.Icon;
+CustomTextInput.Icon = TextInput.Icon;
 
-export default TextInput;
+export default CustomTextInput;

@@ -39,6 +39,7 @@ export function formatNum(num, numOfSigDigs = 2) {
 export function formatPercent(percent, includeSign = true) {
   "worklet";
   if (isNullOrUndefined(percent) || isNaN(+percent)) {
+    console.log(percent);
     return "N/A";
   }
   return +percent >= 0 ? `${includeSign === true ? "+" : ""}${formatNum(+percent)}%` : `${formatNum(+percent)}%`;
@@ -81,3 +82,11 @@ export function getStylesBasedOnSignWorklet(num) {
   "worklet";
   return +num >= 0 ? { color: COLORS.SUCCESS } : { color: COLORS.ERROR };
 }
+
+export const abbreviateNum = (num) => {
+  if (+num >= 1e3 && +num < 1e6) return roundNumToNDecimals(+num / 1e3) + " K";
+  if (+num >= 1e6 && +num < 1e9) return roundNumToNDecimals(+num / 1e6) + " M";
+  if (+num >= 1e9 && +num < 1e12) return roundNumToNDecimals(+num / 1e9) + " Bn";
+  if (+num >= 1e12) return roundNumToNDecimals(+num / 1e12) + " Tr";
+  return `${formatNum(num)}`;
+};

@@ -18,6 +18,7 @@ import { InfiniteScroll } from "../../components";
 import { GLOBAL_CONSTANTS } from "../../constants";
 import { useLivePrices, updatePriceOfCoins, useRefAsState } from "../../hooks";
 import { isNullOrUndefined } from "../../utils";
+import SOCKET_EVENT_NAMES from "../../socket/event-names";
 
 const ListHeader = () => (
   <>

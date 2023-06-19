@@ -1,7 +1,6 @@
-import NEWS_FILTERS from "../../components/News/filters";
 import DISCOVER_ACTION_TYPES from "./discover.action.types";
 
-export const fetchNews = (filter = NEWS_FILTERS.SHOW_ONLY.DEFAULT_OPTION) => ({
+export const fetchNews = (filter) => ({
   type: DISCOVER_ACTION_TYPES.FETCH_NEWS,
   payload: { filter }
 });

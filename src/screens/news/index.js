@@ -9,10 +9,11 @@ import {
   selectHasMoreNews
 } from "../../redux/discover";
 import { News } from "../../components";
+import NEWS_FILTERS from "../../components/News/filters";
 
 const NewsScreen = ({ fetchNews, fetchMoreNews, news, isLoadingNews, isLoadingMoreNews, hasMoreNewsToFetch }) => {
   useEffect(() => {
-    fetchNews();
+    fetchNews(NEWS_FILTERS.SHOW_ONLY.DEFAULT_OPTION.value);
   }, []);
 
   return (

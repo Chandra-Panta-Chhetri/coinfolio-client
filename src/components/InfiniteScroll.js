@@ -31,7 +31,7 @@ const InfiniteScroll = ({
     [hasMoreToFetch]
   );
 
-  if (isLoading || data?.length === 0) {
+  if (isLoading) {
     const dummySkeletonArray = Array(numSkeletons).fill("1");
     return (
       <AnimatedFlatList

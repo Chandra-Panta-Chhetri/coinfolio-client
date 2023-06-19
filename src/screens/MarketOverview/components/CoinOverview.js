@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { View, StyleSheet } from "react-native";
 import { IconImage, OutlinedText, TouchableNativeFeedback, Skeleton } from "../../../components";
-import { formatPercent, formatPrice, getStylesBasedOnSign } from "../../../utils";
+import { abbreviateNum, formatPercent, formatPrice, getStylesBasedOnSign } from "../../../utils";
 import { Text } from "react-native-paper";
 import { TYPOGRAPHY } from "../../../styles";
 import { useNavigation } from "@react-navigation/native";
@@ -38,7 +38,7 @@ const CoinOverview = ({ item }) => {
             {formatPrice(priceUsd)}
           </Text>
           <Text numberOfLines={1} style={TYPOGRAPHY.body1}>
-            MCap {marketCap}
+            MCap {abbreviateNum(marketCap)}
           </Text>
         </View>
       </View>
