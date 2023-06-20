@@ -1,1 +1,4 @@
-export const isNullOrUndefined = (value) => value === null || value === undefined;
+export function isNullOrUndefined(value) {
+  "worklet";
+  return value === null || value === undefined;
+}

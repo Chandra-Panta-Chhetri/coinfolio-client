@@ -39,7 +39,6 @@ export function formatNum(num, numOfSigDigs = 2) {
 export function formatPercent(percent, includeSign = true) {
   "worklet";
   if (isNullOrUndefined(percent) || isNaN(+percent)) {
-    console.log(percent);
     return "N/A";
   }
   return +percent >= 0 ? `${includeSign === true ? "+" : ""}${formatNum(+percent)}%` : `${formatNum(+percent)}%`;

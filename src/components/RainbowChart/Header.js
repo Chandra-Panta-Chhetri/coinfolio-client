@@ -2,7 +2,14 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { ReText } from "react-native-redash";
 import { useDerivedValue, interpolate, useAnimatedStyle, withTiming } from "react-native-reanimated";
-import { getStylesBasedOnSignWorklet, formatTime, formatPercent, formatNum, formatPrice } from "../../utils";
+import {
+  getStylesBasedOnSignWorklet,
+  formatTime,
+  formatPercent,
+  formatNum,
+  formatPrice,
+  isNullOrUndefined
+} from "../../utils";
 import { TYPOGRAPHY } from "../../styles";
 
 const Header = ({
@@ -41,7 +48,9 @@ const Header = ({
     hasPathsBeenCalculated?.value ? selectedGraph?.value?.percentChange : 0
   );
 
-  const percentChangeLabel = useDerivedValue(() => formatPercent(percentChange?.value));
+  const percentChangeLabel = useDerivedValue(() =>
+    isNullOrUndefined(percentChange?.value) ? "" : formatPercent(percentChange?.value)
+  );
 
   const animatedPercentChange = useAnimatedStyle(() => ({
     opacity: withTiming(hasPathsBeenCalculated?.value ? 1 : 0),

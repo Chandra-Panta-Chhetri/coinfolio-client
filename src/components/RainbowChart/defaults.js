@@ -9,7 +9,6 @@ const RAINBOW_CHART_DEFAULTS = {
   ACTIVE_GESTURE_ANIMATION_CONFIG: {
     overshootClamping: true
   },
-  ACCESSOR_FUNC: () => null,
   SELECTED_GRAPH: 0,
   DATA_POINTS: []
 };

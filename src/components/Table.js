@@ -6,7 +6,7 @@ import { GLOBAL_CONSTANTS } from "../constants";
 const CELL_SIZE_MULTIPLIER = 0.3;
 
 const Heading = ({ cellStyle, label }) => (
-  <Text style={cellStyle} key={th}>
+  <Text style={cellStyle} key={label}>
     {label}
   </Text>
 );
@@ -32,7 +32,7 @@ const Table = ({ headings, containerStyle, renderRow, data }) => {
       <View>
         <View style={[STYLES.row]}>
           {(headings ?? []).map((heading) => (
-            <Heading label={heading} key={heading} />
+            <Heading label={heading} key={heading} cellStyle={cellStyle} />
           ))}
         </View>
         <FlatList

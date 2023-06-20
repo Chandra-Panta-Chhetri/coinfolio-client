@@ -71,10 +71,11 @@ function* getAssetAbout({ payload: id }) {
 
 function* getNews({ payload: query }) {
   try {
-    const news = yield newsAPI.getNews({
+    const response = yield newsAPI.getNews({
       ...query,
-      filter: query.filter ?? NEWS_FILTERS.SHOW_ONLY.DEFAULT_OPTION
+      filter: query.filter ?? NEWS_FILTERS.SHOW_ONLY.DEFAULT_OPTION.value
     });
+    const news = yield response?.results;
     if (news?.length === 0) {
       return yield put(noMoreAssetNews());
     }
@@ -89,7 +90,7 @@ function* getMoreNews({ payload: query }) {
     const page = yield select(selectAssetNewsPage);
     const response = yield newsAPI.getNews({
       ...query,
-      filter: query.filter ?? NEWS_FILTERS.SHOW_ONLY.DEFAULT_OPTION,
+      filter: query.filter ?? NEWS_FILTERS.SHOW_ONLY.DEFAULT_OPTION.value,
       page
     });
     const news = yield response?.results;
@@ -115,7 +116,7 @@ function* getEvents({ payload: query }) {
       sortBy: EVENTS_FILTERS.TYPES[filters.sortBy]?.value
     };
     const response = yield eventsAPI.getEvents(filtersDTO);
-    const events = yield response?.response;
+    const events = yield response?.results;
     if (events?.length === 0) {
       return yield put(noMoreAssetEvents());
     }

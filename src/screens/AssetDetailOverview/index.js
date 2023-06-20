@@ -14,11 +14,14 @@ import {
 import { useLivePrices } from "../../hooks";
 import { formatPrice, isNullOrUndefined } from "../../utils";
 import { Statistic } from "./components";
+import SOCKET_EVENT_NAMES from "../../socket/event-names";
 
-const xValueAccessor = (dataInstance) => dataInstance?.time;
-const yValueAccessor = (dataInstance) => dataInstance?.priceUsd;
-const percentChangeAccessor = (data) => data?.percentChange;
-const dataPointsAccessor = (data) => data?.prices;
+const valueAccessors = {
+  xValueAccessor: (dataInstance) => dataInstance?.time,
+  yValueAccessor: (dataInstance) => dataInstance?.priceUsd,
+  percentChangeAccessor: (data) => data?.history?.percentChange,
+  dataPointsAccessor: (data) => data?.history?.prices
+};
 
 const AssetDetailOverviewScreen = ({
   assetOverview,
@@ -66,10 +69,10 @@ const AssetDetailOverviewScreen = ({
           <Skeleton style={STYLES.textSkeleton} />
         ) : (
           <View style={STYLES.nameRank}>
+            <OutlinedText text={assetOverview?.rank} style={TYPOGRAPHY.caption} />
             <Text style={STYLES.fullName} numberOfLines={1}>
               {assetOverview?.name}
             </Text>
-            <OutlinedText text={assetOverview?.rank} style={TYPOGRAPHY.caption} />
           </View>
         )}
         {isLoadingAssetOverview ? (
@@ -80,24 +83,13 @@ const AssetDetailOverviewScreen = ({
           </Text>
         )}
       </View>
-      <LineChart
-        data={assetOverview?.priceHistory}
-        chartStyle={STYLES.lineChart}
-        xValueAccessor={xValueAccessor}
-        yValueAccessor={yValueAccessor}
-        percentChangeAccessor={percentChangeAccessor}
-        dataPointsAccessor={dataPointsAccessor}
-      />
+      <LineChart dataPoints={assetOverview?.priceHistory} style={STYLES.lineChart} valueAccessors={valueAccessors} />
       <View style={STYLES.statsContainer}>
         <Text style={STYLES.statsHeading}>Statistics</Text>
         {isLoadingAssetOverview ? (
           <Skeleton style={STYLES.statsSkeleton} />
         ) : (
-          <MultiColumnView
-            sections={assetOverview?.statistics}
-            renderItem={Statistic}
-            SectionSeparator={() => <View style={[STYLES.statsSeparator, { borderColor: colors?.text }]} />}
-          />
+          <MultiColumnView sections={assetOverview?.statistics} renderItem={Statistic} />
         )}
       </View>
     </ScrollView>
@@ -115,13 +107,13 @@ const STYLES = StyleSheet.create({
   },
   fullName: {
     ...TYPOGRAPHY.subheading,
-    marginRight: GLOBAL_CONSTANTS.SM_MARGIN
+    marginLeft: GLOBAL_CONSTANTS.SM_MARGIN
   },
   nameRank: { flexDirection: "row", alignItems: "center" },
   statsContainer: {
     marginTop: GLOBAL_CONSTANTS.LG_MARGIN
   },
-  statsSeparator: { borderWidth: 1, marginRight: GLOBAL_CONSTANTS.MD_MARGIN },
+  statsSeparator: {},
   lineChart: {
     width: "100%",
     height: 180

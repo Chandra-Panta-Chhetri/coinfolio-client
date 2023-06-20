@@ -34,7 +34,7 @@ const ChartLabelItem = ({
     [maxWidth]
   );
 
-  const labelValue = useDerivedValue(() => `${labelInfo?.value?.val}`);
+  const labelValue = useDerivedValue(() => `${labelInfo?.value?.val ?? ""}`);
 
   const STYLES = {
     ...TYPOGRAPHY.textAlignCenter,

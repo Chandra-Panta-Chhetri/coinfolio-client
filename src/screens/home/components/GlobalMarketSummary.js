@@ -20,7 +20,7 @@ const formatValue = (labelKey, rawValue) => {
     case "ethDom":
       return `${formatPercent(rawValue, false)}`;
     default:
-      return null;
+      return rawValue;
   }
 };
 

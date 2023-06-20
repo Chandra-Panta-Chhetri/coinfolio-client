@@ -18,7 +18,8 @@ import RAINBOW_CHART_DEFAULTS from "./defaults";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { Text, useTheme } from "react-native-paper";
 import { GLOBAL_CONSTANTS } from "../../constants";
-import { calculateRainbowChart } from "../../utils";
+import { calculateRainbowChart, isNullOrUndefined } from "../../utils";
+import { memo } from "react";
 
 const AnimatedPath = Reanimated.createAnimatedComponent(Path);
 
@@ -27,10 +28,7 @@ const LineChart = ({
   style,
   initialSelectedGraph = RAINBOW_CHART_DEFAULTS.SELECTED_GRAPH,
   svgConfig = RAINBOW_CHART_DEFAULTS.SVG_LINE_CONFIG,
-  xValueAccessor = RAINBOW_CHART_DEFAULTS.ACCESSOR_FUNC,
-  yValueAccessor = RAINBOW_CHART_DEFAULTS.ACCESSOR_FUNC,
-  percentChangeAccessor = RAINBOW_CHART_DEFAULTS.ACCESSOR_FUNC,
-  dataPointsAccessor = RAINBOW_CHART_DEFAULTS.ACCESSOR_FUNC
+  valueAccessors
 }) => {
   const { colors: themeColors, dark: isDarkMode } = useTheme();
   const [chartDimensions, setChartDimensions] = useState({
@@ -55,12 +53,6 @@ const LineChart = ({
 
   useEffect(() => {
     if (chartDimensions?.hasBeenCalculated && dataPoints?.length > 0) {
-      const valueAccessors = {
-        xValueAccessor,
-        yValueAccessor,
-        percentChangeAccessor,
-        dataPointsAccessor
-      };
       const chartData = calculateRainbowChart(dataPoints, width, height, valueAccessors);
       setChartData(chartData);
     }
@@ -76,15 +68,11 @@ const LineChart = ({
   const isPanGestureActive = useSharedValue(false);
 
   const hasPathsBeenCalculated = useDerivedValue(() => {
-    return (
-      chartData[currentSelected?.value] &&
-      chartData[currentSelected?.value]?.dataPoints &&
-      chartData[currentSelected?.value]?.dataPoints?.path
-    );
+    return !isNullOrUndefined(chartData[currentSelected?.value]?.data?.path);
   }, [chartData]);
 
   const selectedGraph = useDerivedValue(() =>
-    hasPathsBeenCalculated?.value ? chartData[currentSelected?.value]?.dataPoints : {}
+    hasPathsBeenCalculated?.value ? chartData[currentSelected?.value]?.data : {}
   );
 
   const animatedLabelOverlay = useAnimatedStyle(
@@ -99,8 +87,8 @@ const LineChart = ({
   }));
 
   const animatedPathProps = useAnimatedProps(() => {
-    const previousPath = hasPathsBeenCalculated?.value ? chartData[previousSelected?.value]?.dataPoints?.path : "";
-    const currentPath = hasPathsBeenCalculated?.value ? chartData[currentSelected?.value]?.dataPoints?.path : "";
+    const previousPath = hasPathsBeenCalculated?.value ? chartData[previousSelected?.value]?.data?.path : "";
+    const currentPath = hasPathsBeenCalculated?.value ? chartData[currentSelected?.value]?.data?.path : "";
 
     return {
       d: !previousPath ? "" : mixPath(pathTransistion.value, previousPath, currentPath),
@@ -218,4 +206,4 @@ const STYLES = StyleSheet.create({
   }
 });
 
-export default LineChart;
+export default memo(LineChart);

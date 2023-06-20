@@ -115,10 +115,13 @@ export const buildLineChart = (data, chartWidth = 0, chartHeight = 0, valueAcces
 };
 
 export const calculateRainbowChart = (data, chartWidth, chartHeight, valueAccessors) => {
-  const numPointsPerData = data?.map((d) => valueAccessors?.dataPointsAccessor(d?.data)?.length);
+  if (isNullOrUndefined(valueAccessors)) {
+    return [];
+  }
+  const numPointsPerData = data?.map((d) => valueAccessors?.dataPointsAccessor(d)?.length);
   const maxPointsToShow = Math.min(...numPointsPerData);
   return data?.map((d) => ({
     label: d?.label,
-    data: buildLineChart(d?.data, chartWidth, chartHeight, valueAccessors, maxPointsToShow)
+    data: buildLineChart(d, chartWidth, chartHeight, valueAccessors, maxPointsToShow)
   }));
 };
