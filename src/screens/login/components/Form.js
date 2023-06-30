@@ -1,11 +1,10 @@
 import React, { useRef } from "react";
 import { StyleSheet, View, KeyboardAvoidingView, Platform } from "react-native";
-import { GLOBAL_STYLES } from "../../../styles";
 import { useTheme } from "react-native-paper";
 import { useForm, Controller } from "react-hook-form";
-import { TextInput, Button, Link, PasswordInput } from "../../../shared-components";
+import { TextInput, Button, Link, PasswordInput } from "../../../components";
 import { connect } from "react-redux";
-import { selectIsChangingAuthState, startEmailLogin } from "../../../redux/user";
+import { selectIsChangingAuthState, loginWithEmail } from "../../../redux/user";
 import { GLOBAL_CONSTANTS } from "../../../constants";
 
 const Form = ({ isLoggingIn, login }) => {
@@ -117,7 +116,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  login: (credentials) => dispatch(startEmailLogin(credentials))
+  login: (credentials) => dispatch(loginWithEmail(credentials))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

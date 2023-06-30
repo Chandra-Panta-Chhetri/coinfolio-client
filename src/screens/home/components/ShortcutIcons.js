@@ -4,42 +4,43 @@ import { IconButton, Text, TouchableRipple, useTheme } from "react-native-paper"
 import { useNavigation } from "@react-navigation/native";
 import { TYPOGRAPHY } from "../../../styles";
 import { GLOBAL_CONSTANTS } from "../../../constants";
+import SCREEN_NAMES from "../../../navigators/screen-names";
 
 const SHORTCUT_ICONS = [
   {
     label: "Price Alerts",
     iconName: "bell-alert",
-    navigateTo: "PriceAlert"
+    navigateTo: SCREEN_NAMES.PRICE_ALERT
   },
   {
     label: "Compare",
     iconName: "compare",
-    navigateTo: "CompareCurrency"
+    navigateTo: SCREEN_NAMES.COMPARE_CURRENCY
   },
   {
     label: "Convert",
     iconName: "calculator",
-    navigateTo: "ConvertCurrency"
+    navigateTo: SCREEN_NAMES.CONVERT_CURRENCY
   },
   {
     label: "Watchlist",
     iconName: "eye",
-    navigateTo: "MarketOverview"
+    navigateTo: SCREEN_NAMES.MARKET_OVERVIEW
   }
 ];
 
 const ShortcutIcon = ({ iconInfo }) => {
   const navigation = useNavigation();
-  const navigateToScreen = () => navigation.navigate(iconInfo.navigateTo);
+  const navigateToScreen = () => navigation.navigate(iconInfo?.navigateTo);
   const { colors, dark: isDarkMode } = useTheme();
 
   return (
-    <TouchableRipple onPress={navigateToScreen} rippleColor={colors.touchableRipple}>
+    <TouchableRipple onPress={navigateToScreen} rippleColor={colors?.touchableRipple}>
       <View style={STYLES.iconContainer}>
-        <View style={[STYLES.iconBtnContainer, { borderColor: isDarkMode ? colors.border : colors.card }]}>
-          <IconButton icon={iconInfo.iconName} color={colors.primary} />
+        <View style={[STYLES.iconBtnContainer, { borderColor: isDarkMode ? colors?.border : colors?.card }]}>
+          <IconButton icon={iconInfo?.iconName} iconColor={colors?.primary} />
         </View>
-        <Text style={TYPOGRAPHY.body2}>{iconInfo.label}</Text>
+        <Text style={TYPOGRAPHY.body2}>{iconInfo?.label}</Text>
       </View>
     </TouchableRipple>
   );
@@ -48,7 +49,7 @@ const ShortcutIcon = ({ iconInfo }) => {
 const ShortcutIcons = () => (
   <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={STYLES.container}>
     {SHORTCUT_ICONS.map((si) => (
-      <ShortcutIcon iconInfo={si} key={si.label} />
+      <ShortcutIcon iconInfo={si} key={si?.label} />
     ))}
   </ScrollView>
 );

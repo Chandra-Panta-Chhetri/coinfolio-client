@@ -5,30 +5,30 @@ export const updateFilters = (newFilters) => ({
   payload: newFilters
 });
 
-export const startMarketsFetch = () => ({
-  type: MARKET_ACTION_TYPES.INITIAL_MARKETS_FETCH
+export const fetchMarkets = () => ({
+  type: MARKET_ACTION_TYPES.FETCH_MARKETS
 });
 
-export const marketsFetchFail = (errorMsg) => ({
-  type: MARKET_ACTION_TYPES.INITIAL_MARKETS_FAIL,
+export const fetchMarketsFail = (errorMsg) => ({
+  type: MARKET_ACTION_TYPES.FETCH_MARKETS_FAIL,
   payload: errorMsg
 });
 
-export const marketsFetchSuccess = (markets) => ({
-  type: MARKET_ACTION_TYPES.INITIAL_MARKETS_SUCCESS,
+export const fetchMarketsSuccess = (markets) => ({
+  type: MARKET_ACTION_TYPES.FETCH_MARKETS_SUCCESS,
   payload: markets
 });
 
-export const startNextMarketsFetch = () => ({
+export const fetchMoreMarkets = () => ({
   type: MARKET_ACTION_TYPES.FETCH_MORE_MARKETS
 });
 
-export const moreMarketsFail = (errorMsg) => ({
+export const fetchMoreMarketsFail = (errorMsg) => ({
   type: MARKET_ACTION_TYPES.FETCH_MORE_MARKETS_FAIL,
   payload: errorMsg
 });
 
-export const moreMarketsSuccess = (markets) => ({
+export const fetchMoreMarketsSuccess = (markets) => ({
   type: MARKET_ACTION_TYPES.FETCH_MORE_MARKETS_SUCCESS,
   payload: markets
 });
@@ -37,45 +37,45 @@ export const noMoreMarkets = () => ({
   type: MARKET_ACTION_TYPES.NO_MORE_MARKETS
 });
 
-export const startTrendingSearchesFetch = () => ({
+export const fetchTrendingSearches = () => ({
   type: MARKET_ACTION_TYPES.FETCH_TRENDING_SEARCHES
 });
 
-export const trendingSearchesFail = (errorMsg) => ({
-  type: MARKET_ACTION_TYPES.FETCH_TRENDING_FAIL,
+export const fetchTrendingSearchesFail = (errorMsg) => ({
+  type: MARKET_ACTION_TYPES.FETCH_TRENDING_SEARCHES_FAIL,
   payload: errorMsg
 });
 
-export const trendingSearchesSuccess = (searches) => ({
-  type: MARKET_ACTION_TYPES.FETCH_TRENDING_SUCCESS,
+export const fetchTrendingSearchesSuccess = (searches) => ({
+  type: MARKET_ACTION_TYPES.FETCH_TRENDING_SEARCHES_SUCCESS,
   payload: searches
 });
 
-export const startRecentSearchesFetch = () => ({
+export const fetchRecentSearches = () => ({
   type: MARKET_ACTION_TYPES.FETCH_RECENT_SEARCHES
 });
 
-export const recentSearchesFail = (errorMsg) => ({
+export const fetchRecentSearchesFail = (errorMsg) => ({
   type: MARKET_ACTION_TYPES.FETCH_RECENT_SEARCHES_FAIL,
   payload: errorMsg
 });
 
-export const recentSearchesSuccess = (searches) => ({
+export const fetchRecentSearchesSuccess = (searches) => ({
   type: MARKET_ACTION_TYPES.FETCH_RECENT_SEARCHES_SUCCESS,
   payload: searches
 });
 
-export const startSearchResultsFetch = (keyword) => ({
+export const fetchSearchResults = (keyword) => ({
   type: MARKET_ACTION_TYPES.FETCH_SEARCH_RESULTS,
   payload: keyword
 });
 
-export const searchResultsFail = (errorMsg) => ({
+export const fetchSearchResultsFail = (errorMsg) => ({
   type: MARKET_ACTION_TYPES.FETCH_SEARCH_RESULTS_FAIL,
   payload: errorMsg
 });
 
-export const searchResultsSuccess = (searches) => ({
+export const fetchSearchResultsSuccess = (searches) => ({
   type: MARKET_ACTION_TYPES.FETCH_SEARCH_RESULTS_SUCCESS,
   payload: searches
 });

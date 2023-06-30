@@ -1,122 +1,182 @@
 import PORTFOLIO_ACTION_TYPES from "./portfolio.action.types";
-import dummydata from "./dummydata.json";
-
-const values = dummydata.data.prices;
-const historicValue = [
-  {
-    label: "1h",
-    data: values.hour
-  },
-  {
-    label: "1d",
-    data: values.day
-  },
-  {
-    label: "1m",
-    data: values.month
-  },
-  {
-    label: "1y",
-    data: values.year
-  },
-  {
-    label: "All",
-    data: values.all
-  }
-];
 
 const INITIAL_STATE = {
-  currentPortfolio: {
-    value: 20000,
-    percent: 14.08,
-    plChange: 1000
-  },
+  totalValue: 0,
+  totalProfitLoss: null,
+  totalCost: "",
+  pieCharts: [],
   transactions: [],
-  numLoadingReq: 0,
-  assets: [
-    {
-      iconSrc: "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png",
-      fullName: "Bitcoin",
-      ticker: "BTC",
-      currentPrice: 39923.17,
-      pricePercentChange: 3.76,
-      holdingsVal: 39923.17,
-      totalHoldings: 1
-    },
-    {
-      iconSrc: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
-      fullName: "Ethereum",
-      ticker: "ETH",
-      currentPrice: 2500.24,
-      pricePercentChange: -5.23,
-      holdingsVal: 5000.48,
-      totalHoldings: 2
-    }
-  ],
-  overallProfit: {
-    value: 8000,
-    percentChange: 14
-  },
-  historicValue: historicValue
+  holdings: [],
+  isLoadingOverview: true,
+  userPortfolios: [],
+  isLoadingUserPortfolios: true,
+  isUpdatingUserPortfolios: false,
+  activePortfolioId: null,
+  isLoadingTransactionCoins: true,
+  transactionCoins: [],
+  isAddingTransaction: false,
+  isDeletingHolding: false,
+  holdingOverview: null,
+  isLoadingHoldingOverview: false,
+  isDeletingTransaction: false,
+  isUpdatingTransaction: false
 };
 
 const userReducer = (prevState = INITIAL_STATE, action) => {
-  switch (action.type) {
-    case PORTFOLIO_ACTION_TYPES.START_PORTFOLIO_FETCH:
-    case PORTFOLIO_ACTION_TYPES.START_ADDING_NEW_TRANSACTION:
-    case PORTFOLIO_ACTION_TYPES.START_DELETING_TRANSACTION_BY_ID:
-    case PORTFOLIO_ACTION_TYPES.START_UPDATING_TRANSACTION_BY_ID:
-    case PORTFOLIO_ACTION_TYPES.START_REMOVING_ALL_TRANSACTIONS_FOR_ASSET:
+  switch (action?.type) {
+    case PORTFOLIO_ACTION_TYPES.FETCH_USER_PORTFOLIOS:
       return {
         ...prevState,
-        numLoadingReq: prevState.numLoadingReq + 1
+        isLoadingUserPortfolios: true
       };
-    case PORTFOLIO_ACTION_TYPES.START_TRANSACTIONS_FOR_ASSET_FETCH:
+    case PORTFOLIO_ACTION_TYPES.FETCH_USER_PORTFOLIOS_FAIL:
       return {
         ...prevState,
-        numLoadingReq: prevState.numLoadingReq + 1,
+        isLoadingUserPortfolios: false
+      };
+    case PORTFOLIO_ACTION_TYPES.FETCH_USER_PORTFOLIOS_SUCCESS:
+      return {
+        ...prevState,
+        isLoadingUserPortfolios: false,
+        userPortfolios: action?.payload
+      };
+    case PORTFOLIO_ACTION_TYPES.FETCH_PORTFOLIO_OVERVIEW:
+      return {
+        ...prevState,
+        isLoadingOverview: true
+      };
+    case PORTFOLIO_ACTION_TYPES.ADD_NEW_PORTFOLIO:
+    case PORTFOLIO_ACTION_TYPES.UPDATE_PORTFOLIO:
+    case PORTFOLIO_ACTION_TYPES.DELETE_PORTFOLIO:
+      return {
+        ...prevState,
+        isUpdatingUserPortfolios: true
+      };
+    case PORTFOLIO_ACTION_TYPES.ADD_NEW_PORTFOLIO_FAIL:
+    case PORTFOLIO_ACTION_TYPES.UPDATE_PORTFOLIO_FAIL:
+    case PORTFOLIO_ACTION_TYPES.DELETE_PORTFOLIO_FAIL:
+      return {
+        ...prevState,
+        isUpdatingUserPortfolios: false
+      };
+    case PORTFOLIO_ACTION_TYPES.ADD_NEW_PORTFOLIO_SUCCESS:
+    case PORTFOLIO_ACTION_TYPES.UPDATE_PORTFOLIO_SUCCESS:
+    case PORTFOLIO_ACTION_TYPES.DELETE_PORTFOLIO_SUCCESS:
+      return {
+        ...prevState,
+        isUpdatingUserPortfolios: false,
+        userPortfolios: action?.payload
+      };
+    case PORTFOLIO_ACTION_TYPES.CHANGE_ACTIVE_PORTFOLIO:
+      return {
+        ...prevState,
+        activePortfolioId: action?.payload
+      };
+    case PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTION_COINS:
+      return {
+        ...prevState,
+        isLoadingTransactionCoins: true
+      };
+    case PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTION_COINS_FAIL:
+      return {
+        ...prevState,
+        isLoadingTransactionCoins: false
+      };
+    case PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTION_COINS_SUCCESS:
+      return {
+        ...prevState,
+        isLoadingTransactionCoins: false,
+        transactionCoins: action?.payload
+      };
+    case PORTFOLIO_ACTION_TYPES.FETCH_PORTFOLIO_OVERVIEW_FAIL:
+      return {
+        ...prevState,
+        isLoadingOverview: false
+      };
+    case PORTFOLIO_ACTION_TYPES.FETCH_PORTFOLIO_OVERVIEW_SUCCESS:
+      return {
+        ...prevState,
+        ...action?.payload,
+        isLoadingOverview: false
+      };
+    case PORTFOLIO_ACTION_TYPES.ADD_NEW_TRANSACTION:
+      return {
+        ...prevState,
+        isAddingTransaction: true
+      };
+    case PORTFOLIO_ACTION_TYPES.ADD_NEW_TRANSACTION_FAIL:
+      return {
+        ...prevState,
+        isAddingTransaction: false
+      };
+    case PORTFOLIO_ACTION_TYPES.ADD_NEW_TRANSACTION_SUCCESS:
+      return {
+        ...prevState,
+        isAddingTransaction: false,
+        transactions: action?.payload
+      };
+    case PORTFOLIO_ACTION_TYPES.DELETE_HOLDING:
+      return {
+        ...prevState,
+        isDeletingHolding: true
+      };
+    case PORTFOLIO_ACTION_TYPES.DELETE_HOLDING_FAIL:
+      return {
+        ...prevState,
+        isDeletingHolding: false
+      };
+    case PORTFOLIO_ACTION_TYPES.DELETE_HOLDING_SUCCESS:
+      return {
+        ...prevState,
+        isDeletingHolding: false,
         transactions: []
       };
-    case PORTFOLIO_ACTION_TYPES.PORTFOLIO_FETCH_FAIL:
-    case PORTFOLIO_ACTION_TYPES.ADDING_NEW_TRANSACTION_FAIL:
-    case PORTFOLIO_ACTION_TYPES.DELETE_TRANSACTION_BY_ID_FAIL:
-    case PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_BY_ID_FAIL:
-    case PORTFOLIO_ACTION_TYPES.REMOVE_ALL_TRANSACTIONS_FOR_ASSET_FAIL:
-    case PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTIONS_FOR_ASSET_FAIL:
+    case PORTFOLIO_ACTION_TYPES.FETCH_HOLDING_OVERVIEW:
       return {
         ...prevState,
-        numLoadingReq: prevState.numLoadingReq - 1
+        isLoadingHoldingOverview: true
       };
-    case PORTFOLIO_ACTION_TYPES.PORTFOLIO_FETCH_SUCCESS:
+    case PORTFOLIO_ACTION_TYPES.FETCH_HOLDING_OVERVIEW_FAIL:
       return {
         ...prevState,
-        portfolio: action.payload.portfolio,
-        numLoadingReq: prevState.numLoadingReq - 1
+        isLoadingHoldingOverview: false
       };
-    case PORTFOLIO_ACTION_TYPES.ADDING_NEW_TRANSACTION_SUCCESS:
+    case PORTFOLIO_ACTION_TYPES.FETCH_HOLDING_OVERVIEW_SUCCESS:
       return {
         ...prevState,
-        transactions: [...prevState.transactions, action.payload.newTransaction],
-        numLoadingReq: prevState.numLoadingReq - 1
+        isLoadingHoldingOverview: false,
+        transactions: action?.payload?.transactions,
+        holdingOverview: action?.payload?.summary
       };
-    case PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_BY_ID_SUCCESS:
-    case PORTFOLIO_ACTION_TYPES.DELETE_TRANSACTION_BY_ID_SUCCESS:
+    case PORTFOLIO_ACTION_TYPES.DELETE_TRANSACTION:
       return {
         ...prevState,
-        numLoadingReq: prevState.numLoadingReq - 1,
-        transactions: action.payload.updatedTransactions
+        isDeletingTransaction: true
       };
-    case PORTFOLIO_ACTION_TYPES.REMOVE_ALL_TRANSACTIONS_FOR_ASSET_SUCCESS:
+    case PORTFOLIO_ACTION_TYPES.DELETE_TRANSACTION_FAIL:
       return {
         ...prevState,
-        transactions: [],
-        numLoadingReq: prevState.numLoadingReq - 1
+        isDeletingTransaction: false
       };
-    case PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTIONS_FOR_ASSET_SUCCESS:
+    case PORTFOLIO_ACTION_TYPES.DELETE_TRANSACTION_SUCCESS:
       return {
         ...prevState,
-        transactions: action.payload.transactions,
-        numLoadingReq: prevState.numLoadingReq - 1
+        isDeletingTransaction: false
+      };
+    case PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION:
+      return {
+        ...prevState,
+        isUpdatingTransaction: true
+      };
+    case PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_FAIL:
+      return {
+        ...prevState,
+        isUpdatingTransaction: false
+      };
+    case PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_SUCCESS:
+      return {
+        ...prevState,
+        isUpdatingTransaction: false
       };
     default:
       return prevState;

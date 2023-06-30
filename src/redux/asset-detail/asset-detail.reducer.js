@@ -1,10 +1,10 @@
+import EVENTS_FILTERS from "../../components/Events/filters";
 import ASSET_DETAIL_ACTION_TYPES from "./asset-detail.action.types";
-import { EVENTS_CONSTANTS } from "../../constants";
 
 const INITIAL_STATE = {
   news: [],
   events: [],
-  eventFilters: EVENTS_CONSTANTS.DEFAULT_ASSET_FILTERS,
+  eventFilters: EVENTS_FILTERS.DEFAULT_ASSET_FILTERS,
   isLoadingNews: true,
   isLoadingEvents: true,
   isLoadingMoreNews: false,
@@ -22,23 +22,23 @@ const INITIAL_STATE = {
 };
 
 const assetDetailReducer = (prevState = INITIAL_STATE, action) => {
-  switch (action.type) {
+  switch (action?.type) {
     case ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_OVERVIEW:
       return {
         ...prevState,
         isLoadingOverview: true,
         overview: {}
       };
-    // case ASSET_DETAIL_ACTION_TYPES.ASSET_OVERVIEW_FAIL:
-    //   return {
-    //     ...prevState,
-    //     isLoadingOverview: false
-    //   };
-    case ASSET_DETAIL_ACTION_TYPES.ASSET_OVERVIEW_SUCCESS:
+    case ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_OVERVIEW_FAIL:
+      return {
+        ...prevState,
+        isLoadingOverview: false
+      };
+    case ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_OVERVIEW_SUCCESS:
       return {
         ...prevState,
         isLoadingOverview: false,
-        overview: action.payload
+        overview: action?.payload
       };
     case ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_MARKETS:
       return {
@@ -46,16 +46,16 @@ const assetDetailReducer = (prevState = INITIAL_STATE, action) => {
         isLoadingMarkets: true,
         markets: []
       };
-    // case ASSET_DETAIL_ACTION_TYPES.ASSET_MARKETS_FAIL:
-    //   return {
-    //     ...prevState,
-    //     isLoadingMarkets: false
-    //   };
-    case ASSET_DETAIL_ACTION_TYPES.ASSET_MARKETS_SUCCESS:
+    case ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_MARKETS_FAIL:
+      return {
+        ...prevState,
+        isLoadingMarkets: false
+      };
+    case ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_MARKETS_SUCCESS:
       return {
         ...prevState,
         isLoadingMarkets: false,
-        markets: action.payload
+        markets: action?.payload
       };
     case ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_ABOUT:
       return {
@@ -63,18 +63,18 @@ const assetDetailReducer = (prevState = INITIAL_STATE, action) => {
         isLoadingAbout: true,
         about: {}
       };
-    // case ASSET_DETAIL_ACTION_TYPES.ASSET_ABOUT_FAIL:
-    //   return {
-    //     ...prevState,
-    //     isLoadingAbout: false
-    //   };
-    case ASSET_DETAIL_ACTION_TYPES.ASSET_ABOUT_SUCCESS:
+    case ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_ABOUT_FAIL:
+      return {
+        ...prevState,
+        isLoadingAbout: false
+      };
+    case ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_ABOUT_SUCCESS:
       return {
         ...prevState,
         isLoadingAbout: false,
-        about: action.payload
+        about: action?.payload
       };
-    case ASSET_DETAIL_ACTION_TYPES.INITIAL_ASSET_NEWS_FETCH:
+    case ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_NEWS:
       return {
         ...prevState,
         news: [],
@@ -82,7 +82,7 @@ const assetDetailReducer = (prevState = INITIAL_STATE, action) => {
         hasMoreNews: true,
         newsPage: 1
       };
-    case ASSET_DETAIL_ACTION_TYPES.INITIAL_ASSET_EVENTS_FETCH:
+    case ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_EVENTS:
       return {
         ...prevState,
         events: [],
@@ -90,27 +90,27 @@ const assetDetailReducer = (prevState = INITIAL_STATE, action) => {
         hasMoreEvents: true,
         eventsPage: 1
       };
-    case ASSET_DETAIL_ACTION_TYPES.INITIAL_ASSET_NEWS_FAIL:
+    case ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_NEWS_FAIL:
       return {
         ...prevState,
         isLoadingNews: false
       };
-    case ASSET_DETAIL_ACTION_TYPES.INITIAL_ASSET_NEWS_SUCCESS:
+    case ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_NEWS_SUCCESS:
       return {
         ...prevState,
-        news: action.payload,
+        news: action?.payload,
         isLoadingNews: false,
         newsPage: prevState.newsPage + 1
       };
-    case ASSET_DETAIL_ACTION_TYPES.INITIAL_ASSET_EVENTS_FAIL:
+    case ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_EVENTS_FAIL:
       return {
         ...prevState,
         isLoadingEvents: false
       };
-    case ASSET_DETAIL_ACTION_TYPES.INITIAL_ASSET_EVENTS_SUCCESS:
+    case ASSET_DETAIL_ACTION_TYPES.FETCH_ASSET_EVENTS_SUCCESS:
       return {
         ...prevState,
-        events: action.payload,
+        events: action?.payload,
         isLoadingEvents: false,
         eventsPage: prevState.eventsPage + 1
       };
@@ -119,7 +119,7 @@ const assetDetailReducer = (prevState = INITIAL_STATE, action) => {
         ...prevState,
         eventFilters: {
           ...prevState.eventFilters,
-          ...action.payload
+          ...action?.payload
         }
       };
     case ASSET_DETAIL_ACTION_TYPES.FETCH_MORE_ASSET_NEWS:
@@ -127,16 +127,16 @@ const assetDetailReducer = (prevState = INITIAL_STATE, action) => {
         ...prevState,
         isLoadingMoreNews: true
       };
-    case ASSET_DETAIL_ACTION_TYPES.MORE_ASSET_NEWS_FAIL:
+    case ASSET_DETAIL_ACTION_TYPES.FETCH_MORE_ASSET_NEWS_FAIL:
       return {
         ...prevState,
         isLoadingMoreNews: false
       };
-    case ASSET_DETAIL_ACTION_TYPES.MORE_ASSET_NEWS_SUCCESS:
+    case ASSET_DETAIL_ACTION_TYPES.FETCH_MORE_ASSET_NEWS_SUCCESS:
       return {
         ...prevState,
         isLoadingMoreNews: false,
-        news: action.payload,
+        news: action?.payload,
         newsPage: prevState.newsPage + 1
       };
     case ASSET_DETAIL_ACTION_TYPES.FETCH_MORE_ASSET_EVENTS:
@@ -144,16 +144,16 @@ const assetDetailReducer = (prevState = INITIAL_STATE, action) => {
         ...prevState,
         isLoadingMoreEvents: true
       };
-    case ASSET_DETAIL_ACTION_TYPES.MORE_ASSET_EVENTS_FAIL:
+    case ASSET_DETAIL_ACTION_TYPES.FETCH_MORE_ASSET_EVENTS_FAIL:
       return {
         ...prevState,
         isLoadingMoreEvents: false
       };
-    case ASSET_DETAIL_ACTION_TYPES.MORE_ASSET_EVENTS_SUCCESS:
+    case ASSET_DETAIL_ACTION_TYPES.FETCH_MORE_ASSET_EVENTS_SUCCESS:
       return {
         ...prevState,
         isLoadingMoreEvents: false,
-        events: action.payload,
+        events: action?.payload,
         eventsPage: prevState.eventsPage + 1
       };
     case ASSET_DETAIL_ACTION_TYPES.NO_MORE_ASSET_NEWS:
@@ -175,7 +175,7 @@ const assetDetailReducer = (prevState = INITIAL_STATE, action) => {
         ...prevState,
         overview: {
           ...prevState.overview,
-          ...action.payload
+          ...action?.payload
         }
       };
     default:

@@ -3,31 +3,41 @@ import { connect } from "react-redux";
 import {
   selectNews,
   selectIsLoadingNews,
-  startNewsFetch,
+  fetchNews,
   selectIsLoadingMoreNews,
-  startNextNewsFetch,
+  fetchMoreNews,
   selectHasMoreNews
 } from "../../redux/discover";
-import { NewsList } from "../../shared-components";
+import { News } from "../../components";
+import NEWS_FILTERS from "../../components/News/filters";
 
-const NewsScreen = ({ fetchNews, fetchMoreNews, ...otherProps }) => {
+const NewsScreen = ({ fetchNews, fetchMoreNews, news, isLoadingNews, isLoadingMoreNews, hasMoreNewsToFetch }) => {
   useEffect(() => {
-    fetchNews();
+    fetchNews(NEWS_FILTERS.SHOW_ONLY.DEFAULT_OPTION.value);
   }, []);
 
-  return <NewsList fetchMore={fetchMoreNews} onFilterChange={fetchNews} {...otherProps} />;
+  return (
+    <News
+      fetchMore={fetchMoreNews}
+      onFilterChange={fetchNews}
+      news={news}
+      hasMoreToFetch={hasMoreNewsToFetch}
+      isLoading={isLoadingNews}
+      isLoadingMore={isLoadingMoreNews}
+    />
+  );
 };
 
 const mapStateToProps = (state) => ({
-  isLoading: selectIsLoadingNews(state),
+  isLoadingNews: selectIsLoadingNews(state),
   news: selectNews(state),
-  isLoadingMore: selectIsLoadingMoreNews(state),
-  hasMoreToFetch: selectHasMoreNews(state)
+  isLoadingMoreNews: selectIsLoadingMoreNews(state),
+  hasMoreNewsToFetch: selectHasMoreNews(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchNews: (filter) => dispatch(startNewsFetch(filter)),
-  fetchMoreNews: (filter) => dispatch(startNextNewsFetch({ filter }))
+  fetchNews: (filter) => dispatch(fetchNews(filter)),
+  fetchMoreNews: (filter) => dispatch(fetchMoreNews({ filter }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewsScreen);

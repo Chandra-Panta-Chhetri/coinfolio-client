@@ -1,6 +1,6 @@
 import axios from "axios";
-import { URLS } from "../constants";
+import { GLOBAL_CONSTANTS } from "../constants";
 
 export default axios.create({
-  baseURL: `${URLS.BACKEND_BASE_URL}/api`
+  baseURL: `${GLOBAL_CONSTANTS.BACKEND_BASE_URL}/api/v1`
 });

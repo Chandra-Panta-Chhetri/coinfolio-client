@@ -1,5 +1,5 @@
 export { default as NewsSummaries } from "./NewsSummaries";
-export { default as HeadingWithSeeAll } from "./HeadingWithSeeAll";
+export { default as SeeAllHeading } from "./SeeAllHeading";
 export { default as ShortcutIcons } from "./ShortcutIcons";
 export { default as GlobalMarketSummary } from "./GlobalMarketSummary";
 export { default as TopCoins } from "./TopCoins";

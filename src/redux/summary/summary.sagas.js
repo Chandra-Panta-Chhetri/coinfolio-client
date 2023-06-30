@@ -1,12 +1,12 @@
 import {
-  topCoinsFetchSuccess,
-  newsSummarySuccess,
-  globalSummaryFetchSuccess,
-  gainersLosersFetchSuccess,
-  topCoinsFetchFail,
-  newsSummaryFail,
-  gainersLosersFetchFail,
-  globalSummaryFetchFail
+  fetchTopCoinsSuccess,
+  fetchNewsSummarySuccess,
+  fetchGlobalSummarySuccess,
+  fetchGainersLosersSuccess,
+  fetchTopCoinsFail,
+  fetchNewsSummaryFail,
+  fetchGainersLosersFail,
+  fetchGlobalSummaryFail
 } from "./summary.actions";
 import SUMMARY_ACTION_TYPES from "./summary.action.types";
 import { all, call, put, takeLatest } from "redux-saga/effects";
@@ -15,62 +15,62 @@ import { newsAPI, marketsAPI } from "../../api";
 function* fetchTopCoins({ payload: limit }) {
   try {
     const coins = yield marketsAPI.getTopCoins({ limit });
-    yield put(topCoinsFetchSuccess(coins));
+    yield put(fetchTopCoinsSuccess(coins));
   } catch (err) {
-    yield put(topCoinsFetchFail("Error while fetching the top coins"));
+    yield put(fetchTopCoinsFail("Failed to get the top coins"));
   }
 }
 
 function* fetchGlobalSummary() {
   try {
     const globalSummary = yield marketsAPI.getMarketSummary();
-    yield put(globalSummaryFetchSuccess(globalSummary));
+    yield put(fetchGlobalSummarySuccess(globalSummary));
   } catch (err) {
-    yield put(globalSummaryFetchFail("Error while getting the global market summary"));
+    yield put(fetchGlobalSummaryFail("Failed to get the global market summary"));
   }
 }
 
 function* fetchGainersLosers({ payload: limit }) {
   try {
-    const res = yield marketsAPI.getGainersLosers({ limit });
-    const coins = [...res.gainers, ...res.losers];
-    yield put(gainersLosersFetchSuccess(coins));
+    const gainersAndLosers = yield marketsAPI.getGainersLosers({ limit });
+    const coins = [...gainersAndLosers?.gainers, ...gainersAndLosers?.losers];
+    yield put(fetchGainersLosersSuccess(coins));
   } catch (err) {
-    yield put(gainersLosersFetchFail("Error while getting the gainers and losers"));
+    yield put(fetchGainersLosersFail("Failed to get the gainers and losers"));
   }
 }
 
 function* fetchNewsSummary({ payload: limit }) {
   try {
-    const res = yield newsAPI.getNews();
-    const newsSummary = yield res.results.slice(0, limit);
-    yield put(newsSummarySuccess(newsSummary));
+    const response = yield newsAPI.getNews();
+    const news = yield response?.results?.slice(0, limit);
+    yield put(fetchNewsSummarySuccess(news));
   } catch (err) {
-    yield put(newsSummaryFail("Error while getting the news"));
+    yield put(fetchNewsSummaryFail("Failed to get the news"));
   }
 }
 
-function* watchTopCoinsFetchStart() {
-  yield takeLatest(SUMMARY_ACTION_TYPES.START_TOP_COINS_FETCH, fetchTopCoins);
+function* watchFetchTopCoins() {
+  yield takeLatest(SUMMARY_ACTION_TYPES.FETCH_TOP_COINS, fetchTopCoins);
 }
 
-function* watchGlobalSummaryFetchStart() {
-  yield takeLatest(SUMMARY_ACTION_TYPES.START_GLOBAL_SUMMARY_FETCH, fetchGlobalSummary);
+function* watchFetchGlobalSummary() {
+  yield takeLatest(SUMMARY_ACTION_TYPES.FETCH_GLOBAL_SUMMARY, fetchGlobalSummary);
 }
 
-function* watchGainersLosersFetchStart() {
-  yield takeLatest(SUMMARY_ACTION_TYPES.START_GAINERS_LOSERS_FETCH, fetchGainersLosers);
+function* watchFetchGainersLosers() {
+  yield takeLatest(SUMMARY_ACTION_TYPES.FETCH_GAINERS_LOSERS, fetchGainersLosers);
 }
 
-function* watchNewsSummaryFetch() {
-  yield takeLatest(SUMMARY_ACTION_TYPES.NEWS_SUMMARY_FETCH, fetchNewsSummary);
+function* watchFetchNewsSummary() {
+  yield takeLatest(SUMMARY_ACTION_TYPES.FETCH_NEWS_SUMMARY, fetchNewsSummary);
 }
 
 export default function* summarySagas() {
   yield all([
-    call(watchTopCoinsFetchStart),
-    call(watchGlobalSummaryFetchStart),
-    call(watchGainersLosersFetchStart),
-    call(watchNewsSummaryFetch)
+    call(watchFetchTopCoins),
+    call(watchFetchGlobalSummary),
+    call(watchFetchGainersLosers),
+    call(watchFetchNewsSummary)
   ]);
 }

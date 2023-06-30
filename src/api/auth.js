@@ -1,29 +1,42 @@
 import axios from "./axios-config";
+import { isNullOrUndefined } from "../utils";
 
-const separateUserToken = (userDTO) => ({
+const toUserTokenDTO = (userDTO) => ({
   user: {
-    name: userDTO.name,
-    email: userDTO.email,
-    id: userDTO.id
+    name: userDTO?.name,
+    email: userDTO?.email,
+    id: userDTO?.id
   },
-  token: userDTO.token
+  token: userDTO?.token
 });
 
 export const login = async (credentials) => {
-  const res = await axios.post(`/auth/login`, credentials);
-  return separateUserToken(res.data);
+  if (!isNullOrUndefined(credentials)) {
+    const res = await axios.post(`/auth/login`, credentials);
+    const user = toUserTokenDTO(res?.data);
+    return user;
+  }
+  return null;
 };
 
 export const registerUser = async (newUser) => {
-  const res = await axios.post(`/auth/register`, newUser);
-  return separateUserToken(res.data);
+  if (!isNullOrUndefined(newUser)) {
+    const res = await axios.post(`/auth/register`, newUser);
+    const user = toUserTokenDTO(res?.data);
+    return user;
+  }
+  return null;
 };
 
 export const getUserFromToken = async (token) => {
-  const res = await axios.get(`/auth/user`, {
-    headers: {
-      "Auth-Token": token
-    }
-  });
-  return res.data;
+  if (!isNullOrUndefined(token)) {
+    const res = await axios.get(`/auth/user`, {
+      headers: {
+        "X-Auth-Token": token
+      }
+    });
+    const user = res?.data;
+    return user;
+  }
+  return null;
 };

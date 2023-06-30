@@ -1,38 +1,72 @@
 import { createSelector } from "reselect";
+import { isNullOrUndefined } from "../../utils";
 
-const selectPortfolio = (state) => state.portfolio;
+const selectPortfolio = (state) => state?.portfolio;
 
-export const selectCurrentPortfolioValue = createSelector(
+export const selectCurrentPortfolioValue = createSelector([selectPortfolio], (portfolio) => portfolio?.totalValue);
+
+export const selectTransactions = createSelector([selectPortfolio], (portfolio) => portfolio?.transactions);
+
+export const selectIsLoadingPortfolioOverview = createSelector(
   [selectPortfolio],
-  (portfolio) => portfolio.currentPortfolio
+  (portfolio) => portfolio?.isLoadingOverview
 );
 
-export const selectTransactions = createSelector(
+export const selectPortfolioHoldings = createSelector([selectPortfolio], (portfolio) => portfolio?.holdings);
+
+export const selectTotalProfitLoss = createSelector([selectPortfolio], (portfolio) => portfolio?.totalProfitLoss);
+
+export const selectTotalInvested = createSelector([selectPortfolio], (portfolio) => portfolio?.totalCost);
+
+export const selectPortfolioPieCharts = createSelector([selectPortfolio], (portfolio) => portfolio?.pieCharts);
+
+export const selectIsLoadingUserPortfolios = createSelector(
   [selectPortfolio],
-  (portfolio) => portfolio.transactions
+  (portfolio) => portfolio?.isLoadingUserPortfolios
 );
 
-export const selectNumLoadingReq = createSelector(
+export const selectUserPortfolios = createSelector([selectPortfolio], (portfolio) => portfolio?.userPortfolios);
+
+export const selectIsUpdatingUserPortfolios = createSelector(
   [selectPortfolio],
-  (portfolio) => portfolio.numLoadingReq
+  (portfolio) => portfolio?.isUpdatingUserPortfolios
 );
 
-export const selectIsLoadingPortfolio = createSelector(
-  [selectNumLoadingReq],
-  (numLoadingReq) => numLoadingReq > 0
+export const selectActivePortfolioId = createSelector([selectPortfolio], (portfolio) => portfolio?.activePortfolioId);
+
+export const selectActivePortfolio = createSelector(
+  [selectActivePortfolioId, selectUserPortfolios],
+  (activePortfolioId, userPortfolios) =>
+    userPortfolios?.find((p) => !isNullOrUndefined(activePortfolioId) && p?.id === activePortfolioId)
 );
 
-export const selectPortfolioAssets = createSelector(
+export const selectIsLoadingTransactionCoins = createSelector(
   [selectPortfolio],
-  (portfolio) => portfolio.assets
+  (portfolio) => portfolio?.isLoadingTransactionCoins
 );
 
-export const selectOverallProfit = createSelector(
+export const selectTransactionCoins = createSelector([selectPortfolio], (portfolio) => portfolio?.transactionCoins);
+
+export const selectIsAddingTransaction = createSelector(
   [selectPortfolio],
-  (portfolio) => portfolio.overallProfit
+  (portfolio) => portfolio?.isAddingTransaction
 );
 
-export const selectPortfolioHistoricValue = createSelector(
+export const selectIsDeletingHolding = createSelector([selectPortfolio], (portfolio) => portfolio?.isDeletingHolding);
+
+export const selectIsLoadingHoldingOverview = createSelector(
   [selectPortfolio],
-  (portfolio) => portfolio.historicValue
+  (portfolio) => portfolio?.isLoadingHoldingOverview
+);
+
+export const selectHoldingOverview = createSelector([selectPortfolio], (portfolio) => portfolio?.holdingOverview);
+
+export const selectIsDeletingTransaction = createSelector(
+  [selectPortfolio],
+  (portfolio) => portfolio?.isDeletingTransaction
+);
+
+export const selectIsUpdatingTransaction = createSelector(
+  [selectPortfolio],
+  (portfolio) => portfolio?.isUpdatingTransaction
 );

@@ -1,33 +1,21 @@
 import { createSelector } from "reselect";
 
-const selectPreferences = (state) => state.preferences;
+const selectPreferences = (state) => state?.preferences;
 
-export const selectIsThemeDark = createSelector(
+export const selectIsThemeDark = createSelector([selectPreferences], (preferences) => preferences?.isThemeDark);
+
+export const selectIsNotificationsEnabled = createSelector(
   [selectPreferences],
-  (preferences) => preferences.isThemeDark
+  (preferences) => preferences?.isNotificationsEnabled
 );
 
-export const selectIsNotificationsOn = createSelector(
-  [selectPreferences],
-  (preferences) => preferences.isNotificationsOn
-);
+export const selectCurrencyCode = createSelector([selectPreferences], (preferences) => preferences?.currencyCode);
 
-export const selectCurrencyCode = createSelector(
-  [selectPreferences],
-  (preferences) => preferences.currencyCode
-);
+export const selectInitialScreen = createSelector([selectPreferences], (preferences) => preferences?.initialScreen);
 
-export const selectHomeScreen = createSelector(
-  [selectPreferences],
-  (preferences) => preferences.homeScreen
-);
+export const selectIsAuthEnabled = createSelector([selectPreferences], (preferences) => preferences?.isAuthEnabled);
 
-export const selectIsBiometricAuthOn = createSelector(
+export const selectIsPrivacyModeEnabled = createSelector(
   [selectPreferences],
-  (preferences) => preferences.isBiometricAuthOn
-);
-
-export const selectIsPrivacyModeOn = createSelector(
-  [selectPreferences],
-  (preferences) => preferences.isPrivacyModeOn
+  (preferences) => preferences?.isPrivacyModeEnabled
 );

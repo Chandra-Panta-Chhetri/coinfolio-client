@@ -1,11 +1,12 @@
 import { createSelector } from "reselect";
+import { isNullOrUndefined } from "../../utils";
 
-const selectUserStore = (state) => state.user;
+const selectUserStore = (state) => state?.user;
 
-export const selectCurrentUser = createSelector([selectUserStore], (us) => us.currentUser);
+export const selectCurrentUser = createSelector([selectUserStore], (us) => us?.currentUser);
 
-export const selectIsChangingAuthState = createSelector([selectUserStore], (us) => us.isChangingAuthState);
+export const selectIsChangingAuthState = createSelector([selectUserStore], (us) => us?.isChangingAuthState);
 
-export const selectIsUserAuthenticated = createSelector([selectCurrentUser], (user) => user !== null);
+export const selectIsAuthenticated = createSelector([selectCurrentUser], (user) => !isNullOrUndefined(user));
 
-export const selectUserToken = createSelector([selectUserStore], (us) => us.token);
+export const selectAuthToken = createSelector([selectUserStore], (us) => us?.token);

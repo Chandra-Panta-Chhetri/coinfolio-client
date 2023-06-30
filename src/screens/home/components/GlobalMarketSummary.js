@@ -3,35 +3,52 @@ import { StyleSheet, ScrollView, View } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { connect } from "react-redux";
 import { GLOBAL_CONSTANTS } from "../../../constants";
-import { selectGlobalSummary, selectIsLoadingGlobal, startGlobalSummaryFetch } from "../../../redux/summary";
-import { Skeleton } from "../../../shared-components";
+import { selectGlobalSummary, selectIsLoadingGlobalSummary, fetchGlobalSummary } from "../../../redux/summary";
+import { Skeleton } from "../../../components";
 import { TYPOGRAPHY } from "../../../styles";
+import { formatNum, formatPercent, isNullOrUndefined } from "../../../utils";
 
-const MarketSummarySkeleton = () => (
-  <Card style={STYLES.container}>
-    <Card.Content style={STYLES.rowFlexbox}>
-      <Skeleton style={STYLES.globalSkeleton} />
-    </Card.Content>
-  </Card>
-);
+const formatValue = (labelKey, rawValue) => {
+  switch (labelKey) {
+    case "totalMarketCap":
+    case "volume24hr":
+      return `$${formatNum(rawValue, 0)}`;
+    case "numAssets":
+    case "numExchanges":
+      return `${formatNum(rawValue, 0)}`;
+    case "btcDom":
+    case "ethDom":
+      return `${formatPercent(rawValue, false)}`;
+    default:
+      return rawValue;
+  }
+};
 
-const GlobalMarketSummary = ({ globalSummary, fetchGlobalSummary, isLoading }) => {
+const GlobalMarketSummary = ({ globalSummary, fetchGlobalSummary, isLoadingGlobalSummary }) => {
   useEffect(() => {
     fetchGlobalSummary();
   }, []);
 
-  if (isLoading || globalSummary === null) {
-    return <MarketSummarySkeleton />;
+  if (isLoadingGlobalSummary) {
+    return (
+      <Card style={STYLES.container}>
+        <Card.Content style={STYLES.rowFlexbox}>
+          <Skeleton style={STYLES.globalSkeleton} />
+        </Card.Content>
+      </Card>
+    );
+  } else if (isNullOrUndefined(globalSummary)) {
+    return null;
   }
 
   return (
     <Card style={STYLES.container}>
       <Card.Content>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {Object.keys(globalSummary).map((key) => (
-            <View style={STYLES.summaryItem} key={globalSummary[key].label}>
-              <Text style={TYPOGRAPHY.body2}>{globalSummary[key].label}: </Text>
-              <Text style={TYPOGRAPHY.body2}>{globalSummary[key].value}</Text>
+          {Object.keys(globalSummary ?? {}).map((key) => (
+            <View style={STYLES.summaryItem} key={globalSummary[key]?.label}>
+              <Text style={TYPOGRAPHY.body1}>{globalSummary[key]?.label}: </Text>
+              <Text style={TYPOGRAPHY.body1}>{formatValue(key, globalSummary[key]?.value)}</Text>
             </View>
           ))}
         </ScrollView>
@@ -61,11 +78,11 @@ const STYLES = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   globalSummary: selectGlobalSummary(state),
-  isLoading: selectIsLoadingGlobal(state)
+  isLoadingGlobalSummary: selectIsLoadingGlobalSummary(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchGlobalSummary: () => dispatch(startGlobalSummaryFetch())
+  fetchGlobalSummary: () => dispatch(fetchGlobalSummary())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GlobalMarketSummary);

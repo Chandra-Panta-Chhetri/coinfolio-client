@@ -1,31 +1,35 @@
-import React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import React, { useEffect } from "react";
+import { FlatList } from "react-native";
 import { connect } from "react-redux";
-import { selectCurrentUser } from "../../redux/user";
 import { createStructuredSelector } from "reselect";
 import Reanimated from "react-native-reanimated";
 import { GLOBAL_STYLES } from "../../styles";
-import { CardScrollView } from "../../shared-components";
-import { useHiddenFABOnScroll } from "../../hooks";
-import { CurrentValue, AssetsBreakdown, AllTimeProfit, SummaryTabs, Unauthenticated } from "./components";
-import { GLOBAL_CONSTANTS } from "../../constants";
+import { useFAB } from "../../hooks";
+import { HoldingsOverview, Allocations, Statistics, NoActivePortfolio } from "./components";
+import { selectActivePortfolio, fetchPortfolioOverview } from "../../redux/portfolio";
+import SCREEN_NAMES from "../../navigators/screen-names";
+import { isNullOrUndefined } from "../../utils";
 
 const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
-function PortfolioScreen({ navigation, isAuthenticated }) {
-  const navigateToAddTransactionScreen = () => navigation.navigate("AddTransaction");
+function PortfolioScreen({ navigation, fetchOverview, activePortfolio }) {
+  const goToSelectTransactionCoin = () => navigation?.navigate(SCREEN_NAMES.SELECT_TRANSACTION_COIN);
 
-  const { scrollHandler, Fab } = useHiddenFABOnScroll({
+  const { scrollHandler, Fab: AddTransactionFab } = useFAB({
     icon: "plus",
-    onFABClick: navigateToAddTransactionScreen,
+    onFABClick: goToSelectTransactionCoin,
     accessibilityLabel: "Add Transaction"
   });
 
-  if (!isAuthenticated) {
-    return <Unauthenticated navigation={navigation} />;
-  }
+  useEffect(() => {
+    if (!isNullOrUndefined(activePortfolio) && !isNullOrUndefined(activePortfolio?.id)) {
+      fetchOverview(activePortfolio?.id);
+    }
+  }, [activePortfolio]);
 
-  return (
+  return isNullOrUndefined(activePortfolio) ? (
+    <NoActivePortfolio />
+  ) : (
     <>
       <AnimatedFlatList
         contentContainerStyle={GLOBAL_STYLES.screenContainer}
@@ -33,29 +37,23 @@ function PortfolioScreen({ navigation, isAuthenticated }) {
         onScroll={scrollHandler}
         ListHeaderComponent={
           <>
-            <CardScrollView containerStyle={STYLES.cardContainer}>
-              <CurrentValue />
-              <AllTimeProfit />
-            </CardScrollView>
-            <SummaryTabs />
-            <AssetsBreakdown />
+            <Statistics />
+            <Allocations />
+            <HoldingsOverview />
           </>
         }
-        listKey="PortfolioScreenList"
       />
-      <Fab />
+      <AddTransactionFab />
     </>
   );
 }
 
-const STYLES = StyleSheet.create({
-  cardContainer: {
-    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN
-  }
-});
-
 const mapStateToProps = createStructuredSelector({
-  isAuthenticated: selectCurrentUser
+  activePortfolio: selectActivePortfolio
 });
 
-export default connect(mapStateToProps)(PortfolioScreen);
+const mapDispatchToProps = (dispatch) => ({
+  fetchOverview: (id) => dispatch(fetchPortfolioOverview(id))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PortfolioScreen);

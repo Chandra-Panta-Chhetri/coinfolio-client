@@ -1,31 +1,32 @@
+import SCREEN_NAMES from "../../navigators/screen-names";
 import PREFERENCES_ACTION_TYPES from "./preferences.action.types";
 
 const INITIAL_STATE = {
   isThemeDark: false,
-  isNotificationsOn: true,
+  isNotificationsEnabled: true,
   currencyCode: "USD",
-  homeScreen: {
+  initialScreen: {
     label: "Home",
-    value: "Home"
+    value: SCREEN_NAMES.HOME
   },
-  isBiometricAuthOn: false,
-  isPrivacyModeOn: false
+  isAuthEnabled: false,
+  isPrivacyModeEnabled: false
 };
 
 const preferencesReducer = (prevState = INITIAL_STATE, action) => {
-  switch (action.type) {
+  switch (action?.type) {
     case PREFERENCES_ACTION_TYPES.TOGGLE_THEME:
-      return { ...prevState, isThemeDark: !prevState.isThemeDark };
+      return { ...prevState, isThemeDark: !prevState?.isThemeDark };
     case PREFERENCES_ACTION_TYPES.TOGGLE_NOTIFICATIONS:
-      return { ...prevState, isNotificationsOn: !prevState.isNotificationsOn };
+      return { ...prevState, isNotificationsEnabled: !prevState?.isNotificationsEnabled };
     case PREFERENCES_ACTION_TYPES.CHANGE_CURRENCY:
-      return { ...prevState, currencyCode: action.payload };
+      return { ...prevState, currencyCode: action?.payload };
     case PREFERENCES_ACTION_TYPES.CHANGE_HOME_SCREEN:
-      return { ...prevState, homeScreen: action.payload };
-    case PREFERENCES_ACTION_TYPES.TOGGLE_BIOMETRIC_AUTH:
-      return { ...prevState, isBiometricAuthOn: !prevState.isBiometricAuthOn };
+      return { ...prevState, initialScreen: action?.payload };
+    case PREFERENCES_ACTION_TYPES.TOGGLE_AUTH:
+      return { ...prevState, isAuthEnabled: !prevState?.isAuthEnabled };
     case PREFERENCES_ACTION_TYPES.TOGGLE_PRIVACY_MODE:
-      return { ...prevState, isPrivacyModeOn: !prevState.isPrivacyModeOn };
+      return { ...prevState, isPrivacyModeEnabled: !prevState?.isPrivacyModeEnabled };
     default:
       return prevState;
   }
