@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import Reanimated from "react-native-reanimated";
 import { GLOBAL_STYLES } from "../../styles";
-import { useHiddenFABOnScroll } from "../../hooks";
+import { useFAB } from "../../hooks";
 import { HoldingsOverview, Allocations, Statistics, NoActivePortfolio } from "./components";
 import { selectActivePortfolio, fetchPortfolioOverview } from "../../redux/portfolio";
 import SCREEN_NAMES from "../../navigators/screen-names";
@@ -15,7 +15,7 @@ const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 function PortfolioScreen({ navigation, fetchOverview, activePortfolio }) {
   const goToSelectTransactionCoin = () => navigation?.navigate(SCREEN_NAMES.SELECT_TRANSACTION_COIN);
 
-  const { scrollHandler, Fab: AddTransactionFab } = useHiddenFABOnScroll({
+  const { scrollHandler, Fab: AddTransactionFab } = useFAB({
     icon: "plus",
     onFABClick: goToSelectTransactionCoin,
     accessibilityLabel: "Add Transaction"

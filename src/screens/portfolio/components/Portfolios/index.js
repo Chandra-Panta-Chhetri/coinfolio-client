@@ -1,6 +1,6 @@
-import { DrawerContentScrollView } from "@react-navigation/drawer";
+import { DrawerContentScrollView, useDrawerStatus } from "@react-navigation/drawer";
 import { Text } from "react-native-paper";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import {
   changeActivePortfolio,
@@ -41,6 +41,8 @@ const Portfolios = ({
   const [isAddPortfolioShown, setIsAddPortfolioShown] = useState(false);
   const [isEditPortfolioShown, setIsEditPortfolioShown] = useState(false);
   const [portfolioToEditOrDelete, setPortfolioToEditOrDelete] = useState(null);
+  const swipeableRefsMap = useRef(new Map());
+  const drawerStatus = useDrawerStatus();
 
   const onPortfolioDeleteConfirm = () => {
     if (!isNullOrUndefined(portfolioToEditOrDelete)) {
@@ -65,9 +67,27 @@ const Portfolios = ({
 
   useEffect(() => {
     if (!isNullOrUndefined(portfolios) && portfolios?.length > 0 && isNullOrUndefined(activePortfolio)) {
-      changeActivePortfolio(portfolios[0]);
+      changeActivePortfolio(portfolios[0]?.id);
     }
   }, [portfolios]);
+
+  useEffect(() => {
+    if (drawerStatus === "closed") {
+      closeAllSwipes();
+    }
+  }, [drawerStatus]);
+
+  const closeAllSwipes = () => {
+    if (!isNullOrUndefined(swipeableRefsMap?.current)) {
+      for (const [portfolioId, ref] of swipeableRefsMap?.current?.entries()) {
+        if (!isNullOrUndefined(ref)) {
+          ref.close();
+        } else {
+          swipeableRefsMap?.current?.delete(portfolioId);
+        }
+      }
+    }
+  };
 
   const changeSelectedPortfolio = (selectedPortfolio) => {
     if (
@@ -75,7 +95,7 @@ const Portfolios = ({
       !isNullOrUndefined(selectedPortfolio) &&
       activePortfolio?.id !== selectedPortfolio?.id
     ) {
-      changeActivePortfolio(selectedPortfolio);
+      changeActivePortfolio(selectedPortfolio?.id);
       navigation?.closeDrawer();
     }
   };
@@ -85,10 +105,15 @@ const Portfolios = ({
   const openEditPortfolioModal = () => setIsEditPortfolioShown(true);
   const hideEditPortfolioModal = () => setIsEditPortfolioShown(false);
 
+  const onUpdateSuccess = () => {
+    hideEditPortfolioModal();
+    closeAllSwipes();
+  };
+
   const onUpdatePortfolioSubmit = (updatedPortfolio) => {
     Keyboard.dismiss();
     if (!isNullOrUndefined(portfolioToEditOrDelete)) {
-      updatePortfolio(updatedPortfolio, portfolioToEditOrDelete?.id, hideEditPortfolioModal);
+      updatePortfolio(updatedPortfolio, portfolioToEditOrDelete?.id, onUpdateSuccess);
     }
   };
 
@@ -118,6 +143,7 @@ const Portfolios = ({
           onSelect={changeSelectedPortfolio}
           selectedPortfolio={activePortfolio}
           isLoading={isLoadingPortfolios}
+          swipeableRefsMap={swipeableRefsMap}
         />
       </DrawerContentScrollView>
       <Button

@@ -6,7 +6,7 @@ import TouchableNativeFeedback from "../TouchableNativeFeedback";
 import * as Linking from "expo-linking";
 import { GLOBAL_CONSTANTS } from "../../constants";
 import Skeleton from "../Skeleton";
-import { formatDate } from "../../utils/format";
+import { formatDate } from "../../utils";
 
 function NewsItem({ news, containerStyle }) {
   const openNews = () => Linking.openURL(news?.url);

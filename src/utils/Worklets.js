@@ -83,9 +83,30 @@ export function getStylesBasedOnSignWorklet(num) {
 }
 
 export const abbreviateNum = (num) => {
+  "worklet";
   if (+num >= 1e3 && +num < 1e6) return roundNumToNDecimals(+num / 1e3) + " K";
   if (+num >= 1e6 && +num < 1e9) return roundNumToNDecimals(+num / 1e6) + " M";
   if (+num >= 1e9 && +num < 1e12) return roundNumToNDecimals(+num / 1e9) + " Bn";
   if (+num >= 1e12) return roundNumToNDecimals(+num / 1e12) + " Tr";
   return `${formatNum(num)}`;
+};
+
+export const formatDate = (date) => {
+  "worklet";
+  return isNullOrUndefined(date) ? null : new Date(date)?.toDateString();
+};
+
+export const convertDateToYYYYMMDD = (date) => {
+  "worklet";
+  return convertDateToISOOffset(date)?.substring(0, 10);
+};
+
+export const convertDateToISOOffset = (dateToConvert) => {
+  "worklet";
+  if (isNullOrUndefined(dateToConvert)) {
+    return "";
+  }
+  const date = new Date(dateToConvert);
+  const isoDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString();
+  return isoDate;
 };

@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+import { isNullOrUndefined } from "../../utils";
 
 const selectPortfolio = (state) => state?.portfolio;
 
@@ -31,7 +32,13 @@ export const selectIsUpdatingUserPortfolios = createSelector(
   (portfolio) => portfolio?.isUpdatingUserPortfolios
 );
 
-export const selectActivePortfolio = createSelector([selectPortfolio], (portfolio) => portfolio?.activePortfolio);
+export const selectActivePortfolioId = createSelector([selectPortfolio], (portfolio) => portfolio?.activePortfolioId);
+
+export const selectActivePortfolio = createSelector(
+  [selectActivePortfolioId, selectUserPortfolios],
+  (activePortfolioId, userPortfolios) =>
+    userPortfolios?.find((p) => !isNullOrUndefined(activePortfolioId) && p?.id === activePortfolioId)
+);
 
 export const selectIsLoadingTransactionCoins = createSelector(
   [selectPortfolio],

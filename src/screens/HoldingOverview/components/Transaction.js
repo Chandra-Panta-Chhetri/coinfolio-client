@@ -3,7 +3,7 @@ import { Text } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import { Skeleton, TouchableNativeFeedback } from "../../../components";
 import { GLOBAL_CONSTANTS } from "../../../constants";
-import { formatNum, formatPrice, isNullOrUndefined, toISOSubstring } from "../../../utils";
+import { formatNum, formatPrice, isNullOrUndefined, formatDate } from "../../../utils";
 import { TYPOGRAPHY } from "../../../styles";
 import {
   BUY_TRANSACTION_TYPE,
@@ -39,7 +39,7 @@ function Transaction({ transaction, onSelect, holdingOverview }) {
           </Text>
         </View>
         <View style={STYLES.infoSection}>
-          <Text style={TYPOGRAPHY.body1}>{toISOSubstring(new Date(transaction?.date))}</Text>
+          <Text style={TYPOGRAPHY.body1}>{formatDate(transaction?.date)}</Text>
           {isBuyOrSell ? (
             <Text style={TYPOGRAPHY.body1}>{formatPrice(transaction?.quantity * transaction?.pricePerUSD)}</Text>
           ) : null}

@@ -1,3 +1,5 @@
+import { formatPercent } from "../../utils";
+
 const PIE_CHART_DEFAULTS = {
   INNER_LABEL_CONFIG: {
     textAnchor: "middle",
@@ -12,7 +14,7 @@ const PIE_CHART_DEFAULTS = {
   PAD_ANGLE: 0,
   SORT: (a, b) => b?.value - a?.value,
   VALUE_ACCESSOR: ({ item }) => item?.value,
-  INNER_LABEL_VALUE_ACCESSOR: (selectedSlice) => `${selectedSlice?.key} - ${selectedSlice?.value}%`,
+  INNER_LABEL_VALUE_ACCESSOR: (selectedSlice) => `${formatPercent(selectedSlice?.value, false)}`,
   DATA_POINTS: []
 };
 

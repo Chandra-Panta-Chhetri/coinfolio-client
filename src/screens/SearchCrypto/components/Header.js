@@ -22,10 +22,11 @@ const Header = ({
   trendingSearches,
   recentSearches,
   isLoadingTrendingSearches,
-  isLoadingRecentSearches
+  isLoadingRecentSearches,
+  keyword,
+  setKeyword
 }) => {
   const navigation = useNavigation();
-  const [keyword, setKeyword] = useState("");
   const closeScreen = () => navigation?.navigate(SCREEN_NAMES.MARKET_OVERVIEW);
 
   const clearRecentSearches = () => {};

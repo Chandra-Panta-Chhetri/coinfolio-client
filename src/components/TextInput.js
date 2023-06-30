@@ -19,5 +19,6 @@ const CustomTextInput = forwardRef((props, ref) => {
 });
 
 CustomTextInput.Icon = TextInput.Icon;
+CustomTextInput.Affix = TextInput.Affix;
 
 export default CustomTextInput;

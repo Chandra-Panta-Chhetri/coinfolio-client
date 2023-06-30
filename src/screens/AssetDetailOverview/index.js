@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Text, useTheme } from "react-native-paper";
+import { Text } from "react-native-paper";
 import { LineChart, MultiColumnView, OutlinedText, Skeleton } from "../../components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { GLOBAL_CONSTANTS } from "../../constants";
@@ -12,7 +12,7 @@ import {
   updateAssetOverview
 } from "../../redux/asset-detail";
 import { useLivePrices } from "../../hooks";
-import { formatPrice, isNullOrUndefined } from "../../utils";
+import { formatPercent, formatPrice, getStylesBasedOnSign, isNullOrUndefined } from "../../utils";
 import { Statistic } from "./components";
 import SOCKET_EVENT_NAMES from "../../socket/event-names";
 
@@ -31,7 +31,7 @@ const AssetDetailOverviewScreen = ({
   updateAssetOverview
 }) => {
   const { params } = route;
-  const { colors } = useTheme();
+  const [percentChange, setPercentChange] = useState(null);
 
   const coinsToWatch = useMemo(
     () => (Object.keys(assetOverview ?? [])?.length === 0 ? [] : [{ id: params?.id }]),
@@ -41,7 +41,6 @@ const AssetDetailOverviewScreen = ({
 
   const onNewPrices = (newPrices = {}) => {
     if (!isNullOrUndefined(newPrices[params?.id])) {
-      // console.log(params.id, "updated");
       updateAssetOverview({ priceUsd: `${newPrices[params?.id]}` });
     }
   };
@@ -62,6 +61,14 @@ const AssetDetailOverviewScreen = ({
     };
   }, [socket]);
 
+  const updatePercentChange = (selectedGraph) => setPercentChange(valueAccessors.percentChangeAccessor(selectedGraph));
+
+  useEffect(() => {
+    if (!isNullOrUndefined(assetOverview?.priceHistory) && assetOverview?.priceHistory?.length > 0) {
+      setPercentChange(valueAccessors.percentChangeAccessor(assetOverview?.priceHistory[0]));
+    }
+  }, [assetOverview?.priceHistory]);
+
   return (
     <ScrollView contentContainerStyle={STYLES.container}>
       <View style={STYLES.header}>
@@ -78,12 +85,25 @@ const AssetDetailOverviewScreen = ({
         {isLoadingAssetOverview ? (
           <Skeleton style={STYLES.textSkeleton} />
         ) : (
-          <Text style={TYPOGRAPHY.display1} numberOfLines={1}>
-            {formatPrice(assetOverview?.priceUsd)}
-          </Text>
+          <View style={STYLES.pricePercentChange}>
+            <Text style={TYPOGRAPHY.display1} numberOfLines={1}>
+              {formatPrice(assetOverview?.priceUsd)}
+            </Text>
+            {!isNullOrUndefined(percentChange) ? (
+              <Text style={[TYPOGRAPHY.title, getStylesBasedOnSign(percentChange)]}>
+                {formatPercent(percentChange)}
+              </Text>
+            ) : null}
+          </View>
         )}
       </View>
-      <LineChart dataPoints={assetOverview?.priceHistory} style={STYLES.lineChart} valueAccessors={valueAccessors} />
+      <LineChart
+        dataPoints={assetOverview?.priceHistory}
+        style={STYLES.lineChart}
+        valueAccessors={valueAccessors}
+        isLoading={isLoadingAssetOverview}
+        onSelectedGraphChange={updatePercentChange}
+      />
       <View style={STYLES.statsContainer}>
         <Text style={STYLES.statsHeading}>Statistics</Text>
         {isLoadingAssetOverview ? (
@@ -111,15 +131,22 @@ const STYLES = StyleSheet.create({
   },
   nameRank: { flexDirection: "row", alignItems: "center" },
   statsContainer: {
-    marginTop: GLOBAL_CONSTANTS.LG_MARGIN
+    marginTop: GLOBAL_CONSTANTS.MD_MARGIN
   },
-  statsSeparator: {},
   lineChart: {
     width: "100%",
     height: 180
   },
   textSkeleton: { width: "100%", height: 30, marginBottom: GLOBAL_CONSTANTS.LG_MARGIN },
-  statsSkeleton: { width: "100%", height: 250 }
+  statsSkeleton: { width: "100%", height: 250 },
+  header: {
+    marginBottom: GLOBAL_CONSTANTS.MD_MARGIN
+  },
+  pricePercentChange: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+  }
 });
 
 const mapStateToProps = (state) => ({

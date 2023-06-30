@@ -1,13 +1,13 @@
 import { Text, useTheme } from "react-native-paper";
 import { TouchableNativeFeedback, Skeleton, Swipeable, SwipeableActions } from "../../../../components";
-import { COLORS, GLOBAL_CONSTANTS } from "../../../../constants";
+import { GLOBAL_CONSTANTS } from "../../../../constants";
 import { View, StyleSheet } from "react-native";
 import { isNullOrUndefined } from "../../../../utils";
 import { TYPOGRAPHY } from "../../../../styles";
 
 const NUM_SKELETON_LOADERS = 4;
 
-function ListOfPortfolios({ portfolios, onEdit, onDelete, onSelect, selectedPortfolio, isLoading }) {
+function ListOfPortfolios({ portfolios, onEdit, onDelete, onSelect, selectedPortfolio, isLoading, swipeableRefsMap }) {
   const { colors, dark: isDarkMode } = useTheme();
 
   const onPortfolioSelect = (selectedPortfolio) => {
@@ -23,13 +23,16 @@ function ListOfPortfolios({ portfolios, onEdit, onDelete, onSelect, selectedPort
   return (portfolios ?? [])?.map((p) => (
     <Swipeable
       key={p?.id}
-      rightActions={(props) => <SwipeableActions callbackParams={[p]} onEdit={onEdit} onDelete={onDelete} {...props} />}
+      rightActions={(progress, dragX) => <SwipeableActions callbackParams={[p]} onEdit={onEdit} onDelete={onDelete} />}
       childrenContainerStyle={[
         STYLES.swipeableChildrenContainer,
         {
-          backgroundColor: p?.id === selectedPortfolio?.id ? colors?.primary : COLORS.TRANSPARENT
+          backgroundColor: p?.id === selectedPortfolio?.id ? colors?.primary : colors?.surface
         }
       ]}
+      ref={(ref) => {
+        swipeableRefsMap.current.set(p?.id, isNullOrUndefined(ref) ? undefined : ref);
+      }}
       containerStyle={STYLES.swipeableContainer}
     >
       <TouchableNativeFeedback onPress={() => onPortfolioSelect(p)}>

@@ -1,4 +1,4 @@
-import { isNullOrUndefined } from "../utils";
+import { convertDateToISOOffset, isNullOrUndefined } from "../utils";
 import axios from "./axios-config";
 
 export const getOverview = async (portfolioId, token) => {
@@ -82,13 +82,14 @@ export const getTransactionCoins = async (token, query) => {
 
 export const addTransaction = async (token, transaction, portfolioId) => {
   if (!isNullOrUndefined(portfolioId) && !isNullOrUndefined(transaction) && !isNullOrUndefined(token)) {
+    transaction.date = convertDateToISOOffset(transaction?.date);
     const res = await axios.post(`/portfolios/${portfolioId}/transactions`, transaction, {
       headers: {
         "X-Auth-Token": token
       }
     });
-    const transaction = res?.data;
-    return transaction;
+    const createdTransaction = res?.data;
+    return createdTransaction;
   }
   return null;
 };
@@ -129,8 +130,8 @@ export const deleteTransaction = async (transaction, portfolioId, token) => {
         "X-Auth-Token": token
       }
     });
-    const transaction = res?.data;
-    return transaction;
+    const deletedTransaction = res?.data;
+    return deletedTransaction;
   }
   return null;
 };
@@ -142,6 +143,7 @@ export const updateTransaction = async (transactionUpdates, portfolioId, token, 
     !isNullOrUndefined(portfolioId) &&
     !isNullOrUndefined(transactionId)
   ) {
+    transactionUpdates.date = convertDateToISOOffset(transactionUpdates?.date);
     const res = await axios.patch(`/portfolios/${portfolioId}/transactions/${transactionId}`, transactionUpdates, {
       headers: {
         "X-Auth-Token": token

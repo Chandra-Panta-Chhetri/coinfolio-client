@@ -24,7 +24,8 @@ const PieChart = ({
   selectedSlice,
   innerLabelValueAccessor = PIE_CHART_DEFAULTS.INNER_LABEL_VALUE_ACCESSOR,
   changeSelectedSlice,
-  innerLabelStyle
+  innerLabelStyle,
+  isLoading
 }) => {
   const [containerDimensions, setContainerDimensions] = useState({
     height: 0,
@@ -81,7 +82,7 @@ const PieChart = ({
     [valueAccessor, sort, startAngle, endAngle, dataPoints]
   );
 
-  if (!hasBeenCalculated) {
+  if (!hasBeenCalculated || isLoading) {
     return (
       <View onLayout={onLayout} style={style}>
         <Skeleton style={GLOBAL_STYLES.fullContainer} />

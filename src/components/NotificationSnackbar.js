@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { StyleSheet } from "react-native";
 import { Snackbar, Text } from "react-native-paper";
-import { selectRecentNotification, clearRecentNotification } from "../redux/notification";
+import { selectNotifications, clearRecentNotification } from "../redux/notification";
 import { connect } from "react-redux";
 import { TYPOGRAPHY } from "../styles";
 import { isNullOrUndefined } from "../utils";
@@ -9,20 +9,37 @@ import { COLORS } from "../constants";
 
 const DURATION_IN_MS = 2500;
 
-const NotificationSnackbar = ({ notification, clearRecentNotification }) => {
+const NotificationSnackbar = ({ notifications, clearRecentNotification }) => {
   const [prevBackgroundColor, setPrevBackgroundColor] = useState(COLORS.TRANSPARENT);
+  const displayedNotification = notifications[0] ?? null;
+  const hasNotificationsLeft = notifications?.length > 0 ?? false;
+  const timerRef = useRef(null);
 
   useEffect(() => {
-    if (!isNullOrUndefined(notification)) {
-      setPrevBackgroundColor(notification.backgroundColor);
+    if (!isNullOrUndefined(displayedNotification)) {
+      setPrevBackgroundColor(displayedNotification?.backgroundColor);
     }
-  }, [notification]);
+  }, [displayedNotification]);
+
+  useEffect(() => {
+    if (hasNotificationsLeft) {
+      timerRef.current = setInterval(() => {
+        clearRecentNotification();
+      }, DURATION_IN_MS);
+    }
+
+    return () => {
+      if (!isNullOrUndefined(timerRef?.current)) {
+        clearInterval(timerRef?.current);
+      }
+    };
+  }, [notifications]);
 
   return (
     <Snackbar
-      visible={notification}
+      visible={hasNotificationsLeft}
       onDismiss={clearRecentNotification}
-      duration={DURATION_IN_MS}
+      duration={Infinity}
       action={{
         label: "X",
         onPress: clearRecentNotification,
@@ -30,7 +47,7 @@ const NotificationSnackbar = ({ notification, clearRecentNotification }) => {
       }}
       style={[STYLES.container, { backgroundColor: prevBackgroundColor }]}
     >
-      <Text style={STYLES.notificationMsg}>{notification?.message}</Text>
+      <Text style={STYLES.notificationMsg}>{displayedNotification?.message}</Text>
     </Snackbar>
   );
 };
@@ -46,7 +63,7 @@ const STYLES = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
-  notification: selectRecentNotification(state)
+  notifications: selectNotifications(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

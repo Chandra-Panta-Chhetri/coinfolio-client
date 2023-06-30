@@ -16,9 +16,9 @@ export const SELECT_VISIBLE_COLUMNS = [HOLDINGS_COLUMN, PL_COLUMN];
 const SelectVisibleColumn = ({ onSelect }) => {
   const [selectedColumn, setSelectedColumn] = useState(0);
 
-  const onColumnSelect = (selectedColumn, selectedIndex) => {
+  const onColumnSelect = (selectedColumnVal, selectedIndex, selectedColumnLabel) => {
     if (!isNullOrUndefined(onSelect)) {
-      onSelect(selectedColumn);
+      onSelect(selectedColumnLabel);
     }
     setSelectedColumn(selectedIndex);
   };

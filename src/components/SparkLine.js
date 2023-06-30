@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { GLOBAL_STYLES } from "../styles";
 import Svg, { Path } from "react-native-svg";
 import { COLORS } from "../constants";
-import RAINBOW_CHART_DEFAULTS from "./RainbowChart/defaults";
+import RAINBOW_CHART_DEFAULTS from "./LineChart/defaults";
 import { buildSparkLine, isNullOrUndefined } from "../utils";
 
 const SparkLine = ({

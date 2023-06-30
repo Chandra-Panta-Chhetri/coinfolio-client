@@ -14,7 +14,7 @@ import {
 import DISCOVER_ACTION_TYPES from "./discover.action.types";
 import { selectEventFilters, selectNewsPage, selectNews, selectEvents, selectEventsPage } from "./discover.selectors";
 import { newsAPI, eventsAPI } from "../../api";
-import { toISOSubstring } from "../../utils";
+import { convertDateToYYYYMMDD } from "../../utils";
 import EVENTS_FILTERS from "../../components/Events/filters";
 
 function* getNews({ payload: { filter } }) {
@@ -52,8 +52,8 @@ function* getEvents() {
     const filtersDTO = {
       max: filters?.limit,
       showOnly: EVENTS_FILTERS.TYPES[filters?.showOnly]?.value,
-      ...(filters?.dateRange?.start && { dateRangeStart: toISOSubstring(filters?.dateRange?.start) }),
-      ...(filters?.dateRange?.end && { dateRangeEnd: toISOSubstring(filters?.dateRange?.end) })
+      ...(filters?.dateRange?.start && { dateRangeStart: convertDateToYYYYMMDD(filters?.dateRange?.start) }),
+      ...(filters?.dateRange?.end && { dateRangeEnd: convertDateToYYYYMMDD(filters?.dateRange?.end) })
     };
     const response = yield eventsAPI.getEvents(filtersDTO);
     const events = yield response?.results;
@@ -62,6 +62,7 @@ function* getEvents() {
     }
     yield put(fetchEventsSuccess(events));
   } catch (err) {
+    console.log(err);
     yield put(fetchEventsFail("Failed to get the events"));
   }
 }
@@ -74,8 +75,8 @@ function* getMoreEvents() {
       max: filters?.limit,
       showOnly: EVENTS_FILTERS.TYPES[filters?.showOnly]?.value,
       page,
-      ...(filters?.dateRange?.start && { dateRangeStart: toISOSubstring(filters?.dateRange?.start) }),
-      ...(filters?.dateRange?.end && { dateRangeEnd: toISOSubstring(filters?.dateRange?.end) })
+      ...(filters?.dateRange?.start && { dateRangeStart: convertDateToYYYYMMDD(filters?.dateRange?.start) }),
+      ...(filters?.dateRange?.end && { dateRangeEnd: convertDateToYYYYMMDD(filters?.dateRange?.end) })
     };
     const response = yield eventsAPI.getEvents(filtersDTO);
     const events = yield response?.results;

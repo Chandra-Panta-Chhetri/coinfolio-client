@@ -7,7 +7,7 @@ import { selectNewsSummary, fetchNewsSummary, selectIsLoadingNewsSummary } from 
 import NewsItem from "../../../components/News/NewsItem";
 import { GLOBAL_STYLES } from "../../../styles";
 import SCREEN_NAMES from "../../../navigators/screen-names";
-import { isNullOrUndefined } from "../../../utils";
+import { NoResults } from "../../../components";
 
 const NUM_SKELETON_LOADERS = 4;
 const DUMMY_SKELETON_LOADERS_ARRAY = Array(NUM_SKELETON_LOADERS).fill("1");
@@ -20,18 +20,24 @@ const NewsSummaries = ({ news, isLoadingNewsSummaries, fetchNewsSummary }) => {
     fetchNewsSummary(NUM_SKELETON_LOADERS);
   }, []);
 
+  let content = null;
+
+  if (isLoadingNewsSummaries) {
+    content = DUMMY_SKELETON_LOADERS_ARRAY.map((_, i) => (
+      <NewsItem.Skeleton key={i} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
+    ));
+  } else if (news?.length === 0) {
+    content = <NoResults />;
+  } else {
+    content = news.map((n, i) => (
+      <NewsItem news={n} key={n?.title} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
+    ));
+  }
+
   return (
     <View>
       <SeeAllHeading title="News" onSeeAllPress={goToNewsScreen} />
-      <View>
-        {isLoadingNewsSummaries || isNullOrUndefined(news) || news?.length === 0
-          ? DUMMY_SKELETON_LOADERS_ARRAY.map((_, i) => (
-              <NewsItem.Skeleton key={i} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
-            ))
-          : news.map((n, i) => (
-              <NewsItem news={n} key={n?.title} containerStyle={i !== 0 ? GLOBAL_STYLES.cardMargin : null} />
-            ))}
-      </View>
+      <View>{content}</View>
     </View>
   );
 };

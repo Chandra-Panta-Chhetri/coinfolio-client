@@ -8,7 +8,7 @@ import TouchableOption from "./TouchableOption";
 import { GLOBAL_CONSTANTS } from "../constants";
 import { isNullOrUndefined } from "../utils";
 
-const DropDown = ({ selectedIndex = 0, onSelect, options, containerStyle }) => {
+const DropDown = ({ selectedIndex = 0, onSelect, options, containerStyle, dimensions }) => {
   const { colors } = useTheme();
 
   const [dropDownWidth, setDropDownWidth] = useState({
@@ -42,7 +42,7 @@ const DropDown = ({ selectedIndex = 0, onSelect, options, containerStyle }) => {
         }}
         onLayout={onLayout}
       >
-        <View style={STYLES.container}>
+        <View style={[STYLES.container, dimensions]}>
           <Text style={[TYPOGRAPHY.body1]}>{selectedOptionLabel}</Text>
           <AntDesign name={showDropDown ? "caretup" : "caretdown"} color={colors?.text} style={TYPOGRAPHY.body1} />
         </View>
@@ -50,7 +50,7 @@ const DropDown = ({ selectedIndex = 0, onSelect, options, containerStyle }) => {
       <Menu
         visible={showDropDown}
         onDismiss={hideDropDown}
-        anchor={<View style={STYLES.dropDownAnchor} />}
+        anchor={<View style={[STYLES.dropDownAnchor]} />}
         style={{
           width: dropDownWidth?.width
         }}
@@ -65,7 +65,7 @@ const DropDown = ({ selectedIndex = 0, onSelect, options, containerStyle }) => {
               isSelected={selectedIndex === i}
               onSelect={() => {
                 if (selectedIndex !== i && !isNullOrUndefined(onSelect)) {
-                  onSelect(op?.value, i);
+                  onSelect(op?.value, i, op?.label);
                 }
                 hideDropDown();
               }}

@@ -11,7 +11,7 @@ const INITIAL_STATE = {
   userPortfolios: [],
   isLoadingUserPortfolios: true,
   isUpdatingUserPortfolios: false,
-  activePortfolio: null,
+  activePortfolioId: null,
   isLoadingTransactionCoins: true,
   transactionCoins: [],
   isAddingTransaction: false,
@@ -70,7 +70,7 @@ const userReducer = (prevState = INITIAL_STATE, action) => {
     case PORTFOLIO_ACTION_TYPES.CHANGE_ACTIVE_PORTFOLIO:
       return {
         ...prevState,
-        activePortfolio: action?.payload
+        activePortfolioId: action?.payload
       };
     case PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTION_COINS:
       return {
@@ -161,7 +161,7 @@ const userReducer = (prevState = INITIAL_STATE, action) => {
     case PORTFOLIO_ACTION_TYPES.DELETE_TRANSACTION_SUCCESS:
       return {
         ...prevState,
-        isDeletingTransaction: true
+        isDeletingTransaction: false
       };
     case PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION:
       return {

@@ -1,12 +1,14 @@
 import React from "react";
 import { PressableView } from "../../../../components";
-import { Text } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 import { AntDesign } from "@expo/vector-icons";
 import { TYPOGRAPHY } from "../../../../styles";
 import { StyleSheet } from "react-native";
 import { GLOBAL_CONSTANTS } from "../../../../constants";
 
 const TableHeading = ({ heading, onPress, columnToSortBy, sortingInAscending }) => {
+  const { colors } = useTheme();
+
   return (
     <PressableView key={heading?.label} onPress={() => onPress(heading)} viewStyle={heading?.style}>
       <Text style={TYPOGRAPHY.body1}>{heading?.label}</Text>

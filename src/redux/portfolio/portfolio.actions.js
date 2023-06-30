@@ -76,9 +76,9 @@ export const deletePortfolioFail = (errorMsg) => ({
   payload: errorMsg
 });
 
-export const changeActivePortfolio = (portfolio) => ({
+export const changeActivePortfolio = (portfolioId) => ({
   type: PORTFOLIO_ACTION_TYPES.CHANGE_ACTIVE_PORTFOLIO,
-  payload: portfolio
+  payload: portfolioId
 });
 
 export const fetchTransactionCoins = (query) => ({

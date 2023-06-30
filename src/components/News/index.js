@@ -51,6 +51,7 @@ const News = ({ isLoading, news, onFilterChange, fetchMore, isLoadingMore, hasMo
         hasMoreToFetch={hasMoreToFetch}
         renderDataItem={renderNewsItem}
         renderSkeleton={renderNewsSkeleton}
+        displayNoResults={news?.length === 0}
       />
     </>
   );

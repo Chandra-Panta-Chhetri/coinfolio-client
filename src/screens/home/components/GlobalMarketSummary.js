@@ -29,7 +29,7 @@ const GlobalMarketSummary = ({ globalSummary, fetchGlobalSummary, isLoadingGloba
     fetchGlobalSummary();
   }, []);
 
-  if (isLoadingGlobalSummary || isNullOrUndefined(globalSummary)) {
+  if (isLoadingGlobalSummary) {
     return (
       <Card style={STYLES.container}>
         <Card.Content style={STYLES.rowFlexbox}>
@@ -37,6 +37,8 @@ const GlobalMarketSummary = ({ globalSummary, fetchGlobalSummary, isLoadingGloba
         </Card.Content>
       </Card>
     );
+  } else if (isNullOrUndefined(globalSummary)) {
+    return null;
   }
 
   return (

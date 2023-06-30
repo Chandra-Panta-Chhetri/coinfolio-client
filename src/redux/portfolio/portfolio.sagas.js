@@ -48,6 +48,7 @@ function* fetchPortfolio({ payload: { id } }) {
       throw new Error("Failed to get portfolio");
     }
   } catch (err) {
+    console.log(err);
     yield put(fetchPortfolioOverviewFail("Failed to get portfolio"));
   }
 }
@@ -62,6 +63,7 @@ function* fetchUserPortfolios() {
       throw new Error("Failed to get portfolios");
     }
   } catch (err) {
+    console.log(err);
     yield put(fetchUserPortfoliosFail("Failed to get portfolios"));
   }
 }
@@ -114,7 +116,7 @@ function* deletePortfolio({ payload: { portfolioId, onSuccess } }) {
       const updatedPortfolios = portfolios.filter((p) => p?.id !== portfolioId);
       yield put(deletePortfolioSuccess(updatedPortfolios));
       if (activePortfolio?.id === portfolioId) {
-        yield put(changeActivePortfolio(updatedPortfolios?.length > 0 ? updatedPortfolios[0] : null));
+        yield put(changeActivePortfolio(updatedPortfolios?.length > 0 ? updatedPortfolios[0]?.id : null));
       }
       if (!isNullOrUndefined(onSuccess)) {
         yield onSuccess();
@@ -162,6 +164,7 @@ function* addNewTransaction({ payload: { transaction, onSuccess, startingScreen 
       throw new Error("Failed to create new transaction");
     }
   } catch (err) {
+    console.log(err);
     yield put(addNewTransactionFail("Failed to create new transaction"));
   }
 }
@@ -171,11 +174,15 @@ function* deleteTransaction({ payload: { transaction, onSuccess } }) {
     const authToken = yield select(selectAuthToken);
     const activePortfolio = yield select(selectActivePortfolio);
     const holdingOverview = yield select(selectHoldingOverview);
+    const transactionsForHolding = yield select(selectTransactions);
+    const isLastTransaction = transactionsForHolding?.length - 1 === 0;
     const deletedTransaction = yield portfolioAPI.deleteTransaction(transaction, activePortfolio?.id, authToken);
     if (!isNullOrUndefined(deletedTransaction)) {
       yield put(deleteTransactionSuccess());
       if (!isNullOrUndefined(holdingOverview)) {
-        yield put(fetchHoldingOverview(holdingOverview?.coinId));
+        if (!isLastTransaction) {
+          yield put(fetchHoldingOverview(holdingOverview?.coinId));
+        }
         yield put(fetchPortfolioOverview(activePortfolio?.id));
       }
       if (!isNullOrUndefined(onSuccess)) {

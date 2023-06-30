@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, FlatList, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import SeeAllHeading from "../SeeAllHeading";
 import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
@@ -8,16 +8,23 @@ import TopCoin, { TopCoinSkeleton } from "./TopCoin";
 import { GLOBAL_STYLES } from "../../../../styles";
 import { GLOBAL_CONSTANTS } from "../../../../constants";
 import SCREEN_NAMES from "../../../../navigators/screen-names";
-import { isNullOrUndefined } from "../../../../utils";
+import { AsyncFlatList } from "../../../../components";
+import { updateFilters } from "../../../../redux/market";
 
 const NUM_SKELETON_LOADERS = 5;
-const DUMMY_SKELETON_LOADERS_ARRAY = Array(NUM_SKELETON_LOADERS).fill("1");
 
-const keyExtractor = (c) => c?.id;
-
-const TopCoins = ({ topCoins, isLoadingTopCoins, fetchTopCoins }) => {
+const TopCoins = ({ topCoins, isLoadingTopCoins, fetchTopCoins, updateMarketFilters }) => {
   const navigation = useNavigation();
-  const toMarketScreen = () => navigation.navigate(SCREEN_NAMES.MARKET_OVERVIEW);
+  const toMarketScreen = () => {
+    updateMarketFilters({
+      sortBy: {
+        label: "Market Cap",
+        value: "marketCapUsd"
+      },
+      sortOrder: { label: "Desc", value: "DESC" }
+    });
+    navigation?.navigate(SCREEN_NAMES.MARKET_OVERVIEW);
+  };
 
   useEffect(() => {
     fetchTopCoins(NUM_SKELETON_LOADERS);
@@ -26,25 +33,17 @@ const TopCoins = ({ topCoins, isLoadingTopCoins, fetchTopCoins }) => {
   return (
     <View style={STYLES.container}>
       <SeeAllHeading title="Top Coins" onSeeAllPress={toMarketScreen} />
-      {isLoadingTopCoins || isNullOrUndefined(topCoins) || topCoins?.length === 0 ? (
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={DUMMY_SKELETON_LOADERS_ARRAY}
-          contentContainerStyle={GLOBAL_STYLES.flatListContentContainer}
-          keyExtractor={(_, i) => i}
-          renderItem={TopCoinSkeleton}
-        />
-      ) : (
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={topCoins}
-          contentContainerStyle={GLOBAL_STYLES.flatListContentContainer}
-          keyExtractor={keyExtractor}
-          renderItem={({ item }) => <TopCoin coin={item} />}
-        />
-      )}
+      <AsyncFlatList
+        isLoading={isLoadingTopCoins}
+        data={topCoins}
+        horizontal
+        numSkeletons={NUM_SKELETON_LOADERS}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={GLOBAL_STYLES.flatListContentContainer}
+        renderSkeleton={TopCoinSkeleton}
+        renderDataItem={({ item }) => <TopCoin key={item?.id} coin={item} />}
+        displayNoResults={topCoins?.length === 0}
+      />
     </View>
   );
 };
@@ -61,7 +60,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchTopCoins: (limit) => dispatch(fetchTopCoins(limit))
+  fetchTopCoins: (limit) => dispatch(fetchTopCoins(limit)),
+  updateMarketFilters: (filter) => dispatch(updateFilters(filter))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopCoins);

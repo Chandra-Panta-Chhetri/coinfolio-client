@@ -15,6 +15,7 @@ import TableHeading from "./TableHeading";
 import { isNullOrUndefined } from "../../../../utils";
 import TableRow from "./TableRow";
 import { Skeleton } from "../../../../components";
+import NoHoldings from "./NoHoldings";
 
 const STYLES = StyleSheet.create({
   tableHeadings: { borderBottomWidth: 0 },
@@ -31,7 +32,7 @@ const STYLES = StyleSheet.create({
   },
   skeleton: {
     width: "100%",
-    height: 80
+    height: 240
   }
 });
 
@@ -58,13 +59,38 @@ const tableHeadings = [
   }
 ];
 
+const sortHoldings = (holdings, sortCriteria) => {
+  const { columnToSortBy, sortAscending } = sortCriteria;
+  const sortedHoldings = [...holdings];
+  sortedHoldings.sort((a1, a2) => {
+    switch (columnToSortBy) {
+      case "coinName":
+        return sortAscending
+          ? a1[columnToSortBy].localeCompare(a2[columnToSortBy])
+          : a2[columnToSortBy].localeCompare(a1[columnToSortBy]);
+      case "priceUSD":
+      case "profitLoss":
+        return sortAscending
+          ? a1[columnToSortBy]?.value - a2[columnToSortBy]?.value
+          : a2[columnToSortBy]?.value - a1[columnToSortBy]?.value;
+      case "totalValue":
+        return sortAscending ? +a1[columnToSortBy] - +a2[columnToSortBy] : +a2[columnToSortBy] - +a1[columnToSortBy];
+      default:
+        return sortAscending
+          ? a1[columnToSortBy].localeCompare(a2[columnToSortBy])
+          : a2[columnToSortBy].localeCompare(a1[columnToSortBy]);
+    }
+  });
+  return sortedHoldings;
+};
+
 const HoldingsOverview = ({ holdings, isLoadingPortfolioOverview, deleteHolding, isDeletingHolding }) => {
   const [sortCriteria, setSortCriteria] = useState({
     columnToSortBy: tableHeadings[0]?.sortByField,
     sortAscending: false
   });
   const [sortedHoldings, setSortedHoldings] = useState(holdings);
-  const [visibleColumn, setVisibleColumn] = useState(SELECT_VISIBLE_COLUMNS[0]?.value);
+  const [visibleColumn, setVisibleColumn] = useState(SELECT_VISIBLE_COLUMNS[0]?.label);
   const [holdingToDelete, setHoldingToDelete] = useState(null);
 
   const { columnToSortBy, sortAscending } = sortCriteria;
@@ -91,31 +117,25 @@ const HoldingsOverview = ({ holdings, isLoadingPortfolioOverview, deleteHolding,
 
   const sortTable = (heading) => {
     const sortByField = heading?.sortByField;
-    const sortInAscending = columnToSortBy === sortByField ? !sortAscending : true;
-    const newSortedHoldings = [...sortedHoldings];
-    newSortedHoldings.sort((a1, a2) => {
-      if (typeof a1[sortByField] === typeof "") {
-        return sortInAscending
-          ? a1[sortByField].localeCompare(a2[sortByField])
-          : a2[sortByField].localeCompare(a1[sortByField]);
-      } else {
-        return sortInAscending ? a1[sortByField] - a2[sortByField] : a2[sortByField] - a1[sortByField];
-      }
-    });
-    setSortedHoldings(newSortedHoldings);
-    setSortCriteria({
+    const newSortCriteria = {
       columnToSortBy: sortByField,
-      sortAscending: sortInAscending
-    });
+      sortAscending: columnToSortBy === sortByField ? !sortAscending : true
+    };
+    const newSortedHoldings = sortHoldings(sortedHoldings, newSortCriteria);
+    setSortedHoldings(newSortedHoldings);
+    setSortCriteria(newSortCriteria);
   };
 
   useEffect(() => {
-    setSortedHoldings(holdings);
+    const newSortedHoldings = sortHoldings(holdings, sortCriteria);
+    setSortedHoldings(newSortedHoldings);
   }, [holdings]);
 
-  const onVisibleColumnSelect = (selectedColName) => {
-    setVisibleColumn(selectedColName);
+  const onVisibleColumnSelect = (selectedColLabel) => {
+    setVisibleColumn(selectedColLabel);
   };
+
+  const hasNoHoldings = holdings?.length === 0;
 
   if (isLoadingPortfolioOverview) {
     return <Skeleton style={STYLES.skeleton} />;
@@ -124,37 +144,44 @@ const HoldingsOverview = ({ holdings, isLoadingPortfolioOverview, deleteHolding,
   return (
     <View>
       <Text style={TYPOGRAPHY.headline}>Holdings</Text>
-      <SelectVisibleColumn onSelect={onVisibleColumnSelect} />
-      <DataTable>
-        <DataTable.Header style={STYLES.tableHeadings}>
-          {tableHeadings.map((heading) => {
-            const shouldSkipHeading =
-              (visibleColumn !== HOLDINGS_COLUMN.label && heading?.label === HOLDINGS_COLUMN.label) ||
-              (visibleColumn !== PL_COLUMN.label && heading?.label === PL_COLUMN.label);
-            if (shouldSkipHeading) {
-              return null;
-            }
+      {hasNoHoldings ? (
+        <NoHoldings />
+      ) : (
+        <>
+          <SelectVisibleColumn onSelect={onVisibleColumnSelect} />
+          <DataTable>
+            <DataTable.Header style={STYLES.tableHeadings}>
+              {tableHeadings.map((heading) => {
+                const skipHeading =
+                  !isNullOrUndefined(SELECT_VISIBLE_COLUMNS.find((col) => col?.label === heading?.label)) &&
+                  visibleColumn !== heading?.label;
+                if (skipHeading) {
+                  return null;
+                }
 
-            return (
-              <TableHeading
-                onPress={sortTable}
-                heading={heading}
-                key={heading?.label}
-                columnToSortBy={columnToSortBy}
-                sortingInAscending={sortAscending}
+                return (
+                  <TableHeading
+                    onPress={sortTable}
+                    heading={heading}
+                    key={heading?.label}
+                    columnToSortBy={columnToSortBy}
+                    sortingInAscending={sortAscending}
+                  />
+                );
+              })}
+            </DataTable.Header>
+            {sortedHoldings.map((holding, i) => (
+              <TableRow
+                key={holding?.coinId}
+                onDelete={showDeleteConfirmation}
+                holding={holding}
+                visibleColumn={visibleColumn}
+                isLast={i === sortedHoldings?.length - 1}
               />
-            );
-          })}
-        </DataTable.Header>
-        {sortedHoldings.map((holding) => (
-          <TableRow
-            key={holding?.coinId}
-            onDelete={showDeleteConfirmation}
-            holding={holding}
-            visibleColumn={visibleColumn}
-          />
-        ))}
-      </DataTable>
+            ))}
+          </DataTable>
+        </>
+      )}
       <DeleteHoldingConfirmationModal />
     </View>
   );

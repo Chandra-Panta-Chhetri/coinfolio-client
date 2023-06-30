@@ -31,6 +31,8 @@ function SelectTransactionCoinScreen({ selectableCoins, fetchSelectableCoins, is
       ListHeaderComponent={<Header />}
       renderDataItem={renderDataItem}
       renderSkeleton={renderSkeleton}
+      displayNoResults={selectableCoins?.length === 0}
+      displayNoResultsInHeader
     />
   );
 }

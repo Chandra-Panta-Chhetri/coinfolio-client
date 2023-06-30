@@ -8,7 +8,7 @@ import Reanimated, {
   withTiming
 } from "react-native-reanimated";
 
-export const useHiddenFABOnScroll = ({ icon, onFABClick, ...otherProps }) => {
+export const useFAB = ({ icon, onFABClick, ...otherProps }) => {
   const { colors } = useTheme();
   const isScrolling = useSharedValue(false);
   const fabContainer = useAnimatedStyle(() => ({

@@ -13,7 +13,7 @@ const StatisticsSkeleton = () => (
   </View>
 );
 
-const Statistics = () => (
+const Statistics = ({ holdingOverview }) => (
   <View>
     <View style={STYLES.holdingStatsContainer}>
       <View style={STYLES.statistic}>
@@ -53,7 +53,11 @@ const Header = ({ holdingOverview, isLoading }) => {
   return (
     <Card style={STYLES.card}>
       <Card.Content>
-        {isLoading || isNullOrUndefined(holdingOverview) ? <StatisticsSkeleton /> : <Statistics />}
+        {isLoading || isNullOrUndefined(holdingOverview) ? (
+          <StatisticsSkeleton />
+        ) : (
+          <Statistics holdingOverview={holdingOverview} />
+        )}
       </Card.Content>
     </Card>
   );

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { Card } from "react-native-paper";
 import { GLOBAL_CONSTANTS } from "../../constants";
+import PagingDots from "./PagingDots";
 
 const CardScrollView = ({ children, containerStyle }) => {
   const [visibleWidth, setVisibleWidth] = useState(0);
@@ -34,9 +35,11 @@ const CardScrollView = ({ children, containerStyle }) => {
           onLayout={onLayout}
           onMomentumScrollEnd={onScroll}
         >
-          {React.Children.map(children, (child) => React.cloneElement(child, { width: visibleWidth }))}
+          {React.Children.map(children, (child, i) => React.cloneElement(child, { width: visibleWidth }))}
         </ScrollView>
-        <PagingDots numOfDots={children?.length} activeDot={activeInterval} containerWidth={visibleWidth} />
+        {visibleWidth > 0 ? (
+          <PagingDots numOfDots={children?.length} activeDot={activeInterval} containerWidth={visibleWidth} />
+        ) : null}
       </Card.Content>
     </Card>
   );

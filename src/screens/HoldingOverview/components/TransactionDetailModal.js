@@ -4,7 +4,7 @@ import { Text } from "react-native-paper";
 import { COLORS, GLOBAL_CONSTANTS } from "../../../constants";
 import { Button, Modal } from "../../../components";
 import { TYPOGRAPHY } from "../../../styles";
-import { formatNum, formatPrice, isNullOrUndefined, toISOSubstring } from "../../../utils";
+import { formatNum, formatPrice, isNullOrUndefined, formatDate } from "../../../utils";
 import { TRANSACTION_TYPE_TO_NAME } from "./Transaction";
 
 function TransactionDetailModal({ transaction, hideDetails, holdingOverview, onDelete, onEdit }) {
@@ -26,7 +26,7 @@ function TransactionDetailModal({ transaction, hideDetails, holdingOverview, onD
         </View>
         <View style={STYLES.detail}>
           <Text style={TYPOGRAPHY.body2}>Date</Text>
-          <Text style={TYPOGRAPHY.body1}>{toISOSubstring(new Date(transaction?.date))}</Text>
+          <Text style={TYPOGRAPHY.body1}>{formatDate(transaction?.date)}</Text>
         </View>
         <View style={STYLES.detail}>
           <Text style={TYPOGRAPHY.body2}>Price Per Coin</Text>

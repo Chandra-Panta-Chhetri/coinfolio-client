@@ -12,7 +12,7 @@ import {
 import { AsyncFlatList } from "../../components";
 import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { Header, Transaction, TransactionDetailModal } from "./components";
-import { useConfirmationModal, useHiddenFABOnScroll } from "../../hooks";
+import { useConfirmationModal, useFAB } from "../../hooks";
 import SCREEN_NAMES from "../../navigators/screen-names";
 import { isNullOrUndefined } from "../../utils";
 
@@ -62,7 +62,7 @@ const HoldingOverviewScreen = ({
   };
 
   const [selectedTransaction, setSelectedTransaction] = useState(null);
-  const { scrollHandler, Fab: AddTransactionFab } = useHiddenFABOnScroll({
+  const { scrollHandler, Fab: AddTransactionFab } = useFAB({
     icon: "plus",
     onFABClick: goToAddTransaction,
     accessibilityLabel: "Add Transaction"
@@ -70,6 +70,10 @@ const HoldingOverviewScreen = ({
   const onDeleteTransactionSuccess = () => {
     closeDeleteConfirmationModal();
     setSelectedTransaction(null);
+    const isLastTransaction = transactionsForHolding?.length - 1 === 0;
+    if (isLastTransaction) {
+      navigation?.navigate(SCREEN_NAMES.PORTFOLIO);
+    }
   };
   const onDeleteTransactionConfirm = () => {
     if (!isNullOrUndefined(selectedTransaction)) {

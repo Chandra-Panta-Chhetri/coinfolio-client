@@ -26,7 +26,7 @@ import {
   noMoreAssetEvents
 } from "./asset-detail.actions";
 import { newsAPI, eventsAPI, marketsAPI } from "../../api";
-import { isNullOrUndefined, toISOSubstring } from "../../utils";
+import { isNullOrUndefined, convertDateToYYYYMMDD } from "../../utils";
 import NEWS_FILTERS from "../../components/News/filters";
 import EVENTS_FILTERS from "../../components/Events/filters";
 
@@ -110,8 +110,8 @@ function* getEvents({ payload: query }) {
     const filters = yield select(selectAssetEventFilters);
     const filtersDTO = {
       max: filters?.limit,
-      ...(filters?.dateRange?.start && { dateRangeStart: toISOSubstring(filters?.dateRange?.start) }),
-      ...(filters?.dateRange?.end && { dateRangeEnd: toISOSubstring(filters?.dateRange?.end) }),
+      ...(filters?.dateRange?.start && { dateRangeStart: convertDateToYYYYMMDD(filters?.dateRange?.start) }),
+      ...(filters?.dateRange?.end && { dateRangeEnd: convertDateToYYYYMMDD(filters?.dateRange?.end) }),
       ...query,
       sortBy: EVENTS_FILTERS.TYPES[filters.sortBy]?.value
     };
@@ -133,8 +133,8 @@ function* getMoreEvents({ payload: query }) {
     const filtersDTO = {
       max: filters?.limit,
       page,
-      ...(filters?.dateRange?.start && { dateRangeStart: toISOSubstring(filters?.dateRange?.start) }),
-      ...(filters?.dateRange?.end && { dateRangeEnd: toISOSubstring(filters?.dateRange?.end) }),
+      ...(filters?.dateRange?.start && { dateRangeStart: convertDateToYYYYMMDD(filters?.dateRange?.start) }),
+      ...(filters?.dateRange?.end && { dateRangeEnd: convertDateToYYYYMMDD(filters?.dateRange?.end) }),
       ...query,
       sortBy: EVENTS_FILTERS.TYPES[filters?.sortBy]?.value
     };

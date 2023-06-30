@@ -2,15 +2,15 @@ import React from "react";
 import { StyleSheet, View, ScrollView } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 import { GLOBAL_CONSTANTS } from "../../../../constants";
-import { TouchableNativeFeedback } from "../../../../components";
-import { TYPOGRAPHY } from "../../../../styles";
+import { Skeleton, TouchableNativeFeedback } from "../../../../components";
+import { GLOBAL_STYLES, TYPOGRAPHY } from "../../../../styles";
 import { isNullOrUndefined } from "../../../../utils";
 
-const Label = ({ label, changeSelectedSlice, isSelected }) => {
+const Label = ({ label, changeSelectedSlice, isSelected, sliceIndex }) => {
   const { colors } = useTheme();
   const onPress = () => {
     if (!isNullOrUndefined(changeSelectedSlice)) {
-      changeSelectedSlice(i, false);
+      changeSelectedSlice(sliceIndex, false);
     }
   };
 
@@ -34,7 +34,11 @@ const Label = ({ label, changeSelectedSlice, isSelected }) => {
   );
 };
 
-const Labels = ({ data, selectedSlice, changeSelectedSlice }) => {
+const Labels = ({ dataPoints, selectedSlice, changeSelectedSlice, isLoading }) => {
+  if (isLoading) {
+    return <Skeleton style={STYLES.skeleton} />;
+  }
+
   return (
     <ScrollView
       contentContainerStyle={STYLES.contentContainer}
@@ -42,8 +46,14 @@ const Labels = ({ data, selectedSlice, changeSelectedSlice }) => {
       showsHorizontalScrollIndicator={false}
       style={STYLES.container}
     >
-      {(data ?? []).map((d, i) => (
-        <Label label={d} key={d?.key} isSelected={i === selectedSlice} changeSelectedSlice={changeSelectedSlice} />
+      {(dataPoints ?? []).map((d, i) => (
+        <Label
+          label={d}
+          key={d?.key}
+          isSelected={i === selectedSlice}
+          sliceIndex={i}
+          changeSelectedSlice={changeSelectedSlice}
+        />
       ))}
     </ScrollView>
   );
@@ -69,7 +79,8 @@ const STYLES = StyleSheet.create({
     height: 5,
     marginRight: GLOBAL_CONSTANTS.SM_MARGIN
   },
-  touchableOpacityContainer: { marginRight: 0, flexGrow: 1 }
+  touchableOpacityContainer: { marginRight: 0, flexGrow: 1 },
+  skeleton: { height: 50, marginTop: GLOBAL_CONSTANTS.MD_MARGIN }
 });
 
 export default Labels;

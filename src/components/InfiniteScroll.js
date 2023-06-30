@@ -5,6 +5,7 @@ import { GLOBAL_STYLES } from "../styles";
 import Reanimated from "react-native-reanimated";
 import { GLOBAL_CONSTANTS } from "../constants";
 import { isNullOrUndefined } from "../utils";
+import NoResults from "./NoResults";
 
 const AnimatedFlatList = Reanimated.createAnimatedComponent(FlatList);
 
@@ -18,17 +19,19 @@ const InfiniteScroll = ({
   renderSkeleton,
   renderDataItem,
   contentContainerStyle,
+  displayNoResultsInHeader = false,
+  displayNoResults = false,
   ...otherProps
 }) => {
   const onScrollToEnd = () => {
-    if (!isLoadingMore && hasMoreToFetch && !isNullOrUndefined(onEndReached)) {
+    if (!isLoadingMore && hasMoreToFetch && data?.length > 0 && !isNullOrUndefined(onEndReached)) {
       onEndReached();
     }
   };
 
   const renderFooter = useCallback(
-    () => <ActivityIndicator style={STYLES.footer} animating={hasMoreToFetch} hidesWhenStopped />,
-    [hasMoreToFetch]
+    () => <ActivityIndicator style={STYLES.footer} animating={hasMoreToFetch && data?.length > 0} hidesWhenStopped />,
+    [hasMoreToFetch, data]
   );
 
   if (isLoading) {
@@ -44,6 +47,8 @@ const InfiniteScroll = ({
         contentContainerStyle={contentContainerStyle}
       />
     );
+  } else if (!displayNoResultsInHeader && displayNoResults) {
+    return <NoResults />;
   }
 
   return (
@@ -57,6 +62,12 @@ const InfiniteScroll = ({
       onEndReached={onScrollToEnd}
       onEndReachedThreshold={0.5}
       ListFooterComponent={renderFooter}
+      ListHeaderComponent={
+        <>
+          {otherProps?.ListHeaderComponent}
+          {displayNoResults ? <NoResults /> : null}
+        </>
+      }
     />
   );
 };

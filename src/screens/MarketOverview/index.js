@@ -14,7 +14,7 @@ import {
   selectHasMoreMarkets,
   updateMarkets
 } from "../../redux/market";
-import { InfiniteScroll } from "../../components";
+import { InfiniteScroll, NoResults } from "../../components";
 import { GLOBAL_CONSTANTS } from "../../constants";
 import { useLivePrices, updatePriceOfCoins, useRefAsState } from "../../hooks";
 import { isNullOrUndefined } from "../../utils";
@@ -78,7 +78,13 @@ const MarketOverviewScreen = ({
       isLoadingMore={isLoadingMoreMarkets}
       data={markets}
       numSkeletons={perPage}
-      ListHeaderComponent={ListHeader}
+      ListHeaderComponent={
+        <>
+          <Header />
+          <Filters />
+          {!isLoadingMarkets && !isLoadingMoreMarkets && markets?.length === 0 ? <NoResults /> : null}
+        </>
+      }
       onEndReached={getMoreMarkets}
       hasMoreToFetch={hasMoreMarketsToLoad}
       ListHeaderComponentStyle={[STYLES.listHeader, { backgroundColor: colors?.background }]}

@@ -22,7 +22,7 @@ const SwipeableActions = ({ callbackParams, onDelete, onEdit, progressAnimatedVa
   };
 
   return (
-    <View style={STYLES.actions}>
+    <View style={[STYLES.actions]}>
       {showEdit ? (
         <Button mode="contained" style={STYLES.button} onPress={onEditPress}>
           <AntDesign name="edit" size={GLOBAL_CONSTANTS.ICON_SIZE} />

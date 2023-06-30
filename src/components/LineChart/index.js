@@ -10,7 +10,6 @@ import Reanimated, {
 } from "react-native-reanimated";
 import { mixPath } from "react-native-redash";
 import Cursor from "./Cursor";
-import Header from "./Header";
 import Skeleton from "../Skeleton";
 import PressableView from "../PressableView";
 import Label from "./Label";
@@ -28,7 +27,9 @@ const LineChart = ({
   style,
   initialSelectedGraph = RAINBOW_CHART_DEFAULTS.SELECTED_GRAPH,
   svgConfig = RAINBOW_CHART_DEFAULTS.SVG_LINE_CONFIG,
-  valueAccessors
+  valueAccessors,
+  isLoading,
+  onSelectedGraphChange
 }) => {
   const { colors: themeColors, dark: isDarkMode } = useTheme();
   const [chartDimensions, setChartDimensions] = useState({
@@ -92,7 +93,7 @@ const LineChart = ({
 
     return {
       d: !previousPath ? "" : mixPath(pathTransistion.value, previousPath, currentPath),
-      strokeWidth: withTiming(isPanGestureActive?.value ? svgConfig.strokeWidth + 1 : svgConfig.strokeWidth)
+      opacity: withTiming(isPanGestureActive?.value ? 0.5 : 1)
     };
   }, [chartData]);
 
@@ -102,10 +103,13 @@ const LineChart = ({
       previousSelected.value = currentSelected?.value;
       currentSelected.value = index;
       pathTransistion.value = withTiming(1);
+      if (!isNullOrUndefined(onSelectedGraphChange)) {
+        onSelectedGraphChange(dataPoints[index]);
+      }
     }
   };
 
-  if (!hasBeenCalculated) {
+  if (!hasBeenCalculated || isLoading) {
     return (
       <View onLayout={onLayout} style={style}>
         <Skeleton style={GLOBAL_STYLES.fullContainer} />
@@ -115,16 +119,6 @@ const LineChart = ({
 
   return (
     <View style={[STYLES.container, { width: style?.width ?? "100%" }]}>
-      <View style={STYLES.headerContainer}>
-        <Header
-          yPanGesturePos={yPanGesturePos}
-          selectedGraph={selectedGraph}
-          xPanGesturePos={xPanGesturePos}
-          hasPathsBeenCalculated={hasPathsBeenCalculated}
-          isPanGestureActive={isPanGestureActive}
-          themeColors={themeColors}
-        />
-      </View>
       <View style={[style, STYLES.relativePosition]}>
         <Svg style={GLOBAL_STYLES.fullContainer}>
           <AnimatedPath animatedProps={animatedPathProps} {...svgConfig} stroke={themeColors?.text} />
@@ -182,7 +176,8 @@ const LineChart = ({
 const STYLES = StyleSheet.create({
   container: {
     justifyContent: "space-between",
-    position: "relative"
+    position: "relative",
+    marginTop: GLOBAL_CONSTANTS.LG_MARGIN
   },
   label: {
     ...TYPOGRAPHY.subheading,
@@ -194,9 +189,6 @@ const STYLES = StyleSheet.create({
     width: "100%",
     marginTop: 35,
     position: "relative"
-  },
-  headerContainer: {
-    marginBottom: GLOBAL_CONSTANTS.MD_MARGIN
   },
   relativePosition: {
     position: "relative"

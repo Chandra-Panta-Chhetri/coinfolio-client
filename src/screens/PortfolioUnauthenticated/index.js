@@ -48,8 +48,7 @@ const STYLES = StyleSheet.create({
   },
   animationContainer: { marginBottom: GLOBAL_CONSTANTS.MD_MARGIN, alignItems: "center" },
   animation: {
-    width: "100%",
-    height: 270
+    width: "100%"
   },
   heading: {
     ...TYPOGRAPHY.display1,

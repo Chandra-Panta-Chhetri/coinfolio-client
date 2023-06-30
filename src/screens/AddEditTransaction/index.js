@@ -11,9 +11,8 @@ import {
 } from "../../redux/portfolio";
 import { TextInput, DatePicker, DropDown, Button } from "../../components";
 import { GLOBAL_STYLES } from "../../styles";
-import { TextInput as RNPTextInput } from "react-native-paper";
 import { usePreventNativeBackWhenLoading } from "../../hooks";
-import TRANSACTION_TYPES from "./transaction-types";
+import TRANSACTION_TYPES, { TRANSFER_IN_TRANSACTION_TYPE, TRANSFER_OUT_TRANSACTION_TYPE } from "./transaction-types";
 import { isNullOrUndefined } from "../../utils";
 import SCREEN_NAMES from "../../navigators/screen-names";
 
@@ -25,18 +24,24 @@ const AddEditTransactionScreen = ({
   updateTransaction,
   isUpdatingTransaction
 }) => {
-  const { selectedCoin, startingScreen, transactionToUpdate } = route.params;
+  const { selectedCoin, startingScreen, transactionToUpdate } = route?.params ?? {
+    selectedCoin: {
+      symbol: "BTC",
+      id: 5
+    }
+  };
   const isInEditMode = !isNullOrUndefined(transactionToUpdate);
   const {
     control,
     handleSubmit,
-    formState: { errors, isValid, isDirty }
+    formState: { errors, isValid },
+    watch
   } = useForm({
     defaultValues: {
       type: isInEditMode ? TRANSACTION_TYPES.findIndex((type) => type.value === transactionToUpdate?.type) : 0,
-      quantity: isInEditMode ? transactionToUpdate?.quantity : "",
-      pricePer: isInEditMode ? transactionToUpdate?.pricePerUSD : "",
-      date: isInEditMode ? transactionToUpdate?.date : null,
+      quantity: isInEditMode ? transactionToUpdate?.quantity : "1",
+      pricePer: isInEditMode ? transactionToUpdate?.pricePerUSD : "1",
+      date: isInEditMode ? transactionToUpdate?.date : new Date(),
       notes: isInEditMode ? transactionToUpdate?.notes : ""
     }
   });
@@ -66,10 +71,6 @@ const AddEditTransactionScreen = ({
 
   const onSubmit = (data) => {
     if (!isNullOrUndefined(selectedCoin)) {
-      delete data["date"];
-      if (data["notes"] === "") {
-        delete data["notes"];
-      }
       if (isInEditMode) {
         const updates = {
           ...data,
@@ -86,6 +87,11 @@ const AddEditTransactionScreen = ({
       }
     }
   };
+
+  const transactionType = watch("type");
+  const isTransferTransactionType =
+    TRANSACTION_TYPES[transactionType]?.value === TRANSFER_IN_TRANSACTION_TYPE.value ||
+    TRANSACTION_TYPES[transactionType]?.value === TRANSFER_OUT_TRANSACTION_TYPE.value;
 
   return (
     <ScrollView contentContainerStyle={STYLES.container}>
@@ -106,7 +112,8 @@ const AddEditTransactionScreen = ({
               options={TRANSACTION_TYPES}
               selectedIndex={value}
               onSelect={(value, index) => onChange(index)}
-              containerStyle={[STYLES.field, { height: 56 }]}
+              containerStyle={STYLES.field}
+              dimensions={STYLES.fieldHeight}
             />
           )}
           name="type"
@@ -114,19 +121,23 @@ const AddEditTransactionScreen = ({
         <Controller
           control={control}
           rules={{
-            required: true
+            required: !isTransferTransactionType
           }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               returnKeyType="next"
-              onBlur={onBlur}
+              onBlur={() => {
+                onChange(`${Number(value)}`);
+                onBlur();
+              }}
               onChangeText={onChange}
-              inputMode="numeric"
               value={value}
+              inputMode="numeric"
               placeholder="Price Per Coin"
               style={STYLES.field}
               onSubmitEditing={() => quantityInputRef?.current?.focus()}
-              right={<RNPTextInput.Icon icon={() => <Text>USD</Text>} />}
+              right={<TextInput.Affix text={"USD"} />}
+              disabled={isTransferTransactionType}
             />
           )}
           name="pricePer"
@@ -139,7 +150,10 @@ const AddEditTransactionScreen = ({
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               returnKeyType="next"
-              onBlur={onBlur}
+              onBlur={() => {
+                onChange(`${Number(value)}`);
+                onBlur();
+              }}
               ref={quantityInputRef}
               onChangeText={onChange}
               inputMode="numeric"
@@ -147,7 +161,7 @@ const AddEditTransactionScreen = ({
               placeholder="Quantity"
               style={STYLES.field}
               onSubmitEditing={() => notesInputRef?.current?.focus()}
-              right={<RNPTextInput.Icon icon={() => <Text>{selectedCoin?.symbol}</Text>} />}
+              right={<TextInput.Affix text={selectedCoin?.symbol} />}
             />
           )}
           name="quantity"
@@ -159,7 +173,9 @@ const AddEditTransactionScreen = ({
               isRangePicker={false}
               onConfirm={(selectedDates) => onChange(selectedDates?.start)}
               initialStartDate={value}
-              style={[STYLES.field, STYLES.transactionTypes]}
+              inputStyle={STYLES.fieldHeight}
+              containerStyle={STYLES.field}
+              placeholder="Date"
             />
           )}
           name="date"
@@ -203,7 +219,7 @@ const AddEditTransactionScreen = ({
               ? "Creating..."
               : "Create"
           }
-          disabled={(isInEditMode ? isUpdatingTransaction : isAddingTransaction) || !isValid || !isDirty}
+          disabled={(isInEditMode ? isUpdatingTransaction : isAddingTransaction) || !isValid}
           loading={isInEditMode ? isUpdatingTransaction : isAddingTransaction}
           onPress={handleSubmit(onSubmit)}
           mode="contained"
@@ -220,15 +236,15 @@ const STYLES = StyleSheet.create({
     flex: 1
   },
   field: {
-    marginBottom: GLOBAL_CONSTANTS.LG_MARGIN
+    marginBottom: GLOBAL_CONSTANTS.MD_MARGIN
   },
   flex: {
     flex: 1
   },
   formActions: { display: "flex", flexDirection: "row", justifyContent: "center" },
   submitFormBtn: { flex: 1, marginLeft: GLOBAL_CONSTANTS.LG_MARGIN },
-  transactionTypes: {
-    height: 56
+  fieldHeight: {
+    height: 55
   }
 });
 

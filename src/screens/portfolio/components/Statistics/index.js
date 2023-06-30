@@ -14,25 +14,27 @@ import { GLOBAL_CONSTANTS } from "../../../../constants";
 
 const Statistics = ({ currentValue, isLoading, totalProfitLoss, totalInvested }) => {
   return (
-    <CardScrollView containerStyle={STYLES.cardContainer}>
-      {isLoading ? (
-        <>
-          <Statistic.Skeleton />
-          <Statistic.Skeleton />
-          <Statistic.Skeleton />
-        </>
-      ) : (
-        <>
-          <Statistic title="Current Value" value={formatPrice(currentValue)} />
-          <Statistic title="Total Invested" value={formatPrice(totalInvested)} />
-          <Statistic
-            title="Total Profit/Loss"
-            value={formatPrice(totalProfitLoss?.value)}
-            percentChange={totalProfitLoss?.percentChange}
-          />
-        </>
-      )}
-    </CardScrollView>
+    <CardScrollView
+      containerStyle={STYLES.cardContainer}
+      children={
+        isLoading
+          ? [
+              <Statistic.Skeleton key="Current Value Skeleton" />,
+              <Statistic.Skeleton key="Total Invested Skeleton" />,
+              <Statistic.Skeleton key="Total Profit/Loss Skeleton" />
+            ]
+          : [
+              <Statistic title="Current Value" key="Current Value" value={formatPrice(currentValue)} />,
+              <Statistic title="Total Invested" key="Total Invested" value={formatPrice(totalInvested)} />,
+              <Statistic
+                title="Total Profit/Loss"
+                key="Total Profit/Loss"
+                value={formatPrice(totalProfitLoss?.value)}
+                percentChange={totalProfitLoss?.percentChange}
+              />
+            ]
+      }
+    />
   );
 };
 

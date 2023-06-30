@@ -8,11 +8,19 @@ import TouchableNativeFeedback from "./TouchableNativeFeedback";
 import Button from "./Button";
 import { GLOBAL_CONSTANTS } from "../constants";
 import { AntDesign } from "@expo/vector-icons";
-import { isNullOrUndefined } from "../utils";
+import { formatDate, isNullOrUndefined } from "../utils";
 
 const END_DATE_TYPE = "END_DATE";
 
-const DatePicker = ({ isRangePicker = true, onConfirm, initialStartDate, initialEndDate, style }) => {
+const DatePicker = ({
+  isRangePicker = true,
+  onConfirm,
+  initialStartDate,
+  initialEndDate,
+  inputStyle,
+  containerStyle,
+  placeholder = "Date"
+}) => {
   const { colors } = useTheme();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [startDate, setStartDate] = useState(initialStartDate);
@@ -57,15 +65,13 @@ const DatePicker = ({ isRangePicker = true, onConfirm, initialStartDate, initial
     <>
       <TouchableNativeFeedback
         onPress={showModal}
-        viewContainerStyle={[STYLES.nativeFeedbackContainer, { borderColor: colors?.text }, style]}
+        viewContainerStyle={[STYLES.nativeFeedbackContainer, { borderColor: colors?.text }, containerStyle]}
       >
-        <View style={STYLES.dateOutputContainer}>
+        <View style={[STYLES.dateOutputContainer, inputStyle]}>
           <View style={STYLES.selectedDates}>
-            <Text style={TYPOGRAPHY.body1}>
-              {!isNullOrUndefined(startDate) ? new Date(startDate)?.toDateString() : ""}
-            </Text>
+            <Text style={TYPOGRAPHY.body1}>{formatDate(startDate) ?? placeholder}</Text>
             {isRangePicker && !isNullOrUndefined(endDate) ? (
-              <Text style={TYPOGRAPHY.body1}> - {new Date(endDate)?.toDateString()}</Text>
+              <Text style={TYPOGRAPHY.body1}> - {formatDate(endDate)}</Text>
             ) : null}
           </View>
           <AntDesign name="calendar" size={GLOBAL_CONSTANTS.ICON_SIZE} color={colors?.text} />

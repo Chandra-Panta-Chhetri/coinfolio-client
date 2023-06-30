@@ -9,16 +9,21 @@ import { useNavigation } from "@react-navigation/native";
 import { GLOBAL_CONSTANTS } from "../../constants";
 import Skeleton from "../Skeleton";
 import SCREEN_NAMES from "../../navigators/screen-names";
+import { formatDate } from "../../utils";
 
-function Event({ event, index }) {
+function Event({ event, index, isLast }) {
   const navigation = useNavigation();
   const goToEventDetails = () => navigation?.navigate(SCREEN_NAMES.EVENT_DETAILS, { eventName: event?.title });
+  let containerStyle = null;
+
+  if (isLast) {
+    containerStyle = [STYLES.lastEvent, STYLES.androidContainer];
+  } else if (index !== 0) {
+    containerStyle = STYLES.androidContainer;
+  }
 
   return (
-    <TouchableNativeFeedback
-      viewContainerStyle={index !== 0 ? STYLES.androidContainer : null}
-      onPress={goToEventDetails}
-    >
+    <TouchableNativeFeedback viewContainerStyle={containerStyle} onPress={goToEventDetails}>
       <Card style={STYLES.cardContainer}>
         <Card.Content>
           <View style={STYLES.iconCoinLabel}>
@@ -39,7 +44,7 @@ function Event({ event, index }) {
           </View>
           <View style={STYLES.infoContainer}>
             <Text style={TYPOGRAPHY.caption} numberOfLines={1}>
-              {new Date(event?.date).toDateString()}
+              {formatDate(event?.date)}
               {event.can_occur_before ? " (or earlier)" : null}
             </Text>
             <Text numberOfLines={1} style={STYLES.title}>
@@ -125,6 +130,9 @@ const STYLES = StyleSheet.create({
     height: 15,
     width: "50%",
     borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
+  },
+  lastEvent: {
+    marginBottom: 40
   }
 });
 

@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { GLOBAL_STYLES } from "../../styles";
-import { InfiniteScroll } from "../../components";
+import { AsyncFlatList } from "../../components";
 import { connect } from "react-redux";
 import { SearchResult, Header } from "./components";
 import {
@@ -23,20 +23,24 @@ const renderSkeleton = ({ index }) => (
 );
 
 const SearchCryptoScreen = ({ searchResults, getTrendingSearches, getRecentSearches, isLoadingSearchResults }) => {
+  const [keyword, setKeyword] = useState("");
+
   useEffect(() => {
     getTrendingSearches();
     getRecentSearches();
   }, []);
 
   return (
-    <InfiniteScroll
+    <AsyncFlatList
       isLoading={isLoadingSearchResults}
       data={searchResults}
       numSkeletons={MARKET_OVERVIEW_FILTERS.NUM_SKELETON_LOADERS}
       contentContainerStyle={GLOBAL_STYLES.screenContainer}
-      ListHeaderComponent={<Header />}
+      ListHeaderComponent={<Header keyword={keyword} setKeyword={setKeyword} />}
       renderDataItem={renderSearchResult}
       renderSkeleton={renderSkeleton}
+      displayNoResultsInHeader
+      displayNoResults={keyword !== "" && searchResults?.length === 0}
     />
   );
 };
