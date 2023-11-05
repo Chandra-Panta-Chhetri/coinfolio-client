@@ -14,7 +14,7 @@ const TouchableNativeFeedback = ({ children, viewContainerStyle, onLayout, onPre
 
   return Platform.OS === DEVICE_TYPES.ANDROID &&
     Platform.Version >= GLOBAL_CONSTANTS.MIN_ANDROID_VERSION_FOR_TOUCHABLE_RIPPLES ? (
-    <View style={[viewContainerStyle, STYLES.rippleContainer]} onLayout={onLayout}>
+    <View style={[STYLES.rippleContainer, viewContainerStyle]} onLayout={onLayout}>
       <RNTouchableNativeFeedback
         {...otherProps}
         background={RNTouchableNativeFeedback.Ripple(colors.touchableRipple, false)}

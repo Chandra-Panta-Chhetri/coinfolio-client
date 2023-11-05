@@ -7,6 +7,7 @@ import { discoverReducer } from "./discover";
 import { combineReducers } from "redux";
 import { marketReducer } from "./market";
 import { assetDetailReducer } from "./asset-detail";
+import { currencyReducer } from "./currency";
 
 export default combineReducers({
   user: userReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
   portfolio: portfolioReducer,
   discover: discoverReducer,
   market: marketReducer,
-  assetDetail: assetDetailReducer
+  assetDetail: assetDetailReducer,
+  currency: currencyReducer
 });
