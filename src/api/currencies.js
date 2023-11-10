@@ -7,3 +7,9 @@ export const getCurrencies = async (queryParams = {}) => {
   const currencies = res?.data;
   return currencies;
 };
+
+export const getCurrency = async (currencyCode) => {
+  const res = await axios.get(`/currencies/${currencyCode}`);
+  const currency = res?.data;
+  return currency;
+};

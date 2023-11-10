@@ -44,12 +44,26 @@ export function formatPercent(percent, includeSign = true) {
   return +percent >= 0 ? `${includeSign === true ? "+" : ""}${formatNum(+percent)}%` : `${formatNum(+percent)}%`;
 }
 
-export function formatPrice(price, includeSign = false) {
+export function formatPrice(price, includeSign = false, currency = null, isAlreadyConverted = false, numDecimals = 2) {
   "worklet";
   if (isNullOrUndefined(price) || isNaN(+price)) {
     return "N/A";
+  } else if (isNullOrUndefined(currency)) {
+    return +price >= 0
+      ? `${includeSign === true ? "+" : ""}$${formatNum(price, numDecimals)}`
+      : `-$${formatNum(+price * -1, numDecimals)}`;
+  } else {
+    const priceInCurrency = isAlreadyConverted ? +price : +price / +currency?.rate_usd;
+    if (!isNullOrUndefined(currency?.currency_symbol)) {
+      return priceInCurrency >= 0
+        ? `${includeSign === true ? "+" : ""}${currency?.currency_symbol}${formatNum(priceInCurrency, numDecimals)}`
+        : `-$${formatNum(priceInCurrency * -1, numDecimals)}`;
+    } else {
+      return priceInCurrency >= 0
+        ? `${includeSign === true ? "+" : ""}${formatNum(priceInCurrency, numDecimals)} ${currency?.code}`
+        : `-$${formatNum(priceInCurrency * -1, numDecimals)}`;
+    }
   }
-  return +price >= 0 ? `${includeSign === true ? "+" : ""}$${formatNum(price)}` : `-$${formatNum(+price * -1)}`;
 }
 
 export function toTimeString(date) {

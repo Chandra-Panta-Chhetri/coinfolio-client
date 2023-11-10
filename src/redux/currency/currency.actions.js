@@ -33,3 +33,8 @@ export const fetchMoreCurrenciesFail = (errorMsg) => ({
 export const noMoreCurrencies = () => ({
   type: CURRENCY_ACTION_TYPES.NO_MORE_CURRENCIES
 });
+
+export const fetchCurrencySuccess = (currency) => ({
+  type: CURRENCY_ACTION_TYPES.FETCH_CURRENCY_SUCCESS,
+  payload: currency
+});

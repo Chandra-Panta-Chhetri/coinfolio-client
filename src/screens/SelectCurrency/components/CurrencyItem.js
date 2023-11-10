@@ -90,4 +90,4 @@ const mapDispatchToProps = (dispatch) => ({
   setCurrencyCode: (code) => dispatch(changeCurrency(code))
 });
 
-export default connect(null, mapDispatchToProps)(CurrencyItem);
+export default memo(connect(null, mapDispatchToProps)(CurrencyItem));

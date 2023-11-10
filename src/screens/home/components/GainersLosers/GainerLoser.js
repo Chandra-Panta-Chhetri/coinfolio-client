@@ -9,8 +9,10 @@ import { GLOBAL_CONSTANTS } from "../../../../constants";
 import SCREEN_NAMES from "../../../../navigators/screen-names";
 import { GLOBAL_STYLES } from "../../../../styles";
 import { Skeleton } from "../../../../components";
+import { selectSelectedCurrency } from "../../../../redux/currency";
+import { connect } from "react-redux";
 
-const GainerLoser = ({ coin, containerStyle }) => {
+const GainerLoser = ({ coin, containerStyle, selectedCurrency }) => {
   const navigation = useNavigation();
   const { image, name, symbol, priceUsd, changePercent24Hr, id } = coin;
 
@@ -34,7 +36,7 @@ const GainerLoser = ({ coin, containerStyle }) => {
             </View>
             <View style={[STYLES.priceAndPercent]}>
               <Text numberOfLines={1} style={TYPOGRAPHY.subheading}>
-                {formatPrice(priceUsd)}
+                {formatPrice(priceUsd, false, selectedCurrency)}
               </Text>
               <Text numberOfLines={1} style={[TYPOGRAPHY.body1, getStylesBasedOnSign(changePercent24Hr)]}>
                 {formatPercent(changePercent24Hr)}
@@ -98,4 +100,8 @@ const STYLES = StyleSheet.create({
   }
 });
 
-export default memo(GainerLoser);
+const mapStateToProps = (state) => ({
+  selectedCurrency: selectSelectedCurrency(state)
+});
+
+export default memo(connect(mapStateToProps)(GainerLoser));

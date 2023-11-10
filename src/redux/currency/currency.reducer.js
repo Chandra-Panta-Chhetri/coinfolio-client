@@ -6,7 +6,8 @@ const INITIAL_STATE = {
   isLoadingMoreCurrencies: false,
   currenciesPage: 1,
   hasMoreCurrencies: true,
-  currenciesPerPage: 20
+  currenciesPerPage: 20,
+  selectedCurrency: null
 };
 
 const currencyReducer = (prevState = INITIAL_STATE, action) => {
@@ -54,6 +55,11 @@ const currencyReducer = (prevState = INITIAL_STATE, action) => {
         isLoadingMoreCurrencies: false,
         hasMoreCurrencies: false,
         isLoadingCurrencies: false
+      };
+    case CURRENCY_ACTION_TYPES.FETCH_CURRENCY_SUCCESS:
+      return {
+        ...prevState,
+        selectedCurrency: action?.payload
       };
     default:
       return prevState;

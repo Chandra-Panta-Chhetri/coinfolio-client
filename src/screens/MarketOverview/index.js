@@ -20,13 +20,6 @@ import { useLivePrices, updatePriceOfCoins, useRefAsState } from "../../hooks";
 import { isNullOrUndefined } from "../../utils";
 import SOCKET_EVENT_NAMES from "../../socket/event-names";
 
-const ListHeader = () => (
-  <>
-    <Header />
-    <Filters />
-  </>
-);
-
 const renderItem = ({ item, index }) => <CoinOverview item={item} key={item?.id + index} />;
 
 const MarketOverviewScreen = ({

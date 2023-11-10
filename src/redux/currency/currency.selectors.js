@@ -13,3 +13,5 @@ export const selectCurrenciesPage = createSelector([selectCurrencyStore], (cs) =
 export const selectHasMoreCurrencies = createSelector([selectCurrencyStore], (cs) => cs?.hasMoreCurrencies);
 
 export const selectCurrenciesPerPage = createSelector([selectCurrencyStore], (cs) => cs?.currenciesPerPage);
+
+export const selectSelectedCurrency = createSelector([selectCurrencyStore], (cs) => cs?.selectedCurrency);

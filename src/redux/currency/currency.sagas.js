@@ -2,6 +2,8 @@ import { takeLatest, put, call, all, select } from "redux-saga/effects";
 import {
   fetchCurrenciesFail,
   fetchCurrenciesSuccess,
+  fetchCurrencyFail,
+  fetchCurrencySuccess,
   fetchMoreCurrenciesFail,
   fetchMoreCurrenciesSuccess,
   noMoreCurrencies
@@ -9,6 +11,9 @@ import {
 import CURRENCY_ACTION_TYPES from "./currency.action.types";
 import { selectCurrenciesPage, selectCurrencies, selectCurrenciesPerPage } from "./currency.selectors";
 import { currenciesAPI } from "../../api";
+import { isNullOrUndefined } from "../../utils";
+import PREFERENCES_ACTION_TYPES from "../preferences/preferences.action.types";
+import { changeCurrency } from "../preferences/preferences.actions";
 
 function* getCurrencies() {
   try {
@@ -39,6 +44,24 @@ function* getMoreCurrencies() {
   }
 }
 
+function* getCurrency({ payload: currencyCode }) {
+  try {
+    if (currencyCode !== "USD") {
+      const currency = yield currenciesAPI.getCurrency(currencyCode);
+      if (isNullOrUndefined(currency)) {
+        yield put(changeCurrency("USD"));
+      } else {
+        yield put(fetchCurrencySuccess(currency));
+      }
+    } else {
+      yield put(fetchCurrencySuccess());
+    }
+  } catch (err) {
+    console.log("GET CURRENCY FAILED" + err);
+    yield put(changeCurrency("USD"));
+  }
+}
+
 function* watchFetchCurrencies() {
   yield takeLatest(CURRENCY_ACTION_TYPES.FETCH_CURRENCIES, getCurrencies);
 }
@@ -47,6 +70,10 @@ function* watchFetchMoreCurrencies() {
   yield takeLatest(CURRENCY_ACTION_TYPES.FETCH_MORE_CURRENCIES, getMoreCurrencies);
 }
 
+function* watchChangeCurrencyPreference() {
+  yield takeLatest(PREFERENCES_ACTION_TYPES.CHANGE_CURRENCY, getCurrency);
+}
+
 export default function* currencySagas() {
-  yield all([call(watchFetchCurrencies), call(watchFetchMoreCurrencies)]);
+  yield all([call(watchFetchCurrencies), call(watchFetchMoreCurrencies), call(watchChangeCurrencyPreference)]);
 }

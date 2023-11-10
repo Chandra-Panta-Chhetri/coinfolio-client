@@ -27,7 +27,9 @@ function SelectCurrencyScreen({
   selectedCurrencyCode
 }) {
   useEffect(() => {
-    fetchCurrencies();
+    if (currencies?.length === 0) {
+      fetchCurrencies();
+    }
   }, []);
 
   const renderCurrencyItem = ({ item, index }) => (
