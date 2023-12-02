@@ -125,9 +125,9 @@ export const deleteTransactionSuccess = () => ({
   type: PORTFOLIO_ACTION_TYPES.DELETE_TRANSACTION_SUCCESS
 });
 
-export const updateTransaction = (transactionId, transactionUpdates, onSuccess) => ({
+export const updateTransaction = (transactionId, transaction, onSuccess) => ({
   type: PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION,
-  payload: { transactionId, transactionUpdates, onSuccess }
+  payload: { transactionId, transaction, onSuccess }
 });
 
 export const updateTransactionFail = (errorMsg) => ({

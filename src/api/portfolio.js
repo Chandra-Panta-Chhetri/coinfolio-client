@@ -1,3 +1,7 @@
+import {
+  TRANSFER_IN_TRANSACTION_TYPE,
+  TRANSFER_OUT_TRANSACTION_TYPE
+} from "../screens/AddEditTransaction/transaction-types";
 import { convertDateToISOOffset, isNullOrUndefined } from "../utils";
 import axios from "./axios-config";
 
@@ -80,10 +84,22 @@ export const getTransactionCoins = async (token, query) => {
   return null;
 };
 
+const toTransactionReqBody = (transaction) => {
+  if (
+    transaction.type === TRANSFER_IN_TRANSACTION_TYPE.value ||
+    transaction.type === TRANSFER_OUT_TRANSACTION_TYPE.value
+  ) {
+    delete transaction.currencyCode;
+    delete transaction.pricePer;
+  }
+  transaction.date = convertDateToISOOffset(transaction?.date);
+  return transaction;
+};
+
 export const addTransaction = async (token, transaction, portfolioId) => {
   if (!isNullOrUndefined(portfolioId) && !isNullOrUndefined(transaction) && !isNullOrUndefined(token)) {
-    transaction.date = convertDateToISOOffset(transaction?.date);
-    const res = await axios.post(`/portfolios/${portfolioId}/transactions`, transaction, {
+    const reqBody = toTransactionReqBody(transaction);
+    const res = await axios.post(`/portfolios/${portfolioId}/transactions`, reqBody, {
       headers: {
         "X-Auth-Token": token
       }
@@ -136,15 +152,15 @@ export const deleteTransaction = async (transaction, portfolioId, token) => {
   return null;
 };
 
-export const updateTransaction = async (transactionUpdates, portfolioId, token, transactionId) => {
+export const updateTransaction = async (updatedTransaction, portfolioId, token, transactionId) => {
   if (
     !isNullOrUndefined(token) &&
-    !isNullOrUndefined(transactionUpdates) &&
+    !isNullOrUndefined(updatedTransaction) &&
     !isNullOrUndefined(portfolioId) &&
     !isNullOrUndefined(transactionId)
   ) {
-    transactionUpdates.date = convertDateToISOOffset(transactionUpdates?.date);
-    const res = await axios.patch(`/portfolios/${portfolioId}/transactions/${transactionId}`, transactionUpdates, {
+    const reqBody = toTransactionReqBody(updatedTransaction);
+    const res = await axios.put(`/portfolios/${portfolioId}/transactions/${transactionId}`, reqBody, {
       headers: {
         "X-Auth-Token": token
       }

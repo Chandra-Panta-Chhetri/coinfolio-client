@@ -24,8 +24,11 @@ function SelectCurrencyScreen({
   hasMoreCurrenciesToFetch,
   fetchCurrencies,
   fetchMoreCurrencies,
-  selectedCurrencyCode
+  selectedCurrencyCode,
+  route
 }) {
+  const { fromScreen } = route?.params;
+
   useEffect(() => {
     if (currencies?.length === 0) {
       fetchCurrencies();
@@ -33,7 +36,12 @@ function SelectCurrencyScreen({
   }, []);
 
   const renderCurrencyItem = ({ item, index }) => (
-    <CurrencyItem key={item?.code + index} currency={item} isSelected={item?.code === selectedCurrencyCode} />
+    <CurrencyItem
+      key={item?.code + index}
+      currency={item}
+      isSelected={item?.code === selectedCurrencyCode}
+      fromScreen={fromScreen}
+    />
   );
 
   return (

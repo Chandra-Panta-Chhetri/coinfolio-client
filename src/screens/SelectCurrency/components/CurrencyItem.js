@@ -9,20 +9,32 @@ import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { changeCurrency } from "../../../redux/preferences";
 import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
-function CurrencyItem({ currency, containerStyle, isSelected, setCurrencyCode }) {
-  const setCurrencyPreference = () => {
-    if (!isSelected) {
+function CurrencyItem({ currency, containerStyle, isSelected, setCurrencyCode, fromScreen }) {
+  const { colors } = useTheme();
+  const navigation = useNavigation();
+  const isLoadedFromSettingScreen = isNullOrUndefined(fromScreen);
+
+  const onCurrencySelect = () => {
+    if (!isLoadedFromSettingScreen) {
+      navigation?.navigate({
+        params: {
+          selectedCurrencyCode: currency?.code
+        },
+        name: fromScreen,
+        merge: true
+      });
+    } else if (!isSelected) {
       setCurrencyCode(currency?.code);
     }
   };
-  const { colors } = useTheme();
 
   return (
     <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={STYLES.scrollContainer}>
       <TouchableNativeFeedback
         viewContainerStyle={[containerStyle, STYLES.touchableContainer]}
-        onPress={setCurrencyPreference}
+        onPress={onCurrencySelect}
         delayPressIn={50}
       >
         <View style={STYLES.container}>
@@ -33,7 +45,7 @@ function CurrencyItem({ currency, containerStyle, isSelected, setCurrencyCode })
               <Text style={STYLES.symbol}>({currency?.currency_symbol})</Text>
             ) : null}
           </View>
-          {isSelected ? (
+          {isSelected && isLoadedFromSettingScreen ? (
             <View style={STYLES.flexRowCenter}>
               <AntDesign name="check" style={TYPOGRAPHY.subheading} color={colors.text} size={22} />
             </View>
