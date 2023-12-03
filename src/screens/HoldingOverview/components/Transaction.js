@@ -41,7 +41,17 @@ function Transaction({ transaction, onSelect, holdingOverview }) {
         <View style={STYLES.infoSection}>
           <Text style={TYPOGRAPHY.body1}>{formatDate(transaction?.date)}</Text>
           {isBuyOrSell ? (
-            <Text style={TYPOGRAPHY.body1}>{formatPrice(transaction?.quantity * transaction?.pricePer)}</Text>
+            <Text style={TYPOGRAPHY.body1}>
+              {formatPrice(
+                transaction?.quantity * transaction?.pricePer,
+                false,
+                {
+                  code: transaction?.currencyCode
+                },
+                true,
+                2
+              )}
+            </Text>
           ) : null}
         </View>
       </View>

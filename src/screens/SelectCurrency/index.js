@@ -27,7 +27,7 @@ function SelectCurrencyScreen({
   selectedCurrencyCode,
   route
 }) {
-  const { fromScreen } = route?.params;
+  const { fromScreen } = route?.params ?? {};
 
   useEffect(() => {
     if (currencies?.length === 0) {

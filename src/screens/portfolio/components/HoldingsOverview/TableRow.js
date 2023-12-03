@@ -8,8 +8,10 @@ import { formatNum, formatPercent, formatPrice, getStylesBasedOnSign, isNullOrUn
 import { TYPOGRAPHY } from "../../../../styles";
 import { GLOBAL_CONSTANTS } from "../../../../constants";
 import { PL_COLUMN } from "./SelectVisibleColumn";
+import { selectSelectedCurrency } from "../../../../redux/currency";
+import { connect } from "react-redux";
 
-const TableRow = ({ holding, onDelete, visibleColumn, isLast }) => {
+const TableRow = ({ holding, onDelete, visibleColumn, isLast, selectedCurrency }) => {
   const { colors } = useTheme();
   const navigation = useNavigation();
   const goToHoldingOverview = (coinId) => navigation?.navigate(SCREEN_NAMES.HOLDING_OVERVIEW, { coinId });
@@ -50,7 +52,7 @@ const TableRow = ({ holding, onDelete, visibleColumn, isLast }) => {
               </View>
               <View style={[STYLES.flex, STYLES.marginRight]}>
                 <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}>
-                  {formatPrice(holding?.priceUSD?.value)}
+                  {formatPrice(holding?.priceUSD?.value, false, selectedCurrency)}
                 </Text>
                 <Text
                   numberOfLines={1}
@@ -66,7 +68,7 @@ const TableRow = ({ holding, onDelete, visibleColumn, isLast }) => {
               {visibleColumn === PL_COLUMN.label ? (
                 <View style={STYLES.flex}>
                   <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}>
-                    {formatPrice(holding?.profitLoss?.value)}
+                    {formatPrice(holding?.profitLoss?.value, true, selectedCurrency)}
                   </Text>
                   <Text
                     numberOfLines={1}
@@ -82,7 +84,7 @@ const TableRow = ({ holding, onDelete, visibleColumn, isLast }) => {
               ) : (
                 <View style={STYLES.flex}>
                   <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.body1]}>
-                    {formatPrice(holding?.totalValue)}
+                    {formatPrice(holding?.totalValue, false, selectedCurrency)}
                   </Text>
                   <Text numberOfLines={1} style={[TYPOGRAPHY.textAlignRight, TYPOGRAPHY.caption]}>
                     {formatNum(holding?.amount)}
@@ -122,4 +124,8 @@ const STYLES = StyleSheet.create({
   }
 });
 
-export default TableRow;
+const mapStateToProps = (state) => ({
+  selectedCurrency: selectSelectedCurrency(state)
+});
+
+export default connect(mapStateToProps)(TableRow);

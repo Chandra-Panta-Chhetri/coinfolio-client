@@ -30,7 +30,9 @@ function TransactionDetailModal({ transaction, hideDetails, holdingOverview, onD
         </View>
         <View style={STYLES.detail}>
           <Text style={TYPOGRAPHY.body2}>Price Per Coin</Text>
-          <Text style={TYPOGRAPHY.body1}>{formatPrice(transaction?.pricePer)}</Text>
+          <Text style={TYPOGRAPHY.body1}>
+            {formatPrice(transaction?.pricePer, false, { code: transaction?.currencyCode }, true, 2)}
+          </Text>
         </View>
         <View style={STYLES.detail}>
           <Text style={TYPOGRAPHY.body2}>Quantity</Text>
