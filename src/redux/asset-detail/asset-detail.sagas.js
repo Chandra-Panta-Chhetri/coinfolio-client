@@ -81,6 +81,7 @@ function* getNews({ payload: query }) {
     }
     yield put(fetchAssetNewsSuccess(news));
   } catch (err) {
+    yield put(noMoreAssetNews());
     yield put(fetchAssetNewsFail("Failed to get the news"));
   }
 }
@@ -101,6 +102,7 @@ function* getMoreNews({ payload: query }) {
     }
     yield put(fetchMoreAssetNewsSuccess(combinedNews));
   } catch (err) {
+    yield put(noMoreAssetNews());
     yield put(fetchMoreAssetNewsFail("Failed to get more news"));
   }
 }
@@ -122,6 +124,7 @@ function* getEvents({ payload: query }) {
     }
     yield put(fetchAssetEventsSuccess(events));
   } catch (err) {
+    yield put(noMoreAssetEvents());
     yield put(fetchAssetEventsFail("Failed to get the events"));
   }
 }
@@ -147,6 +150,7 @@ function* getMoreEvents({ payload: query }) {
     }
     yield put(fetchMoreAssetEventsSuccess(combinedEvents));
   } catch (err) {
+    yield put(noMoreAssetEvents());
     yield put(fetchMoreAssetEventsFail("Failed to get more events"));
   }
 }

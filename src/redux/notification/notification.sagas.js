@@ -9,7 +9,7 @@ import ASSET_DETAIL_ACTION_TYPES from "../asset-detail/asset-detail.action.types
 import CURRENCY_ACTION_TYPES from "../currency/currency.action.types";
 
 function* showErrorNotification({ payload: errorMsg }) {
-  console.log(errorMsg);
+  console.error(errorMsg);
   yield put(addErrorNotification(errorMsg));
 }
 

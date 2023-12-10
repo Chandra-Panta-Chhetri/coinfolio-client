@@ -24,6 +24,7 @@ function* getCurrencies() {
     }
     yield put(fetchCurrenciesSuccess(currencies));
   } catch (err) {
+    yield put(noMoreCurrencies());
     yield put(fetchCurrenciesFail("Failed to get the currencies"));
   }
 }
@@ -40,6 +41,7 @@ function* getMoreCurrencies() {
     }
     yield put(fetchMoreCurrenciesSuccess(combinedCurrencies));
   } catch (err) {
+    yield put(noMoreCurrencies());
     yield put(fetchMoreCurrenciesFail("Failed to get more currencies"));
   }
 }

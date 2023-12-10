@@ -25,7 +25,8 @@ const BottomTabNavigator = ({ initialScreen }) => {
         tabBarShowLabel: true,
         headerShown: false,
         tabBarActiveTintColor: theme?.colors?.primary,
-        tabBarItemStyle
+        tabBarItemStyle,
+        freezeOnBlur: true
       }}
       initialRouteName={initialScreen?.value}
       backBehavior="none"
@@ -43,7 +44,7 @@ const BottomTabNavigator = ({ initialScreen }) => {
         component={MarketOverviewScreen}
         options={{
           tabBarIcon: MarketTabIcon,
-          tabBarLabel: "Market"
+          tabBarLabel: "Markets"
         }}
       />
       <BottomTab.Screen
@@ -67,7 +68,7 @@ const BottomTabNavigator = ({ initialScreen }) => {
         component={SettingsScreen}
         options={{
           tabBarIcon: SettingsTabIcon,
-          tabBarLabel: "Setting"
+          tabBarLabel: "Settings"
         }}
       />
     </BottomTab.Navigator>

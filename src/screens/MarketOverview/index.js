@@ -75,7 +75,6 @@ const MarketOverviewScreen = ({
         <>
           <Header />
           <Filters />
-          {!isLoadingMarkets && !isLoadingMoreMarkets && markets?.length === 0 ? <NoResults /> : null}
         </>
       }
       onEndReached={getMoreMarkets}
@@ -84,6 +83,8 @@ const MarketOverviewScreen = ({
       renderDataItem={renderItem}
       renderSkeleton={renderSkeleton}
       contentContainerStyle={GLOBAL_STYLES.screenContainer}
+      displayNoResults={markets?.length === 0}
+      displayNoResultsInHeader={true}
     />
   );
 };
