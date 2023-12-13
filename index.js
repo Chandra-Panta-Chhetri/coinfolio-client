@@ -1,3 +1,4 @@
+import "./wdyr";
 import { registerRootComponent } from "expo";
 import App from "./src/App";
 import { Platform } from "react-native";
