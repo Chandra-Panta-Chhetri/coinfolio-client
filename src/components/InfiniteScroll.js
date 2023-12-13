@@ -24,14 +24,14 @@ const InfiniteScroll = ({
   ...otherProps
 }) => {
   const onScrollToEnd = () => {
-    if (!isLoadingMore && hasMoreToFetch && data?.length > 0 && !isNullOrUndefined(onEndReached)) {
+    if (!isLoading && !isLoadingMore && hasMoreToFetch && !isNullOrUndefined(onEndReached)) {
       onEndReached();
     }
   };
 
   const renderFooter = useCallback(
-    () => <ActivityIndicator style={STYLES.footer} animating={hasMoreToFetch && data?.length > 0} hidesWhenStopped />,
-    [hasMoreToFetch, data]
+    () => <ActivityIndicator style={STYLES.footer} animating={hasMoreToFetch} hidesWhenStopped />,
+    [hasMoreToFetch]
   );
 
   if (isLoading) {
@@ -74,7 +74,7 @@ const InfiniteScroll = ({
 
 const STYLES = StyleSheet.create({
   footer: {
-    marginTop: GLOBAL_CONSTANTS.MD_MARGIN
+    marginVertical: GLOBAL_CONSTANTS.MD_MARGIN
   }
 });
 

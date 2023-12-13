@@ -29,7 +29,8 @@ const LineChart = ({
   svgConfig = RAINBOW_CHART_DEFAULTS.SVG_LINE_CONFIG,
   valueAccessors,
   isLoading,
-  onSelectedGraphChange
+  onSelectedGraphChange,
+  selectedCurrency
 }) => {
   const { colors: themeColors, dark: isDarkMode } = useTheme();
   const [chartDimensions, setChartDimensions] = useState({
@@ -54,10 +55,10 @@ const LineChart = ({
 
   useEffect(() => {
     if (chartDimensions?.hasBeenCalculated && dataPoints?.length > 0) {
-      const chartData = calculateRainbowChart(dataPoints, width, height, valueAccessors);
+      const chartData = calculateRainbowChart(dataPoints, width, height, valueAccessors, selectedCurrency);
       setChartData(chartData);
     }
-  }, [dataPoints, chartDimensions]);
+  }, [dataPoints, chartDimensions, selectedCurrency]);
 
   const labelWidth = chartData?.length === 0 ? 0 : width / chartData?.length;
 
@@ -131,6 +132,7 @@ const LineChart = ({
           xPanGesturePos={xPanGesturePos}
           hasPathsBeenCalculated={hasPathsBeenCalculated}
           themeColors={themeColors}
+          selectedCurrency={selectedCurrency}
         />
         {["min", "max"].map((_, i) => (
           <Label

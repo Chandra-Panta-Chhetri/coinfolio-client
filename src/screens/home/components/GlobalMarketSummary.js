@@ -6,25 +6,26 @@ import { GLOBAL_CONSTANTS } from "../../../constants";
 import { selectGlobalSummary, selectIsLoadingGlobalSummary, fetchGlobalSummary } from "../../../redux/summary";
 import { Skeleton } from "../../../components";
 import { TYPOGRAPHY } from "../../../styles";
-import { formatNum, formatPercent, isNullOrUndefined } from "../../../utils";
+import { formatNum, formatPercent, formatPrice, isNullOrUndefined } from "../../../utils";
+import { selectSelectedCurrency } from "../../../redux/currency";
 
-const formatValue = (labelKey, rawValue) => {
+const formatValue = (labelKey, rawValue, selectedCurrency) => {
   switch (labelKey) {
     case "totalMarketCap":
     case "volume24hr":
-      return `$${formatNum(rawValue, 0)}`;
+      return formatPrice(rawValue, false, selectedCurrency, 0);
     case "numAssets":
     case "numExchanges":
-      return `${formatNum(rawValue, 0)}`;
+      return formatNum(rawValue, 0);
     case "btcDom":
     case "ethDom":
-      return `${formatPercent(rawValue, false)}`;
+      return formatPercent(rawValue, false);
     default:
       return rawValue;
   }
 };
 
-const GlobalMarketSummary = ({ globalSummary, fetchGlobalSummary, isLoadingGlobalSummary }) => {
+const GlobalMarketSummary = ({ globalSummary, fetchGlobalSummary, isLoadingGlobalSummary, selectedCurrency }) => {
   useEffect(() => {
     fetchGlobalSummary();
   }, []);
@@ -48,7 +49,7 @@ const GlobalMarketSummary = ({ globalSummary, fetchGlobalSummary, isLoadingGloba
           {Object.keys(globalSummary ?? {}).map((key) => (
             <View style={STYLES.summaryItem} key={globalSummary[key]?.label}>
               <Text style={TYPOGRAPHY.body1}>{globalSummary[key]?.label}: </Text>
-              <Text style={TYPOGRAPHY.body1}>{formatValue(key, globalSummary[key]?.value)}</Text>
+              <Text style={TYPOGRAPHY.body1}>{formatValue(key, globalSummary[key]?.value, selectedCurrency)}</Text>
             </View>
           ))}
         </ScrollView>
@@ -78,7 +79,8 @@ const STYLES = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   globalSummary: selectGlobalSummary(state),
-  isLoadingGlobalSummary: selectIsLoadingGlobalSummary(state)
+  isLoadingGlobalSummary: selectIsLoadingGlobalSummary(state),
+  selectedCurrency: selectSelectedCurrency(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

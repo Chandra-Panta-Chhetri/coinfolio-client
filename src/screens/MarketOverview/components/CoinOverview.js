@@ -7,8 +7,10 @@ import { TYPOGRAPHY } from "../../../styles";
 import { useNavigation } from "@react-navigation/native";
 import { GLOBAL_CONSTANTS } from "../../../constants";
 import SCREEN_NAMES from "../../../navigators/screen-names";
+import { connect } from "react-redux";
+import { selectSelectedCurrency } from "../../../redux/currency";
 
-const CoinOverview = ({ item }) => {
+const CoinOverview = ({ item, selectedCurrency }) => {
   const { changePercent24Hr, name, priceUsd, image, rank, marketCap, id, symbol } = item;
   const navigation = useNavigation();
 
@@ -35,7 +37,7 @@ const CoinOverview = ({ item }) => {
         </View>
         <View style={STYLES.priceMarketCap}>
           <Text numberOfLines={1} style={TYPOGRAPHY.body2}>
-            {formatPrice(priceUsd)}
+            {formatPrice(priceUsd, false, selectedCurrency)}
           </Text>
           <Text numberOfLines={1} style={TYPOGRAPHY.body1}>
             MCap {abbreviateNum(marketCap)}
@@ -70,4 +72,8 @@ const STYLES = StyleSheet.create({
   }
 });
 
-export default memo(CoinOverview);
+const mapStateToProps = (state) => ({
+  selectedCurrency: selectSelectedCurrency(state)
+});
+
+export default memo(connect(mapStateToProps)(CoinOverview));

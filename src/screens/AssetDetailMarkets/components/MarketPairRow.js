@@ -1,17 +1,17 @@
 import React from "react";
 import { Text } from "react-native-paper";
-import { formatNum, formatPrice } from "../../../utils";
+import { formatPrice } from "../../../utils";
 
-const MarketPairRow = ({ marketPair, cellStyle }) => {
+const MarketPairRow = ({ marketPair, cellStyle, selectedCurrency }) => {
   return (
     <>
       <Text style={cellStyle}>{marketPair?.name}</Text>
       <Text style={cellStyle}>{marketPair?.pair}</Text>
       <Text style={cellStyle} numberOfLines={1}>
-        {formatPrice(marketPair?.priceUsd)}
+        {formatPrice(marketPair?.priceUsd, false, selectedCurrency)}
       </Text>
       <Text style={cellStyle} numberOfLines={1}>
-        {`$${formatNum(marketPair?.vol24h, 0)}`}
+        {formatPrice(marketPair?.vol24h, false, selectedCurrency)}
       </Text>
     </>
   );

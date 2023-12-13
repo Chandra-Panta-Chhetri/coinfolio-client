@@ -8,8 +8,10 @@ import { useNavigation } from "@react-navigation/native";
 import { GLOBAL_CONSTANTS } from "../../../../constants";
 import SCREEN_NAMES from "../../../../navigators/screen-names";
 import { Skeleton } from "../../../../components";
+import { connect } from "react-redux";
+import { selectSelectedCurrency } from "../../../../redux/currency/currency.selectors";
 
-const TopCoin = ({ coin }) => {
+const TopCoin = ({ coin, selectedCurrency }) => {
   const navigation = useNavigation();
   const { symbol, priceUsd, changePercent24Hr, image, name, id } = coin;
 
@@ -26,7 +28,7 @@ const TopCoin = ({ coin }) => {
           />
           <Text style={TYPOGRAPHY.body2}>{symbol}</Text>
           <Text numberOfLines={1} style={TYPOGRAPHY.body1}>
-            {formatPrice(priceUsd)}
+            {formatPrice(priceUsd, false, selectedCurrency)}
           </Text>
           <Text numberOfLines={1} style={[TYPOGRAPHY.body1, getStylesBasedOnSign(changePercent24Hr)]}>
             {formatPercent(changePercent24Hr)}
@@ -78,4 +80,8 @@ const STYLES = StyleSheet.create({
   }
 });
 
-export default memo(TopCoin);
+const mapStateToProps = (state) => ({
+  selectedCurrency: selectSelectedCurrency(state)
+});
+
+export default memo(connect(mapStateToProps)(TopCoin));

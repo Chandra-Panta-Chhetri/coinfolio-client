@@ -5,10 +5,11 @@ import { Table } from "../../components";
 import { connect } from "react-redux";
 import { selectAssetMarkets, selectIsLoadingAssetMarkets, fetchAssetMarkets } from "../../redux/asset-detail";
 import { MarketPairRow, MarketPairsSkeleton } from "./components";
+import { selectSelectedCurrency } from "../../redux/currency";
 
 const TABLE_HEADINGS = ["Name", "Pair", "Price", "24H Volume"];
 
-const AssetDetailMarketsScreen = ({ fetchMarketPairs, marketPairs, isLoadingMarketPairs, route }) => {
+const AssetDetailMarketsScreen = ({ fetchMarketPairs, marketPairs, isLoadingMarketPairs, route, selectedCurrency }) => {
   const { params } = route;
 
   useEffect(() => {
@@ -22,7 +23,9 @@ const AssetDetailMarketsScreen = ({ fetchMarketPairs, marketPairs, isLoadingMark
       headings={TABLE_HEADINGS}
       data={marketPairs}
       containerStyle={STYLES.table}
-      renderRow={({ item }, cellStyle) => <MarketPairRow marketPair={item} cellStyle={cellStyle} />}
+      renderRow={({ item }, cellStyle) => (
+        <MarketPairRow marketPair={item} cellStyle={cellStyle} selectedCurrency={selectedCurrency} />
+      )}
     />
   );
 };
@@ -36,7 +39,8 @@ const STYLES = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   marketPairs: selectAssetMarkets(state),
-  isLoadingMarketPairs: selectIsLoadingAssetMarkets(state)
+  isLoadingMarketPairs: selectIsLoadingAssetMarkets(state),
+  selectedCurrency: selectSelectedCurrency(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

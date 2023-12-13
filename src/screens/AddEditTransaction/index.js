@@ -9,12 +9,14 @@ import {
   selectIsAddingTransaction,
   selectIsUpdatingTransaction
 } from "../../redux/portfolio";
-import { TextInput, DatePicker, DropDown, Button } from "../../components";
-import { GLOBAL_STYLES } from "../../styles";
+import { TextInput, DatePicker, DropDown, Button, TouchableNativeFeedback } from "../../components";
+import { GLOBAL_STYLES, TYPOGRAPHY } from "../../styles";
 import { usePreventNativeBackWhenLoading } from "../../hooks";
 import TRANSACTION_TYPES, { TRANSFER_IN_TRANSACTION_TYPE, TRANSFER_OUT_TRANSACTION_TYPE } from "./transaction-types";
 import { isNullOrUndefined } from "../../utils";
 import SCREEN_NAMES from "../../navigators/screen-names";
+import { AntDesign } from "@expo/vector-icons";
+import { useTheme } from "react-native-paper";
 
 const AddEditTransactionScreen = ({
   route,
@@ -24,12 +26,12 @@ const AddEditTransactionScreen = ({
   updateTransaction,
   isUpdatingTransaction
 }) => {
-  const { selectedCoin, startingScreen, transactionToUpdate } = route?.params ?? {
-    selectedCoin: {
-      symbol: "BTC",
-      id: 5
-    }
-  };
+  const { selectedCoin, startingScreen, transactionToUpdate, selectedCurrencyCode } = route?.params ?? {};
+  const currencyCode = isNullOrUndefined(selectedCurrencyCode)
+    ? isInEditMode
+      ? transactionToUpdate?.currencyCode
+      : "USD"
+    : selectedCurrencyCode;
   const isInEditMode = !isNullOrUndefined(transactionToUpdate);
   const {
     control,
@@ -40,11 +42,12 @@ const AddEditTransactionScreen = ({
     defaultValues: {
       type: isInEditMode ? TRANSACTION_TYPES.findIndex((type) => type.value === transactionToUpdate?.type) : 0,
       quantity: isInEditMode ? transactionToUpdate?.quantity : "1",
-      pricePer: isInEditMode ? transactionToUpdate?.pricePerUSD : "1",
+      pricePer: isInEditMode ? transactionToUpdate?.pricePer ?? "1" : "1",
       date: isInEditMode ? transactionToUpdate?.date : new Date(),
-      notes: isInEditMode ? transactionToUpdate?.notes : ""
+      notes: isInEditMode ? transactionToUpdate?.notes ?? "" : ""
     }
   });
+  const { colors } = useTheme();
   const quantityInputRef = useRef();
   const notesInputRef = useRef();
   const backAction = useCallback(
@@ -71,19 +74,16 @@ const AddEditTransactionScreen = ({
 
   const onSubmit = (data) => {
     if (!isNullOrUndefined(selectedCoin)) {
+      const transaction = {
+        ...data,
+        type: TRANSACTION_TYPES[data?.type]?.value,
+        currencyCode,
+        coinId: selectedCoin?.id
+      };
       if (isInEditMode) {
-        const updates = {
-          ...data,
-          type: TRANSACTION_TYPES[data?.type]?.value
-        };
-        updateTransaction(transactionToUpdate?.id, updates, goBack);
+        updateTransaction(transactionToUpdate?.id, transaction, goBack);
       } else {
-        const transactionToAdd = {
-          ...data,
-          coinId: selectedCoin?.id,
-          type: TRANSACTION_TYPES[data?.type]?.value
-        };
-        addTransaction(transactionToAdd, goBack, startingScreen);
+        addTransaction(transaction, goBack, startingScreen);
       }
     }
   };
@@ -100,7 +100,7 @@ const AddEditTransactionScreen = ({
           ios: "padding",
           android: "height"
         })}
-        style={STYLES.flex}
+        style={STYLES.formContainer}
       >
         <Controller
           control={control}
@@ -112,36 +112,51 @@ const AddEditTransactionScreen = ({
               options={TRANSACTION_TYPES}
               selectedIndex={value}
               onSelect={(value, index) => onChange(index)}
-              containerStyle={STYLES.field}
               dimensions={STYLES.fieldHeight}
             />
           )}
           name="type"
         />
-        <Controller
-          control={control}
-          rules={{
-            required: !isTransferTransactionType
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              returnKeyType="next"
-              onBlur={() => {
-                onChange(`${Number(value)}`);
-                onBlur();
+        {isTransferTransactionType ? null : (
+          <View style={STYLES.pricePerCurrencyCode}>
+            <Controller
+              control={control}
+              rules={{
+                required: true
               }}
-              onChangeText={onChange}
-              value={value}
-              inputMode="numeric"
-              placeholder="Price Per Coin"
-              style={STYLES.field}
-              onSubmitEditing={() => quantityInputRef?.current?.focus()}
-              right={<TextInput.Affix text={"USD"} />}
-              disabled={isTransferTransactionType}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  returnKeyType="next"
+                  onBlur={() => {
+                    onChange(`${Number(value)}`);
+                    onBlur();
+                  }}
+                  onChangeText={onChange}
+                  value={value}
+                  inputMode="numeric"
+                  placeholder="Price Per Coin"
+                  onSubmitEditing={() => quantityInputRef?.current?.focus()}
+                  disabled={isTransferTransactionType}
+                  style={STYLES.flex}
+                />
+              )}
+              name="pricePer"
             />
-          )}
-          name="pricePer"
-        />
+            <TouchableNativeFeedback
+              onPress={() => {
+                navigation?.navigate(SCREEN_NAMES.SELECT_CURRENCY, {
+                  fromScreen: SCREEN_NAMES.ADD_EDIT_TRANSACTION
+                });
+              }}
+              viewContainerStyle={STYLES.currencyCodeFeedback}
+            >
+              <View style={[STYLES.currencyCodeContainer, { borderColor: colors?.text }]}>
+                <Text style={TYPOGRAPHY.body1}>{currencyCode}</Text>
+                <AntDesign name={"caretdown"} color={colors?.text} style={STYLES.currencyCodeCaretDown} />
+              </View>
+            </TouchableNativeFeedback>
+          </View>
+        )}
         <Controller
           control={control}
           rules={{
@@ -159,7 +174,6 @@ const AddEditTransactionScreen = ({
               inputMode="numeric"
               value={value}
               placeholder="Quantity"
-              style={STYLES.field}
               onSubmitEditing={() => notesInputRef?.current?.focus()}
               right={<TextInput.Affix text={selectedCoin?.symbol} />}
             />
@@ -174,7 +188,6 @@ const AddEditTransactionScreen = ({
               onConfirm={(selectedDates) => onChange(selectedDates?.start)}
               initialStartDate={value}
               inputStyle={STYLES.fieldHeight}
-              containerStyle={STYLES.field}
               placeholder="Date"
             />
           )}
@@ -195,7 +208,6 @@ const AddEditTransactionScreen = ({
               placeholder="Notes (Optional)"
               multiline
               rows={5}
-              style={STYLES.field}
             />
           )}
           name="notes"
@@ -235,16 +247,34 @@ const STYLES = StyleSheet.create({
     ...GLOBAL_STYLES.screenContainer,
     flex: 1
   },
-  field: {
-    marginBottom: GLOBAL_CONSTANTS.MD_MARGIN
-  },
   flex: {
     flex: 1
   },
+  formContainer: {
+    flex: 1,
+    rowGap: 20
+  },
+  pricePerCurrencyCode: { flexDirection: "row" },
   formActions: { display: "flex", flexDirection: "row", justifyContent: "center" },
   submitFormBtn: { flex: 1, marginLeft: GLOBAL_CONSTANTS.LG_MARGIN },
   fieldHeight: {
-    height: 55
+    height: 56
+  },
+  currencyCodeFeedback: {
+    marginLeft: GLOBAL_CONSTANTS.SM_MARGIN,
+    marginTop: 8
+  },
+  currencyCodeContainer: {
+    flexDirection: "row",
+    flex: 1,
+    alignItems: "center",
+    paddingHorizontal: 10,
+    borderWidth: GLOBAL_CONSTANTS.BORDER_WIDTH,
+    borderRadius: GLOBAL_CONSTANTS.BORDER_RADIUS
+  },
+  currencyCodeCaretDown: {
+    ...TYPOGRAPHY.body1,
+    marginLeft: GLOBAL_CONSTANTS.SM_MARGIN
   }
 });
 
@@ -256,8 +286,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   addTransaction: (transaction, onSuccess, startingScreen) =>
     dispatch(addNewTransaction(transaction, onSuccess, startingScreen)),
-  updateTransaction: (transactionId, updates, onSuccess) =>
-    dispatch(updateTransaction(transactionId, updates, onSuccess))
+  updateTransaction: (transactionId, transaction, onSuccess) =>
+    dispatch(updateTransaction(transactionId, transaction, onSuccess))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddEditTransactionScreen);

@@ -15,6 +15,7 @@ import { useLivePrices } from "../../hooks";
 import { formatPercent, formatPrice, getStylesBasedOnSign, isNullOrUndefined } from "../../utils";
 import { Statistic } from "./components";
 import SOCKET_EVENT_NAMES from "../../socket/event-names";
+import { selectSelectedCurrency } from "../../redux/currency";
 
 const valueAccessors = {
   xValueAccessor: (dataInstance) => dataInstance?.time,
@@ -28,7 +29,8 @@ const AssetDetailOverviewScreen = ({
   isLoadingAssetOverview,
   fetchAssetOverview,
   route,
-  updateAssetOverview
+  updateAssetOverview,
+  selectedCurrency
 }) => {
   const { params } = route;
   const [percentChange, setPercentChange] = useState(null);
@@ -87,7 +89,7 @@ const AssetDetailOverviewScreen = ({
         ) : (
           <View style={STYLES.pricePercentChange}>
             <Text style={TYPOGRAPHY.display1} numberOfLines={1}>
-              {formatPrice(assetOverview?.priceUsd)}
+              {formatPrice(assetOverview?.priceUsd, false, selectedCurrency)}
             </Text>
             {!isNullOrUndefined(percentChange) ? (
               <Text style={[TYPOGRAPHY.title, getStylesBasedOnSign(percentChange)]}>
@@ -103,13 +105,17 @@ const AssetDetailOverviewScreen = ({
         valueAccessors={valueAccessors}
         isLoading={isLoadingAssetOverview}
         onSelectedGraphChange={updatePercentChange}
+        selectedCurrency={selectedCurrency}
       />
       <View style={STYLES.statsContainer}>
         <Text style={STYLES.statsHeading}>Statistics</Text>
         {isLoadingAssetOverview ? (
           <Skeleton style={STYLES.statsSkeleton} />
         ) : (
-          <MultiColumnView sections={assetOverview?.statistics} renderItem={Statistic} />
+          <MultiColumnView
+            sections={assetOverview?.statistics}
+            renderItem={(props) => <Statistic key={props?.label} {...props} selectedCurrency={selectedCurrency} />}
+          />
         )}
       </View>
     </ScrollView>
@@ -151,7 +157,8 @@ const STYLES = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   assetOverview: selectAssetOverview(state),
-  isLoadingAssetOverview: selectIsLoadingAssetOverview(state)
+  isLoadingAssetOverview: selectIsLoadingAssetOverview(state),
+  selectedCurrency: selectSelectedCurrency(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -30,7 +30,7 @@ const Allocations = ({ pieCharts, isLoadingPieCharts }) => {
     if (!isNullOrUndefined(pieCharts)) {
       const formattedAllocations = pieCharts?.map((pc, i) => ({
         key: `${pc?.coinSymbol}`,
-        value: formatNum(+pc?.percent * 100),
+        value: formatNum(+pc?.percent),
         svg: {
           fill: SLICE_COLORS[i]
         }

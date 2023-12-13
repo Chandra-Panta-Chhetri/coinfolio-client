@@ -23,7 +23,8 @@ const Cursor = ({
   isPanGestureActive,
   xPanGesturePos,
   hasPathsBeenCalculated,
-  themeColors
+  themeColors,
+  selectedCurrency
 }) => {
   const timePriceWidth = useSharedValue(0);
 
@@ -45,10 +46,10 @@ const Cursor = ({
         selectedGraph?.value?.yAxis?.range,
         selectedGraph?.value?.yAxis?.domain
       );
-      return `${formatPrice(yValForPos)}`;
+      return formatPrice(yValForPos, false, selectedCurrency, true);
     }
     return "";
-  });
+  }, [selectedCurrency]);
 
   const xVal = useDerivedValue(() => {
     if (hasPathsBeenCalculated?.value && isPanGestureActive?.value) {

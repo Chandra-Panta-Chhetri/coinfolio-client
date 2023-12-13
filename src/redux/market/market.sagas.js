@@ -37,6 +37,7 @@ function* fetchMarkets() {
     }
     yield put(fetchMarketsSuccess(markets));
   } catch (err) {
+    yield put(noMoreMarkets());
     yield put(fetchMarketsFail("Failed to get the markets"));
   }
 }
@@ -63,6 +64,7 @@ function* fetchMoreMarkets() {
     const combinedMarkets = [...currentMarkets, ...newMarkets];
     yield put(fetchMoreMarketsSuccess(combinedMarkets));
   } catch (err) {
+    yield put(noMoreMarkets());
     yield put(fetchMoreMarketsFail("Failed to get more markets"));
   }
 }

@@ -6,9 +6,10 @@ import { all, call, put, takeEvery } from "redux-saga/effects";
 import { addErrorNotification, addSuccessNotification } from "./notification.actions";
 import DISCOVER_ACTION_TYPES from "../discover/discover.action.types";
 import ASSET_DETAIL_ACTION_TYPES from "../asset-detail/asset-detail.action.types";
+import CURRENCY_ACTION_TYPES from "../currency/currency.action.types";
 
 function* showErrorNotification({ payload: errorMsg }) {
-  console.log(errorMsg);
+  console.error(errorMsg);
   yield put(addErrorNotification(errorMsg));
 }
 
@@ -50,7 +51,9 @@ function* watchErrorNotification() {
       PORTFOLIO_ACTION_TYPES.FETCH_HOLDING_OVERVIEW_FAIL,
       PORTFOLIO_ACTION_TYPES.FETCH_TRANSACTION_COINS_FAIL,
       PORTFOLIO_ACTION_TYPES.ADD_NEW_PORTFOLIO_FAIL,
-      PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_FAIL
+      PORTFOLIO_ACTION_TYPES.UPDATE_TRANSACTION_FAIL,
+      CURRENCY_ACTION_TYPES.FETCH_CURRENCIES_FAIL,
+      CURRENCY_ACTION_TYPES.FETCH_MORE_CURRENCIES_FAIL
     ],
     showErrorNotification
   );

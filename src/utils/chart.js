@@ -51,10 +51,15 @@ export const buildSparkLine = (data, chartWidth = 0, chartHeight = 0, valueAcces
   return path;
 };
 
-const getSvgPath = (data, chartWidth = 0, chartHeight = 0, valueAccessors, maxPointsToShow) => {
+const getSvgPath = (data, chartWidth = 0, chartHeight = 0, valueAccessors, maxPointsToShow, selectedCurrency) => {
   const { xValueAccessor, yValueAccessor, dataPointsAccessor } = valueAccessors;
   const dataPoints = (dataPointsAccessor(data) ?? []).slice(0, maxPointsToShow);
-  const parsedDataPoints = dataPoints?.map((dp) => [parseFloat(xValueAccessor(dp)), parseFloat(yValueAccessor(dp))]);
+  const parsedDataPoints = dataPoints?.map((dp) => [
+    parseFloat(xValueAccessor(dp)),
+    parseFloat(
+      isNullOrUndefined(selectedCurrency) ? yValueAccessor(dp) : +yValueAccessor(dp) / +selectedCurrency?.rate_usd
+    )
+  ]);
   const extremas = findMaxAndMinYX(parsedDataPoints);
   const scaleXDomain = [extremas?.x?.minVal, extremas?.x?.maxVal];
   const scaleYDomain = [extremas?.y?.minVal, extremas?.y?.maxVal];
@@ -86,13 +91,21 @@ const getSvgPath = (data, chartWidth = 0, chartHeight = 0, valueAccessors, maxPo
   };
 };
 
-export const buildLineChart = (data, chartWidth = 0, chartHeight = 0, valueAccessors, maxPointsToShow) => {
+export const buildLineChart = (
+  data,
+  chartWidth = 0,
+  chartHeight = 0,
+  valueAccessors,
+  maxPointsToShow,
+  selectedCurrency
+) => {
   const { path, dataPoints, extremas, xAxis, yAxis, scaleX } = getSvgPath(
     data,
     chartWidth,
     chartHeight,
     valueAccessors,
-    maxPointsToShow
+    maxPointsToShow,
+    selectedCurrency
   );
   return {
     percentChange: valueAccessors?.percentChangeAccessor(data),
@@ -101,12 +114,12 @@ export const buildLineChart = (data, chartWidth = 0, chartHeight = 0, valueAcces
       {
         x: scaleX(dataPoints[extremas.y.indexOfMaxYVal][0]),
         y: -25,
-        val: `${formatPrice(extremas?.y?.maxVal)}`
+        val: formatPrice(extremas?.y?.maxVal, false, selectedCurrency, true)
       },
       {
         x: scaleX(dataPoints[extremas?.y?.indexOfMinYVal][0]),
         y: chartHeight - 4,
-        val: `${formatPrice(extremas?.y?.minVal)}`
+        val: formatPrice(extremas?.y?.minVal, false, selectedCurrency, true)
       }
     ],
     xAxis,
@@ -114,7 +127,7 @@ export const buildLineChart = (data, chartWidth = 0, chartHeight = 0, valueAcces
   };
 };
 
-export const calculateRainbowChart = (data, chartWidth, chartHeight, valueAccessors) => {
+export const calculateRainbowChart = (data, chartWidth, chartHeight, valueAccessors, selectedCurrency) => {
   if (isNullOrUndefined(valueAccessors)) {
     return [];
   }
@@ -122,6 +135,6 @@ export const calculateRainbowChart = (data, chartWidth, chartHeight, valueAccess
   const maxPointsToShow = Math.min(...numPointsPerData);
   return data?.map((d) => ({
     label: d?.label,
-    data: buildLineChart(d, chartWidth, chartHeight, valueAccessors, maxPointsToShow)
+    data: buildLineChart(d, chartWidth, chartHeight, valueAccessors, maxPointsToShow, selectedCurrency)
   }));
 };

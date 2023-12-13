@@ -1,32 +1,33 @@
 import React from "react";
-import { Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { HomeScreen, MarketOverviewScreen, SettingsScreen, DiscoverScreen } from "../screens";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { useTheme } from "react-native-paper";
 import { connect } from "react-redux";
 import { selectInitialScreen } from "../redux/preferences";
 import PortfolioNavigator from "./PortfolioNavigator";
-import { DEVICE_TYPES } from "../constants";
+import { GLOBAL_CONSTANTS } from "../constants";
 import SCREEN_NAMES from "./screen-names";
 import { DiscoverTabIcon, HomeTabIcon, MarketTabIcon, PortfolioTabIcon, SettingsTabIcon } from "./BottomTabIcons";
 
-const BottomTab =
-  Platform.OS === DEVICE_TYPES.ANDROID ? createMaterialBottomTabNavigator() : createBottomTabNavigator();
+const BottomTab = createBottomTabNavigator();
 
 const BottomTabNavigator = ({ initialScreen }) => {
-  const { colors } = useTheme();
-  const tabBarStyle = { backgroundColor: colors?.card };
+  const theme = useTheme();
+  const tabBarStyle = { backgroundColor: theme?.colors?.card };
+  const tabBarItemStyle = {
+    marginTop: GLOBAL_CONSTANTS.SM_MARGIN
+  };
 
   return (
     <BottomTab.Navigator
       screenOptions={{
         tabBarStyle,
-        tabBarShowLabel: false
+        tabBarShowLabel: true,
+        headerShown: false,
+        tabBarActiveTintColor: theme?.colors?.primary,
+        tabBarItemStyle,
+        freezeOnBlur: true
       }}
-      labeled={false}
-      activeColor={colors?.primary}
-      barStyle={tabBarStyle}
       initialRouteName={initialScreen?.value}
       backBehavior="none"
     >
@@ -34,35 +35,40 @@ const BottomTabNavigator = ({ initialScreen }) => {
         name={SCREEN_NAMES.HOME}
         component={HomeScreen}
         options={{
-          tabBarIcon: HomeTabIcon
+          tabBarIcon: HomeTabIcon,
+          tabBarLabel: "Home"
         }}
       />
       <BottomTab.Screen
         name={SCREEN_NAMES.MARKET_OVERVIEW}
         component={MarketOverviewScreen}
         options={{
-          tabBarIcon: MarketTabIcon
+          tabBarIcon: MarketTabIcon,
+          tabBarLabel: "Markets"
         }}
       />
       <BottomTab.Screen
         name={SCREEN_NAMES.DISCOVER}
         component={DiscoverScreen}
         options={{
-          tabBarIcon: DiscoverTabIcon
+          tabBarIcon: DiscoverTabIcon,
+          tabBarLabel: "Discover"
         }}
       />
       <BottomTab.Screen
         name={SCREEN_NAMES.PORTFOLIO_HOME}
         component={PortfolioNavigator}
         options={{
-          tabBarIcon: PortfolioTabIcon
+          tabBarIcon: PortfolioTabIcon,
+          tabBarLabel: "Portfolio"
         }}
       />
       <BottomTab.Screen
         name={SCREEN_NAMES.SETTINGS}
         component={SettingsScreen}
         options={{
-          tabBarIcon: SettingsTabIcon
+          tabBarIcon: SettingsTabIcon,
+          tabBarLabel: "Settings"
         }}
       />
     </BottomTab.Navigator>

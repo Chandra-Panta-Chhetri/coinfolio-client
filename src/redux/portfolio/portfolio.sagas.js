@@ -196,13 +196,13 @@ function* deleteTransaction({ payload: { transaction, onSuccess } }) {
   }
 }
 
-function* updateTransaction({ payload: { transactionId, transactionUpdates, onSuccess } }) {
+function* updateTransaction({ payload: { transactionId, transaction, onSuccess } }) {
   try {
     const authToken = yield select(selectAuthToken);
     const activePortfolio = yield select(selectActivePortfolio);
     const holdingOverview = yield select(selectHoldingOverview);
     const updatedTransaction = yield portfolioAPI.updateTransaction(
-      transactionUpdates,
+      transaction,
       activePortfolio?.id,
       authToken,
       transactionId
@@ -220,6 +220,7 @@ function* updateTransaction({ payload: { transactionId, transactionUpdates, onSu
       throw new Error("Failed to update transaction");
     }
   } catch (err) {
+    console.log("FAILED TRANSACTION UPDATE", err);
     yield put(updateTransactionFail("Failed to update transaction"));
   }
 }

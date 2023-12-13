@@ -26,6 +26,7 @@ function* getNews({ payload: { filter } }) {
     }
     yield put(fetchNewsSuccess(news));
   } catch (err) {
+    yield put(noMoreNews());
     yield put(fetchNewsFail("Failed to get the news"));
   }
 }
@@ -42,6 +43,7 @@ function* getMoreNews({ payload: { filter } }) {
     }
     yield put(fetchMoreNewsSuccess(combinedNews));
   } catch (err) {
+    yield put(noMoreNews());
     yield put(fetchMoreNewsFail("Failed to get more news"));
   }
 }
@@ -62,7 +64,7 @@ function* getEvents() {
     }
     yield put(fetchEventsSuccess(events));
   } catch (err) {
-    console.log(err);
+    yield put(noMoreEvents());
     yield put(fetchEventsFail("Failed to get the events"));
   }
 }
@@ -87,7 +89,7 @@ function* getMoreEvents() {
     }
     yield put(fetchMoreEventsSuccess(combinedEvents));
   } catch (err) {
-    console.log(err.message);
+    yield put(noMoreEvents());
     yield put(fetchMoreEventsFail("Failed to get more events"));
   }
 }

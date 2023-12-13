@@ -13,6 +13,6 @@ export const autoLogin = async () => {
       store.dispatch(loginSuccess(user, token));
     }
   } catch (err) {
-    store.dispatch(loginFail("Log in again for security purposes"));
+    store.dispatch(loginFail("Please log in again"));
   }
 };
