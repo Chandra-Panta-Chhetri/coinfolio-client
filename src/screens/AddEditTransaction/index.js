@@ -27,12 +27,12 @@ const AddEditTransactionScreen = ({
   isUpdatingTransaction
 }) => {
   const { selectedCoin, startingScreen, transactionToUpdate, selectedCurrencyCode } = route?.params ?? {};
+  const isInEditMode = !isNullOrUndefined(transactionToUpdate);
   const currencyCode = isNullOrUndefined(selectedCurrencyCode)
     ? isInEditMode
       ? transactionToUpdate?.currencyCode
       : "USD"
     : selectedCurrencyCode;
-  const isInEditMode = !isNullOrUndefined(transactionToUpdate);
   const {
     control,
     handleSubmit,
