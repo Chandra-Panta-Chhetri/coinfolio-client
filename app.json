@@ -5,6 +5,11 @@
     "name": "coinfolio",
     "slug": "coinfolio",
     "version": "1.0.0",
-    "assetBundlePatterns": ["**/*"]
+    "assetBundlePatterns": ["**/*"],
+    "orientation": "portrait",
+    "android": {
+      "softwareKeyboardLayoutMode": "pan"
+    },
+    "platforms": ["android", "ios"]
   }
 }
